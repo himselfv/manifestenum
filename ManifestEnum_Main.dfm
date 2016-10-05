@@ -77,20 +77,20 @@ object MainForm: TMainForm
     Top = 32
     object F1: TMenuItem
       Caption = 'File'
+      object Reload1: TMenuItem
+        Caption = 'Reload'
+        OnClick = Reload1Click
+      end
+      object pmRebuildAssemblyDatabase: TMenuItem
+        Caption = 'Rebuild assembly database'
+        OnClick = pmRebuildAssemblyDatabaseClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
       object Exit1: TMenuItem
         Caption = 'Exit'
         OnClick = Exit1Click
-      end
-    end
-    object Components1: TMenuItem
-      Caption = 'Components'
-      object Rebuildassemblydatabase1: TMenuItem
-        Caption = 'Rebuild assembly database'
-        OnClick = Rebuildassemblydatabase1Click
-      end
-      object Loadmanifests1: TMenuItem
-        Caption = 'Reload manifests'
-        OnClick = Loadmanifests1Click
       end
     end
   end

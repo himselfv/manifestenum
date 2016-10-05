@@ -5,7 +5,8 @@ unit AssemblyDb;
 
 interface
 uses SysUtils, sqlite3,
-{$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF};
+  {$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF},
+  Generics.Collections;
 
 {$IFNDEF XML_OMNI}
 //MSXML использует чуть иные названия и GUID для интерфейсов, но по функциям всё почти совместимо,
@@ -28,6 +29,11 @@ type
     processorArchitecture: string;
     version: string;
     publicKeyToken: string;
+  end;
+  TAssemblyData = record
+    id: TAssemblyId;
+    identity: TAssemblyIdentity;
+    manifestName: string;
   end;
 
   TDependencyEntryData = record
@@ -74,6 +80,8 @@ type
     StmAddDirectory: PSQLite3Stmt;
     procedure InitStatements;
     procedure FreeStatements;
+    function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
+    function SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
   public
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
     function FindAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
@@ -81,14 +89,21 @@ type
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
     procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
 
+    function QueryAssemblies(const ASql: string): TList<TAssemblyData>;
+    function GetAllAssemblies: TList<TAssemblyData>;
+    function FindAssemblyByFile(const AFilter: string): TList<TAssemblyData>;
+
+    function QueryFiles(const ASql: string): TList<TFileEntryData>;
+    function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
+
   protected
     FXml: IXMLDocument;
     procedure InitXmlParser;
     procedure FreeXmlParser;
-    function ReadAssemblyIdentityData(const ANode: IXmlNode): TAssemblyIdentity;
-    function ReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
-    function ReadFileData(const ANode: IXmlNode): TFileEntryData;
-    function ReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
+    function XmlReadAssemblyIdentityData(const ANode: IXmlNode): TAssemblyIdentity;
+    function XmlReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
+    function XmlReadFileData(const ANode: IXmlNode): TFileEntryData;
+    function XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
   public
     procedure ImportManifest(const AManifestFile: string);
 
@@ -269,6 +284,7 @@ begin
   sqlite3_bind_str(StmAddAssembly, 4, AEntry.processorArchitecture);
   sqlite3_bind_str(StmAddAssembly, 5, AEntry.version);
   sqlite3_bind_str(StmAddAssembly, 6, AEntry.publicKeyToken);
+  sqlite3_bind_str(StmAddAssembly, 7, AManifestName);
   if sqlite3_step(StmAddAssembly) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   Result := sqlite3_last_insert_rowid(FDb);
@@ -324,6 +340,83 @@ begin
   sqlite3_reset(StmAddDirectory);
 end;
 
+//Parses a row from the assembles table into the record
+function TAssemblyDb.SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
+begin
+  Result.id := sqlite3_column_int64(stmt, 0);
+  Result.identity.name := sqlite3_column_text16(stmt, 1);
+  Result.identity.language := sqlite3_column_text16(stmt, 2);
+  Result.identity.buildType := sqlite3_column_text16(stmt, 3);
+  Result.identity.processorArchitecture := sqlite3_column_text16(stmt, 4);
+  Result.identity.version := sqlite3_column_text16(stmt, 5);
+  Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 6);
+  Result.manifestName := sqlite3_column_text16(stmt, 7);
+end;
+
+//Makes an SQL query which returns a set of assembly table records.
+//The returned object must be destroyed by the caller.
+function TAssemblyDb.QueryAssemblies(const ASql: string): TList<TAssemblyData>;
+var stmt: PSQLite3Stmt;
+  res: integer;
+begin
+  Result := TList<TAssemblyData>.Create;
+  stmt := PrepareStatement(ASql);
+  try
+    res := sqlite3_step(stmt);
+    while res = SQLITE_ROW do begin
+      Result.Add(SqlReadAssemblyData(stmt));
+      res := sqlite3_step(stmt)
+    end;
+    if res <> SQLITE_DONE then
+      RaiseLastSQLiteError;
+  finally
+    sqlite3_finalize(stmt);
+  end;
+end;
+
+function TAssemblyDb.GetAllAssemblies: TList<TAssemblyData>;
+begin
+  Result := QueryAssemblies('SELECT * FROM assemblies');
+end;
+
+function TAssemblyDb.FindAssemblyByFile(const AFilter: string): TList<TAssemblyData>;
+begin
+  Result := QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")');
+end;
+
+function TAssemblyDb.SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
+begin
+  Result.name := sqlite3_column_text16(stmt, 1);
+  Result.destinationPath := sqlite3_column_text16(stmt, 2);
+  Result.sourceName := sqlite3_column_text16(stmt, 3);
+  Result.sourcePath := sqlite3_column_text16(stmt, 4);
+  Result.importPath := sqlite3_column_text16(stmt, 5);
+end;
+
+function TAssemblyDb.QueryFiles(const ASql: string): TList<TFileEntryData>;
+var stmt: PSQLite3Stmt;
+  res: integer;
+begin
+  Result := TList<TFileEntryData>.Create;
+  stmt := PrepareStatement(ASql);
+  try
+    res := sqlite3_step(stmt);
+    while res = SQLITE_ROW do begin
+      Result.Add(SqlReadFileData(stmt));
+      res := sqlite3_step(stmt)
+    end;
+    if res <> SQLITE_DONE then
+      RaiseLastSQLiteError;
+  finally
+    sqlite3_finalize(stmt);
+  end;
+end;
+
+function TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
+begin
+  Result := QueryFiles('SELECT * FROM files WHERE assemblyId='+IntToStr(AAssembly));
+end;
+
 
 // Importing manifests
 
@@ -341,7 +434,7 @@ procedure TAssemblyDb.ImportManifest(const AManifestFile: string);
 var node: IXmlNode;
   nodes: IXMLNodeList;
   aId: TAssemblyId;
-  i, j: integer;
+  i: integer;
 begin
   if FXml = nil then begin
    {$IFDEF XML_OMNI}
@@ -355,24 +448,24 @@ begin
 
   node := FXml.selectSingleNode('/assembly/assemblyIdentity');
   Assert(node <> nil);
-  aId := AddAssembly(ReadAssemblyIdentityData(node), ChangeFileExt(ExtractFilename(AManifestFile), ''));
+  aId := AddAssembly(XmlReadAssemblyIdentityData(node), ChangeFileExt(ExtractFilename(AManifestFile), ''));
 
   nodes := FXml.selectNodes('/assembly/dependency');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddDependency(aId, ReadDependencyData(nodes.item[i]));
+      AddDependency(aId, XmlReadDependencyData(nodes.item[i]));
   end;
 
   nodes := FXml.selectNodes('/assembly/file');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddFile(aId, ReadFileData(nodes.item[i]));
+      AddFile(aId, XmlReadFileData(nodes.item[i]));
   end;
 
   nodes := FXml.selectNodes('/assembly/directories/directory');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddDirectory(aId, ReadDirectoryData(nodes.item[i]));
+      AddDirectory(aId, XmlReadDirectoryData(nodes.item[i]));
   end;
 end;
 
@@ -387,7 +480,7 @@ begin
 end;
 
 //Parses a given assemblyIdentity node, extracting all the fields that identify an assembly
-function TAssemblyDb.ReadAssemblyIdentityData(const ANode: IXmlNode): TAssemblyIdentity;
+function TAssemblyDb.XmlReadAssemblyIdentityData(const ANode: IXmlNode): TAssemblyIdentity;
 begin
   Result.name := textAttribute(ANode, 'name');
   Result.language := textAttribute(ANode, 'language');
@@ -397,7 +490,7 @@ begin
   Result.publicKeyToken := textAttribute(ANode, 'publicKeyToken');
 end;
 
-function TAssemblyDb.ReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
+function TAssemblyDb.XmlReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
 var depAss: IXmlNode;
 begin
   Result.discoverable := StrToBoolDef(textAttribute(ANode, 'discoverable'), false);
@@ -407,12 +500,12 @@ begin
     Result.dependentAssembly := 0;
     Result.dependencyType := '';
   end else begin
-    Result.dependentAssembly := FindAssembly(ReadAssemblyIdentityData(depAss));
+    Result.dependentAssembly := FindAssembly(XmlReadAssemblyIdentityData(depAss));
     Result.dependencyType := textAttribute(ANode.selectSingleNode('dependentAssembly'), 'dependencyType');
   end;
 end;
 
-function TAssemblyDb.ReadFileData(const ANode: IXmlNode): TFileEntryData;
+function TAssemblyDb.XmlReadFileData(const ANode: IXmlNode): TFileEntryData;
 begin
   Result.name := textAttribute(ANode, 'name');
   Result.destinationPath := textAttribute(ANode, 'destinationPath');
@@ -421,7 +514,7 @@ begin
   Result.importPath := textAttribute(ANode, 'importPath');
 end;
 
-function TAssemblyDb.ReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
+function TAssemblyDb.XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
 begin
   Result.destinationPath := textAttribute(ANode, 'destinationPath');
   Result.owner := StrToBoolDef(textAttribute(ANode, 'owner'), false);
