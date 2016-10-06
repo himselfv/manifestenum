@@ -96,6 +96,8 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="AssemblyDb.pas"/>
+        <DCCReference Include="SxsExpand.pas"/>
+        <DCCReference Include="MSDeltaLib.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

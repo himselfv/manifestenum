@@ -17,22 +17,13 @@ object MainForm: TMainForm
   TextHeight = 13
   object lbComponents: TListBox
     Left = 0
-    Top = 21
+    Top = 44
     Width = 553
-    Height = 193
+    Height = 170
     Align = alClient
     ItemHeight = 13
     TabOrder = 0
     OnClick = lbComponentsClick
-  end
-  object edtQuickFilter: TEdit
-    Left = 0
-    Top = 0
-    Width = 553
-    Height = 21
-    Align = alTop
-    TabOrder = 1
-    OnChange = edtQuickFilterChange
   end
   object pcDetails: TPageControl
     Left = 0
@@ -41,7 +32,7 @@ object MainForm: TMainForm
     Height = 193
     ActivePage = tsGeneral
     Align = alBottom
-    TabOrder = 2
+    TabOrder = 1
     object tsGeneral: TTabSheet
       Caption = 'General'
     end
@@ -72,9 +63,74 @@ object MainForm: TMainForm
       end
     end
   end
+  object pnlFilterSettings: TPanel
+    Left = 0
+    Top = 23
+    Width = 553
+    Height = 21
+    Align = alTop
+    AutoSize = True
+    BevelOuter = bvNone
+    TabOrder = 2
+    Visible = False
+    object cbFilterByName: TCheckBox
+      Left = 0
+      Top = 0
+      Width = 97
+      Height = 21
+      Align = alLeft
+      Caption = 'Name'
+      Checked = True
+      State = cbChecked
+      TabOrder = 0
+      OnClick = cbFilterByNameClick
+    end
+    object cbFilterByFiles: TCheckBox
+      Left = 97
+      Top = 0
+      Width = 97
+      Height = 21
+      Align = alLeft
+      Caption = 'Files'
+      Checked = True
+      State = cbChecked
+      TabOrder = 1
+      OnClick = cbFilterByNameClick
+    end
+  end
+  object pnlFilter: TPanel
+    Left = 0
+    Top = 0
+    Width = 553
+    Height = 23
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 3
+    object sbFilterSettings: TSpeedButton
+      Left = 504
+      Top = 0
+      Width = 49
+      Height = 23
+      Align = alRight
+      AllowAllUp = True
+      GroupIndex = 10
+      Caption = 'Filters'
+      OnClick = sbFilterSettingsClick
+    end
+    object edtQuickFilter: TEdit
+      Left = 0
+      Top = 0
+      Width = 504
+      Height = 23
+      Align = alClient
+      TabOrder = 0
+      OnChange = edtQuickFilterChange
+      ExplicitHeight = 21
+    end
+  end
   object MainMenu: TMainMenu
     Left = 16
-    Top = 32
+    Top = 72
     object F1: TMenuItem
       Caption = 'File'
       object Reload1: TMenuItem
@@ -93,5 +149,19 @@ object MainForm: TMainForm
         OnClick = Exit1Click
       end
     end
+    object Debug1: TMenuItem
+      Caption = 'Debug'
+      object Loadmanifestfile1: TMenuItem
+        Caption = 'Load manifest file...'
+        OnClick = Loadmanifestfile1Click
+      end
+    end
+  end
+  object OpenManifestDialog: TOpenDialog
+    DefaultExt = '*.manifest'
+    Filter = '*.manifest'
+    Title = 'Open manifest file...'
+    Left = 104
+    Top = 80
   end
 end

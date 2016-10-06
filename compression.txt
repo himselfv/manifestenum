@@ -1,0 +1,59 @@
+https://forums.mydigitallife.info/threads/48613-Aunty-Mel-s-Cheap-And-Nasty-SxS-File-Expander
+In NT 6.3 (Windows 8.1 and Server 2012 R2) - and with a hotfix according to a reliable source, NT 6.2 (Windows 8 and Server 2012) - Microsoft decided to save disk space by compressing parts of WinSxS that aren't being used. The compression is pretty good (around 50% on binaries, up to 90% on .manifest files), but it breaks just about every form of SxS package extraction
+
+There are several different kinds of compression used in WinSxS:
+ M1: W8, W10 manifest compression, used by .manifest files
+ N1: W8 normal compression, used by everything else
+ D1: delta compression
+ S1: W10 non-manifest compression
+
+Manifests are always packed. Normal files are packed when not installed (installed files have to be unpacked to be hardlinked).
+
+M1, N1
+==========
+A variation of Microsoft's semi-famous BDC (Binary Delta Compression).
+Unpacker: MSDELTA.DLL https://msdn.microsoft.com/en-us/library/bb417345.aspx
+
+The first four bytes (DCM$01 or DCN$01 usually) are format markers, and the rest is just a standard BDC PA30-format compressed file, similar to the components of a Windows update.
+> Confirmed, it's just binary delta compression with a four-byte header. I just decompressed TFTP.EXE with a single call into MSDELTA.DLL, though I had to modify the compressed file (by stripping off the header).
+
+> Q: I was trying to expand Manifest files using MSDelta APIs, but I am stuck with the source file input for ApplyDeltaW API.
+> A: It's a resource in WCP.DLL. Because I wanted my tool to work on as many versions of Windows as possible, I copied said resource into my tool. Feel free to chop into it with Resource Hacker FX or similar.
+
+
+D1
+=====
+Files of this type are a delta/patch/diff from a known (and present in the SxS repository) version of the file - and both files are required to decompress it.
+For example, in my SxS folders, I have:
+  x86_microsoft-windows-b..iondata-cmdlinetool_31bf3856ad364e35_6.3.9600.16384_none_1ccac14cc0c5358\bcdedit.exe      11,517
+  x86_microsoft-windows-b..iondata-cmdlinetool_31bf3856ad364e35_6.3.9600.17031_none_1cfdb390c09f7ffb\bcdedit.exe    310,272
+The second file - the latest, and currently in-use version - is uncompressed inside the SxS repository and hardlinked to install location.
+The first file is the compressed 'delta' from the second file. Unlike the 'N1' and 'M1' compression methods, D1 has its own 12-byte header, consisting of:
+  * the standard DCD$01
+  * then (thankfully!) the full version number of the 'delta source' file (as MSDELTA seems to call it) in the next eight bytes - or to be more precise, four 16-bit words.
+For example, in my first BCDEDIT.EXE file:
+  87 42 80 25 03 00 06 00
+Reverse the part order and read as little-endian words:
+  0006 0003 2580 4287
+  6, 3, 9600, 17031
+Hey, I have that file!
+  x86_microsoft-windows-b..iondata-cmdlinetool_31bf3856ad364e35_6.3.9600.17031_none_1cfdb390c09f7ffb
+
+
+
+S1
+====
+Introduced in Windows 10. This one is unrelated to BDC. It uses a 16-byte header:
+  32-bit Magic (DCS$01)
+  32-bit Block Count
+  32-bit Uncompressed File Size
+After the header, there are a number of "blocks". Each block has a block header:
+  32-bit Uncompressed Block Size
+  32-bit Compressed Block Size
+The block size is typically 1Mb but can be anything.
+Each block is then compressed using a custom implementation of Lempel Ziv using Microsoft's own Huffman Tables instead of the default ones. This compression is called "LZMS".
+
+There's an LZMS decompressor built into Windows 8 (and later's) CABINET.DLL - check out this example decompressor from MSDN. It's the method SxSExpand uses.
+https://msdn.microsoft.com/en-us/library/windows/desktop/hh920923%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
+
+There's also another decompressor implemented in wcp.dll, which you need to copy from the servicing stack directory (%systemroot%\winsxs\x86_microsoft-windows-servicingstack_...\wcp.dll). This onehandles all of the details of multiple-block files, it simply takes an entire compressed file and decompresses it with a single call. But you have to have API reversed.

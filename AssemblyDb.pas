@@ -4,7 +4,7 @@ unit AssemblyDb;
 //Использовать OmniXML вместо MSXML
 
 interface
-uses SysUtils, sqlite3,
+uses SysUtils, sqlite3, SxsExpand,
   {$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF},
   Generics.Collections;
 
@@ -35,6 +35,9 @@ type
     identity: TAssemblyIdentity;
     manifestName: string;
   end;
+
+  TAssemblyList = TDictionary<TAssemblyId, TAssemblyData>;
+
 
   TDependencyEntryData = record
     discoverable: boolean;
@@ -89,9 +92,10 @@ type
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
     procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
 
-    function QueryAssemblies(const ASql: string): TList<TAssemblyData>;
-    function GetAllAssemblies: TList<TAssemblyData>;
-    function FindAssemblyByFile(const AFilter: string): TList<TAssemblyData>;
+    procedure QueryAssemblies(const ASql: string; AList: TAssemblyList);
+    procedure GetAllAssemblies(AList: TAssemblyList);
+    procedure FindAssemblyByName(const AFilter: string; AList: TAssemblyList);
+    procedure FindAssemblyByFile(const AFilter: string; AList: TAssemblyList);
 
     function QueryFiles(const ASql: string): TList<TFileEntryData>;
     function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
@@ -354,17 +358,18 @@ begin
 end;
 
 //Makes an SQL query which returns a set of assembly table records.
-//The returned object must be destroyed by the caller.
-function TAssemblyDb.QueryAssemblies(const ASql: string): TList<TAssemblyData>;
+procedure TAssemblyDb.QueryAssemblies(const ASql: string; AList: TAssemblyList);
 var stmt: PSQLite3Stmt;
   res: integer;
+  AId: TAssemblyId;
 begin
-  Result := TList<TAssemblyData>.Create;
   stmt := PrepareStatement(ASql);
   try
     res := sqlite3_step(stmt);
     while res = SQLITE_ROW do begin
-      Result.Add(SqlReadAssemblyData(stmt));
+      AId := sqlite3_column_int64(stmt, 0);
+      if not AList.ContainsKey(AId) then
+        AList.Add(AId, SqlReadAssemblyData(stmt));
       res := sqlite3_step(stmt)
     end;
     if res <> SQLITE_DONE then
@@ -374,14 +379,19 @@ begin
   end;
 end;
 
-function TAssemblyDb.GetAllAssemblies: TList<TAssemblyData>;
+procedure TAssemblyDb.GetAllAssemblies(AList: TAssemblyList);
 begin
-  Result := QueryAssemblies('SELECT * FROM assemblies');
+  QueryAssemblies('SELECT * FROM assemblies', AList);
 end;
 
-function TAssemblyDb.FindAssemblyByFile(const AFilter: string): TList<TAssemblyData>;
+procedure TAssemblyDb.FindAssemblyByName(const AFilter: string; AList: TAssemblyList);
 begin
-  Result := QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")');
+  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.name LIKE "%'+AFilter+'%"', AList);
+end;
+
+procedure TAssemblyDb.FindAssemblyByFile(const AFilter: string; AList: TAssemblyList);
+begin
+  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")', AList);
 end;
 
 function TAssemblyDb.SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
@@ -435,6 +445,7 @@ var node: IXmlNode;
   nodes: IXMLNodeList;
   aId: TAssemblyId;
   i: integer;
+  xmlStr: string;
 begin
   if FXml = nil then begin
    {$IFDEF XML_OMNI}
@@ -444,7 +455,8 @@ begin
    {$ENDIF}
   end;
 
-  FXml.load(AManifestFile);
+  xmlStr := LoadManifestFile(AManifestFile);
+  FXml.loadXML(xmlStr);
 
   node := FXml.selectSingleNode('/assembly/assemblyIdentity');
   Assert(node <> nil);

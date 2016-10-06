@@ -4,18 +4,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
-  StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb;
+  StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
-  TAssemblyDetails = class
-    name: string;
-    files: array of string;
-    dependencies: array of string;
-  end;
-
   TMainForm = class(TForm)
     lbComponents: TListBox;
-    edtQuickFilter: TEdit;
     pcDetails: TPageControl;
     tsGeneral: TTabSheet;
     tsFiles: TTabSheet;
@@ -28,6 +21,15 @@ type
     pmRebuildAssemblyDatabase: TMenuItem;
     N1: TMenuItem;
     Reload1: TMenuItem;
+    pnlFilterSettings: TPanel;
+    pnlFilter: TPanel;
+    edtQuickFilter: TEdit;
+    sbFilterSettings: TSpeedButton;
+    cbFilterByName: TCheckBox;
+    cbFilterByFiles: TCheckBox;
+    Debug1: TMenuItem;
+    Loadmanifestfile1: TMenuItem;
+    OpenManifestDialog: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -35,6 +37,9 @@ type
     procedure Exit1Click(Sender: TObject);
     procedure pmRebuildAssemblyDatabaseClick(Sender: TObject);
     procedure Reload1Click(Sender: TObject);
+    procedure sbFilterSettingsClick(Sender: TObject);
+    procedure cbFilterByNameClick(Sender: TObject);
+    procedure Loadmanifestfile1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     procedure ProcessManifests;
@@ -137,10 +142,12 @@ end;
 
 //Показывает новый отфильтрованный список пакетов
 procedure TMainForm.UpdateAssemblyList;
-var i: integer;
+var
   filter: string;
-  list: TList<TAssemblyData>;
+  list: TAssemblyList;
+  entry: TAssemblyData;
 begin
+  list := TAssemblyList.Create;
   lbComponents.Items.BeginUpdate;
   try
     lbComponents.Items.Clear;
@@ -148,15 +155,26 @@ begin
     filter := edtQuickFilter.Text;
     filter := filter.ToLower();
 
-    if filter <> '' then
-      list := FDb.FindAssemblyByFile(filter)
-    else
-      list := FDb.GetAllAssemblies;
-    for i := 0 to list.Count-1 do
-      lbComponents.AddItem(list[i].identity.name, TObject(list[i].id));
+    if filter = '' then
+      FDb.GetAllAssemblies(list)
+    else begin
+      if cbFilterByName.Checked then
+        FDb.FindAssemblyByName(filter, list);
+      if cbFilterByFiles.Checked then
+        FDb.FindAssemblyByFile(filter, list);
+    end;
+
+    for entry in list.Values do
+      lbComponents.AddItem(entry.identity.name, TObject(entry.id));
   finally
     lbComponents.Items.EndUpdate;
+    FreeAndNil(list);
   end;
+end;
+
+procedure TMainForm.cbFilterByNameClick(Sender: TObject);
+begin
+  UpdateAssemblyList;
 end;
 
 procedure TMainForm.edtQuickFilterChange(Sender: TObject);
@@ -193,5 +211,18 @@ begin
 //    lbAssemblyDependencies.Items.Add(ad.dependencies[i]);
 end;
 
+
+procedure TMainForm.sbFilterSettingsClick(Sender: TObject);
+begin
+//  sbFilterSettings.Down := not sbFilterSettings.Down;
+  pnlFilterSettings.Visible := sbFilterSettings.Down;
+end;
+
+procedure TMainForm.Loadmanifestfile1Click(Sender: TObject);
+begin
+  with OpenManifestDialog do
+    if Execute then
+      FDb.ImportManifest(Filename);
+end;
 
 end.
