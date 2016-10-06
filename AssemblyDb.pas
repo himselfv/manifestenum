@@ -38,7 +38,6 @@ type
 
   TAssemblyList = TDictionary<TAssemblyId, TAssemblyData>;
 
-
   TDependencyEntryData = record
     discoverable: boolean;
     resourceType: string;
@@ -56,6 +55,21 @@ type
 
   TDirectoryEntryData = record
     destinationPath: string;
+    owner: boolean;
+  end;
+
+  TRegistryKeyId = int64;
+  TRegistryKeyData = record
+    keyName: string;
+    owner: boolean;
+  end;
+
+  TRegistryValueData = record
+    key: TRegistryKeyId;
+    name: string;
+    valueType: string;
+    value: string;
+    operationHint: string;
     owner: boolean;
   end;
 
@@ -81,6 +95,8 @@ type
     StmAddDependency: PSQLite3Stmt;
     StmAddFile: PSQLite3Stmt;
     StmAddDirectory: PSQLite3Stmt;
+    StmAddRegistryKey: PSQLite3Stmt;
+    StmAddRegistryValue: PSQLite3Stmt;
     procedure InitStatements;
     procedure FreeStatements;
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
@@ -91,6 +107,8 @@ type
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
     procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
+    function AddRegistryKey(AAssembly: TAssemblyId; const AData: TRegistryKeyData): TRegistryKeyId;
+    procedure AddRegistryValue(AKey: TRegistryKeyId; const AData: TRegistryValueData);
 
     procedure QueryAssemblies(const ASql: string; AList: TAssemblyList);
     procedure GetAllAssemblies(AList: TAssemblyList);
@@ -108,6 +126,8 @@ type
     function XmlReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
     function XmlReadFileData(const ANode: IXmlNode): TFileEntryData;
     function XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
+    procedure ImportRegistryKeyNode(const AAssembly: TAssemblyId; ANode: IXmlNode);
+    function XmlReadRegistryValueData(const AKeyId: TRegistryKeyId; const ANode: IXmlNode): TRegistryValueData;
   public
     procedure ImportManifest(const AManifestFile: string);
 
@@ -238,6 +258,24 @@ begin
     +'owner BOOLEAN,'
     +'CONSTRAINT identity UNIQUE(assemblyId,destinationPath)'
     +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS registryKeys ('
+    +'id INTEGER PRIMARY KEY,'
+    +'assemblyId INTEGER NOT NULL,'
+    +'keyName TEXT NOT NULL,'
+    +'owner BOOLEAN,'
+    +'CONSTRAINT identity UNIQUE(assemblyId,keyName)'
+    +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS registryValues ('
+    +'keyId INTEGER NOT NULL,'
+    +'name TEXT NOT NULL,'
+    +'valueType TEXT NOT NULL,'
+    +'value TEXT NOT NULL,'
+    +'operationHint TEXT NOT NULL,'
+    +'owner BOOLEAN,'
+    +'CONSTRAINT identity UNIQUE(keyId,name)'
+    +')');
 end;
 
 function TAssemblyDb.PrepareStatement(const ASql: string): PSQLite3Stmt;
@@ -263,6 +301,12 @@ begin
   StmAddDirectory := PrepareStatement('INSERT OR REPLACE INTO directories '
     +'(assemblyId,destinationPath,owner) '
     +'VALUES (?,?,?)');
+  StmAddRegistryKey := PrepareStatement('INSERT OR REPLACE INTO registryKeys '
+    +'(assemblyId,keyName,owner) '
+    +'VALUES (?,?,?)');
+  StmAddRegistryValue := PrepareStatement('INSERT OR REPLACE INTO registryValues '
+    +'(keyId,name,valueType,value,operationHint,owner) '
+    +'VALUES (?,?,?,?,?,?)');
 end;
 
 procedure TAssemblyDb.FreeStatements;
@@ -342,6 +386,30 @@ begin
   if sqlite3_step(StmAddDirectory) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddDirectory);
+end;
+
+function TAssemblyDb.AddRegistryKey(AAssembly: TAssemblyId; const AData: TRegistryKeyData): TRegistryKeyId;
+begin
+  sqlite3_bind_int64(StmAddRegistryKey, 1, AAssembly);
+  sqlite3_bind_str(StmAddRegistryKey, 2, AData.keyName);
+  sqlite3_bind_int(StmAddRegistryKey, 3, integer(AData.owner));
+  if sqlite3_step(StmAddRegistryKey) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  Result := sqlite3_last_insert_rowid(FDb);
+  sqlite3_reset(StmAddRegistryKey);
+end;
+
+procedure TAssemblyDb.AddRegistryValue(const AData: TRegistryValueData);
+begin
+  sqlite3_bind_int64(StmAddRegistryValue, 1, AData.key);
+  sqlite3_bind_str(StmAddRegistryValue, 2, AData.name);
+  sqlite3_bind_str(StmAddRegistryValue, 3, AData.valueType);
+  sqlite3_bind_str(StmAddRegistryValue, 4, AData.value);
+  sqlite3_bind_str(StmAddRegistryValue, 5, AData.operationHint);
+  sqlite3_bind_int(StmAddRegistryValue, 6, integer(AData.owner));
+  if sqlite3_step(StmAddRegistryValue) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmAddRegistryValue);
 end;
 
 //Parses a row from the assembles table into the record
@@ -479,6 +547,12 @@ begin
     for i := 0 to nodes.length-1 do
       AddDirectory(aId, XmlReadDirectoryData(nodes.item[i]));
   end;
+
+  nodes := FXml.selectNodes('/assembly/registryKeys/registryKey');
+  if nodes <> nil then begin
+    for i := 0 to nodes.length-1 do
+      ImportRegistryKeyNode(aId, nodes.item[i]);
+  end;
 end;
 
 function textAttribute(const ANode: IXmlNode; const AAttribName: string): string; inline;
@@ -489,6 +563,11 @@ begin
     Result := AAttrib.text
   else
     Result := '';
+end;
+
+function boolAttribute(const ANode: IXmlNode; const AAttribName: string): boolean; inline;
+begin
+  Result := StrToBoolDef(textAttribute(ANode, AAttribName), false);
 end;
 
 //Parses a given assemblyIdentity node, extracting all the fields that identify an assembly
@@ -505,7 +584,7 @@ end;
 function TAssemblyDb.XmlReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
 var depAss: IXmlNode;
 begin
-  Result.discoverable := StrToBoolDef(textAttribute(ANode, 'discoverable'), false);
+  Result.discoverable := boolAttribute(ANode, 'discoverable');
   Result.resourceType := textAttribute(ANode, 'resourceType');
   depAss := ANode.selectSingleNode('dependentAssembly/assemblyIdentity');
   if depAss = nil then begin
@@ -529,7 +608,34 @@ end;
 function TAssemblyDb.XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
 begin
   Result.destinationPath := textAttribute(ANode, 'destinationPath');
-  Result.owner := StrToBoolDef(textAttribute(ANode, 'owner'), false);
+  Result.owner := boolAttribute(ANode, 'owner');
+end;
+
+procedure TAssemblyDb.ImportRegistryKeyNode(const AAssembly: TAssemblyId; ANode: IXmlNode);
+var AKeyData: TRegistryKeyData;
+  AKeyId: TRegistryKeyId;
+  nodes: IXmlNodeList;
+  i: integer;
+begin
+  AKeyData.keyName := textAttribute(ANode, 'keyName');
+  AKeyData.owner := boolAttribute(ANode, 'owner');
+  AKeyId := AddRegistryKey(AAssembly, AKeyData);
+
+  nodes := ANode.selectNodes('registryValue');
+  if nodes <> nil then begin
+    for i := 0 to nodes.length-1 do
+      AddRegistryValue(XmlReadRegistryValueData(AKeyId, nodes.items[i]));
+  end;
+end;
+
+function TAssemblyDb.XmlReadRegistryValueData(const AKeyId: TRegistryKeyId; const ANode: IXmlNode): TRegistryValueData;
+begin
+  Result.key := AKeyId;
+  Result.name := textAttribute(ANode, 'name');
+  Result.valueType := textAttribute(ANode, 'valueType');
+  Result.value := textAttribute(ANode, 'value');
+  Result.operationHint := textAttribute(ANode, 'operationHint');
+  Result.owner := boolAttribute(ANode, 'owner');
 end;
 
 end.
