@@ -73,6 +73,15 @@ type
     owner: boolean;
   end;
 
+  TCategoryMembershipData = record
+    name: string;
+    version: string;
+    publicKeyToken: string;
+    typeName: string;
+  end;
+
+  TTaskFolderId = int64;
+
   TAssemblyDb = class
   protected
     FDb: PSQLite3;
@@ -97,6 +106,9 @@ type
     StmAddDirectory: PSQLite3Stmt;
     StmAddRegistryKey: PSQLite3Stmt;
     StmAddRegistryValue: PSQLite3Stmt;
+    StmAddCategoryMembership: PSQLite3Stmt;
+    StmAddTaskFolder: PSQLite3Stmt;
+    StmAddTask: PSQLite3Stmt;
     procedure InitStatements;
     procedure FreeStatements;
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
@@ -108,7 +120,12 @@ type
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
     procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
     function AddRegistryKey(AAssembly: TAssemblyId; const AData: TRegistryKeyData): TRegistryKeyId;
-    procedure AddRegistryValue(AKey: TRegistryKeyId; const AData: TRegistryValueData);
+    procedure AddRegistryValue(const AData: TRegistryValueData);
+    procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
+
+    function AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
+    procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
+    procedure AddTask(AAssembly: TAssemblyId; AURI: string); overload;
 
     procedure QueryAssemblies(const ASql: string; AList: TAssemblyList);
     procedure GetAllAssemblies(AList: TAssemblyList);
@@ -128,6 +145,7 @@ type
     function XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
     procedure ImportRegistryKeyNode(const AAssembly: TAssemblyId; ANode: IXmlNode);
     function XmlReadRegistryValueData(const AKeyId: TRegistryKeyId; const ANode: IXmlNode): TRegistryValueData;
+    function XmlReadCategoryMembership(const ANode: IXmlNode): TCategoryMembershipData;
   public
     procedure ImportManifest(const AManifestFile: string);
 
@@ -276,6 +294,29 @@ begin
     +'owner BOOLEAN,'
     +'CONSTRAINT identity UNIQUE(keyId,name)'
     +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS categoryMemberships ('
+    +'assemblyId INTEGER NOT NULL,'
+    +'name TEXT NOT NULL,'
+    +'version TEXT NOT NULL,'
+    +'publicKeyToken TEXT NOT NULL,'
+    +'typeName TEXT NOT NULL,'
+    +'CONSTRAINT identity UNIQUE(assemblyId,name,version,publicKeyToken,typeName)'
+    +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS taskFolders ('
+    +'id INTEGER PRIMARY KEY,'
+    +'parentId INTEGER NOT NULL,'
+    +'name TEXT NOT NULL,'
+    +'CONSTRAINT identity UNIQUE(parentId,name)'
+    +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS tasks ('
+    +'assemblyId INTEGER NOT NULL,'
+    +'folderId INTEGER NOT NULL,'
+    +'name TEXT NOT NULL,'
+    +'CONSTRAINT identity UNIQUE(folderId,name)'
+    +')');
 end;
 
 function TAssemblyDb.PrepareStatement(const ASql: string): PSQLite3Stmt;
@@ -307,6 +348,15 @@ begin
   StmAddRegistryValue := PrepareStatement('INSERT OR REPLACE INTO registryValues '
     +'(keyId,name,valueType,value,operationHint,owner) '
     +'VALUES (?,?,?,?,?,?)');
+  StmAddCategoryMembership := PrepareStatement('INSERT OR REPLACE INTO categoryMemberships '
+    +'(assemblyId,name,version,publicKeyToken,typeName) '
+    +'VALUES (?,?,?,?,?)');
+  StmAddTaskFolder := PrepareStatement('INSERT OR REPLACE INTO taskFolders '
+    +'(parentId,name) '
+    +'VALUES (?,?)');
+  StmAddTask := PrepareStatement('INSERT OR REPLACE INTO tasks '
+    +'(assemblyId,folderId,name) '
+    +'VALUES (?,?,?)');
 end;
 
 procedure TAssemblyDb.FreeStatements;
@@ -410,6 +460,60 @@ begin
   if sqlite3_step(StmAddRegistryValue) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddRegistryValue);
+end;
+
+procedure TAssemblyDb.AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
+begin
+  sqlite3_bind_int64(StmAddCategoryMembership, 1, AAssembly);
+  sqlite3_bind_str(StmAddCategoryMembership, 2, AData.name);
+  sqlite3_bind_str(StmAddCategoryMembership, 3, AData.version);
+  sqlite3_bind_str(StmAddCategoryMembership, 4, AData.publicKeyToken);
+  sqlite3_bind_str(StmAddCategoryMembership, 5, AData.typeName);
+  if sqlite3_step(StmAddCategoryMembership) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmAddCategoryMembership);
+end;
+
+function TAssemblyDb.AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
+begin
+  sqlite3_bind_int64(StmAddTaskFolder, 1, AParent);
+  sqlite3_bind_str(StmAddTaskFolder, 2, AName);
+  if sqlite3_step(StmAddTaskFolder) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  Result := sqlite3_last_insert_rowid(FDb);
+  sqlite3_reset(StmAddTaskFolder);
+end;
+
+procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string);
+begin
+  sqlite3_bind_int64(StmAddTask, 1, AAssembly);
+  sqlite3_bind_int64(StmAddTask, 2, AFolder);
+  sqlite3_bind_str(StmAddTask, 3, AName);
+  if sqlite3_step(StmAddTask) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmAddTask);
+end;
+
+procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AURI: string);
+var idx: integer;
+  AFolder: TTaskFolderId;
+begin
+  AFolder := 0;
+  while AURI <> '' do begin
+    idx := pos('\', AURI);
+    if idx <= 0 then begin
+      AddTask(AAssembly, AFolder, AURI);
+      break;
+    end;
+
+    if idx = 1 then begin
+      AURI := copy(AURI, 2, MaxInt);
+      continue;
+    end;
+
+    AFolder := AddTaskFolder(copy(AURI, 1, idx-1), AFolder);
+    AURI := copy(AURI, idx+1, MaxInt);
+  end;
 end;
 
 //Parses a row from the assembles table into the record
@@ -553,6 +657,18 @@ begin
     for i := 0 to nodes.length-1 do
       ImportRegistryKeyNode(aId, nodes.item[i]);
   end;
+
+  nodes := FXml.selectNodes('/assembly/memberships/categoryMembership/id');
+  if nodes <> nil then begin
+    for i := 0 to nodes.length-1 do
+      AddCategoryMembership(aId, XmlReadCategoryMembership(nodes.item[i]));
+  end;
+
+  nodes := FXml.selectNodes('/assembly/taskScheduler/Task/RegistrationInfo/URI');
+  if nodes <> nil then begin
+    for i := 0 to nodes.length-1 do
+      Self.AddTask(aId, nodes.item[i].text);
+  end;
 end;
 
 function textAttribute(const ANode: IXmlNode; const AAttribName: string): string; inline;
@@ -624,7 +740,7 @@ begin
   nodes := ANode.selectNodes('registryValue');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddRegistryValue(XmlReadRegistryValueData(AKeyId, nodes.items[i]));
+      AddRegistryValue(XmlReadRegistryValueData(AKeyId, nodes.item[i]));
   end;
 end;
 
@@ -636,6 +752,14 @@ begin
   Result.value := textAttribute(ANode, 'value');
   Result.operationHint := textAttribute(ANode, 'operationHint');
   Result.owner := boolAttribute(ANode, 'owner');
+end;
+
+function TAssemblyDb.XmlReadCategoryMembership(const ANode: IXmlNode): TCategoryMembershipData;
+begin
+  Result.name := textAttribute(ANode, 'name');
+  Result.version := textAttribute(ANode, 'version');
+  Result.publicKeyToken := textAttribute(ANode, 'publicKeyToken');
+  Result.typeName := textAttribute(ANode, 'typeName');
 end;
 
 end.
