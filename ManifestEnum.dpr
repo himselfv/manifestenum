@@ -6,7 +6,8 @@ uses
   ManifestEnum_Progress in 'ManifestEnum_Progress.pas' {ProgressForm},
   AssemblyDb in 'AssemblyDb.pas',
   SxsExpand in 'SxsExpand.pas',
-  MSDeltaLib in 'MSDeltaLib.pas';
+  MSDeltaLib in 'MSDeltaLib.pas',
+  RegistryBrowser in 'RegistryBrowser.pas' {RegistryBrowserForm};
 
 {$R *.res}
 

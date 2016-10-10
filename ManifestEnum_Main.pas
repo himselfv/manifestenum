@@ -30,6 +30,12 @@ type
     Debug1: TMenuItem;
     Loadmanifestfile1: TMenuItem;
     OpenManifestDialog: TOpenDialog;
+    tsDependents: TTabSheet;
+    tsRegistryKeys: TTabSheet;
+    tsCategories: TTabSheet;
+    tsAdditionalGear: TTabSheet;
+    pcMain: TPageControl;
+    tsAssemblies: TTabSheet;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -44,6 +50,7 @@ type
     FDb: TAssemblyDb;
     procedure ProcessManifests;
     procedure RebuildAssemblyDatabase;
+    procedure AddPage(const AForm: TForm);
   public
     procedure UpdateAssemblyList;
     procedure ReloadAssemblyDetails;
@@ -53,11 +60,12 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, ManifestEnum_Progress;
+uses FilenameUtils, ManifestEnum_Progress, RegistryBrowser;
 
 {$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
+var RegistryBrowser: TRegistryBrowserForm;
 begin
   FDb := TAssemblyDb.Create;
   if not FileExists(AppFolder+'\assembly.db') then
@@ -65,6 +73,10 @@ begin
   else
     FDb.Open(AppFolder+'\assembly.db');
   UpdateAssemblyList;
+
+  RegistryBrowser := TRegistryBrowserForm.Create(Application);
+  RegistryBrowser.Db := FDb;
+  AddPage(RegistryBrowser);
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -75,6 +87,20 @@ end;
 procedure TMainForm.Exit1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.AddPage(const AForm: TForm);
+var ts: TTabSheet;
+begin
+  ts := TTabSheet.Create(pcMain);
+  ts.Caption := AForm.Caption;
+  ts.PageControl := pcMain;
+
+  AForm.Parent := ts;
+  AForm.BorderStyle := bsNone;
+  AForm.WindowState := wsMaximized;
+  AForm.Align := alClient;
+  AForm.Show;
 end;
 
 //Создаёт TStringList и заполняет его файлами из папки, по маске

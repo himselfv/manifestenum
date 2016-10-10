@@ -98,6 +98,10 @@
         <DCCReference Include="AssemblyDb.pas"/>
         <DCCReference Include="SxsExpand.pas"/>
         <DCCReference Include="MSDeltaLib.pas"/>
+        <DCCReference Include="RegistryBrowser.pas">
+            <Form>RegistryBrowserForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

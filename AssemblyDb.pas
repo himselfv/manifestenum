@@ -4,7 +4,7 @@ unit AssemblyDb;
 //Использовать OmniXML вместо MSXML
 
 interface
-uses SysUtils, sqlite3, SxsExpand,
+uses SysUtils, Classes, sqlite3, SxsExpand,
   {$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF},
   Generics.Collections;
 
@@ -59,8 +59,9 @@ type
   end;
 
   TRegistryKeyId = int64;
-  TRegistryKeyData = record
-    keyName: string;
+  TRegistryKeyList = TDictionary<TRegistryKeyId, string>;
+
+  TRegistryKeyReferenceData = record
     owner: boolean;
   end;
 
@@ -99,29 +100,43 @@ type
     procedure CommitTransaction;
 
   protected
-    StmAddAssembly: PSQLite3Stmt;
+    StmTouchAssembly: PSQLite3Stmt;
     StmFindAssembly: PSQLite3Stmt;
+    StmUpdateAssembly: PSQLite3Stmt;
+
     StmAddDependency: PSQLite3Stmt;
+    StmAddCategoryMembership: PSQLite3Stmt;
+
     StmAddFile: PSQLite3Stmt;
     StmAddDirectory: PSQLite3Stmt;
-    StmAddRegistryKey: PSQLite3Stmt;
+
+    StmTouchRegistryKey: PSQLite3Stmt;
+    StmFindRegistryKey: PSQLite3Stmt;
+    StmGetRegistryKeys: PSQLite3Stmt;
+    StmAddRegistryKeyReference: PSQLite3Stmt;
     StmAddRegistryValue: PSQLite3Stmt;
-    StmAddCategoryMembership: PSQLite3Stmt;
-    StmAddTaskFolder: PSQLite3Stmt;
-    StmAddTask: PSQLite3Stmt;
+
+    StmTouchTaskFolder: PSQLite3Stmt;
+    StmFindTaskFolder: PSQLite3Stmt;
+    StmTouchTask: PSQLite3Stmt;
     procedure InitStatements;
     procedure FreeStatements;
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
     function SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
   public
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
-    function FindAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
+    function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
+
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
+    procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
+
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
     procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
-    function AddRegistryKey(AAssembly: TAssemblyId; const AData: TRegistryKeyData): TRegistryKeyId;
-    procedure AddRegistryValue(const AData: TRegistryValueData);
-    procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
+
+    function AddRegistryKey(AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId; overload;
+    procedure AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
+    function AddRegistryKey(AAssembly: TAssemblyId; AName: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId; overload;
+    procedure AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
 
     function AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
@@ -134,6 +149,8 @@ type
 
     function QueryFiles(const ASql: string): TList<TFileEntryData>;
     function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
+
+    procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
 
   protected
     FXml: IXMLDocument;
@@ -241,80 +258,90 @@ procedure TAssemblyDb.InitDb;
 begin
   Exec('CREATE TABLE IF NOT EXISTS assemblies ('
     +'id INTEGER PRIMARY KEY,'
-    +'name TEXT NOT NULL,'
-    +'language TEXT NOT NULL,'
-    +'buildType TEXT NOT NULL,'
-    +'processorArchitecture TEXT NOT NULL,'
-    +'version TEXT NOT NULL,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
+    +'language TEXT NOT NULL COLLATE NOCASE,'
+    +'buildType TEXT NOT NULL COLLATE NOCASE,'
+    +'processorArchitecture TEXT NOT NULL COLLATE NOCASE,'
+    +'version TEXT NOT NULL COLLATE NOCASE,'
     +'publicKeyToken TEXT NOT NULL,'
-    +'manifestName TEXT UNIQUE NOT NULL,'
+    +'manifestName TEXT COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE(name,language,buildType,processorArchitecture,version,publicKeyToken)'
     +')');
 
   Exec('CREATE TABLE IF NOT EXISTS dependencies ('
     +'assemblyId INTEGER NOT NULL,'
     +'discoverable BOOLEAN,'
-    +'resourceType TEXT,'
+    +'resourceType TEXT COLLATE NOCASE,'
     +'dependentAssemblyId INTEGER NOT NULL,'
-    +'dependencyType TEXT,'
+    +'dependencyType TEXT COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE(assemblyId,dependentAssemblyId)'
     +')');
 
   Exec('CREATE TABLE IF NOT EXISTS files ('
     +'assemblyId INTEGER NOT NULL,'
-    +'name TEXT NOT NULL,'
-    +'destinationPath TEXT NOT NULL,'
-    +'sourceName TEXT,'
-    +'sourcePath TEXT,'
-    +'importPath TEXT,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
+    +'destinationPath TEXT NOT NULL COLLATE NOCASE,'
+    +'sourceName TEXT COLLATE NOCASE,'
+    +'sourcePath TEXT COLLATE NOCASE,'
+    +'importPath TEXT COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE (assemblyId,name,destinationPath)' //maybe all fields need to be included?
     +')');
 
   Exec('CREATE TABLE IF NOT EXISTS directories ('
     +'assemblyId INTEGER NOT NULL,'
-    +'destinationPath TEXT NOT NULL,'
+    +'destinationPath TEXT NOT NULL COLLATE NOCASE,'
     +'owner BOOLEAN,'
     +'CONSTRAINT identity UNIQUE(assemblyId,destinationPath)'
     +')');
 
+
   Exec('CREATE TABLE IF NOT EXISTS registryKeys ('
     +'id INTEGER PRIMARY KEY,'
+    +'parentId INTEGER NOT NULL,'
+    +'keyName TEXT NOT NULL COLLATE NOCASE,'
+    +'CONSTRAINT identity UNIQUE(parentId,keyName)'
+    +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS registryKeyReferences ('
     +'assemblyId INTEGER NOT NULL,'
-    +'keyName TEXT NOT NULL,'
+    +'keyId INTEGER NOT NULL,'
     +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(assemblyId,keyName)'
+    +'CONSTRAINT identity UNIQUE(assemblyId,keyId)'
     +')');
 
   Exec('CREATE TABLE IF NOT EXISTS registryValues ('
+    +'assemblyId INTEGER NOT NULL,'
     +'keyId INTEGER NOT NULL,'
-    +'name TEXT NOT NULL,'
-    +'valueType TEXT NOT NULL,'
-    +'value TEXT NOT NULL,'
-    +'operationHint TEXT NOT NULL,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
+    +'valueType TEXT NOT NULL COLLATE NOCASE,'
+    +'value TEXT NOT NULL COLLATE NOCASE,'
+    +'operationHint TEXT NOT NULL COLLATE NOCASE,'
     +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(keyId,name)'
+    +'CONSTRAINT identity UNIQUE(assemblyId,keyId,name)'
     +')');
+
 
   Exec('CREATE TABLE IF NOT EXISTS categoryMemberships ('
     +'assemblyId INTEGER NOT NULL,'
-    +'name TEXT NOT NULL,'
-    +'version TEXT NOT NULL,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
+    +'version TEXT NOT NULL COLLATE NOCASE,'
     +'publicKeyToken TEXT NOT NULL,'
-    +'typeName TEXT NOT NULL,'
+    +'typeName TEXT NOT NULL COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE(assemblyId,name,version,publicKeyToken,typeName)'
     +')');
+
 
   Exec('CREATE TABLE IF NOT EXISTS taskFolders ('
     +'id INTEGER PRIMARY KEY,'
     +'parentId INTEGER NOT NULL,'
-    +'name TEXT NOT NULL,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE(parentId,name)'
     +')');
 
   Exec('CREATE TABLE IF NOT EXISTS tasks ('
     +'assemblyId INTEGER NOT NULL,'
     +'folderId INTEGER NOT NULL,'
-    +'name TEXT NOT NULL,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE(folderId,name)'
     +')');
 end;
@@ -325,47 +352,95 @@ begin
     RaiseLastSQLiteError();
 end;
 
+
+{
+Throughout the unit, three kinds of sql requests are used:
+  Touch: create the entry with this identity if it does not exist.
+  Find: find the entry with this identity and return its rowid/id
+  Update: write optional fields by the rowid
+
+Here's how they combine into:
+  Add: Touch+Update = update the entry or create a new one
+  Need: Touch+Find = find the entry or create a new one without optional fields
+
+Notes:
+
+When INSERT OR IGNORE ends in IGNORE, last rowid is not updated, so we have to query it explicitly.
+
+INSERT OR IGNORES does silent IGNORE even when INSERT fails for reasons other than existing record.
+
+SQLite cannot do INSERT OR UPDATE natively. The closes eqivalent, INSERT OR REPLACE, deletes and
+recreates the record, losing all the ommited fields and the unique ID.
+So when we need INSERT OR UPDATE, we will first INSERT OR IGNORE, to ensure the record is present,
+then UPDATE it.
+}
+
+
 procedure TAssemblyDb.InitStatements;
 begin
-  StmAddAssembly := PrepareStatement('INSERT OR REPLACE INTO assemblies '
-    +'(name,language,buildType,processorArchitecture,version,publicKeyToken,manifestName) '
-    +'VALUES (?,?,?,?,?,?,?)');
-  StmFindAssembly := PrepareStatement('INSERT OR IGNORE INTO assemblies '
+  StmTouchAssembly := PrepareStatement('INSERT OR IGNORE INTO assemblies '
     +'(name,language,buildType,processorArchitecture,version,publicKeyToken) '
     +'VALUES (?,?,?,?,?,?)');
+  StmFindAssembly := PrepareStatement('SELECT id FROM assemblies WHERE '
+    +'name=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=?');
+  StmUpdateAssembly := PrepareStatement('UPDATE assemblies SET manifestName=? '
+    +'WHERE id=? ');
+
   StmAddDependency := PrepareStatement('INSERT OR REPLACE INTO dependencies '
     +'(assemblyId,discoverable,resourceType,dependentAssemblyId,dependencyType) '
     +'VALUES (?,?,?,?,?)');
+  StmAddCategoryMembership := PrepareStatement('INSERT OR REPLACE INTO categoryMemberships '
+    +'(assemblyId,name,version,publicKeyToken,typeName) '
+    +'VALUES (?,?,?,?,?)');
+
   StmAddFile := PrepareStatement('INSERT OR REPLACE INTO files '
     +'(assemblyId,name,destinationPath,sourceName,sourcePath,importPath) '
     +'VALUES (?,?,?,?,?,?)');
   StmAddDirectory := PrepareStatement('INSERT OR REPLACE INTO directories '
     +'(assemblyId,destinationPath,owner) '
     +'VALUES (?,?,?)');
-  StmAddRegistryKey := PrepareStatement('INSERT OR REPLACE INTO registryKeys '
-    +'(assemblyId,keyName,owner) '
-    +'VALUES (?,?,?)');
-  StmAddRegistryValue := PrepareStatement('INSERT OR REPLACE INTO registryValues '
+
+
+  StmTouchRegistryKey := PrepareStatement('INSERT OR IGNORE INTO registryKeys '
+    +'(parentId,keyName) VALUES (?,?)');
+  StmFindRegistryKey := PrepareStatement('SELECT id FROM registryKeys WHERE '
+    +'parentId=? AND keyName=?');
+  StmAddRegistryKeyReference := PrepareStatement('INSERT OR IGNORE INTO registryKeyReferences '
+    +'(assemblyId,keyId,owner) VALUES (?,?,?)');
+  StmAddRegistryValue := PrepareStatement('INSERT OR IGNORE INTO registryValues '
     +'(keyId,name,valueType,value,operationHint,owner) '
     +'VALUES (?,?,?,?,?,?)');
-  StmAddCategoryMembership := PrepareStatement('INSERT OR REPLACE INTO categoryMemberships '
-    +'(assemblyId,name,version,publicKeyToken,typeName) '
-    +'VALUES (?,?,?,?,?)');
-  StmAddTaskFolder := PrepareStatement('INSERT OR REPLACE INTO taskFolders '
-    +'(parentId,name) '
-    +'VALUES (?,?)');
-  StmAddTask := PrepareStatement('INSERT OR REPLACE INTO tasks '
-    +'(assemblyId,folderId,name) '
-    +'VALUES (?,?,?)');
+  StmGetRegistryKeys := PrepareStatement('SELECT id, keyName FROM registryKeys WHERE parentId=?');
+
+  StmTouchTaskFolder := PrepareStatement('INSERT OR IGNORE INTO taskFolders '
+    +'(parentId,name) VALUES (?,?)');
+  StmFindTaskFolder := PrepareStatement('SELECT id FROM taskFolders WHERE '
+    +'parentId=? AND name=?');
+  StmTouchTask := PrepareStatement('INSERT OR IGNORE INTO tasks '
+    +'(assemblyId,folderId,name) VALUES (?,?,?)');
 end;
 
 procedure TAssemblyDb.FreeStatements;
 begin
-  sqlite3_finalize(StmAddAssembly);
+  sqlite3_finalize(StmTouchAssembly);
+  sqlite3_finalize(StmUpdateAssembly);
   sqlite3_finalize(StmFindAssembly);
+
   sqlite3_finalize(StmAddDependency);
   sqlite3_finalize(StmAddFile);
   sqlite3_finalize(StmAddDirectory);
+
+  sqlite3_finalize(StmTouchRegistryKey);
+  sqlite3_finalize(StmFindRegistryKey);
+  sqlite3_finalize(StmAddRegistryKeyReference);
+  sqlite3_finalize(StmAddRegistryValue);
+  sqlite3_finalize(StmGetRegistryKeys);
+
+  sqlite3_finalize(StmAddCategoryMembership);
+
+  sqlite3_finalize(StmTouchTaskFolder);
+  sqlite3_finalize(StmFindTaskFolder);
+  sqlite3_finalize(StmTouchTask);
 end;
 
 function sqlite3_bind_str(pStmt: PSQLite3Stmt; i: Integer; const zData: string): integer; inline;
@@ -373,33 +448,43 @@ begin
   Result := sqlite3_bind_text16(pStmt, i, PChar(zData), -1, nil);
 end;
 
-
 function TAssemblyDb.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
 begin
-  sqlite3_bind_str(StmAddAssembly, 1, AEntry.name);
-  sqlite3_bind_str(StmAddAssembly, 2, AEntry.language);
-  sqlite3_bind_str(StmAddAssembly, 3, AEntry.buildType);
-  sqlite3_bind_str(StmAddAssembly, 4, AEntry.processorArchitecture);
-  sqlite3_bind_str(StmAddAssembly, 5, AEntry.version);
-  sqlite3_bind_str(StmAddAssembly, 6, AEntry.publicKeyToken);
-  sqlite3_bind_str(StmAddAssembly, 7, AManifestName);
-  if sqlite3_step(StmAddAssembly) <> SQLITE_DONE then
+  Result := NeedAssembly(AEntry);
+  //Update optional fields
+  sqlite3_bind_int64(StmUpdateAssembly, 1,Result);
+  sqlite3_bind_str(StmUpdateAssembly, 2, AManifestName);
+  if sqlite3_step(StmUpdateAssembly) <> SQLITE_DONE then
     RaiseLastSQLiteError();
-  Result := sqlite3_last_insert_rowid(FDb);
-  sqlite3_reset(StmAddAssembly);
+  sqlite3_reset(StmUpdateAssembly);
 end;
 
-function TAssemblyDb.FindAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
+function TAssemblyDb.NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
+var res: integer;
 begin
+  //Touch assembly
+  sqlite3_bind_str(StmTouchAssembly, 1, AEntry.name);
+  sqlite3_bind_str(StmTouchAssembly, 2, AEntry.language);
+  sqlite3_bind_str(StmTouchAssembly, 3, AEntry.buildType);
+  sqlite3_bind_str(StmTouchAssembly, 4, AEntry.processorArchitecture);
+  sqlite3_bind_str(StmTouchAssembly, 5, AEntry.version);
+  sqlite3_bind_str(StmTouchAssembly, 6, AEntry.publicKeyToken);
+  if sqlite3_step(StmTouchAssembly) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  Result := sqlite3_last_insert_rowid(FDb);
+  sqlite3_reset(StmTouchAssembly);
+
+  //Find assembly ID
   sqlite3_bind_str(StmFindAssembly, 1, AEntry.name);
   sqlite3_bind_str(StmFindAssembly, 2, AEntry.language);
   sqlite3_bind_str(StmFindAssembly, 3, AEntry.buildType);
   sqlite3_bind_str(StmFindAssembly, 4, AEntry.processorArchitecture);
   sqlite3_bind_str(StmFindAssembly, 5, AEntry.version);
   sqlite3_bind_str(StmFindAssembly, 6, AEntry.publicKeyToken);
-  if sqlite3_step(StmFindAssembly) <> SQLITE_DONE then
+  res := sqlite3_step(StmFindAssembly);
+  if res <> SQLITE_ROW then
     RaiseLastSQLiteError();
-  Result := sqlite3_last_insert_rowid(FDb);
+  Result := sqlite3_column_int64(StmFindAssembly, 0);
   sqlite3_reset(StmFindAssembly);
 end;
 
@@ -413,6 +498,18 @@ begin
   if sqlite3_step(StmAddDependency) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddDependency);
+end;
+
+procedure TAssemblyDb.AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
+begin
+  sqlite3_bind_int64(StmAddCategoryMembership, 1, AAssembly);
+  sqlite3_bind_str(StmAddCategoryMembership, 2, AData.name);
+  sqlite3_bind_str(StmAddCategoryMembership, 3, AData.version);
+  sqlite3_bind_str(StmAddCategoryMembership, 4, AData.publicKeyToken);
+  sqlite3_bind_str(StmAddCategoryMembership, 5, AData.typeName);
+  if sqlite3_step(StmAddCategoryMembership) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmAddCategoryMembership);
 end;
 
 procedure TAssemblyDb.AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
@@ -438,18 +535,63 @@ begin
   sqlite3_reset(StmAddDirectory);
 end;
 
-function TAssemblyDb.AddRegistryKey(AAssembly: TAssemblyId; const AData: TRegistryKeyData): TRegistryKeyId;
+function TAssemblyDb.AddRegistryKey(AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
 begin
-  sqlite3_bind_int64(StmAddRegistryKey, 1, AAssembly);
-  sqlite3_bind_str(StmAddRegistryKey, 2, AData.keyName);
-  sqlite3_bind_int(StmAddRegistryKey, 3, integer(AData.owner));
-  if sqlite3_step(StmAddRegistryKey) <> SQLITE_DONE then
+  //Touch
+  sqlite3_bind_int64(StmTouchRegistryKey, 1, AParent);
+  sqlite3_bind_str(StmTouchRegistryKey, 2, AName);
+  if sqlite3_step(StmTouchRegistryKey) <> SQLITE_DONE then
     RaiseLastSQLiteError();
-  Result := sqlite3_last_insert_rowid(FDb);
-  sqlite3_reset(StmAddRegistryKey);
+  sqlite3_reset(StmTouchRegistryKey);
+
+  //Find id
+  sqlite3_bind_int64(StmFindRegistryKey, 1, AParent);
+  sqlite3_bind_str(StmFindRegistryKey, 2, AName);
+  if sqlite3_step(StmFindRegistryKey) <> SQLITE_ROW then
+    RaiseLastSQLiteError();
+  Result := sqlite3_column_int64(StmFindRegistryKey, 0);
+  sqlite3_reset(StmFindRegistryKey);
 end;
 
-procedure TAssemblyDb.AddRegistryValue(const AData: TRegistryValueData);
+procedure TAssemblyDb.AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
+begin
+  sqlite3_bind_int64(StmAddRegistryKeyReference, 1, AAssembly);
+  sqlite3_bind_int64(StmAddRegistryKeyReference, 2, AKey);
+  sqlite3_bind_int(StmAddRegistryKeyReference, 3, integer(AData.owner));
+  if sqlite3_step(StmAddRegistryKeyReference) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmAddRegistryKeyReference);
+end;
+
+//Overloaded version which parses Registry key name, adds all neccessary key entries and then links
+//the final part with the assembly.
+function TAssemblyDb.AddRegistryKey(AAssembly: TAssemblyId; AName: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId;
+var idx: integer;
+begin
+  Result := 0;
+  while AName <> '' do begin
+    idx := pos('\', AName);
+    if idx <= 0 then begin
+      Result := AddRegistryKey(AName, Result);
+      break;
+    end;
+
+    if idx = 1 then begin
+      AName := copy(AName, 2, MaxInt);
+      continue;
+    end;
+
+    Result := AddRegistryKey(copy(AName, 1, idx-1), Result);
+    AName := copy(AName, idx+1, MaxInt);
+  end;
+
+  if Result <> 0 then
+    AddRegistryKeyReference(AAssembly, Result, AData);
+
+end;
+
+
+procedure TAssemblyDb.AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
 begin
   sqlite3_bind_int64(StmAddRegistryValue, 1, AData.key);
   sqlite3_bind_str(StmAddRegistryValue, 2, AData.name);
@@ -462,36 +604,33 @@ begin
   sqlite3_reset(StmAddRegistryValue);
 end;
 
-procedure TAssemblyDb.AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
-begin
-  sqlite3_bind_int64(StmAddCategoryMembership, 1, AAssembly);
-  sqlite3_bind_str(StmAddCategoryMembership, 2, AData.name);
-  sqlite3_bind_str(StmAddCategoryMembership, 3, AData.version);
-  sqlite3_bind_str(StmAddCategoryMembership, 4, AData.publicKeyToken);
-  sqlite3_bind_str(StmAddCategoryMembership, 5, AData.typeName);
-  if sqlite3_step(StmAddCategoryMembership) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmAddCategoryMembership);
-end;
 
 function TAssemblyDb.AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
 begin
-  sqlite3_bind_int64(StmAddTaskFolder, 1, AParent);
-  sqlite3_bind_str(StmAddTaskFolder, 2, AName);
-  if sqlite3_step(StmAddTaskFolder) <> SQLITE_DONE then
+  //Touch
+  sqlite3_bind_int64(StmTouchTaskFolder, 1, AParent);
+  sqlite3_bind_str(StmTouchTaskFolder, 2, AName);
+  if sqlite3_step(StmTouchTaskFolder) <> SQLITE_DONE then
     RaiseLastSQLiteError();
-  Result := sqlite3_last_insert_rowid(FDb);
-  sqlite3_reset(StmAddTaskFolder);
+  sqlite3_reset(StmTouchTaskFolder);
+
+  //Find id
+  sqlite3_bind_int64(StmFindTaskFolder, 1, AParent);
+  sqlite3_bind_str(StmFindTaskFolder, 2, AName);
+  if sqlite3_step(StmFindTaskFolder) <> SQLITE_ROW then
+    RaiseLastSQLiteError();
+  Result := sqlite3_column_int64(StmFindTaskFolder, 0);
+  sqlite3_reset(StmFindTaskFolder);
 end;
 
 procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string);
 begin
-  sqlite3_bind_int64(StmAddTask, 1, AAssembly);
-  sqlite3_bind_int64(StmAddTask, 2, AFolder);
-  sqlite3_bind_str(StmAddTask, 3, AName);
-  if sqlite3_step(StmAddTask) <> SQLITE_DONE then
+  sqlite3_bind_int64(StmTouchTask, 1, AAssembly);
+  sqlite3_bind_int64(StmTouchTask, 2, AFolder);
+  sqlite3_bind_str(StmTouchTask, 3, AName);
+  if sqlite3_step(StmTouchTask) <> SQLITE_DONE then
     RaiseLastSQLiteError();
-  sqlite3_reset(StmAddTask);
+  sqlite3_reset(StmTouchTask);
 end;
 
 procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AURI: string);
@@ -597,6 +736,21 @@ end;
 function TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
 begin
   Result := QueryFiles('SELECT * FROM files WHERE assemblyId='+IntToStr(AAssembly));
+end;
+
+//Retrieves the list of children key names for a given parent key id (0 for root)
+procedure TAssemblyDb.GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
+var res: integer;
+begin
+  sqlite3_bind_int64(StmGetRegistryKeys, 1, AParent);
+  res := sqlite3_step(StmGetRegistryKeys);
+  while res = SQLITE_ROW do begin
+    AList.Add(sqlite3_column_int64(StmGetRegistryKeys, 0), sqlite3_column_text16(StmGetRegistryKeys, 1));
+    res := sqlite3_step(StmGetRegistryKeys)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(StmGetRegistryKeys);
 end;
 
 
@@ -707,7 +861,7 @@ begin
     Result.dependentAssembly := 0;
     Result.dependencyType := '';
   end else begin
-    Result.dependentAssembly := FindAssembly(XmlReadAssemblyIdentityData(depAss));
+    Result.dependentAssembly := NeedAssembly(XmlReadAssemblyIdentityData(depAss));
     Result.dependencyType := textAttribute(ANode.selectSingleNode('dependentAssembly'), 'dependencyType');
   end;
 end;
@@ -728,19 +882,20 @@ begin
 end;
 
 procedure TAssemblyDb.ImportRegistryKeyNode(const AAssembly: TAssemblyId; ANode: IXmlNode);
-var AKeyData: TRegistryKeyData;
+var AKeyName: string;
+  AKeyData: TRegistryKeyReferenceData;
   AKeyId: TRegistryKeyId;
   nodes: IXmlNodeList;
   i: integer;
 begin
-  AKeyData.keyName := textAttribute(ANode, 'keyName');
+  AKeyName := textAttribute(ANode, 'keyName');
   AKeyData.owner := boolAttribute(ANode, 'owner');
-  AKeyId := AddRegistryKey(AAssembly, AKeyData);
+  AKeyId := AddRegistryKey(AAssembly, AKeyName, AKeyData);
 
   nodes := ANode.selectNodes('registryValue');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddRegistryValue(XmlReadRegistryValueData(AKeyId, nodes.item[i]));
+      AddRegistryValue(AAssembly, XmlReadRegistryValueData(AKeyId, nodes.item[i]));
   end;
 end;
 
