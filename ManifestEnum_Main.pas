@@ -45,8 +45,6 @@ type
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
     FRegistryBrowser: TRegistryBrowserForm;
-    procedure ProcessManifests;
-    procedure RebuildAssemblyDatabase;
     procedure AddPage(const AForm: TForm);
   public
     procedure UpdateAssemblyList;
@@ -56,17 +54,14 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, ManifestEnum_Progress, SxSExpand;
+uses FilenameUtils, AssemblyDbBuilder, SxSExpand;
 
 {$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FDb := TAssemblyDb.Create;
-  if not FileExists(AppFolder+'\assembly.db') then
-    RebuildAssemblyDatabase
-  else
-    FDb.Open(AppFolder+'\assembly.db');
+  InitAssemblyDb(FDb, AppFolder+'\assembly.db', true);
   UpdateAssemblyList;
 
   FRegistryBrowser := TRegistryBrowserForm.Create(Application);
@@ -104,66 +99,9 @@ begin
   AForm.Show;
 end;
 
-//Создаёт TStringList и заполняет его файлами из папки, по маске
-function FilesByMask(const AMask: string): TStringList;
-var sr: TSearchRec;
-  res: integer;
-begin
-  Result := TStringList.Create;
-  res := FindFirst(AMask, faAnyFile and not faDirectory, sr);
-  while res = 0 do begin
-    Result.Add(sr.Name);
-    res := FindNext(sr);
-  end;
-  SysUtils.FindClose(sr);
-end;
-
-//Parses all manifests in WinSxS\Manifests and adds/updates their data in the database.
-//Displays progress form.
-procedure TMainForm.ProcessManifests;
-var baseDir: string;
-  fnames: TStringList;
-  i: integer;
-  progress: TProgressForm;  
-begin
-  baseDir := GetWindowsDir()+'\WinSxS\Manifests';
-  fnames := nil;
-
-  progress := TProgressForm.Create(Self);
-  try
-    progress.Show;
-
-    //Составляем список файлов
-    progress.Start('Building file list');
-    fnames := FilesByMask(baseDir+'\*.manifest');
-
-    FDb.BeginTransaction;
-
-    //Теперь загружаем содержимое.
-    progress.Start('Reading manifests', fnames.Count-1);
-    for i := 0 to fnames.Count-1 do begin
-      FDb.ImportManifest(baseDir+'\'+fnames[i]);
-      progress.Step();
-    end;
-
-    FDb.CommitTransaction;
-  finally
-    FreeAndNil(fnames);
-    FreeAndNil(progress);
-  end;
-end;
-
-procedure TMainForm.RebuildAssemblyDatabase;
-begin
-  FDb.Close;
-  DeleteFile(AppFolder+'\assembly.db');
-  FDb.Open(AppFolder+'\assembly.db');
-  ProcessManifests;
-end;
-
 procedure TMainForm.pmRebuildAssemblyDatabaseClick(Sender: TObject);
 begin
-  RebuildAssemblyDatabase;
+  RebuildAssemblyDatabase(FDb, AppFolder+'\assembly.db');
   UpdateAssemblyList;
 end;
 

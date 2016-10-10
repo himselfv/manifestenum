@@ -136,8 +136,8 @@ type
     procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
 
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
-    procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
-    procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
+    procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
+    procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
     procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
 
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
@@ -553,7 +553,7 @@ begin
   sqlite3_reset(StmAddDependency);
 end;
 
-procedure TAssemblyDb.GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
+procedure TAssemblyDb.GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
 var stmt: PSQLite3Stmt;
 begin
   stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT dependentAssemblyId FROM dependencies WHERE assemblyId=?)');
@@ -561,7 +561,7 @@ begin
   QueryAssemblies(stmt, AList);
 end;
 
-procedure TAssemblyDb.GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
+procedure TAssemblyDb.GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
 var stmt: PSQLite3Stmt;
 begin
   stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT assemblyId FROM dependencies WHERE dependentAssemblyId=?)');
