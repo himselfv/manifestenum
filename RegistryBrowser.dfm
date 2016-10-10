@@ -14,11 +14,19 @@ object RegistryBrowserForm: TRegistryBrowserForm
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object Label1: TLabel
+    Left = 0
+    Top = 256
+    Width = 635
+    Height = 13
+    Align = alBottom
+    Caption = 'Components which use this key:'
+  end
   object Tree: TVirtualStringTree
     Left = 0
     Top = 0
     Width = 635
-    Height = 393
+    Height = 256
     Align = alClient
     BorderWidth = 1
     Header.AutoSizeIndex = 0
@@ -30,10 +38,22 @@ object RegistryBrowserForm: TRegistryBrowserForm
     Header.MainColumn = -1
     TabOrder = 0
     OnExpanding = TreeExpanding
+    OnFocusChanged = TreeFocusChanged
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetNodeDataSize = TreeGetNodeDataSize
     OnInitNode = TreeInitNode
+    ExplicitHeight = 393
     Columns = <>
+  end
+  object lbComponents: TListBox
+    Left = 0
+    Top = 269
+    Width = 635
+    Height = 124
+    Align = alBottom
+    ItemHeight = 13
+    TabOrder = 1
+    ExplicitTop = 256
   end
 end

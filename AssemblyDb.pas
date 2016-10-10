@@ -29,6 +29,7 @@ type
     processorArchitecture: string;
     version: string;
     publicKeyToken: string;
+    function ToString: string;
   end;
   TAssemblyData = record
     id: TAssemblyId;
@@ -64,6 +65,7 @@ type
   TRegistryKeyReferenceData = record
     owner: boolean;
   end;
+  TRegistryKeyReferees = TDictionary<TAssemblyId, TRegistryKeyReferenceData>;
 
   TRegistryValueData = record
     key: TRegistryKeyId;
@@ -103,6 +105,7 @@ type
     StmTouchAssembly: PSQLite3Stmt;
     StmFindAssembly: PSQLite3Stmt;
     StmUpdateAssembly: PSQLite3Stmt;
+    StmGetAssembly: PSQLite3Stmt;
 
     StmAddDependency: PSQLite3Stmt;
     StmAddCategoryMembership: PSQLite3Stmt;
@@ -112,9 +115,10 @@ type
 
     StmTouchRegistryKey: PSQLite3Stmt;
     StmFindRegistryKey: PSQLite3Stmt;
-    StmGetRegistryKeys: PSQLite3Stmt;
     StmAddRegistryKeyReference: PSQLite3Stmt;
     StmAddRegistryValue: PSQLite3Stmt;
+    StmGetRegistryKeys: PSQLite3Stmt;
+    StmGetRegistryKeyReferees: PSQLite3Stmt;
 
     StmTouchTaskFolder: PSQLite3Stmt;
     StmFindTaskFolder: PSQLite3Stmt;
@@ -126,6 +130,7 @@ type
   public
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
+    function GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
 
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
     procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
@@ -137,6 +142,8 @@ type
     procedure AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
     function AddRegistryKey(AAssembly: TAssemblyId; AName: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId; overload;
     procedure AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
+    procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
+    procedure GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
 
     function AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
@@ -149,8 +156,6 @@ type
 
     function QueryFiles(const ASql: string): TList<TFileEntryData>;
     function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
-
-    procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
 
   protected
     FXml: IXMLDocument;
@@ -172,6 +177,12 @@ function OpenAssemblyDb(const AFilename: string): TAssemblyDb;
 procedure ResetAssemblyDb(const AFilename: string);
 
 implementation
+
+function TAssemblyIdentity.ToString: string;
+begin
+  Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
+    + '-' + Self.processorArchitecture + '-' + Self.version + '-' + Self.publicKeyToken;
+end;
 
 function OpenAssemblyDb(const AFilename: string): TAssemblyDb;
 begin
@@ -385,6 +396,7 @@ begin
     +'name=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=?');
   StmUpdateAssembly := PrepareStatement('UPDATE assemblies SET manifestName=? '
     +'WHERE id=? ');
+  StmGetAssembly := PrepareStatement('SELECT * FROM assemblies WHERE id=?');
 
   StmAddDependency := PrepareStatement('INSERT OR REPLACE INTO dependencies '
     +'(assemblyId,discoverable,resourceType,dependentAssemblyId,dependencyType) '
@@ -411,6 +423,7 @@ begin
     +'(keyId,name,valueType,value,operationHint,owner) '
     +'VALUES (?,?,?,?,?,?)');
   StmGetRegistryKeys := PrepareStatement('SELECT id, keyName FROM registryKeys WHERE parentId=?');
+  StmGetRegistryKeyReferees := PrepareStatement('SELECT assemblyId FROM registryKeyReferences WHERE keyId=?');
 
   StmTouchTaskFolder := PrepareStatement('INSERT OR IGNORE INTO taskFolders '
     +'(parentId,name) VALUES (?,?)');
@@ -425,6 +438,7 @@ begin
   sqlite3_finalize(StmTouchAssembly);
   sqlite3_finalize(StmUpdateAssembly);
   sqlite3_finalize(StmFindAssembly);
+  sqlite3_finalize(StmGetAssembly);
 
   sqlite3_finalize(StmAddDependency);
   sqlite3_finalize(StmAddFile);
@@ -435,6 +449,7 @@ begin
   sqlite3_finalize(StmAddRegistryKeyReference);
   sqlite3_finalize(StmAddRegistryValue);
   sqlite3_finalize(StmGetRegistryKeys);
+  sqlite3_finalize(StmGetRegistryKeyReferees);
 
   sqlite3_finalize(StmAddCategoryMembership);
 
@@ -487,6 +502,29 @@ begin
   Result := sqlite3_column_int64(StmFindAssembly, 0);
   sqlite3_reset(StmFindAssembly);
 end;
+
+//Parses a row from the assembles table into the record
+function TAssemblyDb.SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
+begin
+  Result.id := sqlite3_column_int64(stmt, 0);
+  Result.identity.name := sqlite3_column_text16(stmt, 1);
+  Result.identity.language := sqlite3_column_text16(stmt, 2);
+  Result.identity.buildType := sqlite3_column_text16(stmt, 3);
+  Result.identity.processorArchitecture := sqlite3_column_text16(stmt, 4);
+  Result.identity.version := sqlite3_column_text16(stmt, 5);
+  Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 6);
+  Result.manifestName := sqlite3_column_text16(stmt, 7);
+end;
+
+function TAssemblyDb.GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
+begin
+  sqlite3_bind_int64(StmGetAssembly, 1, AAssembly);
+  if sqlite3_step(StmGetAssembly) <> SQLITE_ROW then
+    RaiseLastSQLiteError();
+  Result := SqlReadAssemblyData(StmGetAssembly);
+  sqlite3_reset(StmGetAssembly);
+end;
+
 
 procedure TAssemblyDb.AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
 begin
@@ -655,18 +693,6 @@ begin
   end;
 end;
 
-//Parses a row from the assembles table into the record
-function TAssemblyDb.SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
-begin
-  Result.id := sqlite3_column_int64(stmt, 0);
-  Result.identity.name := sqlite3_column_text16(stmt, 1);
-  Result.identity.language := sqlite3_column_text16(stmt, 2);
-  Result.identity.buildType := sqlite3_column_text16(stmt, 3);
-  Result.identity.processorArchitecture := sqlite3_column_text16(stmt, 4);
-  Result.identity.version := sqlite3_column_text16(stmt, 5);
-  Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 6);
-  Result.manifestName := sqlite3_column_text16(stmt, 7);
-end;
 
 //Makes an SQL query which returns a set of assembly table records.
 procedure TAssemblyDb.QueryAssemblies(const ASql: string; AList: TAssemblyList);
@@ -751,6 +777,22 @@ begin
   if res <> SQLITE_DONE then
     RaiseLastSQLiteError;
   sqlite3_reset(StmGetRegistryKeys);
+end;
+
+procedure TAssemblyDb.GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
+var res: integer;
+  AData: TRegistryKeyReferenceData;
+begin
+  sqlite3_bind_int64(StmGetRegistryKeyReferees, 1, AKey);
+  res := sqlite3_step(StmGetRegistryKeyReferees);
+  while res = SQLITE_ROW do begin
+    AData.owner := boolean(sqlite3_column_int(StmGetRegistryKeyReferees, 1));
+    AList.Add(sqlite3_column_int64(StmGetRegistryKeyReferees, 0), AData);
+    res := sqlite3_step(StmGetRegistryKeyReferees)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(StmGetRegistryKeyReferees);
 end;
 
 

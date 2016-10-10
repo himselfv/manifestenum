@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VirtualTrees, AssemblyDb, Vcl.StdCtrls;
 
 type
   TRegistryKeyNodeData = record
@@ -16,6 +16,8 @@ type
 
   TRegistryBrowserForm = class(TForm)
     Tree: TVirtualStringTree;
+    Label1: TLabel;
+    lbComponents: TListBox;
     procedure FormShow(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
@@ -24,11 +26,13 @@ type
     procedure TreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
       TextType: TVSTTextType; var CellText: string);
     procedure TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode; var Allowed: Boolean);
+    procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
   protected
     FDb: TAssemblyDb;
     procedure SetDb(ADb: TAssemblyDb);
     procedure CreateSubnodes(AParent: PVirtualNode; AKeyId: TRegistryKeyId);
     procedure TouchSubnodes(AParent: PVirtualNode);
+    procedure ReloadComponents;
   public
     procedure Clear;
     procedure Reload;
@@ -144,6 +148,38 @@ procedure TRegistryBrowserForm.TreeExpanding(Sender: TBaseVirtualTree; Node: PVi
   var Allowed: Boolean);
 begin
   TouchSubnodes(Node);
+end;
+
+procedure TRegistryBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex);
+begin
+  ReloadComponents;
+end;
+
+procedure TRegistryBrowserForm.ReloadComponents;
+var AData: PRegistryKeyNodeData;
+  AList: TRegistryKeyReferees;
+  AAssembly: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  lbComponents.Clear;
+  if Tree.FocusedNode = nil then exit;
+
+  AData := Tree.GetNodeData(Tree.FocusedNode);
+
+  AList := TRegistryKeyReferees.Create;
+  try
+    FDb.GetRegistryKeyReferees(AData.keyId, AList);
+    for AAssembly in AList.Keys do begin
+      AAssemblyData := FDb.GetAssembly(AAssembly);
+      lbComponents.Items.Add(AAssemblyData.identity.ToString());
+    end;
+
+
+  finally
+    FreeAndNil(AList);
+  end;
+
 end;
 
 
