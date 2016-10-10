@@ -32,9 +32,9 @@ object MainForm: TMainForm
         Height = 335
         Align = alClient
         ItemHeight = 13
+        PopupMenu = PopupMenu
         TabOrder = 0
         OnClick = lbComponentsClick
-        ExplicitHeight = 142
       end
       object pnlFilter: TPanel
         Left = 0
@@ -139,5 +139,19 @@ object MainForm: TMainForm
     Title = 'Open manifest file...'
     Left = 104
     Top = 80
+  end
+  object PopupMenu: TPopupMenu
+    Left = 248
+    Top = 80
+    object Savemanifest1: TMenuItem
+      Caption = 'Save manifest...'
+      OnClick = Savemanifest1Click
+    end
+  end
+  object SaveManifestDialog: TSaveDialog
+    DefaultExt = '*.manifest'
+    Filter = '*.manifest'
+    Left = 104
+    Top = 136
   end
 end

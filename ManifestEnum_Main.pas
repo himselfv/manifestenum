@@ -27,6 +27,9 @@ type
     OpenManifestDialog: TOpenDialog;
     pcMain: TPageControl;
     tsAssemblies: TTabSheet;
+    PopupMenu: TPopupMenu;
+    Savemanifest1: TMenuItem;
+    SaveManifestDialog: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -37,6 +40,7 @@ type
     procedure sbFilterSettingsClick(Sender: TObject);
     procedure cbFilterByNameClick(Sender: TObject);
     procedure Loadmanifestfile1Click(Sender: TObject);
+    procedure Savemanifest1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
@@ -52,7 +56,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, ManifestEnum_Progress;
+uses FilenameUtils, ManifestEnum_Progress, SxSExpand;
 
 {$R *.dfm}
 
@@ -188,7 +192,7 @@ begin
     end;
 
     for entry in list.Values do
-      lbComponents.AddItem(entry.identity.name, TObject(entry.id));
+      lbComponents.AddItem(entry.identity.ToString, TObject(entry.id));
   finally
     lbComponents.Items.EndUpdate;
     FreeAndNil(list);
@@ -230,5 +234,37 @@ begin
     if Execute then
       FDb.ImportManifest(Filename);
 end;
+
+procedure TMainForm.Savemanifest1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+  AManifestPath: string;
+  ATargetFile: TStringList;
+begin
+  if lbComponents.ItemIndex < 0 then
+    exit;
+  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
+  AAssemblyData := FDb.GetAssembly(AAssemblyId);
+
+  if AAssemblyData.manifestName = '' then begin
+    MessageBox(Self.Handle, PChar('This assembly has no associated manifest'), PChar('Cannot save manifest'), MB_OK + MB_ICONEXCLAMATION);
+    exit;
+  end;
+
+  SaveManifestDialog.Filename := AAssemblyData.manifestName+'.manifest';
+  if not SaveManifestDialog.Execute then
+    exit;
+
+  AManifestPath := GetWindowsDir()+'\WinSxS\Manifests\'+AAssemblyData.manifestName+'.manifest';
+
+  ATargetFile := TStringList.Create();
+  try
+    ATargetFile.Text := LoadManifestFile(AManifestPath);
+    ATargetFile.SaveToFile(SaveManifestDialog.Filename);
+  finally
+    FreeAndNil(ATargetFile);
+  end;
+end;
+
 
 end.
