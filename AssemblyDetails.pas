@@ -105,14 +105,31 @@ begin
 end;
 
 procedure TAssemblyDetailsForm.LoadDependencies;
+var list: TAssemblyList;
+  key: TAssemblyId;
 begin
-//  for i := 0 to Length(ad.dependencies)-1 do
-//    lbAssemblyDependencies.Items.Add(ad.dependencies[i]);
+  list := TAssemblyList.Create();
+  try
+    FDb.GetDependencies(Self.FAssemblyId, list);
+    for key in list.Keys do
+      lbDependencies.Items.Add(list[key].identity.ToString);
+  finally
+    FreeAndNil(list);
+  end;
 end;
 
 procedure TAssemblyDetailsForm.LoadDependents;
+var list: TAssemblyList;
+  key: TAssemblyId;
 begin
-
+  list := TAssemblyList.Create();
+  try
+    FDb.GetDependents(Self.FAssemblyId, list);
+    for key in list.Keys do
+      lbDependents.Items.Add(list[key].identity.ToString);
+  finally
+    FreeAndNil(list);
+  end;
 end;
 
 end.

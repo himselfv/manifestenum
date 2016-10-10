@@ -131,8 +131,13 @@ type
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
     function GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
+    procedure GetAllAssemblies(AList: TAssemblyList);
+    procedure QueryAssemblies(const ASql: string; AList: TAssemblyList); overload;
+    procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
 
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
+    procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
+    procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
     procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
 
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
@@ -151,8 +156,7 @@ type
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
     procedure AddTask(AAssembly: TAssemblyId; AURI: string); overload;
 
-    procedure QueryAssemblies(const ASql: string; AList: TAssemblyList);
-    procedure GetAllAssemblies(AList: TAssemblyList);
+
     procedure FindAssemblyByName(const AFilter: string; AList: TAssemblyList);
     procedure FindAssemblyByFile(const AFilter: string; AList: TAssemblyList);
 
@@ -515,6 +519,27 @@ begin
   sqlite3_reset(StmGetAssembly);
 end;
 
+//Makes an SQL query which returns a set of assembly table records.
+procedure TAssemblyDb.QueryAssemblies(const ASql: string; AList: TAssemblyList);
+begin
+  QueryAssemblies(PrepareStatement(ASql), AList);
+end;
+
+procedure TAssemblyDb.QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList);
+var res: integer;
+  AId: TAssemblyId;
+begin
+  res := sqlite3_step(AStmt);
+  while res = SQLITE_ROW do begin
+    AId := sqlite3_column_int64(AStmt, 0);
+    if not AList.ContainsKey(AId) then
+      AList.Add(AId, SqlReadAssemblyData(AStmt));
+    res := sqlite3_step(AStmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(AStmt);
+end;
 
 procedure TAssemblyDb.AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
 begin
@@ -526,6 +551,22 @@ begin
   if sqlite3_step(StmAddDependency) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddDependency);
+end;
+
+procedure TAssemblyDb.GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT dependentAssemblyId FROM dependencies WHERE assemblyId=?)');
+  sqlite3_bind_int64(stmt, 1, AAssembly);
+  QueryAssemblies(stmt, AList);
+end;
+
+procedure TAssemblyDb.GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT assemblyId FROM dependencies WHERE dependentAssemblyId=?)');
+  sqlite3_bind_int64(stmt, 1, AAssembly);
+  QueryAssemblies(stmt, AList);
 end;
 
 procedure TAssemblyDb.AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
@@ -683,25 +724,6 @@ begin
   end;
 end;
 
-
-//Makes an SQL query which returns a set of assembly table records.
-procedure TAssemblyDb.QueryAssemblies(const ASql: string; AList: TAssemblyList);
-var stmt: PSQLite3Stmt;
-  res: integer;
-  AId: TAssemblyId;
-begin
-  stmt := PrepareStatement(ASql);
-  res := sqlite3_step(stmt);
-  while res = SQLITE_ROW do begin
-    AId := sqlite3_column_int64(stmt, 0);
-    if not AList.ContainsKey(AId) then
-      AList.Add(AId, SqlReadAssemblyData(stmt));
-    res := sqlite3_step(stmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
-end;
 
 procedure TAssemblyDb.GetAllAssemblies(AList: TAssemblyList);
 begin
