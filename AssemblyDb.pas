@@ -187,7 +187,7 @@ implementation
 function TAssemblyIdentity.ToString: string;
 begin
   Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
-    + '-' + Self.processorArchitecture + '-' + Self.version + '-' + Self.publicKeyToken;
+    + '-' + Self.version + '-' + Self.publicKeyToken;
 end;
 
 function OpenAssemblyDb(const AFilename: string): TAssemblyDb;
@@ -461,8 +461,8 @@ function TAssemblyDb.AddAssembly(const AEntry: TAssemblyIdentity; const AManifes
 begin
   Result := NeedAssembly(AEntry);
   //Update optional fields
-  sqlite3_bind_int64(StmUpdateAssembly, 1,Result);
-  sqlite3_bind_str(StmUpdateAssembly, 2, AManifestName);
+  sqlite3_bind_str(StmUpdateAssembly, 1, AManifestName);
+  sqlite3_bind_int64(StmUpdateAssembly, 2, Result);
   if sqlite3_step(StmUpdateAssembly) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmUpdateAssembly);
