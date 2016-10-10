@@ -4,17 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
-  StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons;
+  StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons,
+  AssemblyDetails, RegistryBrowser;
 
 type
   TMainForm = class(TForm)
     lbComponents: TListBox;
-    pcDetails: TPageControl;
-    tsGeneral: TTabSheet;
-    tsFiles: TTabSheet;
-    lbAssemblyFiles: TListBox;
-    tsDependencies: TTabSheet;
-    lbAssemblyDependencies: TListBox;
     MainMenu: TMainMenu;
     F1: TMenuItem;
     Exit1: TMenuItem;
@@ -30,10 +25,6 @@ type
     Debug1: TMenuItem;
     Loadmanifestfile1: TMenuItem;
     OpenManifestDialog: TOpenDialog;
-    tsDependents: TTabSheet;
-    tsRegistryKeys: TTabSheet;
-    tsCategories: TTabSheet;
-    tsAdditionalGear: TTabSheet;
     pcMain: TPageControl;
     tsAssemblies: TTabSheet;
     procedure FormCreate(Sender: TObject);
@@ -48,24 +39,24 @@ type
     procedure Loadmanifestfile1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
+    FAssemblyDetails: TAssemblyDetailsForm;
+    FRegistryBrowser: TRegistryBrowserForm;
     procedure ProcessManifests;
     procedure RebuildAssemblyDatabase;
     procedure AddPage(const AForm: TForm);
   public
     procedure UpdateAssemblyList;
-    procedure ReloadAssemblyDetails;
   end;
 
 var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, ManifestEnum_Progress, RegistryBrowser;
+uses FilenameUtils, ManifestEnum_Progress;
 
 {$R *.dfm}
 
 procedure TMainForm.FormCreate(Sender: TObject);
-var RegistryBrowser: TRegistryBrowserForm;
 begin
   FDb := TAssemblyDb.Create;
   if not FileExists(AppFolder+'\assembly.db') then
@@ -74,9 +65,15 @@ begin
     FDb.Open(AppFolder+'\assembly.db');
   UpdateAssemblyList;
 
-  RegistryBrowser := TRegistryBrowserForm.Create(Application);
-  RegistryBrowser.Db := FDb;
-  AddPage(RegistryBrowser);
+  FRegistryBrowser := TRegistryBrowserForm.Create(Application);
+  FRegistryBrowser.Db := FDb;
+  AddPage(FRegistryBrowser);
+
+  FAssemblyDetails := TAssemblyDetailsForm.Create(Application);
+  FAssemblyDetails.Db := FDb;
+  FAssemblyDetails.ManualDock(Self.tsAssemblies, nil, alBottom);
+  FAssemblyDetails.Align := alBottom;
+  FAssemblyDetails.Visible := true;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
@@ -215,28 +212,11 @@ end;
 
 procedure TMainForm.lbComponentsClick(Sender: TObject);
 begin
-  ReloadAssemblyDetails;
+  if lbComponents.ItemIndex >= 0 then
+    FAssemblyDetails.AssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex])
+  else
+    FAssemblyDetails.AssemblyId := 0;
 end;
-
-procedure TMainForm.ReloadAssemblyDetails;
-var id: TAssemblyId;
-  files: TList<TFileEntryData>;
-  i: integer;
-begin
-  lbAssemblyFiles.Clear;
-  lbAssemblyDependencies.Clear;
-  if lbComponents.ItemIndex < 0 then exit;
-
-  id := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
-
-  files := FDb.GetAssemblyFiles(id);
-  for i := 0 to files.Count-1 do
-    lbAssemblyFiles.Items.Add(files[i].name);
-
-//  for i := 0 to Length(ad.dependencies)-1 do
-//    lbAssemblyDependencies.Items.Add(ad.dependencies[i]);
-end;
-
 
 procedure TMainForm.sbFilterSettingsClick(Sender: TObject);
 begin

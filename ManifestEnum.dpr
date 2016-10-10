@@ -7,7 +7,8 @@ uses
   AssemblyDb in 'AssemblyDb.pas',
   SxsExpand in 'SxsExpand.pas',
   MSDeltaLib in 'MSDeltaLib.pas',
-  RegistryBrowser in 'RegistryBrowser.pas' {RegistryBrowserForm};
+  RegistryBrowser in 'RegistryBrowser.pas' {RegistryBrowserForm},
+  AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm};
 
 {$R *.res}
 

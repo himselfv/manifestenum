@@ -23,86 +23,18 @@ object MainForm: TMainForm
     ActivePage = tsAssemblies
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 104
-    ExplicitTop = 8
-    ExplicitWidth = 289
-    ExplicitHeight = 193
     object tsAssemblies: TTabSheet
       Caption = 'Assemblies'
-      ExplicitWidth = 281
-      ExplicitHeight = 165
       object lbComponents: TListBox
         Left = 0
         Top = 44
         Width = 545
-        Height = 142
+        Height = 335
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
         OnClick = lbComponentsClick
-        ExplicitWidth = 553
-        ExplicitHeight = 170
-      end
-      object pcDetails: TPageControl
-        Left = 0
-        Top = 186
-        Width = 545
-        Height = 193
-        ActivePage = tsGeneral
-        Align = alBottom
-        TabOrder = 1
-        ExplicitTop = 214
-        ExplicitWidth = 553
-        object tsGeneral: TTabSheet
-          Caption = 'General'
-          ExplicitWidth = 545
-        end
-        object tsFiles: TTabSheet
-          Caption = 'Files'
-          ImageIndex = 1
-          object lbAssemblyFiles: TListBox
-            Left = 0
-            Top = 0
-            Width = 537
-            Height = 165
-            Align = alClient
-            ItemHeight = 13
-            TabOrder = 0
-          end
-        end
-        object tsRegistryKeys: TTabSheet
-          Caption = 'Registry keys'
-          ImageIndex = 4
-          ExplicitWidth = 545
-        end
-        object tsDependencies: TTabSheet
-          Caption = 'Depends on'
-          ImageIndex = 2
-          object lbAssemblyDependencies: TListBox
-            Left = 0
-            Top = 0
-            Width = 537
-            Height = 165
-            Align = alClient
-            ItemHeight = 13
-            TabOrder = 0
-          end
-        end
-        object tsDependents: TTabSheet
-          Caption = 'Required by'
-          ImageIndex = 3
-          ExplicitWidth = 545
-        end
-        object tsCategories: TTabSheet
-          Caption = 'Categories'
-          ImageIndex = 5
-          ExplicitWidth = 545
-        end
-        object tsAdditionalGear: TTabSheet
-          Caption = 'Additional'
-          ImageIndex = 6
-          ExplicitWidth = 545
-        end
+        ExplicitHeight = 142
       end
       object pnlFilter: TPanel
         Left = 0
@@ -111,9 +43,7 @@ object MainForm: TMainForm
         Height = 23
         Align = alTop
         BevelOuter = bvNone
-        TabOrder = 2
-        ExplicitTop = 0
-        ExplicitWidth = 553
+        TabOrder = 1
         object sbFilterSettings: TSpeedButton
           Left = 496
           Top = 0
@@ -134,7 +64,6 @@ object MainForm: TMainForm
           Align = alClient
           TabOrder = 0
           OnChange = edtQuickFilterChange
-          ExplicitWidth = 504
           ExplicitHeight = 21
         end
       end
@@ -146,9 +75,8 @@ object MainForm: TMainForm
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
-        TabOrder = 3
+        TabOrder = 2
         Visible = False
-        ExplicitWidth = 553
         object cbFilterByName: TCheckBox
           Left = 0
           Top = 0

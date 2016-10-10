@@ -175,11 +175,9 @@ begin
       lbComponents.Items.Add(AAssemblyData.identity.ToString());
     end;
 
-
   finally
     FreeAndNil(AList);
   end;
-
 end;
 
 
