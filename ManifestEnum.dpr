@@ -7,10 +7,12 @@ uses
   AssemblyDb in 'AssemblyDb.pas',
   SxsExpand in 'SxsExpand.pas',
   MSDeltaLib in 'MSDeltaLib.pas',
-  RegistryBrowser in 'RegistryBrowser.pas' {RegistryBrowserForm},
-  AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
   AssemblyDbBuilder in 'AssemblyDbBuilder.pas',
-  AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm};
+  AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
+  RegistryBrowser in 'Views\RegistryBrowser.pas' {RegistryBrowserForm},
+  AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm},
+  DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
+  AssemblyTree in 'Views\AssemblyTree.pas' {AssemblyTreeForm};
 
 {$R *.res}
 
@@ -19,6 +21,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
-  Application.CreateForm(TAssemblyFilesForm, AssemblyFilesForm);
+  Application.CreateForm(TAssemblyTreeForm, AssemblyTreeForm);
   Application.Run;
 end.

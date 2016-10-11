@@ -4,41 +4,37 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Generics.Collections, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Generics.Collections, VirtualTrees, AssemblyDb,
+  DelayLoadTree;
 
 type
   TNodeType = (ntAssembly, ntFile);
   TNodeData = record
+    DelayLoad: TDelayLoadHeader;
     NodeType: TNodeType;
     Name: string;
-    Touched: boolean;
     Assembly: TAssemblyId;
   end;
   PNodeData = ^TNodeData;
 
-  TAssemblyFilesForm = class(TForm)
-    Tree: TVirtualStringTree;
+  TAssemblyFilesForm = class(TDelayLoadTree)
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
     procedure TreeFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure TreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
       TextType: TVSTTextType; var CellText: string);
-    procedure TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode; var Allowed: Boolean);
+    procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
+      Column: TColumnIndex; var Result: Integer);
   protected
-    FDb: TAssemblyDb;
     FAssembly: TAssemblyId;
     FFollowDependencies: boolean;
     procedure SetAssembly(const Value: TAssemblyId);
     procedure SetFollowDependencies(const Value: boolean);
-    procedure Touch(ANode: PVirtualNode);
-    procedure TouchChildren(ANode: PVirtualNode);
     function AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
     function AddAssemblyNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode;
+    procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
   public
-    procedure Clear;
-    procedure Reload;
-    property Db: TAssemblyDb read FDb write FDb;
     property Assembly: TAssemblyId read FAssembly write SetAssembly;
     property FollowDependencies: boolean read FFollowDependencies write SetFollowDependencies;
   end;
@@ -64,21 +60,6 @@ begin
     FFollowDependencies := Value;
     Reload;
   end;
-end;
-
-procedure TAssemblyFilesForm.Clear;
-begin
-  Tree.Clear;
-end;
-
-procedure TAssemblyFilesForm.Reload;
-begin
-  Clear;
-  if (FDb = nil) or (FAssembly <= 0) then
-    exit;
-
-  Touch(nil);
-  TouchChildren(nil);
 end;
 
 procedure TAssemblyFilesForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
@@ -113,31 +94,56 @@ begin
   end;
 end;
 
-procedure TAssemblyFilesForm.TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode;
-  var Allowed: Boolean);
+procedure TAssemblyFilesForm.TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
+  Column: TColumnIndex; var Result: Integer);
+var AData1, AData2: PNodeData;
 begin
-  TouchChildren(Node);
+  inherited;
+  AData1 := Sender.GetNodeData(Node1);
+  AData2 := Sender.GetNodeData(Node2);
+
+  case Column of
+    NoColumn, 0:
+      if (AData1.NodeType = ntAssembly) and (AData2.NodeType = ntFile) then
+        Result := -1
+      else
+      if (AData1.NodeType = ntFile) and (AData2.NodeType = ntAssembly) then
+        Result := +1
+      else
+        Result := CompareText(AData1.Name, AData2.Name);
+  end;
 end;
 
-//Nodes have two stages of initialization:
-//  Add: when they are initially added to store their ID and count towards their parent's ChildCount
-//  Touch: when they are fully initialized (including querying/adding their own children)
-
-procedure TAssemblyFilesForm.Touch(ANode: PVirtualNode);
+function TAssemblyFilesForm.AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
 var AData: PNodeData;
+begin
+  Result := AddNode(AParent);
+  AData := Tree.GetNodeData(Result);
+  AData.NodeType := ntFile;
+  AData.Name := AFileData.fullDestinationName;
+  AData.Assembly := 0;
+  AData.DelayLoad.Touched := true;
+end;
+
+function TAssemblyFilesForm.AddAssemblyNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode;
+var AData: PNodeData;
+begin
+  Result := AddNode(AParent);
+  AData := Tree.GetNodeData(Result);
+  AData.NodeType := ntAssembly;
+  AData.Name := AAssemblyData.identity.ToString;
+  AData.Assembly := AAssemblyData.id;
+end;
+
+procedure TAssemblyFilesForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
+var AData: PNodeData absolute ANodeData;
   AAssembly: TAssemblyId;
   AFiles: TList<TFileEntryData>;
   ADependencies: TAssemblyList;
   ADependencyData: TAssemblyData;
   i: integer;
 begin
-  if ANode <> nil then
-    AData := Tree.GetNodeData(ANode)
-  else
-    AData := nil; //Root is a special case
-
   if AData <> nil then begin
-    if AData.Touched then exit;
     if AData.NodeType <> ntAssembly then
       exit; //Files don't have children
     AAssembly := AData.Assembly;
@@ -165,40 +171,6 @@ begin
       FreeAndNil(ADependencies);
     end;
   end;
-
-  if AData <> nil then
-    AData.Touched := true;
-end;
-
-procedure TAssemblyFilesForm.TouchChildren(ANode: PVirtualNode);
-var AChild: PVirtualNode;
-begin
-  for AChild in Tree.ChildNodes(ANode) do
-    Touch(AChild);
-end;
-
-function TAssemblyFilesForm.AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
-var AData: PNodeData;
-begin
-  Result := Tree.AddChild(AParent);
-  Tree.ReinitNode(Result, false);
-  AData := Tree.GetNodeData(Result);
-  AData.NodeType := ntFile;
-  AData.Name := AFileData.fullDestinationName;
-  AData.Touched := true;
-  AData.Assembly := 0;
-end;
-
-function TAssemblyFilesForm.AddAssemblyNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode;
-var AData: PNodeData;
-begin
-  Result := Tree.AddChild(AParent);
-  Tree.ReinitNode(Result, false);
-  AData := Tree.GetNodeData(Result);
-  AData.NodeType := ntAssembly;
-  AData.Name := AAssemblyData.identity.name;
-  AData.Touched := false;
-  AData.Assembly := AAssemblyData.id;
 end;
 
 end.

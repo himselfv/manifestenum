@@ -1,5 +1,5 @@
-inherited AssemblyFilesForm: TAssemblyFilesForm
-  Caption = 'Files'
+inherited AssemblyTreeForm: TAssemblyTreeForm
+  Caption = 'AssemblyTreeForm'
   PixelsPerInch = 96
   TextHeight = 13
   inherited Tree: TVirtualStringTree
