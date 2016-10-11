@@ -8,6 +8,7 @@ inherited AssemblyResourcesForm: TAssemblyResourcesForm
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
     Images = NodeImages
+    TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoDeleteMovedNodes]
     TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowRoot, toThemeAware, toUseBlendedImages]
     TreeOptions.SelectionOptions = [toFullRowSelect, toRightClickSelect]
     OnCompareNodes = TreeCompareNodes

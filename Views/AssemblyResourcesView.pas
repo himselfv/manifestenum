@@ -49,8 +49,10 @@ type
   protected
     FAssembly: TAssemblyId;
     FShowDependencies: boolean;
+    FFlatTree: boolean;
     procedure SetAssembly(const AValue: TAssemblyId);
     procedure SetShowDependencies(const AValue: boolean);
+    procedure SetFlatTree(const AValue: boolean);
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     function AddDirectoryNode(AParent: PVirtualNode; const ADirectoryData: TDirectoryEntryData): PVirtualNode;
     function AddFileNode(AParent: PVirtualNode; const AFileData: TFileEntryData): PVirtualNode;
@@ -60,6 +62,7 @@ type
   public
     property Assembly: TAssemblyId read FAssembly write SetAssembly;
     property ShowDependencies: boolean read FShowDependencies write SetShowDependencies;
+    property FlatTree: boolean read FFlatTree write SetFlatTree;
   end;
 
 var
@@ -82,6 +85,14 @@ procedure TAssemblyResourcesForm.SetShowDependencies(const AValue: boolean);
 begin
   if FShowDependencies <> AValue then begin
     FShowDependencies := AValue;
+    Reload;
+  end;
+end;
+
+procedure TAssemblyResourcesForm.SetFlatTree(const AValue: boolean);
+begin
+  if FFlatTree <> AValue then begin
+    FFlatTree := AValue;
     Reload;
   end;
 end;
@@ -194,6 +205,9 @@ begin
     AAssemblyId := FAssembly;
   if AAssemblyId = 0 then exit; //no assembly set or non-assembly node
 
+  if FFlatTree then
+    ANode := nil; //create all children under root node
+
   ADirectories := TList<TDirectoryEntryData>.Create;
   try
     FDb.GetAssemblyDirectories(AAssemblyId, ADirectories);
@@ -290,6 +304,8 @@ begin
   AData.NodeType := ntAssembly;
   AData.Name := AAssemblyData.identity.ToString;
   AData.AssemblyId := AAssemblyData.id;
+  if Self.FlatTree then
+    Touch(Result);
 end;
 
 end.
