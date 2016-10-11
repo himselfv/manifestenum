@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DelayLoadTree, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
+  CommonResources;
 
 type
   TNodeType = (ntFolder, ntTask);
@@ -26,6 +27,9 @@ type
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
     procedure FormShow(Sender: TObject);
+    procedure TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind;
+      Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
+      var ImageList: TCustomImageList);
   protected
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     function AddFolderNode(AParent: PVirtualNode; ATaskFolderId: TTaskFolderId): PVirtualNode;
@@ -133,6 +137,25 @@ begin
   case Column of
     NoColumn, 0:
       CellText := AData.Name;
+  end;
+end;
+
+procedure TTaskBrowserForm.TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
+  var ImageList: TCustomImageList);
+var AData: PNodeData;
+begin
+  if not (Kind in [ikNormal, ikSelected]) then exit;
+  AData := Sender.GetNodeData(Node);
+
+  case Column of
+    NoColumn, 0: begin
+      ImageList := ResourceModule.SmallImages;
+      case AData.NodeType of
+        ntFolder: ImageIndex := imgFolder;
+        ntTask: ImageIndex := imgTask;
+      end;
+    end;
   end;
 end;
 

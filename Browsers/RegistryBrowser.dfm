@@ -21,6 +21,7 @@ object RegistryBrowserForm: TRegistryBrowserForm
     Height = 13
     Align = alBottom
     Caption = 'Components which use this key:'
+    ExplicitWidth = 154
   end
   object Tree: TVirtualStringTree
     Left = 0
@@ -36,14 +37,15 @@ object RegistryBrowserForm: TRegistryBrowserForm
     Header.Font.Name = 'Tahoma'
     Header.Font.Style = []
     Header.MainColumn = -1
+    Images = ResourceModule.SmallImages
     TabOrder = 0
     OnExpanding = TreeExpanding
     OnFocusChanged = TreeFocusChanged
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
+    OnGetImageIndexEx = TreeGetImageIndexEx
     OnGetNodeDataSize = TreeGetNodeDataSize
     OnInitNode = TreeInitNode
-    ExplicitHeight = 393
     Columns = <>
   end
   object lbComponents: TListBox
@@ -54,6 +56,5 @@ object RegistryBrowserForm: TRegistryBrowserForm
     Align = alBottom
     ItemHeight = 13
     TabOrder = 1
-    ExplicitTop = 256
   end
 end

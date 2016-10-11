@@ -135,6 +135,11 @@
             <Form>TaskBrowserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="CommonResources.pas">
+            <Form>ResourceModule</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

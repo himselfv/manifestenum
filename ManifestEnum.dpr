@@ -14,7 +14,8 @@ uses
   AssemblyTree in 'Views\AssemblyTree.pas' {AssemblyTreeForm},
   AssemblyResourcesView in 'Views\AssemblyResourcesView.pas' {AssemblyResourcesForm},
   RegistryBrowser in 'Browsers\RegistryBrowser.pas' {RegistryBrowserForm},
-  TaskBrowser in 'Browsers\TaskBrowser.pas' {TaskBrowserForm};
+  TaskBrowser in 'Browsers\TaskBrowser.pas' {TaskBrowserForm},
+  CommonResources in 'CommonResources.pas' {ResourceModule: TDataModule};
 
 {$R *.res}
 
@@ -23,5 +24,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
+  Application.CreateForm(TResourceModule, ResourceModule);
   Application.Run;
 end.

@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VirtualTrees, AssemblyDb, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ImgList, VirtualTrees, AssemblyDb,
+  CommonResources;
 
 type
   TRegistryKeyNodeData = record
@@ -27,6 +28,9 @@ type
       TextType: TVSTTextType; var CellText: string);
     procedure TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode; var Allowed: Boolean);
     procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
+    procedure TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind;
+      Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
+      var ImageList: TCustomImageList);
   protected
     FDb: TAssemblyDb;
     procedure SetDb(ADb: TAssemblyDb);
@@ -122,13 +126,17 @@ end;
 
 procedure TRegistryBrowserForm.TreeInitNode(Sender: TBaseVirtualTree; ParentNode,
   Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
+var AData: PRegistryKeyNodeData;
 begin
- //
+  AData := Sender.GetNodeData(Node);
+  Initialize(AData^)
 end;
 
 procedure TRegistryBrowserForm.TreeFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
+var AData: PRegistryKeyNodeData;
 begin
- //
+  AData := Sender.GetNodeData(Node);
+  Finalize(AData^);
 end;
 
 procedure TRegistryBrowserForm.TreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -141,6 +149,22 @@ begin
   case Column of
     NoColumn, 0:
       CellText := AData.keyName;
+  end;
+end;
+
+procedure TRegistryBrowserForm.TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
+  var ImageList: TCustomImageList);
+var AData: PRegistryKeyNodeData;
+begin
+  if not (Kind in [ikNormal, ikSelected]) then exit;
+  AData := Sender.GetNodeData(Node);
+
+  case Column of
+    NoColumn, 0: begin
+      ImageIndex := imgFolder;
+      ImageList := ResourceModule.SmallImages;
+    end;
   end;
 end;
 

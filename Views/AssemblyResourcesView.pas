@@ -15,7 +15,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
+  CommonResources;
 
 type
   TNodeType = (
@@ -34,7 +35,6 @@ type
   PNodeData = ^TNodeData;
 
   TAssemblyResourcesForm = class(TDelayLoadTree)
-    NodeImages: TImageList;
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -155,13 +155,13 @@ begin
 
   case Column of
     NoColumn, 0: begin
-      ImageList := Self.NodeImages;
+      ImageList := ResourceModule.SmallImages;
       case Adata.NodeType of
-        ntAssembly: ImageIndex := 4;
-        ntDirectory: ImageIndex := 0;
-        ntFile: ImageIndex := 1;
-        ntRegistryValue: ImageIndex := 2;
-        ntTask: ImageIndex := 3;
+        ntAssembly: ImageIndex := imgAssembly;
+        ntDirectory: ImageIndex := imgFolder;
+        ntFile: ImageIndex := imgFile;
+        ntRegistryValue: ImageIndex := imgRegistryValue;
+        ntTask: ImageIndex := imgTask;
       end;
     end;
   end;
