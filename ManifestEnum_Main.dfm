@@ -25,16 +25,26 @@ object MainForm: TMainForm
     TabOrder = 0
     object tsAssemblies: TTabSheet
       Caption = 'Assemblies'
+      object Splitter1: TSplitter
+        Left = 0
+        Top = 376
+        Width = 545
+        Height = 3
+        Cursor = crVSplit
+        Align = alBottom
+        ExplicitTop = 377
+      end
       object lbComponents: TListBox
         Left = 0
         Top = 44
         Width = 545
-        Height = 335
+        Height = 332
         Align = alClient
         ItemHeight = 13
         PopupMenu = PopupMenu
         TabOrder = 0
         OnClick = lbComponentsClick
+        ExplicitHeight = 335
       end
       object pnlFilter: TPanel
         Left = 0

@@ -113,9 +113,6 @@
         <DCCReference Include="AssemblyDetails.pas">
             <Form>AssemblyDetailsForm</Form>
         </DCCReference>
-        <DCCReference Include="Views\RegistryBrowser.pas">
-            <Form>RegistryBrowserForm</Form>
-        </DCCReference>
         <DCCReference Include="Views\AssemblyFilesView.pas">
             <Form>AssemblyFilesForm</Form>
             <FormType>dfm</FormType>
@@ -129,6 +126,13 @@
         </DCCReference>
         <DCCReference Include="Views\AssemblyResourcesView.pas">
             <Form>AssemblyResourcesForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Browsers\RegistryBrowser.pas">
+            <Form>RegistryBrowserForm</Form>
+        </DCCReference>
+        <DCCReference Include="Browsers\TaskBrowser.pas">
+            <Form>TaskBrowserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

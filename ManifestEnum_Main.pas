@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
   StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons,
-  AssemblyDetails, RegistryBrowser;
+  AssemblyDetails, RegistryBrowser, TaskBrowser;
 
 type
   TMainForm = class(TForm)
@@ -30,6 +30,7 @@ type
     PopupMenu: TPopupMenu;
     Savemanifest1: TMenuItem;
     SaveManifestDialog: TSaveDialog;
+    Splitter1: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -45,6 +46,7 @@ type
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
     FRegistryBrowser: TRegistryBrowserForm;
+    FTaskBrowser: TTaskBrowserForm;
     procedure AddPage(const AForm: TForm);
   public
     procedure UpdateAssemblyList;
@@ -68,11 +70,17 @@ begin
   FRegistryBrowser.Db := FDb;
   AddPage(FRegistryBrowser);
 
+  FTaskBrowser := TTaskBrowserForm.Create(Application);
+  FTaskBrowser.Db := FDb;
+  AddPage(FTaskBrowser);
+
   FAssemblyDetails := TAssemblyDetailsForm.Create(Application);
   FAssemblyDetails.Db := FDb;
   FAssemblyDetails.ManualDock(Self.tsAssemblies, nil, alBottom);
   FAssemblyDetails.Align := alBottom;
   FAssemblyDetails.Visible := true;
+  Splitter1.Top := FAssemblyDetails.Top - 10;
+//  FAssemblyDetails.Top := Splitter1.Top + 50;
 end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);

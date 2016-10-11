@@ -9,11 +9,12 @@ uses
   MSDeltaLib in 'MSDeltaLib.pas',
   AssemblyDbBuilder in 'AssemblyDbBuilder.pas',
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
-  RegistryBrowser in 'Views\RegistryBrowser.pas' {RegistryBrowserForm},
   AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm},
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
   AssemblyTree in 'Views\AssemblyTree.pas' {AssemblyTreeForm},
-  AssemblyResourcesView in 'Views\AssemblyResourcesView.pas' {AssemblyResourcesForm};
+  AssemblyResourcesView in 'Views\AssemblyResourcesView.pas' {AssemblyResourcesForm},
+  RegistryBrowser in 'Browsers\RegistryBrowser.pas' {RegistryBrowserForm},
+  TaskBrowser in 'Browsers\TaskBrowser.pas' {TaskBrowserForm};
 
 {$R *.res}
 
@@ -22,7 +23,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
-  Application.CreateForm(TAssemblyTreeForm, AssemblyTreeForm);
-  Application.CreateForm(TAssemblyResourcesForm, AssemblyResourcesForm);
   Application.Run;
 end.

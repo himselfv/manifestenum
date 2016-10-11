@@ -166,9 +166,12 @@ type
     function AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
     procedure AddTask(AAssembly: TAssemblyId; AURI: string); overload;
+    function GetTaskFolderName(AKey: TTaskFolderId): string;
     function GetTaskFolderPath(AKey: TTaskFolderId): string;
     procedure QueryTasks(AStmt: PSQLite3Stmt; AList: TList<TTaskEntryData>);
     procedure GetAssemblyTasks(AAssembly: TAssemblyId; AList: TList<TTaskEntryData>);
+    procedure GetTaskFolders(const AParent: TTaskFolderId; AList: TList<TTaskFolderId>);
+    procedure GetTasks(const AParent: TTaskFolderId; AList: TList<TTaskEntryData>);
 
     procedure FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
     procedure FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
@@ -886,6 +889,23 @@ begin
   end;
 end;
 
+function TAssemblyDb.GetTaskFolderName(AKey: TTaskFolderId): string;
+var stmt: PSQLite3Stmt;
+  res: integer;
+begin
+  stmt := PrepareStatement('SELECT parentId,name FROM taskFolders WHERE id=?');
+  sqlite3_bind_int64(stmt, 1, AKey);
+  res := sqlite3_step(stmt);
+  if res = SQLITE_ROW then
+    Result := sqlite3_column_text16(stmt, 1)
+  else begin
+    if res <> SQLITE_DONE then
+      RaiseLastSQLiteError();
+    Result := '';
+  end;
+  sqlite3_reset(stmt);
+end;
+
 function TAssemblyDb.GetTaskFolderPath(AKey: TRegistryKeyId): string;
 var stmt: PSQLite3Stmt;
 begin
@@ -928,6 +948,30 @@ var AStmt: PSQLite3Stmt;
 begin
   AStmt := PrepareStatement('SELECT * FROM tasks WHERE assemblyId=?');
   sqlite3_bind_int64(AStmt, 1, AAssembly);
+  QueryTasks(AStmt, AList);
+end;
+
+procedure TAssemblyDb.GetTaskFolders(const AParent: TTaskFolderId; AList: TList<TTaskFolderId>);
+var stmt: PSQLite3Stmt;
+  res: integer;
+begin
+  stmt := PrepareStatement('SELECT id FROM taskFolders WHERE parentId=?');
+  sqlite3_bind_int64(stmt, 1, AParent);
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(sqlite3_column_int64(stmt, 0));
+    res := sqlite3_step(stmt);
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(stmt);
+end;
+
+procedure TAssemblyDb.GetTasks(const AParent: TTaskFolderId; AList: TList<TTaskEntryData>);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT * FROM tasks WHERE folderId=?');
+  sqlite3_bind_int64(AStmt, 1, AParent);
   QueryTasks(AStmt, AList);
 end;
 
