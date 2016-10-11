@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources;
+  CommonResources, Vcl.StdCtrls;
 
 type
   TNodeType = (ntFolder, ntTask);
@@ -13,11 +13,13 @@ type
     DelayLoad: TDelayLoadHeader;
     NodeType: TNodeType;
     Name: string;
+    AssemblyId: TAssemblyId;
     FolderId: TTaskFolderId;
   end;
   PNodeData = ^TNodeData;
 
   TTaskBrowserForm = class(TDelayLoadTree)
+    lblWhoAdded: TLabel;
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -30,6 +32,7 @@ type
     procedure TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind;
       Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
       var ImageList: TCustomImageList);
+    procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
   protected
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     function AddFolderNode(AParent: PVirtualNode; ATaskFolderId: TTaskFolderId): PVirtualNode;
@@ -92,6 +95,7 @@ begin
   AData.NodeType := ntFolder;
   AData.FolderId := ATaskFolderId;
   AData.Name := FDb.GetTaskFolderName(ATaskFolderId);
+  AData.AssemblyId := 0;
 end;
 
 function TTaskBrowserForm.AddTaskNode(AParent: PVirtualNode; ATaskData: TTaskEntryData): PVirtualNode;
@@ -102,6 +106,7 @@ begin
   AData.NodeType := ntTask;
   AData.Name := ATaskData.name;
   AData.FolderId := ATaskData.folderId;
+  AData.AssemblyId := ATaskData.assemblyId;
 end;
 
 procedure TTaskBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
@@ -170,6 +175,18 @@ begin
   Result := integer(AData1.NodeType) - integer(AData2.NodeType);
   if Result = 0 then
     Result := CompareText(AData1.Name, AData2.Name);
+end;
+
+procedure TTaskBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex);
+var AData: PNodeData;
+begin
+  inherited;
+  AData := Sender.GetNodeData(Node);
+  if AData.AssemblyId > 0 then
+    lblWhoAdded.Caption := 'Component: '+FDb.GetAssembly(AData.AssemblyId).identity.ToString
+  else
+    lblWhoAdded.Caption := '';
 end;
 
 

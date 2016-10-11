@@ -86,6 +86,7 @@ type
 
   TTaskFolderId = int64;
   TTaskEntryData = record
+    assemblyId: TAssemblyId;
     folderId: TTaskFolderId;
     name: string;
   end;
@@ -926,6 +927,7 @@ end;
 
 function TAssemblyDb.SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
 begin
+  Result.assemblyId := sqlite3_column_int64(stmt, 0);
   Result.folderId := sqlite3_column_int64(stmt, 1);
   Result.name := sqlite3_column_text16(stmt, 2);
 end;
