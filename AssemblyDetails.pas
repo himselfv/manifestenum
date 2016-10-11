@@ -51,6 +51,7 @@ begin
   AddTab(FilesTab);
 
   ResourcesTab := TAssemblyResourcesForm.Create(Self);
+  ResourcesTab.ShowDependencies := true;
   AddTab(ResourcesTab);
 end;
 
@@ -79,7 +80,7 @@ begin
     Reload;
   end;
   FilesTab.Assembly := AValue;
-  ResourcesTab.AssemblyId := AValue;
+  ResourcesTab.Assembly := AValue;
 end;
 
 procedure TAssemblyDetailsForm.Clear;

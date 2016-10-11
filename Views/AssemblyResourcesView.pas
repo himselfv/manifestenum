@@ -19,6 +19,7 @@ uses
 
 type
   TNodeType = (
+    ntAssembly,
     ntDirectory,
     ntFile,
     ntRegistryValue,
@@ -28,6 +29,7 @@ type
     DelayLoad: TDelayLoadHeader;
     NodeType: TNodeType;
     Name: string;
+    AssemblyId: TAssemblyId;
   end;
   PNodeData = ^TNodeData;
 
@@ -45,15 +47,19 @@ type
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
   protected
-    FAssemblyId: TAssemblyId;
-    procedure SetAssemblyId(const AValue: TAssemblyId);
+    FAssembly: TAssemblyId;
+    FShowDependencies: boolean;
+    procedure SetAssembly(const AValue: TAssemblyId);
+    procedure SetShowDependencies(const AValue: boolean);
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     function AddDirectoryNode(AParent: PVirtualNode; const ADirectoryData: TDirectoryEntryData): PVirtualNode;
     function AddFileNode(AParent: PVirtualNode; const AFileData: TFileEntryData): PVirtualNode;
     function AddRegistryValueNode(AParent: PVirtualNode; const ARegistryValueData: TRegistryValueData): PVirtualNode;
     function AddTaskNode(AParent: PVirtualNode; const ATaskData: TTaskEntryData): PVirtualNode;
+    function AddAssemblyNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
   public
-    property AssemblyId: TAssemblyId read FAssemblyId write SetAssemblyId;
+    property Assembly: TAssemblyId read FAssembly write SetAssembly;
+    property ShowDependencies: boolean read FShowDependencies write SetShowDependencies;
   end;
 
 var
@@ -64,10 +70,18 @@ uses Generics.Collections;
 
 {$R *.dfm}
 
-procedure TAssemblyResourcesForm.SetAssemblyId(const AValue: TAssemblyId);
+procedure TAssemblyResourcesForm.SetAssembly(const AValue: TAssemblyId);
 begin
-  if FAssemblyId <> AValue then begin
-    FAssemblyId := AValue;
+  if FAssembly <> AValue then begin
+    FAssembly := AValue;
+    Reload;
+  end;
+end;
+
+procedure TAssemblyResourcesForm.SetShowDependencies(const AValue: boolean);
+begin
+  if FShowDependencies <> AValue then begin
+    FShowDependencies := AValue;
     Reload;
   end;
 end;
@@ -108,6 +122,7 @@ begin
       CellText := AData.Name;
     1:
       case AData.NodeType of
+        ntAssembly: CellText := 'Assembly';
         ntDirectory: CellText := 'Dir';
         ntFile: CellText := 'File';
         ntRegistryValue: CellText := 'Key';
@@ -131,6 +146,7 @@ begin
     NoColumn, 0: begin
       ImageList := Self.NodeImages;
       case Adata.NodeType of
+        ntAssembly: ImageIndex := 4;
         ntDirectory: ImageIndex := 0;
         ntFile: ImageIndex := 1;
         ntRegistryValue: ImageIndex := 2;
@@ -144,6 +160,7 @@ procedure TAssemblyResourcesForm.TreeCompareNodes(Sender: TBaseVirtualTree; Node
   Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
 const
   NodeTypeWeights: array[TNodeType] of integer = (
+    10, //assembly
     1,  //dir
     1,  //file
     2,  //regkey
@@ -162,15 +179,24 @@ end;
 
 procedure TAssemblyResourcesForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 var AData: PNodeData absolute ANodeData;
+  AAssemblyId: TAssemblyId;
   ADirectories: TList<TDirectoryEntryData>;
   AFiles: TList<TFileEntryData>;
   ARegistryValues: TList<TRegistryValueData>;
   ATasks: TList<TTaskEntryData>;
+  AAssemblies: TAssemblyList;
+  AAssemblyData: TAssemblyData;
   i: integer;
 begin
+  if (ANode <> nil) and (AData.NodeType = ntAssembly) then
+    AAssemblyId := AData.AssemblyId
+  else
+    AAssemblyId := FAssembly;
+  if AAssemblyId = 0 then exit; //no assembly set or non-assembly node
+
   ADirectories := TList<TDirectoryEntryData>.Create;
   try
-    FDb.GetAssemblyDirectories(FAssemblyId, ADirectories);
+    FDb.GetAssemblyDirectories(AAssemblyId, ADirectories);
     for i := 0 to ADirectories.Count-1 do
       AddDirectoryNode(ANode, ADirectories[i]);
   finally
@@ -179,7 +205,7 @@ begin
 
   AFiles := TList<TFileEntryData>.Create;
   try
-    FDb.GetAssemblyFiles(FAssemblyId, AFiles);
+    FDb.GetAssemblyFiles(AAssemblyId, AFiles);
     for i := 0 to AFiles.Count-1 do
       AddFileNode(ANode, AFiles[i]);
   finally
@@ -188,7 +214,7 @@ begin
 
   ARegistryValues := TList<TRegistryValueData>.Create;
   try
-    FDb.GetAssemblyKeys(FAssemblyId, ARegistryValues);
+    FDb.GetAssemblyKeys(AAssemblyId, ARegistryValues);
     for i := 0 to ARegistryValues.Count-1 do
       AddRegistryValueNode(ANode, ARegistryValues[i]);
   finally
@@ -197,11 +223,22 @@ begin
 
   ATasks := TList<TTaskEntryData>.Create;
   try
-    FDb.GetAssemblyTasks(FAssemblyId, ATasks);
+    FDb.GetAssemblyTasks(AAssemblyId, ATasks);
     for i := 0 to ATasks.Count-1 do
       AddTaskNode(ANode, ATasks[i]);
   finally
     FreeAndNil(ATasks);
+  end;
+
+  if FShowDependencies then begin
+    AAssemblies := TAssemblyList.Create;
+    try
+      FDb.GetDependencies(AAssemblyId, AAssemblies);
+      for AAssemblyData in AAssemblies.Values do
+        AddAssemblyNode(ANode, AAssemblyData);
+    finally
+      FreeAndNil(AAssemblies);
+    end;
   end;
 end;
 
@@ -243,6 +280,16 @@ begin
   AData.NodeType := ntTask;
   AData.Name := FDb.GetTaskFolderPath(ATaskData.folderId) + '\' + ATaskData.name;
   AData.DelayLoad.Touched := true;
+end;
+
+function TAssemblyResourcesForm.AddAssemblyNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
+var AData: PNodeData;
+begin
+  Result := inherited AddNode(AParent);
+  AData := Tree.GetNodeData(Result);
+  AData.NodeType := ntAssembly;
+  AData.Name := AAssemblyData.identity.ToString;
+  AData.AssemblyId := AAssemblyData.id;
 end;
 
 end.
