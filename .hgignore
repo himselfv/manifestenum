@@ -57,3 +57,7 @@ dunit.ini
 *.exe
 *.dll
 *.db
+
+
+Samples/*
+Samples/*/*
