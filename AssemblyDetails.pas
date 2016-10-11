@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
-  AssemblyDb;
+  AssemblyDb, AssemblyFilesView;
 
 type
   TAssemblyDetailsForm = class(TForm)
@@ -21,19 +21,24 @@ type
     tsAdditionalGear: TTabSheet;
     lbRegistryKeys: TListBox;
     lbDependents: TListBox;
+    procedure FormCreate(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyId: TAssemblyId;
+    procedure SetDb(ADb: TAssemblyDb);
     procedure SetAssemblyId(const AValue: TAssemblyId);
     procedure LoadAssemblyData;
     procedure LoadFiles;
     procedure LoadRegistryKeys;
     procedure LoadDependencies;
     procedure LoadDependents;
+  protected //Additional tabs
+    AssemblyFiles: TAssemblyFilesForm;
+    procedure AddTab(AForm: TForm);
   public
     procedure Clear;
     procedure Reload;
-    property Db: TAssemblyDb read FDb write FDb;
+    property Db: TAssemblyDb read FDb write SetDb;
     property AssemblyId: TAssemblyId read FAssemblyId write SetAssemblyId;
   end;
 
@@ -44,12 +49,37 @@ implementation
 
 {$R *.dfm}
 
+procedure TAssemblyDetailsForm.FormCreate(Sender: TObject);
+begin
+  AssemblyFiles := TAssemblyFilesForm.Create(Self);
+  AssemblyFiles.FollowDependencies := true;
+  AddTab(AssemblyFiles);
+end;
+
+procedure TAssemblyDetailsForm.AddTab(AForm: TForm);
+var ATab: TTabSheet;
+begin
+  ATab := TTabSheet.Create(pcDetails);
+  ATab.PageControl := pcDetails;
+  ATab.Caption := AForm.Caption;
+  AForm.ManualDock(ATab, ATab, alClient);
+  AForm.Align := alClient;
+  AForm.Visible := true;
+end;
+
+procedure TAssemblyDetailsForm.SetDb(ADb: TAssemblyDb);
+begin
+  FDb := ADb;
+  AssemblyFiles.Db := ADb;
+end;
+
 procedure TAssemblyDetailsForm.SetAssemblyId(const AValue: TAssemblyId);
 begin
   if AValue <> FAssemblyId then begin
     FAssemblyId := AValue;
     Reload;
   end;
+  AssemblyFiles.Assembly := AValue;
 end;
 
 procedure TAssemblyDetailsForm.Clear;
@@ -58,6 +88,7 @@ begin
   lbRegistryKeys.Clear;
   lbDependencies.Clear;
   lbDependents.Clear;
+  AssemblyFiles.Clear;
 end;
 
 procedure TAssemblyDetailsForm.Reload;
@@ -70,6 +101,7 @@ begin
   LoadRegistryKeys;
   LoadDependencies;
   LoadDependents;
+  AssemblyFiles.Reload;
 end;
 
 procedure TAssemblyDetailsForm.LoadAssemblyData;

@@ -124,9 +124,9 @@ begin
       FDb.GetAllAssemblies(list)
     else begin
       if cbFilterByName.Checked then
-        FDb.FindAssemblyByName(filter, list);
+        FDb.FilterAssemblyByName(filter, list);
       if cbFilterByFiles.Checked then
-        FDb.FindAssemblyByFile(filter, list);
+        FDb.FilterAssemblyByFile(filter, list);
     end;
 
     for entry in list.Values do

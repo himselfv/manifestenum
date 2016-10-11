@@ -9,7 +9,8 @@ uses
   MSDeltaLib in 'MSDeltaLib.pas',
   RegistryBrowser in 'RegistryBrowser.pas' {RegistryBrowserForm},
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
-  AssemblyDbBuilder in 'AssemblyDbBuilder.pas';
+  AssemblyDbBuilder in 'AssemblyDbBuilder.pas',
+  AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm};
 
 {$R *.res}
 
@@ -18,5 +19,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
+  Application.CreateForm(TAssemblyFilesForm, AssemblyFilesForm);
   Application.Run;
 end.

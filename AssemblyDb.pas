@@ -52,6 +52,7 @@ type
     sourceName: string;
     sourcePath: string;
     importPath: string;
+    function fullDestinationName: string; inline;
   end;
 
   TDirectoryEntryData = record
@@ -136,8 +137,8 @@ type
     procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
 
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
-    procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
-    procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
+    procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
+    procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
     procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
 
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
@@ -156,12 +157,12 @@ type
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
     procedure AddTask(AAssembly: TAssemblyId; AURI: string); overload;
 
+    procedure FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
+    procedure FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
 
-    procedure FindAssemblyByName(const AFilter: string; AList: TAssemblyList);
-    procedure FindAssemblyByFile(const AFilter: string; AList: TAssemblyList);
-
-    function QueryFiles(const ASql: string): TList<TFileEntryData>;
-    function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
+    procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+    procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>); overload;
+    function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>; overload;
 
   protected
     FXml: IXMLDocument;
@@ -188,6 +189,14 @@ function TAssemblyIdentity.ToString: string;
 begin
   Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
     + '-' + Self.version + '-' + Self.publicKeyToken;
+end;
+
+function TFileEntryData.fullDestinationName: string;
+begin
+  if (Length(Self.destinationPath) > 0) and (Self.destinationPath[Length(Self.destinationPath)]<>'\') then
+    Result := Self.destinationPath+'\'+Self.name
+  else
+    Result := Self.destinationPath+Self.name;
 end;
 
 function OpenAssemblyDb(const AFilename: string): TAssemblyDb;
@@ -553,7 +562,7 @@ begin
   sqlite3_reset(StmAddDependency);
 end;
 
-procedure TAssemblyDb.GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
+procedure TAssemblyDb.GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
 var stmt: PSQLite3Stmt;
 begin
   stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT dependentAssemblyId FROM dependencies WHERE assemblyId=?)');
@@ -561,7 +570,7 @@ begin
   QueryAssemblies(stmt, AList);
 end;
 
-procedure TAssemblyDb.GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList; ARecursive: boolean = false);
+procedure TAssemblyDb.GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
 var stmt: PSQLite3Stmt;
 begin
   stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT assemblyId FROM dependencies WHERE dependentAssemblyId=?)');
@@ -730,12 +739,12 @@ begin
   QueryAssemblies('SELECT * FROM assemblies', AList);
 end;
 
-procedure TAssemblyDb.FindAssemblyByName(const AFilter: string; AList: TAssemblyList);
+procedure TAssemblyDb.FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
 begin
   QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.name LIKE "%'+AFilter+'%"', AList);
 end;
 
-procedure TAssemblyDb.FindAssemblyByFile(const AFilter: string; AList: TAssemblyList);
+procedure TAssemblyDb.FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
 begin
   QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")', AList);
 end;
@@ -749,25 +758,31 @@ begin
   Result.importPath := sqlite3_column_text16(stmt, 5);
 end;
 
-function TAssemblyDb.QueryFiles(const ASql: string): TList<TFileEntryData>;
-var stmt: PSQLite3Stmt;
-  res: integer;
+procedure TAssemblyDb.QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+var res: integer;
 begin
-  Result := TList<TFileEntryData>.Create;
-  stmt := PrepareStatement(ASql);
-  res := sqlite3_step(stmt);
+  res := sqlite3_step(AStmt);
   while res = SQLITE_ROW do begin
-    Result.Add(SqlReadFileData(stmt));
-    res := sqlite3_step(stmt)
+    AList.Add(SqlReadFileData(AStmt));
+    res := sqlite3_step(AStmt)
   end;
   if res <> SQLITE_DONE then
     RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
+  sqlite3_reset(AStmt);
+end;
+
+procedure TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT * FROM files WHERE assemblyId=?');
+  sqlite3_bind_int64(AStmt, 1, AAssembly);
+  QueryFiles(AStmt, AList);
 end;
 
 function TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
 begin
-  Result := QueryFiles('SELECT * FROM files WHERE assemblyId='+IntToStr(AAssembly));
+  Result := TList<TFileEntryData>.Create;
+  GetAssemblyFiles(AAssembly, Result);
 end;
 
 //Retrieves the list of children key names for a given parent key id (0 for root)
