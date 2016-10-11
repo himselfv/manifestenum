@@ -5,21 +5,17 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ComCtrls, Generics.Collections,
-  AssemblyDb, AssemblyFilesView;
+  AssemblyDb, AssemblyFilesView, AssemblyResourcesView;
 
 type
   TAssemblyDetailsForm = class(TForm)
     pcDetails: TPageControl;
     tsGeneral: TTabSheet;
-    tsFiles: TTabSheet;
-    lbFiles: TListBox;
-    tsRegistryKeys: TTabSheet;
     tsDependencies: TTabSheet;
     lbDependencies: TListBox;
     tsDependents: TTabSheet;
     tsCategories: TTabSheet;
     tsAdditionalGear: TTabSheet;
-    lbRegistryKeys: TListBox;
     lbDependents: TListBox;
     procedure FormCreate(Sender: TObject);
   protected
@@ -28,12 +24,11 @@ type
     procedure SetDb(ADb: TAssemblyDb);
     procedure SetAssemblyId(const AValue: TAssemblyId);
     procedure LoadAssemblyData;
-    procedure LoadFiles;
-    procedure LoadRegistryKeys;
     procedure LoadDependencies;
     procedure LoadDependents;
   protected //Additional tabs
-    AssemblyFiles: TAssemblyFilesForm;
+    FilesTab: TAssemblyFilesForm;
+    ResourcesTab: TAssemblyResourcesForm;
     procedure AddTab(AForm: TForm);
   public
     procedure Clear;
@@ -51,9 +46,12 @@ implementation
 
 procedure TAssemblyDetailsForm.FormCreate(Sender: TObject);
 begin
-  AssemblyFiles := TAssemblyFilesForm.Create(Self);
-  AssemblyFiles.FollowDependencies := true;
-  AddTab(AssemblyFiles);
+  FilesTab := TAssemblyFilesForm.Create(Self);
+  FilesTab.FollowDependencies := true;
+  AddTab(FilesTab);
+
+  ResourcesTab := TAssemblyResourcesForm.Create(Self);
+  AddTab(ResourcesTab);
 end;
 
 procedure TAssemblyDetailsForm.AddTab(AForm: TForm);
@@ -70,7 +68,8 @@ end;
 procedure TAssemblyDetailsForm.SetDb(ADb: TAssemblyDb);
 begin
   FDb := ADb;
-  AssemblyFiles.Db := ADb;
+  FilesTab.Db := ADb;
+  ResourcesTab.Db := ADb;
 end;
 
 procedure TAssemblyDetailsForm.SetAssemblyId(const AValue: TAssemblyId);
@@ -79,16 +78,16 @@ begin
     FAssemblyId := AValue;
     Reload;
   end;
-  AssemblyFiles.Assembly := AValue;
+  FilesTab.Assembly := AValue;
+  ResourcesTab.AssemblyId := AValue;
 end;
 
 procedure TAssemblyDetailsForm.Clear;
 begin
-  lbFiles.Clear;
-  lbRegistryKeys.Clear;
   lbDependencies.Clear;
   lbDependents.Clear;
-  AssemblyFiles.Clear;
+  FilesTab.Clear;
+  ResourcesTab.Clear;
 end;
 
 procedure TAssemblyDetailsForm.Reload;
@@ -97,43 +96,15 @@ begin
   if FAssemblyId <= 0 then exit;
 
   LoadAssemblyData;
-  LoadFiles;
-  LoadRegistryKeys;
   LoadDependencies;
   LoadDependents;
-  AssemblyFiles.Reload;
+  FilesTab.Reload;
+  ResourcesTab.Reload;
 end;
 
 procedure TAssemblyDetailsForm.LoadAssemblyData;
 begin
 
-end;
-
-procedure TAssemblyDetailsForm.LoadFiles;
-var files: TList<TFileEntryData>;
-  i: integer;
-begin
-  files := FDb.GetAssemblyFiles(Self.FAssemblyId);
-  try
-    for i := 0 to files.Count-1 do
-      lbFiles.Items.Add(files[i].name);
-  finally
-    FreeAndNil(files);
-  end;
-end;
-
-procedure TAssemblyDetailsForm.LoadRegistryKeys;
-var keys: TList<TRegistryValueData>;
-  i: integer;
-begin
-  keys := TList<TRegistryValueData>.Create;
-  try
-    FDb.GetAssemblyKeys(Self.FAssemblyId, keys);
-    for i := 0 to keys.Count-1 do
-      lbRegistryKeys.Items.Add(FDb.GetRegistryKeyPath(keys[i].key)+'\'+keys[i].name+'='+keys[i].value);
-  finally
-    FreeAndNil(keys);
-  end;
 end;
 
 procedure TAssemblyDetailsForm.LoadDependencies;

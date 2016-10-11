@@ -85,6 +85,10 @@ type
   end;
 
   TTaskFolderId = int64;
+  TTaskEntryData = record
+    folderId: TTaskFolderId;
+    name: string;
+  end;
 
   TAssemblyDb = class
   protected
@@ -127,7 +131,9 @@ type
     procedure FreeStatements;
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
     function SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
+    function SqlReadDirectoryData(stmt: PSQLite3Stmt): TDirectoryEntryData;
     function SqlReadRegistryValueData(stmt: PSQLite3Stmt): TRegistryValueData;
+    function SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
   public
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
@@ -143,6 +149,10 @@ type
 
     procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
     procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
+    procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+    procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
+    procedure QueryDirectories(AStmt: PSQLite3Stmt; AList: TList<TDirectoryEntryData>);
+    procedure GetAssemblyDirectories(AAssembly: TAssemblyId; AList: TList<TDirectoryEntryData>);
 
     function AddRegistryKey(AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId; overload;
     procedure AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
@@ -156,13 +166,12 @@ type
     function AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
     procedure AddTask(AAssembly: TAssemblyId; AURI: string); overload;
+    function GetTaskFolderPath(AKey: TTaskFolderId): string;
+    procedure QueryTasks(AStmt: PSQLite3Stmt; AList: TList<TTaskEntryData>);
+    procedure GetAssemblyTasks(AAssembly: TAssemblyId; AList: TList<TTaskEntryData>);
 
     procedure FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
     procedure FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
-
-    procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
-    procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>); overload;
-    function GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>; overload;
 
   protected
     FXml: IXMLDocument;
@@ -459,12 +468,11 @@ begin
   FPreparedStatements.Add(ASql, Result);
 end;
 
-
-
 function sqlite3_bind_str(pStmt: PSQLite3Stmt; i: Integer; const zData: string): integer; inline;
 begin
   Result := sqlite3_bind_text16(pStmt, i, PChar(zData), -1, nil);
 end;
+
 
 function TAssemblyDb.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
 begin
@@ -550,6 +558,12 @@ begin
   sqlite3_reset(AStmt);
 end;
 
+procedure TAssemblyDb.GetAllAssemblies(AList: TAssemblyList);
+begin
+  QueryAssemblies('SELECT * FROM assemblies', AList);
+end;
+
+
 procedure TAssemblyDb.AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
 begin
   sqlite3_bind_int64(StmAddDependency, 1, AAssembly);
@@ -578,6 +592,7 @@ begin
   QueryAssemblies(stmt, AList);
 end;
 
+
 procedure TAssemblyDb.AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
 begin
   sqlite3_bind_int64(StmAddCategoryMembership, 1, AAssembly);
@@ -589,6 +604,7 @@ begin
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddCategoryMembership);
 end;
+
 
 procedure TAssemblyDb.AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
 begin
@@ -612,6 +628,64 @@ begin
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddDirectory);
 end;
+
+function TAssemblyDb.SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
+begin
+  Result.name := sqlite3_column_text16(stmt, 1);
+  Result.destinationPath := sqlite3_column_text16(stmt, 2);
+  Result.sourceName := sqlite3_column_text16(stmt, 3);
+  Result.sourcePath := sqlite3_column_text16(stmt, 4);
+  Result.importPath := sqlite3_column_text16(stmt, 5);
+end;
+
+procedure TAssemblyDb.QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(SqlReadFileData(AStmt));
+    res := sqlite3_step(AStmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(AStmt);
+end;
+
+procedure TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT * FROM files WHERE assemblyId=?');
+  sqlite3_bind_int64(AStmt, 1, AAssembly);
+  QueryFiles(AStmt, AList);
+end;
+
+function TAssemblyDb.SqlReadDirectoryData(stmt: PSQLite3Stmt): TDirectoryEntryData;
+begin
+  Result.destinationPath := sqlite3_column_text16(stmt, 1);
+  Result.owner := boolean(sqlite3_column_int(stmt, 2));
+end;
+
+procedure TAssemblyDb.QueryDirectories(AStmt: PSQLite3Stmt; AList: TList<TDirectoryEntryData>);
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(SqlReadDirectoryData(AStmt));
+    res := sqlite3_step(AStmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(AStmt);
+end;
+
+procedure TAssemblyDb.GetAssemblyDirectories(AAssembly: TAssemblyId; AList: TList<TDirectoryEntryData>);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT * FROM directories WHERE assemblyId=?');
+  sqlite3_bind_int64(AStmt, 1, AAssembly);
+  QueryDirectories(AStmt, AList);
+end;
+
 
 function TAssemblyDb.AddRegistryKey(AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
 begin
@@ -667,7 +741,6 @@ begin
     AddRegistryKeyReference(AAssembly, Result, AData);
 end;
 
-
 procedure TAssemblyDb.AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
 begin
   sqlite3_bind_int64(StmAddRegistryValue, 1, AAssembly);
@@ -680,109 +753,6 @@ begin
   if sqlite3_step(StmAddRegistryValue) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddRegistryValue);
-end;
-
-
-function TAssemblyDb.AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
-begin
-  //Touch
-  sqlite3_bind_int64(StmTouchTaskFolder, 1, AParent);
-  sqlite3_bind_str(StmTouchTaskFolder, 2, AName);
-  if sqlite3_step(StmTouchTaskFolder) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmTouchTaskFolder);
-
-  //Find id
-  sqlite3_bind_int64(StmFindTaskFolder, 1, AParent);
-  sqlite3_bind_str(StmFindTaskFolder, 2, AName);
-  if sqlite3_step(StmFindTaskFolder) <> SQLITE_ROW then
-    RaiseLastSQLiteError();
-  Result := sqlite3_column_int64(StmFindTaskFolder, 0);
-  sqlite3_reset(StmFindTaskFolder);
-end;
-
-procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string);
-begin
-  sqlite3_bind_int64(StmTouchTask, 1, AAssembly);
-  sqlite3_bind_int64(StmTouchTask, 2, AFolder);
-  sqlite3_bind_str(StmTouchTask, 3, AName);
-  if sqlite3_step(StmTouchTask) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmTouchTask);
-end;
-
-procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AURI: string);
-var idx: integer;
-  AFolder: TTaskFolderId;
-begin
-  AFolder := 0;
-  while AURI <> '' do begin
-    idx := pos('\', AURI);
-    if idx <= 0 then begin
-      AddTask(AAssembly, AFolder, AURI);
-      break;
-    end;
-
-    if idx = 1 then begin
-      AURI := copy(AURI, 2, MaxInt);
-      continue;
-    end;
-
-    AFolder := AddTaskFolder(copy(AURI, 1, idx-1), AFolder);
-    AURI := copy(AURI, idx+1, MaxInt);
-  end;
-end;
-
-
-procedure TAssemblyDb.GetAllAssemblies(AList: TAssemblyList);
-begin
-  QueryAssemblies('SELECT * FROM assemblies', AList);
-end;
-
-procedure TAssemblyDb.FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
-begin
-  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.name LIKE "%'+AFilter+'%"', AList);
-end;
-
-procedure TAssemblyDb.FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
-begin
-  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")', AList);
-end;
-
-function TAssemblyDb.SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
-begin
-  Result.name := sqlite3_column_text16(stmt, 1);
-  Result.destinationPath := sqlite3_column_text16(stmt, 2);
-  Result.sourceName := sqlite3_column_text16(stmt, 3);
-  Result.sourcePath := sqlite3_column_text16(stmt, 4);
-  Result.importPath := sqlite3_column_text16(stmt, 5);
-end;
-
-procedure TAssemblyDb.QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
-var res: integer;
-begin
-  res := sqlite3_step(AStmt);
-  while res = SQLITE_ROW do begin
-    AList.Add(SqlReadFileData(AStmt));
-    res := sqlite3_step(AStmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(AStmt);
-end;
-
-procedure TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
-var AStmt: PSQLite3Stmt;
-begin
-  AStmt := PrepareStatement('SELECT * FROM files WHERE assemblyId=?');
-  sqlite3_bind_int64(AStmt, 1, AAssembly);
-  QueryFiles(AStmt, AList);
-end;
-
-function TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId): TList<TFileEntryData>;
-begin
-  Result := TList<TFileEntryData>.Create;
-  GetAssemblyFiles(AAssembly, Result);
 end;
 
 //Retrieves the list of children key names for a given parent key id (0 for root)
@@ -863,6 +833,117 @@ begin
     RaiseLastSQLiteError;
   sqlite3_reset(stmt);
 end;
+
+
+
+function TAssemblyDb.AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
+begin
+  //Touch
+  sqlite3_bind_int64(StmTouchTaskFolder, 1, AParent);
+  sqlite3_bind_str(StmTouchTaskFolder, 2, AName);
+  if sqlite3_step(StmTouchTaskFolder) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmTouchTaskFolder);
+
+  //Find id
+  sqlite3_bind_int64(StmFindTaskFolder, 1, AParent);
+  sqlite3_bind_str(StmFindTaskFolder, 2, AName);
+  if sqlite3_step(StmFindTaskFolder) <> SQLITE_ROW then
+    RaiseLastSQLiteError();
+  Result := sqlite3_column_int64(StmFindTaskFolder, 0);
+  sqlite3_reset(StmFindTaskFolder);
+end;
+
+procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string);
+begin
+  sqlite3_bind_int64(StmTouchTask, 1, AAssembly);
+  sqlite3_bind_int64(StmTouchTask, 2, AFolder);
+  sqlite3_bind_str(StmTouchTask, 3, AName);
+  if sqlite3_step(StmTouchTask) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmTouchTask);
+end;
+
+procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AURI: string);
+var idx: integer;
+  AFolder: TTaskFolderId;
+begin
+  AFolder := 0;
+  while AURI <> '' do begin
+    idx := pos('\', AURI);
+    if idx <= 0 then begin
+      AddTask(AAssembly, AFolder, AURI);
+      break;
+    end;
+
+    if idx = 1 then begin
+      AURI := copy(AURI, 2, MaxInt);
+      continue;
+    end;
+
+    AFolder := AddTaskFolder(copy(AURI, 1, idx-1), AFolder);
+    AURI := copy(AURI, idx+1, MaxInt);
+  end;
+end;
+
+function TAssemblyDb.GetTaskFolderPath(AKey: TRegistryKeyId): string;
+var stmt: PSQLite3Stmt;
+begin
+  Result := '';
+  stmt := PrepareStatement('SELECT parentId,name FROM taskFolders WHERE id=?');
+  while AKey > 0 do begin
+    sqlite3_bind_int64(stmt, 1, AKey);
+    if sqlite3_step(stmt) <> SQLITE_ROW then
+      RaiseLastSQLiteError();
+    AKey := sqlite3_column_int64(stmt, 0); //parent
+    if Result = '' then
+      Result := sqlite3_column_text16(stmt, 1)
+    else
+      Result := sqlite3_column_text16(stmt, 1) + '\' + Result;
+    sqlite3_reset(stmt);
+  end;
+end;
+
+function TAssemblyDb.SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
+begin
+  Result.folderId := sqlite3_column_int64(stmt, 1);
+  Result.name := sqlite3_column_text16(stmt, 2);
+end;
+
+procedure TAssemblyDb.QueryTasks(AStmt: PSQLite3Stmt; AList: TList<TTaskEntryData>);
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(SqlReadTaskData(AStmt));
+    res := sqlite3_step(AStmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(AStmt);
+end;
+
+procedure TAssemblyDb.GetAssemblyTasks(AAssembly: TAssemblyId; AList: TList<TTaskEntryData>);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT * FROM tasks WHERE assemblyId=?');
+  sqlite3_bind_int64(AStmt, 1, AAssembly);
+  QueryTasks(AStmt, AList);
+end;
+
+
+
+
+procedure TAssemblyDb.FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
+begin
+  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.name LIKE "%'+AFilter+'%"', AList);
+end;
+
+procedure TAssemblyDb.FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
+begin
+  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")', AList);
+end;
+
 
 
 // Importing manifests

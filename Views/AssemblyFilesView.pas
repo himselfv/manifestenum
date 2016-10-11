@@ -31,8 +31,8 @@ type
     FFollowDependencies: boolean;
     procedure SetAssembly(const Value: TAssemblyId);
     procedure SetFollowDependencies(const Value: boolean);
-    function AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
-    function AddAssemblyNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode;
+    function AddFileNode(AParent: PVirtualNode; const AFileData: TFileEntryData): PVirtualNode;
+    function AddAssemblyNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
   public
     property Assembly: TAssemblyId read FAssembly write SetAssembly;
@@ -114,7 +114,7 @@ begin
   end;
 end;
 
-function TAssemblyFilesForm.AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
+function TAssemblyFilesForm.AddFileNode(AParent: PVirtualNode; const AFileData: TFileEntryData): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := AddNode(AParent);
@@ -125,7 +125,7 @@ begin
   AData.DelayLoad.Touched := true;
 end;
 
-function TAssemblyFilesForm.AddAssemblyNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode;
+function TAssemblyFilesForm.AddAssemblyNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := AddNode(AParent);

@@ -19,37 +19,11 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     Top = 0
     Width = 461
     Height = 166
-    ActivePage = tsGeneral
+    ActivePage = tsAdditionalGear
     Align = alClient
     TabOrder = 0
     object tsGeneral: TTabSheet
       Caption = 'General'
-    end
-    object tsFiles: TTabSheet
-      Caption = 'Files'
-      ImageIndex = 1
-      object lbFiles: TListBox
-        Left = 0
-        Top = 0
-        Width = 453
-        Height = 138
-        Align = alClient
-        ItemHeight = 13
-        TabOrder = 0
-      end
-    end
-    object tsRegistryKeys: TTabSheet
-      Caption = 'Registry keys'
-      ImageIndex = 4
-      object lbRegistryKeys: TListBox
-        Left = 0
-        Top = 0
-        Width = 453
-        Height = 138
-        Align = alClient
-        ItemHeight = 13
-        TabOrder = 0
-      end
     end
     object tsDependencies: TTabSheet
       Caption = 'Depends on'
@@ -80,18 +54,10 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     object tsCategories: TTabSheet
       Caption = 'Categories'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 627
-      ExplicitHeight = 272
     end
     object tsAdditionalGear: TTabSheet
       Caption = 'Additional'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 627
-      ExplicitHeight = 272
     end
   end
 end

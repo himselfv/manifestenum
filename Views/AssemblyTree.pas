@@ -27,7 +27,7 @@ type
     FRootAssembly: TAssemblyId;
     procedure SetRootAssembly(const AValue: TAssemblyId);
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
-    function AddNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode; reintroduce;
+    function AddNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode; reintroduce;
   public
     property RootAssembly: TAssemblyId read FRootAssembly write FRootAssembly;
   end;
@@ -121,7 +121,7 @@ begin
   end;
 end;
 
-function TAssemblyTreeForm.AddNode(AParent: PVirtualNode; AAssemblyData: TAssemblyData): PVirtualNode;
+function TAssemblyTreeForm.AddNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := inherited AddNode(AParent);

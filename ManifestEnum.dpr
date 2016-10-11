@@ -12,7 +12,8 @@ uses
   RegistryBrowser in 'Views\RegistryBrowser.pas' {RegistryBrowserForm},
   AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm},
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
-  AssemblyTree in 'Views\AssemblyTree.pas' {AssemblyTreeForm};
+  AssemblyTree in 'Views\AssemblyTree.pas' {AssemblyTreeForm},
+  AssemblyResourcesView in 'Views\AssemblyResourcesView.pas' {AssemblyResourcesForm};
 
 {$R *.res}
 
@@ -22,5 +23,6 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TAssemblyTreeForm, AssemblyTreeForm);
+  Application.CreateForm(TAssemblyResourcesForm, AssemblyResourcesForm);
   Application.Run;
 end.

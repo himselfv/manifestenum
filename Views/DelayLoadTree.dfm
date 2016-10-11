@@ -27,6 +27,8 @@ object DelayLoadTree: TDelayLoadTree
     Header.Font.Style = []
     Header.MainColumn = -1
     TabOrder = 0
+    TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+    TreeOptions.SelectionOptions = [toRightClickSelect]
     OnExpanding = TreeExpanding
     OnGetNodeDataSize = TreeGetNodeDataSize
     Columns = <>
