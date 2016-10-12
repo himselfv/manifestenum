@@ -80,7 +80,9 @@ begin
     Reload;
   end;
   FilesTab.Assembly := AValue;
-  ResourcesTab.Assembly := AValue;
+  ResourcesTab.Assemblies.Clear;
+  ResourcesTab.Assemblies.Add(AValue);
+  ResourcesTab.Reload;
 end;
 
 procedure TAssemblyDetailsForm.Clear;

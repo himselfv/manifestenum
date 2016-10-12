@@ -16,7 +16,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources;
+  CommonResources, Generics.Collections;
 
 type
   TNodeType = (
@@ -46,11 +46,12 @@ type
       var ImageList: TCustomImageList);
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   protected
-    FAssembly: TAssemblyId;
+    FAssemblies: TList<TAssemblyId>;
     FShowDependencies: boolean;
     FFlatTree: boolean;
-    procedure SetAssembly(const AValue: TAssemblyId);
     procedure SetShowDependencies(const AValue: boolean);
     procedure SetFlatTree(const AValue: boolean);
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
@@ -60,7 +61,7 @@ type
     function AddTaskNode(AParent: PVirtualNode; const ATaskData: TTaskEntryData): PVirtualNode;
     function AddAssemblyNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
   public
-    property Assembly: TAssemblyId read FAssembly write SetAssembly;
+    property Assemblies: TList<TAssemblyId> read FAssemblies;
     property ShowDependencies: boolean read FShowDependencies write SetShowDependencies;
     property FlatTree: boolean read FFlatTree write SetFlatTree;
   end;
@@ -69,16 +70,19 @@ var
   AssemblyResourcesForm: TAssemblyResourcesForm;
 
 implementation
-uses Generics.Collections;
 
 {$R *.dfm}
 
-procedure TAssemblyResourcesForm.SetAssembly(const AValue: TAssemblyId);
+procedure TAssemblyResourcesForm.FormCreate(Sender: TObject);
 begin
-  if FAssembly <> AValue then begin
-    FAssembly := AValue;
-    Reload;
-  end;
+  inherited;
+  FAssemblies := TList<TAssemblyId>.Create();
+end;
+
+procedure TAssemblyResourcesForm.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(FAssemblies);
+  inherited;
 end;
 
 procedure TAssemblyResourcesForm.SetShowDependencies(const AValue: boolean);
@@ -199,10 +203,26 @@ var AData: PNodeData absolute ANodeData;
   AAssemblyData: TAssemblyData;
   i: integer;
 begin
-  if (ANode <> nil) and (AData.NodeType = ntAssembly) then
-    AAssemblyId := AData.AssemblyId
-  else
-    AAssemblyId := FAssembly;
+  if ANode = nil then begin //Root node
+    if FAssemblies.Count <= 0 then exit; //nothing
+
+    //Multiple root assemblies => add them
+    if FAssemblies.Count > 1 then begin
+      for i := 0 to FAssemblies.Count-1 do begin
+        AAssemblyData := FDb.GetAssembly(FAssemblies[i]);
+        Self.Touch(Self.AddAssemblyNode(nil, AAssemblyData));
+      end;
+      exit;
+    end;
+
+    //Single assembly => assume it's root
+    AAssemblyId := FAssemblies[0];
+  end else
+   //Not a root node
+    if AData.NodeType = ntAssembly then
+      AAssemblyId := AData.AssemblyId
+    else
+      AAssemblyId := 0;
   if AAssemblyId = 0 then exit; //no assembly set or non-assembly node
 
   if FFlatTree then
