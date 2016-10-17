@@ -46,19 +46,25 @@ type
     dependencyType: string;
   end;
 
+
+  TFolderId = int64;
+  TFolderList = TDictionary<TFolderId, string>;
+
+  TFolderReferenceData = record
+    owner: boolean;
+  end;
+  TFolderReferees = TDictionary<TAssemblyId, TFolderReferenceData>;
+  TFolderReferences = TDictionary<TFolderId, TFolderReferenceData>;
+
   TFileEntryData = record
+    assembly: TAssemblyId;
+    folder: TFolderId;
     name: string;
-    destinationPath: string;
     sourceName: string;
     sourcePath: string;
     importPath: string;
-    function fullDestinationName: string; inline;
   end;
 
-  TDirectoryEntryData = record
-    destinationPath: string;
-    owner: boolean;
-  end;
 
   TRegistryKeyId = int64;
   TRegistryKeyList = TDictionary<TRegistryKeyId, string>;
@@ -76,6 +82,7 @@ type
     operationHint: string;
     owner: boolean;
   end;
+
 
   TCategoryMembershipData = record
     name: string;
@@ -117,8 +124,10 @@ type
     StmAddDependency: PSQLite3Stmt;
     StmAddCategoryMembership: PSQLite3Stmt;
 
+    StmTouchFolder: PSQLite3Stmt;
+    StmFindFolder: PSQLite3Stmt;
+    StmAddFolderReference: PSQLite3Stmt;
     StmAddFile: PSQLite3Stmt;
-    StmAddDirectory: PSQLite3Stmt;
 
     StmTouchRegistryKey: PSQLite3Stmt;
     StmFindRegistryKey: PSQLite3Stmt;
@@ -132,7 +141,6 @@ type
     procedure FreeStatements;
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
     function SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
-    function SqlReadDirectoryData(stmt: PSQLite3Stmt): TDirectoryEntryData;
     function SqlReadRegistryValueData(stmt: PSQLite3Stmt): TRegistryValueData;
     function SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
   public
@@ -148,24 +156,33 @@ type
     procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
     procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
 
-    procedure AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
-    procedure AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
+    function AddFolder(const AName: string; AParent: TFolderId = 0): TFolderId; overload;
+    function AddFolderPath(APath: string): TFolderId;
+    procedure AddFolderReference(AAssembly: TAssemblyId; AFolder: TFolderId; const AData: TFolderReferenceData);
+    function AddFolder(AAssembly: TAssemblyId; APath: string; const AData: TFolderReferenceData): TFolderId; overload;
+    procedure AddFile(const AData: TFileEntryData);
+    procedure GetFolders(const AParent: TFolderId; AList: TFolderList);
+    procedure GetFolderReferees(AFolder: TFolderId; AList: TFolderReferees);
+    function GetFolderName(AFolder: TFolderId): string;
+    function GetFolderPath(AFolder: TFolderId): string;
+    function GetFileFullDestinationName(const AFile: TFileEntryData): string;
+    procedure GetAssemblyFolders(AAssembly: TAssemblyId; AList: TFolderReferences);
     procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+    procedure GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
     procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
-    procedure QueryDirectories(AStmt: PSQLite3Stmt; AList: TList<TDirectoryEntryData>);
-    procedure GetAssemblyDirectories(AAssembly: TAssemblyId; AList: TList<TDirectoryEntryData>);
 
-    function AddRegistryKey(AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId; overload;
+    function AddRegistryKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId; overload;
+    function AddRegistryKeyPath(APath: string): TRegistryKeyId; overload;
     procedure AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
-    function AddRegistryKey(AAssembly: TAssemblyId; AName: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId; overload;
+    function AddRegistryKey(AAssembly: TAssemblyId; APath: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId; overload;
     procedure AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
     procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
     procedure GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
     function GetRegistryKeyPath(AKey: TRegistryKeyId): string;
     procedure GetAssemblyKeys(AAssembly: TAssemblyId; AList: TList<TRegistryValueData>);
 
-    function AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
-    procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string); overload;
+    function AddTaskFolder(const AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
+    procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; const AName: string); overload;
     procedure AddTask(AAssembly: TAssemblyId; AURI: string); overload;
     function GetTaskFolderName(AKey: TTaskFolderId): string;
     function GetTaskFolderPath(AKey: TTaskFolderId): string;
@@ -183,9 +200,9 @@ type
     procedure FreeXmlParser;
     function XmlReadAssemblyIdentityData(const ANode: IXmlNode): TAssemblyIdentity;
     function XmlReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;
-    function XmlReadFileData(const ANode: IXmlNode): TFileEntryData;
-    function XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
-    procedure ImportRegistryKeyNode(const AAssembly: TAssemblyId; ANode: IXmlNode);
+    procedure ImportDirectoryNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
+    procedure ImportFileNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
+    procedure ImportRegistryKeyNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
     function XmlReadRegistryValueData(const AKeyId: TRegistryKeyId; const ANode: IXmlNode): TRegistryValueData;
     function XmlReadCategoryMembership(const ANode: IXmlNode): TCategoryMembershipData;
   public
@@ -202,14 +219,6 @@ function TAssemblyIdentity.ToString: string;
 begin
   Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
     + '-' + Self.version + '-' + Self.publicKeyToken;
-end;
-
-function TFileEntryData.fullDestinationName: string;
-begin
-  if (Length(Self.destinationPath) > 0) and (Self.destinationPath[Length(Self.destinationPath)]<>'\') then
-    Result := Self.destinationPath+'\'+Self.name
-  else
-    Result := Self.destinationPath+Self.name;
 end;
 
 function OpenAssemblyDb(const AFilename: string): TAssemblyDb;
@@ -316,21 +325,29 @@ begin
     +'CONSTRAINT identity UNIQUE(assemblyId,dependentAssemblyId)'
     +')');
 
+
+  Exec('CREATE TABLE IF NOT EXISTS folders ('
+    +'id INTEGER PRIMARY KEY,'
+    +'parentId INTEGER NOT NULL,'
+    +'name TEXT NOT NULL COLLATE NOCASE,'
+    +'CONSTRAINT identity UNIQUE(parentId, name)'
+    +')');
+
+  Exec('CREATE TABLE IF NOT EXISTS folderReferences ('
+    +'assemblyId INTEGER NOT NULL,'
+    +'folderId INTEGER NOT NULL,'
+    +'owner BOOLEAN,'
+    +'CONSTRAINT identity UNIQUE(assemblyId,folderId)'
+    +')');
+
   Exec('CREATE TABLE IF NOT EXISTS files ('
     +'assemblyId INTEGER NOT NULL,'
+    +'folderId INTEGER NOT NULL,'
     +'name TEXT NOT NULL COLLATE NOCASE,'
-    +'destinationPath TEXT NOT NULL COLLATE NOCASE,'
     +'sourceName TEXT COLLATE NOCASE,'
     +'sourcePath TEXT COLLATE NOCASE,'
     +'importPath TEXT COLLATE NOCASE,'
-    +'CONSTRAINT identity UNIQUE (assemblyId,name,destinationPath)' //maybe all fields need to be included?
-    +')');
-
-  Exec('CREATE TABLE IF NOT EXISTS directories ('
-    +'assemblyId INTEGER NOT NULL,'
-    +'destinationPath TEXT NOT NULL COLLATE NOCASE,'
-    +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(assemblyId,destinationPath)'
+    +'CONSTRAINT identity UNIQUE (assemblyId,folderId,name)'
     +')');
 
 
@@ -429,13 +446,15 @@ begin
     +'(assemblyId,name,version,publicKeyToken,typeName) '
     +'VALUES (?,?,?,?,?)');
 
-  StmAddFile := PrepareStatement('INSERT OR REPLACE INTO files '
-    +'(assemblyId,name,destinationPath,sourceName,sourcePath,importPath) '
+  StmTouchFolder := PrepareStatement('INSERT OR IGNORE INTO folders '
+    +'(parentId,name) VALUES (?,?)');
+  StmFindFolder := PrepareStatement('SELECT id FROM folders WHERE '
+    +'parentId=? AND name=?');
+  StmAddFolderReference := PrepareStatement('INSERT OR IGNORE INTO folderReferences '
+    +'(assemblyId,folderId,owner) VALUES (?,?,?)');
+  StmAddFile := PrepareStatement('INSERT OR IGNORE INTO files '
+    +'(assemblyId,folderId,name,sourceName,sourcePath,importPath) '
     +'VALUES (?,?,?,?,?,?)');
-  StmAddDirectory := PrepareStatement('INSERT OR REPLACE INTO directories '
-    +'(assemblyId,destinationPath,owner) '
-    +'VALUES (?,?,?)');
-
 
   StmTouchRegistryKey := PrepareStatement('INSERT OR IGNORE INTO registryKeys '
     +'(parentId,keyName) VALUES (?,?)');
@@ -610,33 +629,171 @@ begin
 end;
 
 
-procedure TAssemblyDb.AddFile(AAssembly: TAssemblyId; const AFileData: TFileEntryData);
+function TAssemblyDb.AddFolder(const AName: string; AParent: TFolderId = 0): TFolderId;
 begin
-  sqlite3_bind_int64(StmAddFile, 1, AAssembly);
-  sqlite3_bind_str(StmAddFile, 2, AFileData.name);
-  sqlite3_bind_str(StmAddFile, 3, AFileData.destinationPath);
-  sqlite3_bind_str(StmAddFile, 4, AFileData.sourceName);
-  sqlite3_bind_str(StmAddFile, 5, AFileData.sourcePath);
-  sqlite3_bind_str(StmAddFile, 6, AFileData.importPath);
+  //Touch
+  sqlite3_bind_int64(StmTouchFolder, 1, AParent);
+  sqlite3_bind_str(StmTouchFolder, 2, AName);
+  if sqlite3_step(StmTouchFolder) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmTouchFolder);
+
+  //Find id
+  sqlite3_bind_int64(StmFindFolder, 1, AParent);
+  sqlite3_bind_str(StmFindFolder, 2, AName);
+  if sqlite3_step(StmFindFolder) <> SQLITE_ROW then
+    RaiseLastSQLiteError();
+  Result := sqlite3_column_int64(StmFindFolder, 0);
+  sqlite3_reset(StmFindFolder);
+end;
+
+//Overloaded version which parses the path and adds it folder by folder. Returns the leaf folder id.
+function TAssemblyDb.AddFolderPath(APath: string): TFolderId;
+var idx: integer;
+begin
+  Result := 0;
+  while APath <> '' do begin
+    idx := pos('\', APath);
+    if idx <= 0 then begin
+      Result := AddFolder(APath, Result);
+      break;
+    end;
+
+    if idx = 1 then begin
+      APath := copy(APath, 2, MaxInt);
+      continue;
+    end;
+
+    Result := AddFolder(copy(APath, 1, idx-1), Result);
+    APath := copy(APath, idx+1, MaxInt);
+  end;
+end;
+
+procedure TAssemblyDb.AddFolderReference(AAssembly: TAssemblyId; AFolder: TFolderId; const AData: TFolderReferenceData);
+begin
+  sqlite3_bind_int64(StmAddFolderReference, 1, AAssembly);
+  sqlite3_bind_int64(StmAddFolderReference, 2, AFolder);
+  sqlite3_bind_int(StmAddFolderReference, 3, integer(AData.owner));
+  if sqlite3_step(StmAddFolderReference) <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(StmAddFolderReference);
+end;
+
+//Overloaded version which parses the path, adds it and links the leaf folder with the assembly.
+function TAssemblyDb.AddFolder(AAssembly: TAssemblyId; APath: string; const AData: TFolderReferenceData): TFolderId;
+begin
+  Result := AddFolderPath(APath);
+  if Result <> 0 then
+    AddFolderReference(AAssembly, Result, AData);
+end;
+
+procedure TAssemblyDb.AddFile(const AData: TFileEntryData);
+begin
+  sqlite3_bind_int64(StmAddFile, 1, AData.assembly);
+  sqlite3_bind_int64(StmAddFile, 2, AData.folder);
+  sqlite3_bind_str(StmAddFile, 3, AData.name);
+  sqlite3_bind_str(StmAddFile, 4, AData.sourceName);
+  sqlite3_bind_str(StmAddFile, 5, AData.sourcePath);
+  sqlite3_bind_str(StmAddFile, 6, AData.importPath);
   if sqlite3_step(StmAddFile) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddFile);
 end;
 
-procedure TAssemblyDb.AddDirectory(AAssembly: TAssemblyId; const ADirectoryData: TDirectoryEntryData);
+//Retrieves the list of children folders for a given parent (0 for root)
+procedure TAssemblyDb.GetFolders(const AParent: TFolderId; AList: TFolderList);
+var stmt: PSQLite3Stmt;
+  res: integer;
 begin
-  sqlite3_bind_int64(StmAddDirectory, 1, AAssembly);
-  sqlite3_bind_str(StmAddDirectory, 2, ADirectoryData.destinationPath);
-  sqlite3_bind_int(StmAddDirectory, 3, integer(ADirectoryData.owner));
-  if sqlite3_step(StmAddDirectory) <> SQLITE_DONE then
+  stmt := PrepareStatement('SELECT id, name FROM folders WHERE parentId=?');
+  sqlite3_bind_int64(stmt, 1, AParent);
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(sqlite3_column_int64(stmt, 0), sqlite3_column_text16(stmt, 1));
+    res := sqlite3_step(stmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(stmt);
+end;
+
+procedure TAssemblyDb.GetFolderReferees(AFolder: TFolderId; AList: TFolderReferees);
+var stmt: PSQLite3Stmt;
+  res: integer;
+  AData: TFolderReferenceData;
+begin
+  stmt := PrepareStatement('SELECT assemblyId FROM folderReferences WHERE folderId=?');
+  sqlite3_bind_int64(stmt, 1, AFolder);
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    AData.owner := boolean(sqlite3_column_int(stmt, 1));
+    AList.Add(sqlite3_column_int64(stmt, 0), AData);
+    res := sqlite3_step(stmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(stmt);
+end;
+
+function TAssemblyDb.GetFolderName(AFolder: TFolderId): string;
+var stmt: PSQLite3Stmt;
+begin
+  stmt := PrepareStatement('SELECT name FROM folders WHERE id=?');
+  sqlite3_bind_int64(stmt, 1, AFolder);
+  if sqlite3_step(stmt) <> SQLITE_ROW then
     RaiseLastSQLiteError();
-  sqlite3_reset(StmAddDirectory);
+  Result := sqlite3_column_text16(stmt, 0);
+end;
+
+function TAssemblyDb.GetFolderPath(AFolder: TFolderId): string;
+var stmt: PSQLite3Stmt;
+begin
+  Result := '';
+  stmt := PrepareStatement('SELECT parentId,name FROM folders WHERE id=?');
+  while AFolder > 0 do begin
+    sqlite3_bind_int64(stmt, 1, AFolder);
+    if sqlite3_step(stmt) <> SQLITE_ROW then
+      RaiseLastSQLiteError();
+    AFolder := sqlite3_column_int64(stmt, 0); //parent
+    if Result = '' then
+      Result := sqlite3_column_text16(stmt, 1)
+    else
+      Result := sqlite3_column_text16(stmt, 1) + '\' + Result;
+    sqlite3_reset(stmt);
+  end;
+end;
+
+function TAssemblyDb.GetFileFullDestinationName(const AFile: TFileEntryData): string;
+begin
+  if AFile.folder = 0 then
+    Result := AFile.name
+  else
+    Result := GetFolderPath(AFile.folder) + '\' + AFile.name;
+end;
+
+procedure TAssemblyDb.GetAssemblyFolders(AAssembly: TAssemblyId; AList: TFolderReferences);
+var stmt: PSQLite3Stmt;
+  res: integer;
+  AData: TFolderReferenceData;
+begin
+  stmt := PrepareStatement('SELECT folderId FROM folderReferences WHERE assemblyId=?');
+  sqlite3_bind_int64(stmt, 1, AAssembly);
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    AData.owner := boolean(sqlite3_column_int(stmt, 1));
+    AList.Add(sqlite3_column_int64(stmt, 0), AData);
+    res := sqlite3_step(stmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(stmt);
 end;
 
 function TAssemblyDb.SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
 begin
-  Result.name := sqlite3_column_text16(stmt, 1);
-  Result.destinationPath := sqlite3_column_text16(stmt, 2);
+  Result.assembly := sqlite3_column_int64(stmt, 0);
+  Result.folder := sqlite3_column_int64(stmt, 1);
+  Result.name := sqlite3_column_text16(stmt, 2);
   Result.sourceName := sqlite3_column_text16(stmt, 3);
   Result.sourcePath := sqlite3_column_text16(stmt, 4);
   Result.importPath := sqlite3_column_text16(stmt, 5);
@@ -655,6 +812,14 @@ begin
   sqlite3_reset(AStmt);
 end;
 
+procedure TAssemblyDb.GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT * FROM files WHERE folderId=?');
+  sqlite3_bind_int64(AStmt, 1, AFolder);
+  QueryFiles(AStmt, AList);
+end;
+
 procedure TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
 var AStmt: PSQLite3Stmt;
 begin
@@ -663,35 +828,9 @@ begin
   QueryFiles(AStmt, AList);
 end;
 
-function TAssemblyDb.SqlReadDirectoryData(stmt: PSQLite3Stmt): TDirectoryEntryData;
-begin
-  Result.destinationPath := sqlite3_column_text16(stmt, 1);
-  Result.owner := boolean(sqlite3_column_int(stmt, 2));
-end;
-
-procedure TAssemblyDb.QueryDirectories(AStmt: PSQLite3Stmt; AList: TList<TDirectoryEntryData>);
-var res: integer;
-begin
-  res := sqlite3_step(AStmt);
-  while res = SQLITE_ROW do begin
-    AList.Add(SqlReadDirectoryData(AStmt));
-    res := sqlite3_step(AStmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(AStmt);
-end;
-
-procedure TAssemblyDb.GetAssemblyDirectories(AAssembly: TAssemblyId; AList: TList<TDirectoryEntryData>);
-var AStmt: PSQLite3Stmt;
-begin
-  AStmt := PrepareStatement('SELECT * FROM directories WHERE assemblyId=?');
-  sqlite3_bind_int64(AStmt, 1, AAssembly);
-  QueryDirectories(AStmt, AList);
-end;
 
 
-function TAssemblyDb.AddRegistryKey(AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
+function TAssemblyDb.AddRegistryKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
 begin
   //Touch
   sqlite3_bind_int64(StmTouchRegistryKey, 1, AParent);
@@ -709,6 +848,28 @@ begin
   sqlite3_reset(StmFindRegistryKey);
 end;
 
+//Overloaded version which parses Registry path and creates all neccessary key entries. Returns the leaf key id.
+function TAssemblyDb.AddRegistryKeyPath(APath: string): TRegistryKeyId;
+var idx: integer;
+begin
+  Result := 0;
+  while APath <> '' do begin
+    idx := pos('\', APath);
+    if idx <= 0 then begin
+      Result := AddRegistryKey(APath, Result);
+      break;
+    end;
+
+    if idx = 1 then begin
+      APath := copy(APath, 2, MaxInt);
+      continue;
+    end;
+
+    Result := AddRegistryKey(copy(APath, 1, idx-1), Result);
+    APath := copy(APath, idx+1, MaxInt);
+  end;
+end;
+
 procedure TAssemblyDb.AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
 begin
   sqlite3_bind_int64(StmAddRegistryKeyReference, 1, AAssembly);
@@ -719,28 +880,10 @@ begin
   sqlite3_reset(StmAddRegistryKeyReference);
 end;
 
-//Overloaded version which parses Registry key name, adds all neccessary key entries and then links
-//the final part with the assembly.
-function TAssemblyDb.AddRegistryKey(AAssembly: TAssemblyId; AName: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId;
-var idx: integer;
+//Overloaded version which parses Registry path, adds it and links the leaf key with the assembly.
+function TAssemblyDb.AddRegistryKey(AAssembly: TAssemblyId; APath: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId;
 begin
-  Result := 0;
-  while AName <> '' do begin
-    idx := pos('\', AName);
-    if idx <= 0 then begin
-      Result := AddRegistryKey(AName, Result);
-      break;
-    end;
-
-    if idx = 1 then begin
-      AName := copy(AName, 2, MaxInt);
-      continue;
-    end;
-
-    Result := AddRegistryKey(copy(AName, 1, idx-1), Result);
-    AName := copy(AName, idx+1, MaxInt);
-  end;
-
+  Result := AddRegistryKeyPath(APath);
   if Result <> 0 then
     AddRegistryKeyReference(AAssembly, Result, AData);
 end;
@@ -840,7 +983,7 @@ end;
 
 
 
-function TAssemblyDb.AddTaskFolder(AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
+function TAssemblyDb.AddTaskFolder(const AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
 begin
   //Touch
   sqlite3_bind_int64(StmTouchTaskFolder, 1, AParent);
@@ -858,7 +1001,7 @@ begin
   sqlite3_reset(StmFindTaskFolder);
 end;
 
-procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; AName: string);
+procedure TAssemblyDb.AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; const AName: string);
 begin
   sqlite3_bind_int64(StmTouchTask, 1, AAssembly);
   sqlite3_bind_int64(StmTouchTask, 2, AFolder);
@@ -1035,13 +1178,13 @@ begin
   nodes := FXml.selectNodes('/assembly/file');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddFile(aId, XmlReadFileData(nodes.item[i]));
+      ImportFileNode(aId, nodes.item[i]);
   end;
 
   nodes := FXml.selectNodes('/assembly/directories/directory');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      AddDirectory(aId, XmlReadDirectoryData(nodes.item[i]));
+      ImportDirectoryNode(aId, nodes.item[i]);
   end;
 
   nodes := FXml.selectNodes('/assembly/registryKeys/registryKey');
@@ -1104,22 +1247,30 @@ begin
   end;
 end;
 
-function TAssemblyDb.XmlReadFileData(const ANode: IXmlNode): TFileEntryData;
+procedure TAssemblyDb.ImportDirectoryNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
+var AData: TFolderReferenceData;
 begin
-  Result.name := textAttribute(ANode, 'name');
-  Result.destinationPath := textAttribute(ANode, 'destinationPath');
-  Result.sourceName := textAttribute(ANode, 'sourceName');
-  Result.sourcePath := textAttribute(ANode, 'sourcePath');
-  Result.importPath := textAttribute(ANode, 'importPath');
+  AData.owner := boolAttribute(ANode, 'owner');
+  AddFolder(AAssembly,
+    textAttribute(ANode, 'destinationPath'),
+    AData);
 end;
 
-function TAssemblyDb.XmlReadDirectoryData(const ANode: IXmlNode): TDirectoryEntryData;
+procedure TAssemblyDb.ImportFileNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
+var AData: TFileEntryData;
+  ADestinationPath: string;
 begin
-  Result.destinationPath := textAttribute(ANode, 'destinationPath');
-  Result.owner := boolAttribute(ANode, 'owner');
+  ADestinationPath := textAttribute(ANode, 'destinationPath');
+  AData.assembly := AAssembly;
+  AData.folder := self.AddFolderPath(ADestinationPath);
+  AData.name := textAttribute(ANode, 'name');
+  AData.sourceName := textAttribute(ANode, 'sourceName');
+  AData.sourcePath := textAttribute(ANode, 'sourcePath');
+  AData.importPath := textAttribute(ANode, 'importPath');
+  AddFile(AData);
 end;
 
-procedure TAssemblyDb.ImportRegistryKeyNode(const AAssembly: TAssemblyId; ANode: IXmlNode);
+procedure TAssemblyDb.ImportRegistryKeyNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
 var AKeyName: string;
   AKeyData: TRegistryKeyReferenceData;
   AKeyId: TRegistryKeyId;

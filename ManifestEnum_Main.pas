@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
   StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons,
-  AssemblyDetails, RegistryBrowser, TaskBrowser;
+  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser;
 
 type
   TMainForm = class(TForm)
@@ -45,6 +45,7 @@ type
   protected
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
+    FFileBrowser: TFileBrowserForm;
     FRegistryBrowser: TRegistryBrowserForm;
     FTaskBrowser: TTaskBrowserForm;
     procedure AddPage(const AForm: TForm);
@@ -65,6 +66,10 @@ begin
   FDb := TAssemblyDb.Create;
   InitAssemblyDb(FDb, AppFolder+'\assembly.db', true);
   UpdateAssemblyList;
+
+  FFileBrowser := TFileBrowserForm.Create(Application);
+  FFileBrowser.Db := FDb;
+  AddPage(FFileBrowser);
 
   FRegistryBrowser := TRegistryBrowserForm.Create(Application);
   FRegistryBrowser.Db := FDb;

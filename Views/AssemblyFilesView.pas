@@ -120,7 +120,7 @@ begin
   Result := AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFile;
-  AData.Name := AFileData.fullDestinationName;
+  AData.Name := FDb.GetFileFullDestinationName(AFileData);
   AData.Assembly := 0;
   AData.DelayLoad.Touched := true;
 end;

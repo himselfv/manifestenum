@@ -15,7 +15,8 @@ uses
   AssemblyResourcesView in 'Views\AssemblyResourcesView.pas' {AssemblyResourcesForm},
   RegistryBrowser in 'Browsers\RegistryBrowser.pas' {RegistryBrowserForm},
   TaskBrowser in 'Browsers\TaskBrowser.pas' {TaskBrowserForm},
-  CommonResources in 'CommonResources.pas' {ResourceModule: TDataModule};
+  CommonResources in 'CommonResources.pas' {ResourceModule: TDataModule},
+  FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm};
 
 {$R *.res}
 
@@ -25,5 +26,6 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TResourceModule, ResourceModule);
+  Application.CreateForm(TFileBrowserForm, FileBrowserForm);
   Application.Run;
 end.

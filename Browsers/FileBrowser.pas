@@ -1,24 +1,24 @@
-unit TaskBrowser;
+unit FileBrowser;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees,
-  AssemblyDb, CommonResources;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
+  CommonResources, Vcl.StdCtrls;
 
 type
-  TNodeType = (ntFolder, ntTask);
+  TNodeType = (ntFolder, ntFile);
   TNodeData = record
     DelayLoad: TDelayLoadHeader;
     NodeType: TNodeType;
     Name: string;
     AssemblyId: TAssemblyId;
-    FolderId: TTaskFolderId;
+    FolderId: TFolderId;
   end;
   PNodeData = ^TNodeData;
 
-  TTaskBrowserForm = class(TDelayLoadTree)
+  TFileBrowserForm = class(TDelayLoadTree)
     lblWhoAdded: TLabel;
     procedure FormShow(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
@@ -35,86 +35,87 @@ type
     procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
   protected
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
-    function AddFolderNode(AParent: PVirtualNode; ATaskFolderId: TTaskFolderId): PVirtualNode;
-    function AddTaskNode(AParent: PVirtualNode; ATaskData: TTaskEntryData): PVirtualNode;
+    function AddFolderNode(AParent: PVirtualNode; AFolderId: TFolderId; AFolderName: string): PVirtualNode;
+    function AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
   end;
 
 var
-  TaskBrowserForm: TTaskBrowserForm;
+  FileBrowserForm: TFileBrowserForm;
 
 implementation
 uses Generics.Collections;
 
 {$R *.dfm}
 
-procedure TTaskBrowserForm.FormShow(Sender: TObject);
+procedure TFileBrowserForm.FormShow(Sender: TObject);
 begin
   inherited;
   if FDb <> nil then
     Reload;
 end;
 
-procedure TTaskBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
+procedure TFileBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 var AData: PNodeData absolute ANodeData;
-  AFolderId: TTaskFolderId;
-  AFolders: TList<TTaskFolderId>;
-  ATasks: TList<TTaskEntryData>;
+  AFolderId: TFolderId;
+  AFolders: TFolderList;
+  AChildFolderId: TFolderId;
+  AFiles: TList<TFileEntryData>;
   i: integer;
 begin
-  if (AData <> nil) and (AData.NodeType = ntTask) then exit;
+  if (AData <> nil) and (AData.NodeType = ntFile) then exit;
 
   if AData <> nil then
     AFolderId := AData.FolderId
   else
     AFolderId := 0;
 
-  AFolders := TList<TTaskFolderId>.Create;
+  AFolders := TFolderList.Create;
   try
-    FDb.GetTaskFolders(AFolderId, AFolders);
-    for i := 0 to AFolders.Count-1 do
-      AddFolderNode(ANode, AFolders[i]);
+    FDb.GetFolders(AFolderId, AFolders);
+    for AChildFolderId in AFolders.Keys do
+      AddFolderNode(ANode, AChildFolderId, AFolders[AChildFolderId]);
   finally
     FreeAndNil(AFolders);
   end;
 
-  ATasks := TList<TTaskEntryData>.Create;
+  AFiles := TList<TFileEntryData>.Create;
   try
-    FDb.GetTasks(AFolderId, ATasks);
-    for i := 0 to ATasks.Count-1 do
-      AddTaskNode(ANode, ATasks[i]);
+    FDb.GetFiles(AFolderId, AFiles);
+    for i := 0 to AFiles.Count-1 do
+      AddFileNode(ANode, AFiles[i]);
   finally
-    FreeAndNil(ATasks);
+    FreeAndNil(AFiles);
   end;
 end;
 
-function TTaskBrowserForm.AddFolderNode(AParent: PVirtualNode; ATaskFolderId: TTaskFolderId): PVirtualNode;
+function TFileBrowserForm.AddFolderNode(AParent: PVirtualNode; AFolderId: TFolderId; AFolderName: string): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFolder;
-  AData.FolderId := ATaskFolderId;
-  AData.Name := FDb.GetTaskFolderName(ATaskFolderId);
+  AData.FolderId := AFolderId;
+  AData.Name := AFolderName; //we could call Db.GetFolderName(AFolderId), but why waste cycles
   AData.AssemblyId := 0;
 end;
 
-function TTaskBrowserForm.AddTaskNode(AParent: PVirtualNode; ATaskData: TTaskEntryData): PVirtualNode;
+function TFileBrowserForm.AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
-  AData.NodeType := ntTask;
-  AData.Name := ATaskData.name;
-  AData.FolderId := ATaskData.folderId;
-  AData.AssemblyId := ATaskData.assemblyId;
+  AData.NodeType := ntFile;
+  AData.Name := AFileData.name;
+  AData.FolderId := AFileData.folder;
+  AData.AssemblyId := AFileData.assembly;
 end;
 
-procedure TTaskBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
+procedure TFileBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
 begin
   NodeDataSize := SizeOf(TNodeData);
 end;
 
-procedure TTaskBrowserForm.TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
+procedure TFileBrowserForm.TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
   var InitialStates: TVirtualNodeInitStates);
 var AData: PNodeData;
 begin
@@ -123,7 +124,7 @@ begin
   Initialize(AData^);
 end;
 
-procedure TTaskBrowserForm.TreeFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
+procedure TFileBrowserForm.TreeFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
 var AData: PNodeData;
 begin
   inherited;
@@ -131,7 +132,7 @@ begin
   Finalize(AData^);
 end;
 
-procedure TTaskBrowserForm.TreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
+procedure TFileBrowserForm.TreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
 var AData: PNodeData;
 begin
@@ -145,7 +146,7 @@ begin
   end;
 end;
 
-procedure TTaskBrowserForm.TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
+procedure TFileBrowserForm.TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
   var ImageList: TCustomImageList);
 var AData: PNodeData;
@@ -158,13 +159,13 @@ begin
       ImageList := ResourceModule.SmallImages;
       case AData.NodeType of
         ntFolder: ImageIndex := imgFolder;
-        ntTask: ImageIndex := imgTask;
+        ntFile: ImageIndex := imgFile;
       end;
     end;
   end;
 end;
 
-procedure TTaskBrowserForm.TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
+procedure TFileBrowserForm.TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
   Column: TColumnIndex; var Result: Integer);
 var AData1, AData2: PNodeData;
 begin
@@ -177,7 +178,7 @@ begin
     Result := CompareText(AData1.Name, AData2.Name);
 end;
 
-procedure TTaskBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+procedure TFileBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
 var AData: PNodeData;
 begin
@@ -188,6 +189,5 @@ begin
   else
     lblWhoAdded.Caption := '';
 end;
-
 
 end.

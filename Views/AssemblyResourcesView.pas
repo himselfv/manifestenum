@@ -21,7 +21,7 @@ uses
 type
   TNodeType = (
     ntAssembly,
-    ntDirectory,
+    ntFolder,
     ntFile,
     ntRegistryValue,
     ntTask
@@ -55,7 +55,7 @@ type
     procedure SetShowDependencies(const AValue: boolean);
     procedure SetFlatTree(const AValue: boolean);
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
-    function AddDirectoryNode(AParent: PVirtualNode; const ADirectoryData: TDirectoryEntryData): PVirtualNode;
+    function AddFolderNode(AParent: PVirtualNode; AFolder: TFolderId; const AFolderData: TFolderReferenceData): PVirtualNode;
     function AddFileNode(AParent: PVirtualNode; const AFileData: TFileEntryData): PVirtualNode;
     function AddRegistryValueNode(AParent: PVirtualNode; const ARegistryValueData: TRegistryValueData): PVirtualNode;
     function AddTaskNode(AParent: PVirtualNode; const ATaskData: TTaskEntryData): PVirtualNode;
@@ -138,7 +138,7 @@ begin
     1:
       case AData.NodeType of
         ntAssembly: CellText := 'Assembly';
-        ntDirectory: CellText := 'Dir';
+        ntFolder: CellText := 'Dir';
         ntFile: CellText := 'File';
         ntRegistryValue: CellText := 'Key';
         ntTask: CellText := 'Task';
@@ -162,7 +162,7 @@ begin
       ImageList := ResourceModule.SmallImages;
       case Adata.NodeType of
         ntAssembly: ImageIndex := imgAssembly;
-        ntDirectory: ImageIndex := imgFolder;
+        ntFolder: ImageIndex := imgFolder;
         ntFile: ImageIndex := imgFile;
         ntRegistryValue: ImageIndex := imgRegistryValue;
         ntTask: ImageIndex := imgTask;
@@ -195,12 +195,13 @@ end;
 procedure TAssemblyResourcesForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 var AData: PNodeData absolute ANodeData;
   AAssemblyId: TAssemblyId;
-  ADirectories: TList<TDirectoryEntryData>;
+  AFolders: TFolderReferences;
   AFiles: TList<TFileEntryData>;
   ARegistryValues: TList<TRegistryValueData>;
   ATasks: TList<TTaskEntryData>;
   AAssemblies: TAssemblyList;
   AAssemblyData: TAssemblyData;
+  AFolder: TFolderId;
   i: integer;
 begin
   if ANode = nil then begin //Root node
@@ -228,13 +229,13 @@ begin
   if FFlatTree then
     ANode := nil; //create all children under root node
 
-  ADirectories := TList<TDirectoryEntryData>.Create;
+  AFolders := TFolderReferences.Create;
   try
-    FDb.GetAssemblyDirectories(AAssemblyId, ADirectories);
-    for i := 0 to ADirectories.Count-1 do
-      AddDirectoryNode(ANode, ADirectories[i]);
+    FDb.GetAssemblyFolders(AAssemblyId, AFolders);
+    for AFolder in AFolders.Keys do
+      AddFolderNode(ANode, AFolder, AFolders[AFolder]);
   finally
-    FreeAndNil(ADirectories);
+    FreeAndNil(AFolders);
   end;
 
   AFiles := TList<TFileEntryData>.Create;
@@ -276,13 +277,13 @@ begin
   end;
 end;
 
-function TAssemblyResourcesForm.AddDirectoryNode(AParent: PVirtualNode; const ADirectoryData: TDirectoryEntryData): PVirtualNode;
+function TAssemblyResourcesForm.AddFolderNode(AParent: PVirtualNode; AFolder: TFolderId; const AFolderData: TFolderReferenceData): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
-  AData.NodeType := ntDirectory;
-  AData.Name := ADirectoryData.destinationPath;
+  AData.NodeType := ntFolder;
+  AData.Name := FDb.GetFolderPath(AFolder);
   AData.DelayLoad.Touched := true;
 end;
 
@@ -292,7 +293,7 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFile;
-  AData.Name := AFileData.fullDestinationName;
+  AData.Name := FDb.GetFileFullDestinationName(AFileData);
   AData.DelayLoad.Touched := true;
 end;
 

@@ -44,7 +44,6 @@ object MainForm: TMainForm
         PopupMenu = PopupMenu
         TabOrder = 0
         OnClick = lbComponentsClick
-        ExplicitHeight = 335
       end
       object pnlFilter: TPanel
         Left = 0
