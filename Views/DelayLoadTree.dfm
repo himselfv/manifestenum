@@ -31,6 +31,7 @@ object DelayLoadTree: TDelayLoadTree
     TreeOptions.SelectionOptions = [toRightClickSelect]
     OnExpanding = TreeExpanding
     OnGetNodeDataSize = TreeGetNodeDataSize
+    OnHeaderClick = TreeHeaderClick
     Columns = <>
   end
 end

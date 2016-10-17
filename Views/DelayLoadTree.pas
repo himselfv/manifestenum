@@ -23,6 +23,7 @@ type
     Tree: TVirtualStringTree;
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode; var Allowed: Boolean);
+    procedure TreeHeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
   protected
     FDb: TAssemblyDb;
     procedure Touch(ANode: PVirtualNode);
@@ -50,8 +51,15 @@ begin
   if FDb = nil then
     exit;
 
-  Touch(nil);
-  TouchChildren(nil);
+  Tree.BeginUpdate;
+  try
+    Touch(nil);
+    TouchChildren(nil);
+    if Tree.Header.SortColumn <> NoColumn then
+      Tree.SortTree(Tree.Header.SortColumn, Tree.Header.SortDirection);
+  finally
+    Tree.EndUpdate;
+  end;
 end;
 
 procedure TDelayLoadTree.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
@@ -64,6 +72,20 @@ procedure TDelayLoadTree.TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualN
   var Allowed: Boolean);
 begin
   TouchChildren(Node);
+  Sender.Sort(Node, TVirtualStringTree(Sender).Header.SortColumn, TVirtualStringTree(Sender).Header.SortDirection);
+end;
+
+procedure TDelayLoadTree.TreeHeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
+begin
+  if Sender.SortColumn <> HitInfo.Column then begin
+    Sender.SortColumn := HitInfo.Column;
+    Sender.SortDirection := sdAscending;
+  end else
+  if Sender.SortDirection = sdAscending then
+    Sender.SortDirection := sdDescending
+  else
+    Sender.SortDirection := sdAscending;
+  Sender.Treeview.SortTree(Sender.SortColumn, Sender.SortDirection);
 end;
 
 procedure TDelayLoadTree.Touch(ANode: PVirtualNode);
@@ -76,10 +98,14 @@ begin
 
   if (AData <> nil) and AData.Touched then exit;
 
-  DelayLoad(ANode, AData);
-
-  if AData <> nil then
-    AData.Touched := true;
+  Tree.BeginUpdate;
+  try
+    DelayLoad(ANode, AData);
+    if AData <> nil then
+      AData.Touched := true;
+  finally
+    Tree.EndUpdate;
+  end;
 end;
 
 procedure TDelayLoadTree.TouchChildren(ANode: PVirtualNode);
