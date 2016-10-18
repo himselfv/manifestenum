@@ -47,6 +47,15 @@ type
   end;
 
 
+  TCategoryMembershipData = record
+    name: string;
+    version: string;
+    publicKeyToken: string;
+    typeName: string;
+  end;
+  TCategoryMemberships = TDictionary<TAssemblyId, TCategoryMembershipData>;
+
+
   TFolderId = int64;
   TFolderList = TDictionary<TFolderId, string>;
 
@@ -83,13 +92,6 @@ type
     owner: boolean;
   end;
 
-
-  TCategoryMembershipData = record
-    name: string;
-    version: string;
-    publicKeyToken: string;
-    typeName: string;
-  end;
 
   TTaskFolderId = int64;
   TTaskEntryData = record
@@ -154,7 +156,10 @@ type
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
     procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
     procedure GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
+
     procedure AddCategoryMembership(AAssembly: TAssemblyId; const AData: TCategoryMembershipData);
+    procedure GetCategories(AList: TStringList);
+    procedure GetCategoryMemberships(AList: TCategoryMemberships);
 
     function AddFolder(const AName: string; AParent: TFolderId = 0): TFolderId; overload;
     function AddFolderPath(APath: string): TFolderId;
@@ -626,6 +631,43 @@ begin
   if sqlite3_step(StmAddCategoryMembership) <> SQLITE_DONE then
     RaiseLastSQLiteError();
   sqlite3_reset(StmAddCategoryMembership);
+end;
+
+procedure TAssemblyDb.GetCategories(AList: TStringList);
+var stmt: PSQLite3Stmt;
+  res: integer;
+begin
+  stmt := PrepareStatement('SELECT DISTINCT(name) FROM categoryMemberships');
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(sqlite3_column_text16(stmt, 0));
+    res := sqlite3_step(stmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(stmt);
+end;
+
+procedure TAssemblyDb.GetCategoryMemberships(AList: TCategoryMemberships);
+var stmt: PSQLite3Stmt;
+  res: integer;
+  AId: TAssemblyId;
+  AData: TCategoryMembershipData;
+begin
+  stmt := PrepareStatement('SELECT * FROM categoryMemberships');
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    AId := sqlite3_column_int64(stmt, 0);
+    AData.name := sqlite3_column_text16(stmt, 1);
+    AData.version := sqlite3_column_text16(stmt, 2);
+    AData.publicKeyToken := sqlite3_column_text16(stmt, 3);
+    AData.typeName := sqlite3_column_text16(stmt, 4);
+    AList.AddOrSetValue(AId, AData);
+    res := sqlite3_step(stmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
+  sqlite3_reset(stmt);
 end;
 
 

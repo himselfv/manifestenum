@@ -20,6 +20,7 @@ const
   imgRegistryValue = 2;
   imgTask = 3;
   imgAssembly = 4;
+  imgCategory = 5;
 
 implementation
 

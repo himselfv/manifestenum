@@ -16,7 +16,8 @@ uses
   RegistryBrowser in 'Browsers\RegistryBrowser.pas' {RegistryBrowserForm},
   TaskBrowser in 'Browsers\TaskBrowser.pas' {TaskBrowserForm},
   CommonResources in 'CommonResources.pas' {ResourceModule: TDataModule},
-  FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm};
+  FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm},
+  CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm};
 
 {$R *.res}
 
@@ -27,5 +28,6 @@ begin
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TResourceModule, ResourceModule);
   Application.CreateForm(TFileBrowserForm, FileBrowserForm);
+  Application.CreateForm(TCategoryBrowserForm, CategoryBrowserForm);
   Application.Run;
 end.
