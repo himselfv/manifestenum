@@ -58,7 +58,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, AssemblyDbBuilder, SxSExpand;
+uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand;
 
 {$R *.dfm}
 
@@ -185,10 +185,17 @@ begin
 end;
 
 procedure TMainForm.Loadmanifestfile1Click(Sender: TObject);
+var parser: TManifestParser;
 begin
   with OpenManifestDialog do
-    if Execute then
-      FDb.ImportManifest(Filename);
+    if Execute then begin
+      parser := TManifestParser.Create(FDb);
+      try
+        parser.ImportManifest(Filename);
+      finally
+        FreeAndNil(parser);
+      end;
+    end;
 end;
 
 procedure TMainForm.Savemanifest1Click(Sender: TObject);

@@ -1,7 +1,7 @@
 unit AssemblyDbBuilder;
 
 interface
-uses AssemblyDb;
+uses AssemblyDb, ManifestParser;
 
 function SxSDir: string;
 function SxSManifestDir: string;
@@ -52,9 +52,11 @@ var baseDir: string;
   fnames: TStringList;
   i: integer;
   progress: TProgressForm;
+  parser: TManifestParser;
 begin
   baseDir := SxSManifestDir()+'\';
   fnames := nil;
+  parser := nil;
 
   progress := TProgressForm.Create(nil);
   try
@@ -65,16 +67,18 @@ begin
     fnames := FilesByMask(baseDir+'\*.manifest');
 
     ADb.BeginTransaction;
+    parser := TManifestParser.Create(ADb);
 
     //Теперь загружаем содержимое.
     progress.Start('Reading manifests', fnames.Count-1);
     for i := 0 to fnames.Count-1 do begin
-      ADb.ImportManifest(baseDir+'\'+fnames[i]);
+      parser.ImportManifest(baseDir+'\'+fnames[i]);
       progress.Step();
     end;
 
     ADb.CommitTransaction;
   finally
+    FreeAndNil(parser);
     FreeAndNil(fnames);
     FreeAndNil(progress);
   end;

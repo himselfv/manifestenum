@@ -106,47 +106,42 @@
             <Form>ProgressForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="AssemblyDb.pas"/>
+        <DCCReference Include="Db\AssemblyDb.pas"/>
+        <DCCReference Include="Db\AssemblyDb.Core.pas"/>
         <DCCReference Include="SxsExpand.pas"/>
         <DCCReference Include="MSDeltaLib.pas"/>
+        <DCCReference Include="Db\ManifestParser.pas"/>
         <DCCReference Include="AssemblyDbBuilder.pas"/>
         <DCCReference Include="AssemblyDetails.pas">
             <Form>AssemblyDetailsForm</Form>
         </DCCReference>
         <DCCReference Include="Views\AssemblyFilesView.pas">
             <Form>AssemblyFilesForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Views\DelayLoadTree.pas">
             <Form>DelayLoadTree</Form>
         </DCCReference>
         <DCCReference Include="Views\AssemblyTree.pas">
             <Form>AssemblyTreeForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Views\AssemblyResourcesView.pas">
             <Form>AssemblyResourcesForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Browsers\RegistryBrowser.pas">
             <Form>RegistryBrowserForm</Form>
         </DCCReference>
         <DCCReference Include="Browsers\TaskBrowser.pas">
             <Form>TaskBrowserForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="CommonResources.pas">
             <Form>ResourceModule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Browsers\FileBrowser.pas">
             <Form>FileBrowserForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Browsers\CategoryBrowser.pas">
             <Form>CategoryBrowserForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
