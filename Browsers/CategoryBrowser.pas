@@ -46,6 +46,7 @@ var
   CategoryBrowserForm: TCategoryBrowserForm;
 
 implementation
+uses AssemblyDb.Assemblies;
 
 {$R *.dfm}
 
@@ -70,7 +71,7 @@ begin
     for AId in AList.Keys do begin
       AData := AList[AId];
       ACat := NeedCategoryNode(AData.name);
-      AddAssemblyNode(ACat, FDb.GetAssembly(AId).identity.ToString, AData.typeName)
+      AddAssemblyNode(ACat, FDb.Assemblies.GetAssembly(AId).identity.ToString, AData.typeName)
     end;
   finally
     FreeAndNil(AList);

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DelayLoadTree, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DelayLoadTree, VirtualTrees, AssemblyDb, AssemblyDb.Assemblies;
 
 type
   TNodeData = record
@@ -113,7 +113,7 @@ begin
     if AAssembly > 0 then
       FDb.GetDependencies(AAssembly, ADependencies)
     else
-      FDb.GetAllAssemblies(ADependencies);
+      FDb.Assemblies.GetAllAssemblies(ADependencies);
     for ADependencyData in ADependencies.Values do
       AddNode(ANode, ADependencyData);
   finally

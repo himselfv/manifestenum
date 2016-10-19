@@ -19,7 +19,9 @@ uses
   TaskBrowser in 'Browsers\TaskBrowser.pas' {TaskBrowserForm},
   CommonResources in 'CommonResources.pas' {ResourceModule: TDataModule},
   FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm},
-  CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm};
+  CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm},
+  AssemblyDb.UnusualProps in 'Db\AssemblyDb.UnusualProps.pas',
+  AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas';
 
 {$R *.res}
 

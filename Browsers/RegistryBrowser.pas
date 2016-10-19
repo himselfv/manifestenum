@@ -47,6 +47,7 @@ var
   RegistryBrowserForm: TRegistryBrowserForm;
 
 implementation
+uses AssemblyDb.Assemblies;
 
 {$R *.dfm}
 
@@ -195,7 +196,7 @@ begin
   try
     FDb.GetRegistryKeyReferees(AData.keyId, AList);
     for AAssembly in AList.Keys do begin
-      AAssemblyData := FDb.GetAssembly(AAssembly);
+      AAssemblyData := FDb.Assemblies.GetAssembly(AAssembly);
       lbComponents.Items.Add(AAssemblyData.identity.ToString());
     end;
 

@@ -58,7 +58,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand;
+uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand, AssemblyDb.Assemblies;
 
 {$R *.dfm}
 
@@ -139,7 +139,7 @@ begin
     filter := filter.ToLower();
 
     if filter = '' then
-      FDb.GetAllAssemblies(list)
+      FDb.Assemblies.GetAllAssemblies(list)
     else begin
       if cbFilterByName.Checked then
         FDb.FilterAssemblyByName(filter, list);
@@ -207,7 +207,7 @@ begin
   if lbComponents.ItemIndex < 0 then
     exit;
   AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
-  AAssemblyData := FDb.GetAssembly(AAssemblyId);
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
   if AAssemblyData.manifestName = '' then begin
     MessageBox(Self.Handle, PChar('This assembly has no associated manifest'), PChar('Cannot save manifest'), MB_OK + MB_ICONEXCLAMATION);

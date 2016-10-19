@@ -16,7 +16,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources, Generics.Collections;
+  CommonResources, Generics.Collections, AssemblyDb.Assemblies;
 
 type
   TNodeType = (
@@ -210,7 +210,7 @@ begin
     //Multiple root assemblies => add them
     if FAssemblies.Count > 1 then begin
       for i := 0 to FAssemblies.Count-1 do begin
-        AAssemblyData := FDb.GetAssembly(FAssemblies[i]);
+        AAssemblyData := FDb.Assemblies.GetAssembly(FAssemblies[i]);
         Self.Touch(Self.AddAssemblyNode(nil, AAssemblyData));
       end;
       exit;

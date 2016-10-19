@@ -5,7 +5,7 @@ unit ManifestParser;
 //Использовать OmniXML вместо MSXML
 
 interface
-uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb,
+uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies,
   {$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF},
   Generics.Collections;
 
@@ -48,6 +48,7 @@ implementation
 constructor TManifestParser.Create(ADb: TAssemblyDb);
 begin
   inherited Create;
+  FDb := ADb;
   InitXmlParser;
 end;
 
@@ -88,7 +89,7 @@ begin
 
   node := FXml.selectSingleNode('/assembly/assemblyIdentity');
   Assert(node <> nil);
-  aId := Db.AddAssembly(XmlReadAssemblyIdentityData(node), ChangeFileExt(ExtractFilename(AManifestFile), ''));
+  aId := Db.Assemblies.AddAssembly(XmlReadAssemblyIdentityData(node), ChangeFileExt(ExtractFilename(AManifestFile), ''));
 
   root := FXml.selectSingleNode('/assembly');
   children := root.childNodes;
@@ -113,27 +114,7 @@ begin
     if nodeName = 'taskScheduler' then
       ImportTaskScheduler(aId, node)
     else
-    if nodeName = 'assemblyIdentity' then begin
-    end else
-    if nodeName = 'deployment' then begin
-    end else
-    if nodeName = 'languagePack' then begin
-    end else
-    if nodeName = 'trustInfo' then begin
-    end else
-    if nodeName = 'rescache' then begin
-    end else
-    if nodeName = 'runtime' then begin
-    end else
-    if nodeName = 'localization' then begin
-    end else
-    if nodeName = 'instrumentation' then begin
-    end else
-    if nodeName = 'migration' then begin
-    end else
-    if nodeName = 'mvid' then begin
-    end else
-      raise Exception.Create('Unknown assembly property type: '+nodeName);
+      Db.UnusualProps.Add(aId, nodeName);
   end;
 
 
@@ -212,7 +193,7 @@ begin
     Result.dependentAssembly := 0;
     Result.dependencyType := '';
   end else begin
-    Result.dependentAssembly := Db.NeedAssembly(XmlReadAssemblyIdentityData(depAss));
+    Result.dependentAssembly := Db.Assemblies.NeedAssembly(XmlReadAssemblyIdentityData(depAss));
     Result.dependencyType := textAttribute(ANode.selectSingleNode('dependentAssembly'), 'dependencyType');
   end;
 end;

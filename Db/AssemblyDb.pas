@@ -1,27 +1,10 @@
 unit AssemblyDb;
 
 interface
-uses SysUtils, Classes, sqlite3, Generics.Collections, AssemblyDb.Core;
+uses SysUtils, Classes, sqlite3, Generics.Collections, AssemblyDb.Core, AssemblyDb.Assemblies,
+  AssemblyDb.UnusualProps;
 
 type
-  TAssemblyId = int64;
-  TAssemblyIdentity = record
-    name: string;
-    language: string;
-    buildType: string;
-    processorArchitecture: string;
-    version: string;
-    publicKeyToken: string;
-    function ToString: string;
-  end;
-  TAssemblyData = record
-    id: TAssemblyId;
-    identity: TAssemblyIdentity;
-    manifestName: string;
-  end;
-
-  TAssemblyList = TDictionary<TAssemblyId, TAssemblyData>;
-
   TDependencyEntryData = record
     discoverable: boolean;
     resourceType: string;
@@ -85,11 +68,6 @@ type
 
   TAssemblyDb = class(TAssemblyDbCore)
   protected
-    StmTouchAssembly: PSQLite3Stmt;
-    StmFindAssembly: PSQLite3Stmt;
-    StmUpdateAssembly: PSQLite3Stmt;
-    StmGetAssembly: PSQLite3Stmt;
-
     StmAddDependency: PSQLite3Stmt;
     StmAddCategoryMembership: PSQLite3Stmt;
 
@@ -108,17 +86,13 @@ type
     StmTouchTask: PSQLite3Stmt;
     procedure CreateTables; override;
     procedure InitStatements; override;
-    function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
     function SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
     function SqlReadRegistryValueData(stmt: PSQLite3Stmt): TRegistryValueData;
     function SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
   public
-    function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
-    function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
-    function GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
-    procedure GetAllAssemblies(AList: TAssemblyList);
-    procedure QueryAssemblies(const ASql: string; AList: TAssemblyList); overload;
-    procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
+    Assemblies: TAssemblyAssemblies;
+    UnusualProps: TAssemblyUnusualProps;
+    constructor Create;
 
     procedure AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
     procedure GetDependencies(AAssembly: TAssemblyId; AList: TAssemblyList);
@@ -173,12 +147,6 @@ procedure ResetAssemblyDb(const AFilename: string);
 
 implementation
 
-function TAssemblyIdentity.ToString: string;
-begin
-  Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
-    + '-' + Self.version + '-' + Self.publicKeyToken;
-end;
-
 function OpenAssemblyDb(const AFilename: string): TAssemblyDb;
 begin
   Result := TAssemblyDb.Create;
@@ -190,22 +158,21 @@ begin
   DeleteFile(AFilename);
 end;
 
+constructor TAssemblyDb.Create;
+begin
+  inherited;
+  Assemblies := TAssemblyAssemblies.Create(Self);
+  AddModule(Assemblies);
+
+  UnusualProps := TAssemblyUnusualProps.Create(Self);
+  AddModule(UnusualProps);
+end;
+
 
 //Ensures all the tables are present
 procedure TAssemblyDb.CreateTables;
 begin
-  Exec('CREATE TABLE IF NOT EXISTS assemblies ('
-    +'id INTEGER PRIMARY KEY,'
-    +'name TEXT NOT NULL COLLATE NOCASE,'
-    +'language TEXT NOT NULL COLLATE NOCASE,'
-    +'buildType TEXT NOT NULL COLLATE NOCASE,'
-    +'processorArchitecture TEXT NOT NULL COLLATE NOCASE,'
-    +'version TEXT NOT NULL COLLATE NOCASE,'
-    +'publicKeyToken TEXT NOT NULL,'
-    +'manifestName TEXT COLLATE NOCASE,'
-    +'CONSTRAINT identity UNIQUE(name,language,buildType,processorArchitecture,version,publicKeyToken)'
-    +')');
-
+  inherited;
   Exec('CREATE TABLE IF NOT EXISTS dependencies ('
     +'assemblyId INTEGER NOT NULL,'
     +'discoverable BOOLEAN,'
@@ -318,17 +285,7 @@ then UPDATE it.
 
 procedure TAssemblyDb.InitStatements;
 begin
-  FPreparedStatements := TDictionary<string, PSQLite3Stmt>.Create;
-
-  StmTouchAssembly := PrepareStatement('INSERT OR IGNORE INTO assemblies '
-    +'(name,language,buildType,processorArchitecture,version,publicKeyToken) '
-    +'VALUES (?,?,?,?,?,?)');
-  StmFindAssembly := PrepareStatement('SELECT id FROM assemblies WHERE '
-    +'name=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=?');
-  StmUpdateAssembly := PrepareStatement('UPDATE assemblies SET manifestName=? '
-    +'WHERE id=? ');
-  StmGetAssembly := PrepareStatement('SELECT * FROM assemblies WHERE id=?');
-
+  inherited;
   StmAddDependency := PrepareStatement('INSERT OR REPLACE INTO dependencies '
     +'(assemblyId,discoverable,resourceType,dependentAssemblyId,dependencyType) '
     +'VALUES (?,?,?,?,?)');
@@ -364,100 +321,6 @@ begin
     +'(assemblyId,folderId,name) VALUES (?,?,?)');
 end;
 
-function sqlite3_bind_str(pStmt: PSQLite3Stmt; i: Integer; const zData: string): integer; inline;
-begin
-  Result := sqlite3_bind_text16(pStmt, i, PChar(zData), -1, nil);
-end;
-
-
-function TAssemblyDb.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
-begin
-  Result := NeedAssembly(AEntry);
-  //Update optional fields
-  sqlite3_bind_str(StmUpdateAssembly, 1, AManifestName);
-  sqlite3_bind_int64(StmUpdateAssembly, 2, Result);
-  if sqlite3_step(StmUpdateAssembly) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmUpdateAssembly);
-end;
-
-function TAssemblyDb.NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
-var res: integer;
-begin
-  //Touch assembly
-  sqlite3_bind_str(StmTouchAssembly, 1, AEntry.name);
-  sqlite3_bind_str(StmTouchAssembly, 2, AEntry.language);
-  sqlite3_bind_str(StmTouchAssembly, 3, AEntry.buildType);
-  sqlite3_bind_str(StmTouchAssembly, 4, AEntry.processorArchitecture);
-  sqlite3_bind_str(StmTouchAssembly, 5, AEntry.version);
-  sqlite3_bind_str(StmTouchAssembly, 6, AEntry.publicKeyToken);
-  if sqlite3_step(StmTouchAssembly) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  Result := sqlite3_last_insert_rowid(FDb);
-  sqlite3_reset(StmTouchAssembly);
-
-  //Find assembly ID
-  sqlite3_bind_str(StmFindAssembly, 1, AEntry.name);
-  sqlite3_bind_str(StmFindAssembly, 2, AEntry.language);
-  sqlite3_bind_str(StmFindAssembly, 3, AEntry.buildType);
-  sqlite3_bind_str(StmFindAssembly, 4, AEntry.processorArchitecture);
-  sqlite3_bind_str(StmFindAssembly, 5, AEntry.version);
-  sqlite3_bind_str(StmFindAssembly, 6, AEntry.publicKeyToken);
-  res := sqlite3_step(StmFindAssembly);
-  if res <> SQLITE_ROW then
-    RaiseLastSQLiteError();
-  Result := sqlite3_column_int64(StmFindAssembly, 0);
-  sqlite3_reset(StmFindAssembly);
-end;
-
-//Parses a row from the assembles table into the record
-function TAssemblyDb.SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
-begin
-  Result.id := sqlite3_column_int64(stmt, 0);
-  Result.identity.name := sqlite3_column_text16(stmt, 1);
-  Result.identity.language := sqlite3_column_text16(stmt, 2);
-  Result.identity.buildType := sqlite3_column_text16(stmt, 3);
-  Result.identity.processorArchitecture := sqlite3_column_text16(stmt, 4);
-  Result.identity.version := sqlite3_column_text16(stmt, 5);
-  Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 6);
-  Result.manifestName := sqlite3_column_text16(stmt, 7);
-end;
-
-function TAssemblyDb.GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
-begin
-  sqlite3_bind_int64(StmGetAssembly, 1, AAssembly);
-  if sqlite3_step(StmGetAssembly) <> SQLITE_ROW then
-    RaiseLastSQLiteError();
-  Result := SqlReadAssemblyData(StmGetAssembly);
-  sqlite3_reset(StmGetAssembly);
-end;
-
-//Makes an SQL query which returns a set of assembly table records.
-procedure TAssemblyDb.QueryAssemblies(const ASql: string; AList: TAssemblyList);
-begin
-  QueryAssemblies(PrepareStatement(ASql), AList);
-end;
-
-procedure TAssemblyDb.QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList);
-var res: integer;
-  AId: TAssemblyId;
-begin
-  res := sqlite3_step(AStmt);
-  while res = SQLITE_ROW do begin
-    AId := sqlite3_column_int64(AStmt, 0);
-    if not AList.ContainsKey(AId) then
-      AList.Add(AId, SqlReadAssemblyData(AStmt));
-    res := sqlite3_step(AStmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(AStmt);
-end;
-
-procedure TAssemblyDb.GetAllAssemblies(AList: TAssemblyList);
-begin
-  QueryAssemblies('SELECT * FROM assemblies', AList);
-end;
 
 
 procedure TAssemblyDb.AddDependency(AAssembly: TAssemblyId; const AProperties: TDependencyEntryData);
@@ -477,7 +340,7 @@ var stmt: PSQLite3Stmt;
 begin
   stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT dependentAssemblyId FROM dependencies WHERE assemblyId=?)');
   sqlite3_bind_int64(stmt, 1, AAssembly);
-  QueryAssemblies(stmt, AList);
+  Assemblies.QueryAssemblies(stmt, AList);
 end;
 
 procedure TAssemblyDb.GetDependents(AAssembly: TAssemblyId; AList: TAssemblyList);
@@ -485,7 +348,7 @@ var stmt: PSQLite3Stmt;
 begin
   stmt := PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT assemblyId FROM dependencies WHERE dependentAssemblyId=?)');
   sqlite3_bind_int64(stmt, 1, AAssembly);
-  QueryAssemblies(stmt, AList);
+  Assemblies.QueryAssemblies(stmt, AList);
 end;
 
 
@@ -1035,12 +898,12 @@ end;
 
 procedure TAssemblyDb.FilterAssemblyByName(const AFilter: string; AList: TAssemblyList);
 begin
-  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.name LIKE "%'+AFilter+'%"', AList);
+  Assemblies.QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.name LIKE "%'+AFilter+'%"', AList);
 end;
 
 procedure TAssemblyDb.FilterAssemblyByFile(const AFilter: string; AList: TAssemblyList);
 begin
-  QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")', AList);
+  Assemblies.QueryAssemblies('SELECT * FROM assemblies WHERE assemblies.id IN (SELECT assemblyId FROM files WHERE files.name LIKE "%'+AFilter+'%")', AList);
 end;
 
 

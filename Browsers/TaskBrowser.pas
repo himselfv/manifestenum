@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees,
-  AssemblyDb, CommonResources;
+  AssemblyDb, CommonResources, AssemblyDb.Assemblies;
 
 type
   TNodeType = (ntFolder, ntTask);
@@ -184,7 +184,7 @@ begin
   inherited;
   AData := Sender.GetNodeData(Node);
   if AData.AssemblyId > 0 then
-    lblWhoAdded.Caption := 'Component: '+FDb.GetAssembly(AData.AssemblyId).identity.ToString
+    lblWhoAdded.Caption := 'Component: '+FDb.Assemblies.GetAssembly(AData.AssemblyId).identity.ToString
   else
     lblWhoAdded.Caption := '';
 end;

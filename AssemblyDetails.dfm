@@ -24,10 +24,18 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     TabOrder = 0
     object tsGeneral: TTabSheet
       Caption = 'General'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tsDependencies: TTabSheet
       Caption = 'Depends on'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lbDependencies: TListBox
         Left = 0
         Top = 0
@@ -41,6 +49,10 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     object tsDependents: TTabSheet
       Caption = 'Required by'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lbDependents: TListBox
         Left = 0
         Top = 0
@@ -54,10 +66,18 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     object tsCategories: TTabSheet
       Caption = 'Categories'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object tsAdditionalGear: TTabSheet
       Caption = 'Additional'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
 end

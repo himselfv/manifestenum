@@ -28,7 +28,7 @@ inherited FileBrowserForm: TFileBrowserForm
     Columns = <
       item
         Position = 0
-        Width = 458
+        Width = 464
         WideText = 'Name'
       end>
   end

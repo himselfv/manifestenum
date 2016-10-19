@@ -14,11 +14,7 @@ type
   protected
     FDb: PSQLite3;
     FPreparedStatements: TDictionary<string, PSQLite3Stmt>;
-    function GetLastSqliteError: string;
-    procedure RaiseLastSqliteError;
-    procedure Exec(const ASql: string);
     procedure CreateTables; virtual;
-    function PrepareStatement(const ASql: string): PSQLite3Stmt;
     procedure InitStatements; virtual;
     procedure FreeStatements; virtual;
   public
@@ -26,8 +22,12 @@ type
     destructor Destroy; override;
     function Open(const AFilename: string): boolean;
     procedure Close;
+    function GetLastSqliteError: string;
+    procedure RaiseLastSqliteError;
     procedure BeginTransaction;
     procedure CommitTransaction;
+    procedure Exec(const ASql: string);
+    function PrepareStatement(const ASql: string): PSQLite3Stmt;
 
   //Modules provide a way to extend the database object with additions to its key functions
   protected
@@ -44,15 +44,21 @@ type
     FDb: TAssemblyDbCore;
     procedure CreateTables; virtual;
     procedure InitStatements; virtual;
+    procedure Close; virtual;
   public
     constructor Create(ADb: TAssemblyDbCore);
     destructor Destroy;
     property Db: TAssemblyDbCore read FDb;
   end;
 
+function sqlite3_bind_str(pStmt: PSQLite3Stmt; i: Integer; const zData: string): integer; inline;
 
 implementation
 
+function sqlite3_bind_str(pStmt: PSQLite3Stmt; i: Integer; const zData: string): integer;
+begin
+  Result := sqlite3_bind_text16(pStmt, i, PChar(zData), -1, nil);
+end;
 
 constructor TAssemblyDbCore.Create;
 begin
@@ -100,8 +106,10 @@ begin
 end;
 
 procedure TAssemblyDbCore.Close;
+var AModule: TAssemblyDbModule;
 begin
-  FreeModules;
+  for AModule in FModules do
+    AModule.Close;
   if FDb <> nil then begin
     FreeStatements;
     sqlite3_close(FDb);
@@ -181,13 +189,19 @@ begin
   inherited;
 end;
 
-//Override to create tables
+//Override to create tables which are missing from the DB
 procedure TAssemblyDbModule.CreateTables;
 begin
 end;
 
 //Override to initialize precompiled statements
 procedure TAssemblyDbModule.InitStatements;
+begin
+end;
+
+//Override to free any resources which are not free automatically due to TAssemblyDbCore unloading.
+//Often nothing to do.
+procedure TAssemblyDbModule.Close;
 begin
 end;
 
