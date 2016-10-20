@@ -269,7 +269,7 @@ procedure TManifestParser.ImportMemberships(const AAssembly: TAssemblyId; const 
 var nodes: IXmlNodeList;
   i: integer;
 begin
-  nodes := FXml.selectNodes('categoryMembership/id');
+  nodes := ANode.selectNodes('categoryMembership/id');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
       Db.AddCategoryMembership(AAssembly, XmlReadCategoryMembership(nodes.item[i]));
@@ -280,7 +280,7 @@ procedure TManifestParser.ImportTaskScheduler(const AAssembly: TAssemblyId; cons
 var nodes: IXmlNodeList;
   i: integer;
 begin
-  nodes := FXml.selectNodes('Task/RegistrationInfo/URI');
+  nodes := ANode.selectNodes('Task/RegistrationInfo/URI');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
       Db.AddTask(AAssembly, nodes.item[i].text);
