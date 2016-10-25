@@ -5,7 +5,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RegistryBrowser, Vcl.StdCtrls, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RegistryBrowser, Vcl.StdCtrls, VirtualTrees, AssemblyDb,
+  Vcl.ExtCtrls;
 
 type
   TShellExtensionBrowserForm = class(TRegistryBrowserForm)
@@ -22,7 +23,7 @@ var
   ShellExtensionBrowserForm: TShellExtensionBrowserForm;
 
 implementation
-uses sqlite3, AssemblyDb.Core;
+uses sqlite3, AssemblyDb.Core, AssemblyDb.Registry;
 
 {$R *.dfm}
 
@@ -53,7 +54,7 @@ begin
   AExpandedPath := APath
     .Replace('HKLM', 'HKEY_LOCAL_MACHINE')
     .Replace('HKCU', 'HKEY_CURRENT_USER');
-  AKeyId := FDb.FindRegistryKeyByPath(AExpandedPath);
+  AKeyId := FDb.Registry.FindKeyByPath(AExpandedPath);
   if AKeyId > 0 then
     FKeys.Add(AKeyId, APath);
 end;
@@ -115,9 +116,9 @@ begin
 
   AList := TRegistryKeyList.Create;
   try
-    FDb.QueryRegistryKeys(stmt, AList);
+    FDb.Registry.QueryKeys(stmt, AList);
     for AKey in AList.Keys do begin
-      AKeyPath := FDb.GetRegistryKeyPath(AKey)
+      AKeyPath := FDb.Registry.GetKeyPath(AKey)
         .Replace('HKEY_LOCAL_MACHINE', 'HKLM')
         .Replace('HKEY_CURRENT_USER', 'HKCU')
         .Replace('HKEY_CLASSES_ROOT', 'HKCR');

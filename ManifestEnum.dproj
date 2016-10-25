@@ -153,6 +153,7 @@
             <Form>ShellExtensionBrowserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Db\AssemblyDb.Registry.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

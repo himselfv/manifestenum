@@ -21,7 +21,7 @@ inherited AssemblyResourcesForm: TAssemblyResourcesForm
     Columns = <
       item
         Position = 0
-        Width = 378
+        Width = 384
         WideText = 'Resource'
       end
       item

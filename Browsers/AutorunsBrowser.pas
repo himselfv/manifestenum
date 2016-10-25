@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RegistryBrowser, Vcl.StdCtrls, VirtualTrees, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RegistryBrowser, Vcl.StdCtrls, VirtualTrees, AssemblyDb,
+  Vcl.ExtCtrls;
 
 type
   TAutorunsBrowserForm = class(TRegistryBrowserForm)
@@ -21,6 +22,7 @@ var
   AutorunsBrowserForm: TAutorunsBrowserForm;
 
 implementation
+uses AssemblyDb.Registry;
 
 {$R *.dfm}
 
@@ -51,7 +53,7 @@ begin
   AExpandedPath := APath
     .Replace('HKLM', 'HKEY_LOCAL_MACHINE')
     .Replace('HKCU', 'HKEY_CURRENT_USER');
-  AKeyId := FDb.FindRegistryKeyByPath(AExpandedPath);
+  AKeyId := FDb.Registry.FindKeyByPath(AExpandedPath);
   if AKeyId > 0 then
     FKeys.Add(AKeyId, APath);
 end;

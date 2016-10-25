@@ -16,7 +16,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources, Generics.Collections, AssemblyDb.Assemblies;
+  CommonResources, Generics.Collections, AssemblyDb.Assemblies, AssemblyDb.Registry;
 
 type
   TNodeType = (
@@ -249,7 +249,7 @@ begin
 
   ARegistryValues := TList<TRegistryValueData>.Create;
   try
-    FDb.GetAssemblyKeys(AAssemblyId, ARegistryValues);
+    FDb.Registry.GetAssemblyKeys(AAssemblyId, ARegistryValues);
     for i := 0 to ARegistryValues.Count-1 do
       AddRegistryValueNode(ANode, ARegistryValues[i]);
   finally
@@ -303,7 +303,7 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntRegistryValue;
-  AData.Name := FDb.GetRegistryKeyPath(ARegistryValueData.key) + '\' + ARegistryValueData.name;
+  AData.Name := FDb.Registry.GetKeyPath(ARegistryValueData.key) + '\' + ARegistryValueData.name;
   AData.DelayLoad.Touched := true;
 end;
 

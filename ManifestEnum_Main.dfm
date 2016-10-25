@@ -1,8 +1,8 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
-  ClientHeight = 407
-  ClientWidth = 553
+  ClientHeight = 558
+  ClientWidth = 729
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,43 +18,51 @@ object MainForm: TMainForm
   object pcMain: TPageControl
     Left = 0
     Top = 0
-    Width = 553
-    Height = 407
+    Width = 729
+    Height = 558
     ActivePage = tsAssemblies
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 553
+    ExplicitHeight = 407
     object tsAssemblies: TTabSheet
       Caption = 'Assemblies'
+      ExplicitWidth = 545
+      ExplicitHeight = 379
       object Splitter1: TSplitter
         Left = 0
-        Top = 376
-        Width = 545
+        Top = 527
+        Width = 721
         Height = 3
         Cursor = crVSplit
         Align = alBottom
         ExplicitTop = 377
+        ExplicitWidth = 545
       end
       object lbComponents: TListBox
         Left = 0
         Top = 44
-        Width = 545
-        Height = 332
+        Width = 721
+        Height = 483
         Align = alClient
         ItemHeight = 13
         PopupMenu = PopupMenu
         TabOrder = 0
         OnClick = lbComponentsClick
+        ExplicitWidth = 545
+        ExplicitHeight = 332
       end
       object pnlFilter: TPanel
         Left = 0
         Top = 21
-        Width = 545
+        Width = 721
         Height = 23
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 545
         object sbFilterSettings: TSpeedButton
-          Left = 496
+          Left = 672
           Top = 0
           Width = 49
           Height = 23
@@ -68,24 +76,26 @@ object MainForm: TMainForm
         object edtQuickFilter: TEdit
           Left = 0
           Top = 0
-          Width = 496
+          Width = 672
           Height = 23
           Align = alClient
           TabOrder = 0
           OnChange = edtQuickFilterChange
+          ExplicitWidth = 496
           ExplicitHeight = 21
         end
       end
       object pnlFilterSettings: TPanel
         Left = 0
         Top = 0
-        Width = 545
+        Width = 721
         Height = 21
         Align = alTop
         AutoSize = True
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
+        ExplicitWidth = 545
         object cbFilterByName: TCheckBox
           Left = 0
           Top = 0

@@ -5,7 +5,7 @@ unit ManifestParser;
 //Использовать OmniXML вместо MSXML
 
 interface
-uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies,
+uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies, AssemblyDb.Registry,
   {$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF},
   Generics.Collections;
 
@@ -246,12 +246,12 @@ var AKeyName: string;
 begin
   AKeyName := textAttribute(ANode, 'keyName');
   AKeyData.owner := boolAttribute(ANode, 'owner');
-  AKeyId := Db.AddRegistryKey(AAssembly, AKeyName, AKeyData);
+  AKeyId := Db.Registry.AddKey(AAssembly, AKeyName, AKeyData);
 
   nodes := ANode.selectNodes('registryValue');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      Db.AddRegistryValue(AAssembly, XmlReadRegistryValueData(AKeyId, nodes.item[i]));
+      Db.Registry.AddValue(AAssembly, XmlReadRegistryValueData(AKeyId, nodes.item[i]));
   end;
 end;
 
@@ -259,7 +259,7 @@ function TManifestParser.XmlReadRegistryValueData(const AKeyId: TRegistryKeyId; 
 begin
   Result.key := AKeyId;
   Result.name := textAttribute(ANode, 'name');
-  Result.valueType := textAttribute(ANode, 'valueType');
+  Result.valueType := DecodeRegistryValueType(textAttribute(ANode, 'valueType'));
   Result.value := textAttribute(ANode, 'value');
   Result.operationHint := textAttribute(ANode, 'operationHint');
   Result.owner := boolAttribute(ANode, 'owner');

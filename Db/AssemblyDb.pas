@@ -2,7 +2,7 @@ unit AssemblyDb;
 
 interface
 uses SysUtils, Classes, sqlite3, Generics.Collections, AssemblyDb.Core, AssemblyDb.Assemblies,
-  AssemblyDb.UnusualProps;
+  AssemblyDb.Registry, AssemblyDb.UnusualProps;
 
 type
   TDependencyEntryData = record
@@ -41,24 +41,6 @@ type
   end;
 
 
-  TRegistryKeyId = int64;
-  TRegistryKeyList = TDictionary<TRegistryKeyId, string>;
-
-  TRegistryKeyReferenceData = record
-    owner: boolean;
-  end;
-  TRegistryKeyReferees = TDictionary<TAssemblyId, TRegistryKeyReferenceData>;
-
-  TRegistryValueData = record
-    key: TRegistryKeyId;
-    name: string;
-    valueType: string;
-    value: string;
-    operationHint: string;
-    owner: boolean;
-  end;
-
-
   TTaskFolderId = int64;
   TTaskEntryData = record
     assemblyId: TAssemblyId;
@@ -76,21 +58,16 @@ type
     StmAddFolderReference: PSQLite3Stmt;
     StmAddFile: PSQLite3Stmt;
 
-    StmTouchRegistryKey: PSQLite3Stmt;
-    StmFindRegistryKey: PSQLite3Stmt;
-    StmAddRegistryKeyReference: PSQLite3Stmt;
-    StmAddRegistryValue: PSQLite3Stmt;
-
     StmTouchTaskFolder: PSQLite3Stmt;
     StmFindTaskFolder: PSQLite3Stmt;
     StmTouchTask: PSQLite3Stmt;
     procedure CreateTables; override;
     procedure InitStatements; override;
     function SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
-    function SqlReadRegistryValueData(stmt: PSQLite3Stmt): TRegistryValueData;
     function SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
   public
     Assemblies: TAssemblyAssemblies;
+    Registry: TAssemblyRegistry;
     UnusualProps: TAssemblyUnusualProps;
     constructor Create;
 
@@ -116,19 +93,6 @@ type
     procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
     procedure GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
     procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
-
-    function AddRegistryKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId; overload;
-    function AddRegistryKeyPath(APath: string): TRegistryKeyId; overload;
-    procedure AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
-    function AddRegistryKey(AAssembly: TAssemblyId; APath: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId; overload;
-    procedure AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
-    procedure QueryRegistryKeys(AStmt: PSQLite3Stmt; AList: TRegistryKeyList); overload;
-    procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
-    procedure GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
-    function GetRegistryKeyName(AKey: TRegistryKeyId): string;
-    function GetRegistryKeyPath(AKey: TRegistryKeyId): string;
-    function FindRegistryKeyByPath(const APath: string; ARoot: TRegistryKeyId = 0): TRegistryKeyId;
-    procedure GetAssemblyKeys(AAssembly: TAssemblyId; AList: TList<TRegistryValueData>);
 
     function AddTaskFolder(const AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; const AName: string); overload;
@@ -166,6 +130,9 @@ begin
   inherited;
   Assemblies := TAssemblyAssemblies.Create(Self);
   AddModule(Assemblies);
+
+  Registry := TAssemblyRegistry.Create(Self);
+  AddModule(Registry);
 
   UnusualProps := TAssemblyUnusualProps.Create(Self);
   AddModule(UnusualProps);
@@ -208,32 +175,6 @@ begin
     +'sourcePath TEXT COLLATE NOCASE,'
     +'importPath TEXT COLLATE NOCASE,'
     +'CONSTRAINT identity UNIQUE (assemblyId,folderId,name)'
-    +')');
-
-
-  Exec('CREATE TABLE IF NOT EXISTS registryKeys ('
-    +'id INTEGER PRIMARY KEY,'
-    +'parentId INTEGER NOT NULL,'
-    +'keyName TEXT NOT NULL COLLATE NOCASE,'
-    +'CONSTRAINT identity UNIQUE(parentId,keyName)'
-    +')');
-
-  Exec('CREATE TABLE IF NOT EXISTS registryKeyReferences ('
-    +'assemblyId INTEGER NOT NULL,'
-    +'keyId INTEGER NOT NULL,'
-    +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(assemblyId,keyId)'
-    +')');
-
-  Exec('CREATE TABLE IF NOT EXISTS registryValues ('
-    +'assemblyId INTEGER NOT NULL,'
-    +'keyId INTEGER NOT NULL,'
-    +'name TEXT NOT NULL COLLATE NOCASE,'
-    +'valueType TEXT NOT NULL COLLATE NOCASE,'
-    +'value TEXT NOT NULL COLLATE NOCASE,'
-    +'operationHint TEXT NOT NULL COLLATE NOCASE,'
-    +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(assemblyId,keyId,name)'
     +')');
 
 
@@ -305,16 +246,6 @@ begin
   StmAddFile := PrepareStatement('INSERT OR IGNORE INTO files '
     +'(assemblyId,folderId,name,sourceName,sourcePath,importPath) '
     +'VALUES (?,?,?,?,?,?)');
-
-  StmTouchRegistryKey := PrepareStatement('INSERT OR IGNORE INTO registryKeys '
-    +'(parentId,keyName) VALUES (?,?)');
-  StmFindRegistryKey := PrepareStatement('SELECT id FROM registryKeys WHERE '
-    +'parentId=? AND keyName=?');
-  StmAddRegistryKeyReference := PrepareStatement('INSERT OR IGNORE INTO registryKeyReferences '
-    +'(assemblyId,keyId,owner) VALUES (?,?,?)');
-  StmAddRegistryValue := PrepareStatement('INSERT OR IGNORE INTO registryValues '
-    +'(assemblyId,keyId,name,valueType,value,operationHint,owner) '
-    +'VALUES (?,?,?,?,?,?,?)');
 
   StmTouchTaskFolder := PrepareStatement('INSERT OR IGNORE INTO taskFolders '
     +'(parentId,name) VALUES (?,?)');
@@ -602,202 +533,6 @@ begin
   AStmt := PrepareStatement('SELECT * FROM files WHERE assemblyId=?');
   sqlite3_bind_int64(AStmt, 1, AAssembly);
   QueryFiles(AStmt, AList);
-end;
-
-
-
-function TAssemblyDb.AddRegistryKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
-begin
-  //Touch
-  sqlite3_bind_int64(StmTouchRegistryKey, 1, AParent);
-  sqlite3_bind_str(StmTouchRegistryKey, 2, AName);
-  if sqlite3_step(StmTouchRegistryKey) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmTouchRegistryKey);
-
-  //Find id
-  sqlite3_bind_int64(StmFindRegistryKey, 1, AParent);
-  sqlite3_bind_str(StmFindRegistryKey, 2, AName);
-  if sqlite3_step(StmFindRegistryKey) <> SQLITE_ROW then
-    RaiseLastSQLiteError();
-  Result := sqlite3_column_int64(StmFindRegistryKey, 0);
-  sqlite3_reset(StmFindRegistryKey);
-end;
-
-//Overloaded version which parses Registry path and creates all neccessary key entries. Returns the leaf key id.
-function TAssemblyDb.AddRegistryKeyPath(APath: string): TRegistryKeyId;
-var idx: integer;
-begin
-  Result := 0;
-  while APath <> '' do begin
-    idx := pos('\', APath);
-    if idx <= 0 then begin
-      Result := AddRegistryKey(APath, Result);
-      break;
-    end;
-
-    if idx = 1 then begin
-      APath := copy(APath, 2, MaxInt);
-      continue;
-    end;
-
-    Result := AddRegistryKey(copy(APath, 1, idx-1), Result);
-    APath := copy(APath, idx+1, MaxInt);
-  end;
-end;
-
-procedure TAssemblyDb.AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
-begin
-  sqlite3_bind_int64(StmAddRegistryKeyReference, 1, AAssembly);
-  sqlite3_bind_int64(StmAddRegistryKeyReference, 2, AKey);
-  sqlite3_bind_int(StmAddRegistryKeyReference, 3, integer(AData.owner));
-  if sqlite3_step(StmAddRegistryKeyReference) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmAddRegistryKeyReference);
-end;
-
-//Overloaded version which parses Registry path, adds it and links the leaf key with the assembly.
-function TAssemblyDb.AddRegistryKey(AAssembly: TAssemblyId; APath: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId;
-begin
-  Result := AddRegistryKeyPath(APath);
-  if Result <> 0 then
-    AddRegistryKeyReference(AAssembly, Result, AData);
-end;
-
-procedure TAssemblyDb.AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
-begin
-  sqlite3_bind_int64(StmAddRegistryValue, 1, AAssembly);
-  sqlite3_bind_int64(StmAddRegistryValue, 2, AData.key);
-  sqlite3_bind_str(StmAddRegistryValue, 3, AData.name);
-  sqlite3_bind_str(StmAddRegistryValue, 4, AData.valueType);
-  sqlite3_bind_str(StmAddRegistryValue, 5, AData.value);
-  sqlite3_bind_str(StmAddRegistryValue, 6, AData.operationHint);
-  sqlite3_bind_int(StmAddRegistryValue, 7, integer(AData.owner));
-  if sqlite3_step(StmAddRegistryValue) <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(StmAddRegistryValue);
-end;
-
-//Parses the results of SELECT * FROM registryKeys
-procedure TAssemblyDb.QueryRegistryKeys(AStmt: PSQLite3Stmt; AList: TRegistryKeyList);
-var res: integer;
-begin
-  res := sqlite3_step(AStmt);
-  while res = SQLITE_ROW do begin
-    AList.Add(sqlite3_column_int64(AStmt, 0), sqlite3_column_text16(AStmt, 1));
-    res := sqlite3_step(AStmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError();
-  sqlite3_reset(AStmt);
-end;
-
-//Retrieves the list of children key names for a given parent key id (0 for root)
-procedure TAssemblyDb.GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
-var stmt: PSQLite3Stmt;
-begin
-  stmt := PrepareStatement('SELECT id, keyName FROM registryKeys WHERE parentId=?');
-  sqlite3_bind_int64(stmt, 1, AParent);
-  QueryRegistryKeys(stmt, AList);
-end;
-
-procedure TAssemblyDb.GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
-var stmt: PSQLite3Stmt;
-  res: integer;
-  AData: TRegistryKeyReferenceData;
-begin
-  stmt := PrepareStatement('SELECT assemblyId FROM registryKeyReferences WHERE keyId=?');
-  sqlite3_bind_int64(stmt, 1, AKey);
-  res := sqlite3_step(stmt);
-  while res = SQLITE_ROW do begin
-    AData.owner := boolean(sqlite3_column_int(stmt, 1));
-    AList.Add(sqlite3_column_int64(stmt, 0), AData);
-    res := sqlite3_step(stmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
-end;
-
-function TAssemblyDb.GetRegistryKeyName(AKey: TRegistryKeyId): string;
-var stmt: PSQLite3Stmt;
-begin
-  stmt := PrepareStatement('SELECT parentId,keyName FROM registryKeys WHERE id=?');
-  sqlite3_bind_int64(stmt, 1, AKey);
-  if sqlite3_step(stmt) <> SQLITE_ROW then
-    RaiseLastSQLiteError();
-  Result := sqlite3_column_text16(stmt, 1);
-end;
-
-function TAssemblyDb.GetRegistryKeyPath(AKey: TRegistryKeyId): string;
-var stmt: PSQLite3Stmt;
-begin
-  Result := '';
-  stmt := PrepareStatement('SELECT parentId,keyName FROM registryKeys WHERE id=?');
-  while AKey > 0 do begin
-    sqlite3_bind_int64(stmt, 1, AKey);
-    if sqlite3_step(stmt) <> SQLITE_ROW then
-      RaiseLastSQLiteError();
-    AKey := sqlite3_column_int64(stmt, 0); //parent
-    if Result = '' then
-      Result := sqlite3_column_text16(stmt, 1)
-    else
-      Result := sqlite3_column_text16(stmt, 1) + '\' + Result;
-    sqlite3_reset(stmt);
-  end;
-end;
-
-//Locates registry key ID by it's path. If the key is not found, returns 0.
-function TAssemblyDb.FindRegistryKeyByPath(const APath: string; ARoot: TRegistryKeyId): TRegistryKeyId;
-var stmt: PSQLite3Stmt;
-  pos_b, pos_e: integer;
-  res: integer;
-begin
-  stmt := PrepareStatement('SELECT id FROM registryKeys WHERE parentId=? AND keyName=?');
-  pos_b := 1;
-  Result := ARoot;
-  while pos_b <= Length(APath) do begin
-    pos_e := pos('\', APath, pos_b);
-    if pos_e <= 0 then pos_e := Length(APath)+1;
-    sqlite3_bind_int64(stmt, 1, Result);
-    sqlite3_bind_str(stmt, 2, copy(APath, pos_b, pos_e-pos_b));
-    res := sqlite3_step(stmt);
-    if res = SQLITE_DONE then begin
-      Result := 0;
-      exit;
-    end;
-    if res <> SQLITE_ROW then
-      RaiseLastSQLiteError();
-    Result := sqlite3_column_int64(stmt, 0);
-    sqlite3_reset(stmt);
-    pos_b := pos_e + 1;
-  end;
-end;
-
-function TAssemblyDb.SqlReadRegistryValueData(stmt: PSQLite3Stmt): TRegistryValueData;
-begin
-  Result.key := sqlite3_column_int64(stmt, 1);
-  Result.name := sqlite3_column_text16(stmt, 2);
-  Result.valueType := sqlite3_column_text16(stmt, 3);
-  Result.value := sqlite3_column_text16(stmt, 4);
-  Result.operationHint := sqlite3_column_text16(stmt, 5);
-  Result.owner := boolean(sqlite3_column_int(stmt, 6));
-end;
-
-procedure TAssemblyDb.GetAssemblyKeys(AAssembly: TAssemblyId; AList: TList<TRegistryValueData>);
-var stmt: PSQLite3Stmt;
-  res: integer;
-begin
-  stmt := PrepareStatement('SELECT * FROM registryValues WHERE assemblyId=?');
-  sqlite3_bind_int64(stmt, 1, AAssembly);
-  res := sqlite3_step(stmt);
-  while res = SQLITE_ROW do begin
-    AList.Add(SqlReadRegistryValueData(stmt));
-    res := sqlite3_step(stmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
 end;
 
 

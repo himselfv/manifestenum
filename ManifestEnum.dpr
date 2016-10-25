@@ -23,7 +23,8 @@ uses
   AssemblyDb.UnusualProps in 'Db\AssemblyDb.UnusualProps.pas',
   AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
-  ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm};
+  ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
+  AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas';
 
 {$R *.res}
 

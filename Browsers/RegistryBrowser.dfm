@@ -15,8 +15,17 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Caption = 'Components which use this key:'
     ExplicitWidth = 154
   end
+  object splValues: TSplitter [1]
+    Left = 181
+    Top = 0
+    Height = 256
+    Align = alRight
+    ExplicitLeft = 496
+    ExplicitTop = 128
+    ExplicitHeight = 100
+  end
   inherited Tree: TVirtualStringTree
-    Width = 635
+    Width = 181
     Height = 256
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs]
@@ -33,7 +42,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Columns = <
       item
         Position = 0
-        Width = 629
+        Width = 175
         WideText = 'Name'
       end>
   end
@@ -45,5 +54,26 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Align = alBottom
     ItemHeight = 13
     TabOrder = 1
+  end
+  object vtValues: TVirtualStringTree
+    Left = 184
+    Top = 0
+    Width = 451
+    Height = 256
+    Align = alRight
+    Header.AutoSizeIndex = 0
+    Header.Font.Charset = DEFAULT_CHARSET
+    Header.Font.Color = clWindowText
+    Header.Font.Height = -11
+    Header.Font.Name = 'Tahoma'
+    Header.Font.Style = []
+    Header.MainColumn = -1
+    TabOrder = 2
+    OnFreeNode = vtValuesFreeNode
+    OnGetText = vtValuesGetText
+    OnGetImageIndexEx = vtValuesGetImageIndexEx
+    OnGetNodeDataSize = vtValuesGetNodeDataSize
+    OnInitNode = vtValuesInitNode
+    Columns = <>
   end
 end
