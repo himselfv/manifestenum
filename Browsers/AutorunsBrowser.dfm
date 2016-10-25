@@ -1,4 +1,4 @@
-inherited AutorunsForm: TAutorunsForm
+inherited AutorunsBrowserForm: TAutorunsBrowserForm
   Caption = 'Autoruns'
   ExplicitWidth = 651
   ExplicitHeight = 431

@@ -122,6 +122,7 @@ type
     procedure AddRegistryKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
     function AddRegistryKey(AAssembly: TAssemblyId; APath: string; const AData: TRegistryKeyReferenceData): TRegistryKeyId; overload;
     procedure AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
+    procedure QueryRegistryKeys(AStmt: PSQLite3Stmt; AList: TRegistryKeyList); overload;
     procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
     procedure GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
     function GetRegistryKeyName(AKey: TRegistryKeyId): string;
@@ -677,21 +678,27 @@ begin
   sqlite3_reset(StmAddRegistryValue);
 end;
 
+//Parses the results of SELECT * FROM registryKeys
+procedure TAssemblyDb.QueryRegistryKeys(AStmt: PSQLite3Stmt; AList: TRegistryKeyList);
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(sqlite3_column_int64(AStmt, 0), sqlite3_column_text16(AStmt, 1));
+    res := sqlite3_step(AStmt)
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError();
+  sqlite3_reset(AStmt);
+end;
+
 //Retrieves the list of children key names for a given parent key id (0 for root)
 procedure TAssemblyDb.GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
 var stmt: PSQLite3Stmt;
-  res: integer;
 begin
   stmt := PrepareStatement('SELECT id, keyName FROM registryKeys WHERE parentId=?');
   sqlite3_bind_int64(stmt, 1, AParent);
-  res := sqlite3_step(stmt);
-  while res = SQLITE_ROW do begin
-    AList.Add(sqlite3_column_int64(stmt, 0), sqlite3_column_text16(stmt, 1));
-    res := sqlite3_step(stmt)
-  end;
-  if res <> SQLITE_DONE then
-    RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
+  QueryRegistryKeys(stmt, AList);
 end;
 
 procedure TAssemblyDb.GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);

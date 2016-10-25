@@ -146,7 +146,11 @@
         <DCCReference Include="Db\AssemblyDb.UnusualProps.pas"/>
         <DCCReference Include="Db\AssemblyDb.Assemblies.pas"/>
         <DCCReference Include="Browsers\AutorunsBrowser.pas">
-            <Form>AutorunsForm</Form>
+            <Form>AutorunsBrowserForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Browsers\ShellExtBrowser.pas">
+            <Form>ShellExtensionBrowserForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

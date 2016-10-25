@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
   StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons,
-  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser, AutorunsBrowser;
+  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser;
 
 type
   TMainForm = class(TForm)
@@ -49,7 +49,6 @@ type
     FFileBrowser: TFileBrowserForm;
     FRegistryBrowser: TRegistryBrowserForm;
     FTaskBrowser: TTaskBrowserForm;
-    FAutorunsBrowser: TAutorunsForm;
     procedure AddPage(const AForm: TForm);
   public
     procedure UpdateAssemblyList;
@@ -59,7 +58,8 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand, AssemblyDb.Assemblies;
+uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand, AssemblyDb.Assemblies,
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser;
 
 {$R *.dfm}
 
@@ -70,24 +70,19 @@ begin
   UpdateAssemblyList;
 
   FCategoryBrowser := TCategoryBrowserForm.Create(Application);
-  FCategoryBrowser.Db := FDb;
   AddPage(FCategoryBrowser);
 
   FFileBrowser := TFileBrowserForm.Create(Application);
-  FFileBrowser.Db := FDb;
   AddPage(FFileBrowser);
 
   FRegistryBrowser := TRegistryBrowserForm.Create(Application);
-  FRegistryBrowser.Db := FDb;
   AddPage(FRegistryBrowser);
 
   FTaskBrowser := TTaskBrowserForm.Create(Application);
-  FTaskBrowser.Db := FDb;
   AddPage(FTaskBrowser);
 
-  FAutorunsBrowser := TAutorunsForm.Create(Application);
-  FAutorunsBrowser.Db := FDb;
-  AddPage(FAutorunsBrowser);
+  AddPage(TAutorunsBrowserForm.Create(Application));
+  AddPage(TShellExtensionBrowserForm.Create(Application));
 
   FAssemblyDetails := TAssemblyDetailsForm.Create(Application);
   FAssemblyDetails.Db := FDb;
@@ -114,6 +109,9 @@ begin
   ts := TTabSheet.Create(pcMain);
   ts.Caption := AForm.Caption;
   ts.PageControl := pcMain;
+
+  if AForm is TDelayLoadTree then
+    TDelayLoadTree(AForm).Db := FDb;
 
   AForm.Parent := ts;
   AForm.BorderStyle := bsNone;
