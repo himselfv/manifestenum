@@ -1,20 +1,12 @@
-object RegistryBrowserForm: TRegistryBrowserForm
-  Left = 0
-  Top = 0
+inherited RegistryBrowserForm: TRegistryBrowserForm
   Caption = 'Registry'
   ClientHeight = 393
   ClientWidth = 635
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
-  OnShow = FormShow
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object Label1: TLabel [0]
     Left = 0
     Top = 256
     Width = 635
@@ -23,30 +15,27 @@ object RegistryBrowserForm: TRegistryBrowserForm
     Caption = 'Components which use this key:'
     ExplicitWidth = 154
   end
-  object Tree: TVirtualStringTree
-    Left = 0
-    Top = 0
+  inherited Tree: TVirtualStringTree
     Width = 635
     Height = 256
-    Align = alClient
-    BorderWidth = 1
-    Header.AutoSizeIndex = 0
-    Header.Font.Charset = DEFAULT_CHARSET
-    Header.Font.Color = clWindowText
-    Header.Font.Height = -11
-    Header.Font.Name = 'Tahoma'
-    Header.Font.Style = []
-    Header.MainColumn = -1
+    Header.MainColumn = 0
+    Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs]
+    Header.SortColumn = 0
     Images = ResourceModule.SmallImages
-    TabOrder = 0
-    OnExpanding = TreeExpanding
+    OnCompareNodes = TreeCompareNodes
     OnFocusChanged = TreeFocusChanged
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetImageIndexEx = TreeGetImageIndexEx
-    OnGetNodeDataSize = TreeGetNodeDataSize
     OnInitNode = TreeInitNode
-    Columns = <>
+    ExplicitWidth = 635
+    ExplicitHeight = 256
+    Columns = <
+      item
+        Position = 0
+        Width = 629
+        WideText = 'Name'
+      end>
   end
   object lbComponents: TListBox
     Left = 0

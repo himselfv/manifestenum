@@ -124,7 +124,9 @@ type
     procedure AddRegistryValue(AAssembly: TAssemblyId; const AData: TRegistryValueData);
     procedure GetRegistryKeys(const AParent: TRegistryKeyId; AList: TRegistryKeyList);
     procedure GetRegistryKeyReferees(AKey: TRegistryKeyId; AList: TRegistryKeyReferees);
+    function GetRegistryKeyName(AKey: TRegistryKeyId): string;
     function GetRegistryKeyPath(AKey: TRegistryKeyId): string;
+    function FindRegistryKeyByPath(const APath: string; ARoot: TRegistryKeyId = 0): TRegistryKeyId;
     procedure GetAssemblyKeys(AAssembly: TAssemblyId; AList: TList<TRegistryValueData>);
 
     function AddTaskFolder(const AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
@@ -710,6 +712,16 @@ begin
   sqlite3_reset(stmt);
 end;
 
+function TAssemblyDb.GetRegistryKeyName(AKey: TRegistryKeyId): string;
+var stmt: PSQLite3Stmt;
+begin
+  stmt := PrepareStatement('SELECT parentId,keyName FROM registryKeys WHERE id=?');
+  sqlite3_bind_int64(stmt, 1, AKey);
+  if sqlite3_step(stmt) <> SQLITE_ROW then
+    RaiseLastSQLiteError();
+  Result := sqlite3_column_text16(stmt, 1);
+end;
+
 function TAssemblyDb.GetRegistryKeyPath(AKey: TRegistryKeyId): string;
 var stmt: PSQLite3Stmt;
 begin
@@ -725,6 +737,33 @@ begin
     else
       Result := sqlite3_column_text16(stmt, 1) + '\' + Result;
     sqlite3_reset(stmt);
+  end;
+end;
+
+//Locates registry key ID by it's path. If the key is not found, returns 0.
+function TAssemblyDb.FindRegistryKeyByPath(const APath: string; ARoot: TRegistryKeyId): TRegistryKeyId;
+var stmt: PSQLite3Stmt;
+  pos_b, pos_e: integer;
+  res: integer;
+begin
+  stmt := PrepareStatement('SELECT id FROM registryKeys WHERE parentId=? AND keyName=?');
+  pos_b := 1;
+  Result := ARoot;
+  while pos_b <= Length(APath) do begin
+    pos_e := pos('\', APath, pos_b);
+    if pos_e <= 0 then pos_e := Length(APath)+1;
+    sqlite3_bind_int64(stmt, 1, Result);
+    sqlite3_bind_str(stmt, 2, copy(APath, pos_b, pos_e-pos_b));
+    res := sqlite3_step(stmt);
+    if res = SQLITE_DONE then begin
+      Result := 0;
+      exit;
+    end;
+    if res <> SQLITE_ROW then
+      RaiseLastSQLiteError();
+    Result := sqlite3_column_int64(stmt, 0);
+    sqlite3_reset(stmt);
+    pos_b := pos_e + 1;
   end;
 end;
 
