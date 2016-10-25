@@ -1,10 +1,17 @@
 inherited AutorunsBrowserForm: TAutorunsBrowserForm
   Caption = 'Autoruns'
-  ExplicitWidth = 651
-  ExplicitHeight = 431
   PixelsPerInch = 96
   TextHeight = 13
+  inherited splValues: TSplitter
+    Align = alRight
+    Visible = False
+  end
+  inherited Tree: TVirtualStringTree
+    Align = alClient
+  end
   inherited vtValues: TVirtualStringTree
-    BorderWidth = 1
+    Align = alRight
+    Visible = False
+    ExplicitLeft = 288
   end
 end

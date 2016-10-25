@@ -31,18 +31,19 @@ procedure TShellExtensionBrowserForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FMode := rmKeys;
+  FValuePresentation := vpInline;
 end;
 
 procedure TShellExtensionBrowserForm.SetDb(ADb: TAssemblyDb);
 begin
   if FDb <> ADb then
-    FKeys.Clear; //need to rediscover the key IDs
+    FRootKeys.Clear; //need to rediscover the key IDs
   inherited;
 end;
 
 procedure TShellExtensionBrowserForm.Reload;
 begin
-  if FKeys.Count = 0 then //not yet populated
+  if FRootKeys.Count = 0 then //not yet populated
     AddRootKeys;
   inherited;
 end;
@@ -56,7 +57,7 @@ begin
     .Replace('HKCU', 'HKEY_CURRENT_USER');
   AKeyId := FDb.Registry.FindKeyByPath(AExpandedPath);
   if AKeyId > 0 then
-    FKeys.Add(AKeyId, APath);
+    FRootKeys.Add(AKeyId, APath);
 end;
 
 procedure TShellExtensionBrowserForm.AddRootKeys;
@@ -121,7 +122,7 @@ begin
         .Replace('HKEY_LOCAL_MACHINE', 'HKLM')
         .Replace('HKEY_CURRENT_USER', 'HKCU')
         .Replace('HKEY_CLASSES_ROOT', 'HKCR');
-      FKeys.Add(AKey, AKeyPath);
+      FRootKeys.Add(AKey, AKeyPath);
     end;
   finally
     FreeAndNil(AList);

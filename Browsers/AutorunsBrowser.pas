@@ -30,20 +30,22 @@ procedure TAutorunsBrowserForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FMode := rmKeys;
+  FValuePresentation := vpInline;
 end;
 
 procedure TAutorunsBrowserForm.SetDb(ADb: TAssemblyDb);
 begin
   if FDb <> ADb then
-    FKeys.Clear; //need to rediscover the key IDs
+    FRootKeys.Clear; //need to rediscover the key IDs
   inherited;
 end;
 
 procedure TAutorunsBrowserForm.Reload;
 begin
-  if FKeys.Count = 0 then //not yet populated
+  if FRootKeys.Count = 0 then //not yet populated
     AddRootKeys;
   inherited;
+  Tree.FullExpand();
 end;
 
 procedure TAutorunsBrowserForm.AddRoot(const APath: string);
@@ -55,7 +57,7 @@ begin
     .Replace('HKCU', 'HKEY_CURRENT_USER');
   AKeyId := FDb.Registry.FindKeyByPath(AExpandedPath);
   if AKeyId > 0 then
-    FKeys.Add(AKeyId, APath);
+    FRootKeys.Add(AKeyId, APath);
 end;
 
 procedure TAutorunsBrowserForm.AddRootKeys;

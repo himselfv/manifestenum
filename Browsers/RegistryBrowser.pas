@@ -8,18 +8,6 @@ uses
   Generics.Collections, AssemblyDb, AssemblyDb.Registry, DelayLoadTree, CommonResources;
 
 type
-  TRegistryKeyNodeData = record
-    DelayLoad: TDelayLoadHeader;
-    keyId: TRegistryKeyId;
-    keyName: string;
-  end;
-  PRegistryKeyNodeData = ^TRegistryKeyNodeData;
-
-  TRegistryBrowserMode = (
-    rmRegistry, //show all registry
-    rmKeys      //show specific keys
-  );
-
   TRootKey = record
     Key: TRegistryKeyId;
     Caption: string;     // empty means use registry key name
@@ -28,6 +16,30 @@ type
   public
     procedure Add(AKey: TRegistryKeyId; const ACaption: string = '');
   end;
+
+  TRegistryKeyNodeData = record
+    DelayLoad: TDelayLoadHeader;
+    keyId: TRegistryKeyId;
+    name: string;
+    valueType: dword;
+    value: string;
+  end;
+  PRegistryKeyNodeData = ^TRegistryKeyNodeData;
+
+  TRegistryBrowserMode = (
+    rmRegistry, //show all registry
+    rmKeys      //show specific keys
+  );
+
+ {
+  RegistryBrowser can show values both inline (in the main table) or in the separate panel
+  to the right of it
+ }
+  TRegistryValuePresentation = (
+    vpNone,     //show only keys
+    vpInline,   //show values in the same tree
+    vpPanel     //show on a separate panel
+  );
 
   TRegistryValueNodeData = record
     name: string;
@@ -66,17 +78,22 @@ type
       var ImageList: TCustomImageList);
     procedure vtValuesCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
+    procedure FormShow(Sender: TObject);
   protected
     FMode: TRegistryBrowserMode;
-    FKeys: TRootKeyList; //root keys to display in rmKeys mode
+    FRootKeys: TRootKeyList; //root keys to display in rmKeys mode
+    FValuePresentation: TRegistryValuePresentation;
     procedure SetMode(const AValue: TRegistryBrowserMode);
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     procedure AddChildren(AParent: PVirtualNode; AKeyId: TRegistryKeyId);
     function AddRootKey(AParent: PVirtualNode; const AKey: TRootKey): PVirtualNode;
     function GetFocusedKey: TRegistryKeyId;
+    procedure SetValuePresentation(AValue: TRegistryValuePresentation);
+    procedure ApplyValuePresentation;
   public
     property Mode: TRegistryBrowserMode read FMode write SetMode;
-    property Keys: TRootKeyList read FKeys;
+    property RootKeys: TRootKeyList read FRootKeys;
+    property ValuePresentation: TRegistryValuePresentation read FValuePresentation write SetValuePresentation;
 
   protected
     function AddValueNode(AParent: PVirtualNode; AValue: TRegistryValueData): PVirtualNode;
@@ -106,13 +123,19 @@ end;
 procedure TRegistryBrowserForm.FormCreate(Sender: TObject);
 begin
   inherited;
-  FKeys := TRootKeyList.Create;
+  FRootKeys := TRootKeyList.Create;
   FMode := rmRegistry;
 end;
 
 procedure TRegistryBrowserForm.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil(FKeys);
+  FreeAndNil(FRootKeys);
+  inherited;
+end;
+
+procedure TRegistryBrowserForm.FormShow(Sender: TObject);
+begin
+  ApplyValuePresentation;
   inherited;
 end;
 
@@ -124,6 +147,48 @@ begin
   end;
 end;
 
+//You will have to manually reload after changing the presentation. This is not designed to be
+//changed mid-browsing anyway.
+procedure TRegistryBrowserForm.SetValuePresentation(AValue: TRegistryValuePresentation);
+begin
+  if Self.FValuePresentation = AValue then exit;
+  FValuePresentation := AValue;
+  ApplyValuePresentation;
+end;
+
+procedure TRegistryBrowserForm.ApplyValuePresentation;
+begin
+  case FValuePresentation of
+    vpNone, vpInline: begin
+      vtValues.Visible := false;
+      splValues.Visible := false;
+      Tree.Align := alClient;
+    end;
+    vpPanel: begin
+      Tree.Align := alLeft;
+      Tree.Width := Self.Width div 3;
+      splValues.Visible := true;
+      splValues.Left := Tree.Left + Tree.Width + 2;
+      vtValues.Visible := true;
+      vtValues.Left := splValues.Left + splValues.Width + 2;
+      vtValues.Align := alClient;
+    end;
+  end;
+
+  if FValuePresentation = vpInline then begin
+    Tree.Header.Options := Tree.Header.Options + [hoVisible];
+    Tree.Header.Columns[1].Options := Tree.Header.Columns[1].Options + [coVisible];
+    Tree.Header.Columns[2].Options := Tree.Header.Columns[2].Options + [coVisible];
+    Tree.Header.AutoSizeIndex := 2;
+    Tree.Header.Columns[0].Width := Tree.Width div 3;
+  end else begin
+    Tree.Header.Options := Tree.Header.Options - [hoVisible];
+    Tree.Header.Columns[1].Options := Tree.Header.Columns[1].Options - [coVisible];
+    Tree.Header.Columns[2].Options := Tree.Header.Columns[2].Options - [coVisible];
+    Tree.Header.AutoSizeIndex := 0;
+  end;
+end;
+
 procedure TRegistryBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 var AData: PRegistryKeyNodeData absolute ANodeData;
   i: integer;
@@ -132,8 +197,8 @@ begin
     if FMode = rmRegistry then
       AddChildren(ANode, 0)
     else begin
-      for i := 0 to FKeys.Count-1 do
-        AddRootKey(nil, FKeys[i]);
+      for i := 0 to FRootKeys.Count-1 do
+        AddRootKey(nil, FRootKeys[i]);
     end;
   end else
     AddChildren(ANode, AData.keyId);
@@ -146,6 +211,8 @@ var AList: TRegistryKeyList;
   ANode: PVirtualNode;
   AData: PRegistryKeyNodeData;
   AKey: TRegistryKeyId;
+  AValues: TRegistryValueList;
+  i: integer;
 begin
   AList := TRegistryKeyList.Create;
   try
@@ -154,10 +221,28 @@ begin
       ANode := Self.AddNode(AParent);
       AData := Tree.GetNodeData(ANode);
       AData.keyId := AKey;
-      AData.keyName := AList[AKey];
+      AData.name := AList[AKey];
     end;
   finally
     FreeAndNil(AList);
+  end;
+
+  if FValuePresentation = vpInline then begin
+    AValues := TRegistryValueList.Create;
+    try
+      FDb.Registry.GetKeyValues(AKeyId, AValues);
+      for i := 0 to AValues.Count-1 do begin
+        ANode := Self.AddNode(AParent);
+        AData := Tree.GetNodeData(ANode);
+        AData.keyId := 0; //mark as a value key
+        AData.name := AValues[i].name;
+        AData.valueType := AValues[i].valueType;
+        ADAta.value := AValues[i].value;
+        AData.DelayLoad.Touched := true;
+      end;
+    finally
+      FreeAndNil(AValues);
+    end;
   end;
 end;
 
@@ -168,9 +253,9 @@ begin
   Result := Self.AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.keyId := AKey.Key;
-  AData.keyName := AKey.Caption;
-  if AData.keyName = '' then
-    AData.keyName := Db.Registry.GetKeyName(AKey.Key);
+  AData.name := AKey.Caption;
+  if AData.name = '' then
+    AData.name := Db.Registry.GetKeyName(AKey.Key);
 end;
 
 procedure TRegistryBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
@@ -205,7 +290,12 @@ begin
 
   case Column of
     NoColumn, 0:
-      CellText := AData.keyName;
+      CellText := AData.name;
+    1:
+      if AData.keyId = 0 then
+        CellText := GetRegistryValueTypeName(AData.valueType)
+      else CellText := '';
+    2: CellText := AData.value;
   end;
 end;
 
@@ -219,8 +309,11 @@ begin
 
   case Column of
     NoColumn, 0: begin
-      ImageIndex := imgFolder;
       ImageList := ResourceModule.SmallImages;
+      if AData.keyId > 0 then
+        ImageIndex := imgFolder
+      else
+        ImageIndex := imgRegistryValue;
     end;
   end;
 end;
@@ -232,8 +325,12 @@ begin
   Data1 := Tree.GetNodeData(Node1);
   Data2 := Tree.GetNodeData(Node2);
   case Column of
-    NoColumn, 0:
-      Result := CompareText(Data1.keyName, Data2.keyName);
+    NoColumn, 0: begin
+      if (Data1.keyId = 0) xor (Data2.keyId = 0) then begin
+        Result := Data2.keyId - Data1.keyId; //the one with 0 goes later
+      end else
+        Result := CompareText(Data1.name, Data2.name);
+    end
   else
     inherited;
   end;
@@ -259,6 +356,7 @@ begin
   AData := Tree.GetNodeData(Tree.FocusedNode);
   Result := AData.keyId;
 end;
+
 
 
 // Values

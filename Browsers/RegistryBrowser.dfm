@@ -18,34 +18,45 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     ExplicitWidth = 154
   end
   object splValues: TSplitter [1]
-    Left = 269
+    Left = 285
     Top = 0
     Height = 442
-    Align = alRight
     ExplicitLeft = 496
     ExplicitTop = 128
     ExplicitHeight = 100
   end
   inherited Tree: TVirtualStringTree
-    Width = 269
+    Width = 285
     Height = 442
+    Align = alLeft
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs]
     Header.SortColumn = 0
     Images = ResourceModule.SmallImages
+    TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSpanColumns, toAutoTristateTracking, toAutoDeleteMovedNodes]
     OnCompareNodes = TreeCompareNodes
     OnFocusChanged = TreeFocusChanged
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetImageIndexEx = TreeGetImageIndexEx
     OnInitNode = TreeInitNode
-    ExplicitWidth = 269
+    ExplicitWidth = 285
     ExplicitHeight = 442
     Columns = <
       item
         Position = 0
-        Width = 263
+        Width = 23
         WideText = 'Name'
+      end
+      item
+        Position = 1
+        Width = 128
+        WideText = 'Type'
+      end
+      item
+        Position = 2
+        Width = 128
+        WideText = 'Value'
       end>
   end
   object lbComponents: TListBox
@@ -58,11 +69,11 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     TabOrder = 1
   end
   object vtValues: TVirtualStringTree
-    Left = 272
+    Left = 288
     Top = 0
-    Width = 516
+    Width = 500
     Height = 442
-    Align = alRight
+    Align = alClient
     BorderWidth = 1
     Header.AutoSizeIndex = 2
     Header.Font.Charset = DEFAULT_CHARSET
@@ -82,6 +93,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     OnGetImageIndexEx = vtValuesGetImageIndexEx
     OnGetNodeDataSize = vtValuesGetNodeDataSize
     OnInitNode = vtValuesInitNode
+    ExplicitLeft = 388
     Columns = <
       item
         Position = 0
@@ -95,7 +107,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
       end
       item
         Position = 2
-        Width = 190
+        Width = 174
         WideText = 'Value'
       end>
   end
