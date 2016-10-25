@@ -1,10 +1,13 @@
 unit DelayLoadTree;
+{
+Delay-load tree base implementation
 
-//Delay-load tree base implementation
+Nodes have two stages of initialization:
+  Add: when they are initially added to store their ID and count towards their parent's ChildCount
+  Touch: when they are fully initialized (including querying/adding their own children)
 
-//Nodes have two stages of initialization:
-//  Add: when they are initially added to store their ID and count towards their parent's ChildCount
-//  Touch: when they are fully initialized (including querying/adding their own children)
+Usage: inherit, implement DelayLoad() to Add() children of the given node.
+}
 
 interface
 
@@ -24,16 +27,18 @@ type
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode; var Allowed: Boolean);
     procedure TreeHeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
+    procedure FormShow(Sender: TObject);
   protected
     FDb: TAssemblyDb;
+    procedure SetDb(ADb: TAssemblyDb); virtual;
     procedure Touch(ANode: PVirtualNode);
     procedure TouchChildren(ANode: PVirtualNode);
     function AddNode(AParent: PVirtualNode): PVirtualNode;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); virtual;
   public
     procedure Clear;
-    procedure Reload;
-    property Db: TAssemblyDb read FDb write FDb;
+    procedure Reload; virtual;
+    property Db: TAssemblyDb read FDb write SetDb;
   end;
 
 implementation
@@ -60,6 +65,23 @@ begin
   finally
     Tree.EndUpdate;
   end;
+end;
+
+procedure TDelayLoadTree.FormShow(Sender: TObject);
+begin
+  if FDb <> nil then
+    Reload;
+end;
+
+procedure TDelayLoadTree.SetDb(ADb: TAssemblyDb);
+begin
+  FDb := ADb;
+  //The form automatically loads data at first reasonable time (visible + have db)
+  if Self.Visible and not Self.Showing then
+    if ADb <> nil then
+      Reload
+    else
+      Clear;
 end;
 
 procedure TDelayLoadTree.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
@@ -128,5 +150,6 @@ procedure TDelayLoadTree.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 begin
 //Override to do delayed loading
 end;
+
 
 end.

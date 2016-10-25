@@ -1,8 +1,5 @@
 inherited FileBrowserForm: TFileBrowserForm
   Caption = 'Files'
-  OnShow = FormShow
-  ExplicitWidth = 480
-  ExplicitHeight = 306
   PixelsPerInch = 96
   TextHeight = 13
   object lblWhoAdded: TLabel [0]

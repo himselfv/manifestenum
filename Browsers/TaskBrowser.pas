@@ -20,7 +20,6 @@ type
 
   TTaskBrowserForm = class(TDelayLoadTree)
     lblWhoAdded: TLabel;
-    procedure FormShow(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -46,13 +45,6 @@ implementation
 uses Generics.Collections;
 
 {$R *.dfm}
-
-procedure TTaskBrowserForm.FormShow(Sender: TObject);
-begin
-  inherited;
-  if FDb <> nil then
-    Reload;
-end;
 
 procedure TTaskBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 var AData: PNodeData absolute ANodeData;
