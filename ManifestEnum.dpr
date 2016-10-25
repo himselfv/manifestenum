@@ -21,7 +21,8 @@ uses
   FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm},
   CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm},
   AssemblyDb.UnusualProps in 'Db\AssemblyDb.UnusualProps.pas',
-  AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas';
+  AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',
+  AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsForm};
 
 {$R *.res}
 
@@ -33,5 +34,6 @@ begin
   Application.CreateForm(TResourceModule, ResourceModule);
   Application.CreateForm(TFileBrowserForm, FileBrowserForm);
   Application.CreateForm(TCategoryBrowserForm, CategoryBrowserForm);
+  Application.CreateForm(TAutorunsForm, AutorunsForm);
   Application.Run;
 end.

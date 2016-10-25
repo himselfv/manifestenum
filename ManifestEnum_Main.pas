@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
   StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons,
-  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser;
+  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser, AutorunsBrowser;
 
 type
   TMainForm = class(TForm)
@@ -49,6 +49,7 @@ type
     FFileBrowser: TFileBrowserForm;
     FRegistryBrowser: TRegistryBrowserForm;
     FTaskBrowser: TTaskBrowserForm;
+    FAutorunsBrowser: TAutorunsForm;
     procedure AddPage(const AForm: TForm);
   public
     procedure UpdateAssemblyList;
@@ -83,6 +84,10 @@ begin
   FTaskBrowser := TTaskBrowserForm.Create(Application);
   FTaskBrowser.Db := FDb;
   AddPage(FTaskBrowser);
+
+  FAutorunsBrowser := TAutorunsForm.Create(Application);
+  FAutorunsBrowser.Db := FDb;
+  AddPage(FAutorunsBrowser);
 
   FAssemblyDetails := TAssemblyDetailsForm.Create(Application);
   FAssemblyDetails.Db := FDb;
