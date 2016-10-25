@@ -249,7 +249,7 @@ begin
 
   ARegistryValues := TList<TRegistryValueData>.Create;
   try
-    FDb.Registry.GetAssemblyKeys(AAssemblyId, ARegistryValues);
+    FDb.Registry.GetAssemblyValues(AAssemblyId, ARegistryValues);
     for i := 0 to ARegistryValues.Count-1 do
       AddRegistryValueNode(ANode, ARegistryValues[i]);
   finally

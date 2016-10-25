@@ -64,6 +64,8 @@ type
     procedure vtValuesGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
       var ImageList: TCustomImageList);
+    procedure vtValuesCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
+      Column: TColumnIndex; var Result: Integer);
   protected
     FMode: TRegistryBrowserMode;
     FKeys: TRootKeyList; //root keys to display in rmKeys mode
@@ -71,10 +73,18 @@ type
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     procedure AddChildren(AParent: PVirtualNode; AKeyId: TRegistryKeyId);
     function AddRootKey(AParent: PVirtualNode; const AKey: TRootKey): PVirtualNode;
-    procedure ReloadComponents;
+    function GetFocusedKey: TRegistryKeyId;
   public
     property Mode: TRegistryBrowserMode read FMode write SetMode;
     property Keys: TRootKeyList read FKeys;
+
+  protected
+    function AddValueNode(AParent: PVirtualNode; AValue: TRegistryValueData): PVirtualNode;
+    procedure ReloadValueNodes;
+
+  protected
+    procedure ReloadComponents;
+
   end;
 
 var
@@ -233,11 +243,59 @@ procedure TRegistryBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: 
   Column: TColumnIndex);
 begin
   inherited;
+  if vtValues.Visible then
+    ReloadValueNodes;
   ReloadComponents;
+end;
+
+function TRegistryBrowserForm.GetFocusedKey: TRegistryKeyId;
+var AData: PRegistryKeyNodeData;
+begin
+  if Tree.FocusedNode = nil then begin
+    Result := 0;
+    exit;
+  end;
+
+  AData := Tree.GetNodeData(Tree.FocusedNode);
+  Result := AData.keyId;
 end;
 
 
 // Values
+
+procedure TRegistryBrowserForm.ReloadValueNodes;
+var AKey: TRegistryKeyId;
+  AList: TRegistryValueList;
+  i: integer;
+begin
+  vtValues.Clear;
+
+  AKey := Self.GetFocusedKey();
+  if AKey <= 0 then exit;
+
+  AList := TRegistryValueList.Create;
+  vtValues.BeginUpdate;
+  try
+    Db.Registry.GetKeyValues(AKey, AList);
+    for i := 0 to AList.Count-1 do
+      AddValueNode(nil, AList[i]);
+    vtValues.Sort(nil, vtValues.Header.SortColumn, vtValues.Header.SortDirection);
+  finally
+    vtValues.EndUpdate;
+    FreeAndNil(AList);
+  end;
+end;
+
+function TRegistryBrowserForm.AddValueNode(AParent: PVirtualNode; AValue: TRegistryValueData): PVirtualNode;
+var AData: PRegistryValueNodeData;
+begin
+  Result := vtValues.AddChild(AParent);
+  vtValues.ReinitNode(Result, false);
+  AData := vtValues.GetNodeData(Result);
+  AData.name := AValue.name;
+  AData.valueType := AValue.valueType;
+  AData.value := AValue.value;
+end;
 
 procedure TRegistryBrowserForm.vtValuesGetNodeDataSize(Sender: TBaseVirtualTree;
   var NodeDataSize: Integer);
@@ -247,36 +305,64 @@ end;
 
 procedure TRegistryBrowserForm.vtValuesInitNode(Sender: TBaseVirtualTree; ParentNode,
   Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
-var Data: PRegistryValueNodeData;
+var AData: PRegistryValueNodeData;
 begin
   inherited;
-  Data := Sender.GetNodeData(Node);
-  Initialize(Data^);
+  AData := Sender.GetNodeData(Node);
+  Initialize(AData^);
 end;
 
 procedure TRegistryBrowserForm.vtValuesFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
-var Data: PRegistryValueNodeData;
+var AData: PRegistryValueNodeData;
 begin
   inherited;
-  Data := Sender.GetNodeData(Node);
-  Finalize(Data^);
+  AData := Sender.GetNodeData(Node);
+  Finalize(AData^);
 end;
 
 procedure TRegistryBrowserForm.vtValuesGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
-var Data: PRegistryValueNodeData;
+var AData: PRegistryValueNodeData;
 begin
-  inherited;
+  AData := Sender.GetNodeData(Node);
+  if TextType <> ttNormal then exit;
 
+  case Column of
+    NoColumn, 0: CellText := AData.name;
+    1: CellText := GetRegistryValueTypeName(AData.valueType);
+    2: CellText := AData.value;
+  end;
 end;
 
 procedure TRegistryBrowserForm.vtValuesGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
   var ImageList: TCustomImageList);
-var Data: PRegistryValueNodeData;
+var AData: PRegistryValueNodeData;
 begin
-  inherited;
+  if not (Kind in [ikNormal, ikSelected]) then exit;
+  AData := Sender.GetNodeData(Node);
 
+  case Column of
+    NoColumn, 0: begin
+      ImageList := ResourceModule.SmallImages;
+      ImageIndex := imgRegistryValue;
+    end;
+  end;
+end;
+
+procedure TRegistryBrowserForm.vtValuesCompareNodes(Sender: TBaseVirtualTree; Node1,
+  Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
+var Data1, Data2: PRegistryValueNodeData;
+begin
+  Data1 := Tree.GetNodeData(Node1);
+  Data2 := Tree.GetNodeData(Node2);
+  case Column of
+    NoColumn, 0: Result := CompareText(Data1.name, Data2.name);
+    1: Result := Data1.valueType - Data2.valueType;
+    2: Result := CompareText(Data1.value, Data2.value);
+  else
+    inherited;
+  end;
 end;
 
 

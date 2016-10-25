@@ -32,6 +32,8 @@ type
     owner: boolean;
   end;
 
+  TRegistryValueList = TList<TRegistryValueData>;
+
   TAssemblyRegistry = class(TAssemblyDbModule)
   protected
     StmTouchKey: PSQLite3Stmt;
@@ -54,7 +56,9 @@ type
     function GetKeyPath(AKey: TRegistryKeyId): string;
     function FindKeyByPath(const APath: string; ARoot: TRegistryKeyId = 0): TRegistryKeyId;
 
-    procedure GetAssemblyKeys(AAssembly: TAssemblyId; AList: TList<TRegistryValueData>);
+    procedure QueryValues(AStmt: PSQLite3Stmt; AList: TRegistryValueList);
+    procedure GetKeyValues(AKey: TRegistryKeyId; AList: TRegistryValueList);
+    procedure GetAssemblyValues(AAssembly: TAssemblyId; AList: TRegistryValueList);
 
   end;
 
@@ -355,20 +359,34 @@ begin
   Result.owner := boolean(sqlite3_column_int(stmt, 6));
 end;
 
-procedure TAssemblyRegistry.GetAssemblyKeys(AAssembly: TAssemblyId; AList: TList<TRegistryValueData>);
-var stmt: PSQLite3Stmt;
-  res: integer;
+
+procedure TAssemblyRegistry.QueryValues(AStmt: PSQLite3Stmt; AList: TRegistryValueList);
+var res: integer;
 begin
-  stmt := Db.PrepareStatement('SELECT * FROM registryValues WHERE assemblyId=?');
-  sqlite3_bind_int64(stmt, 1, AAssembly);
-  res := sqlite3_step(stmt);
+  res := sqlite3_step(AStmt);
   while res = SQLITE_ROW do begin
-    AList.Add(SqlReadValueData(stmt));
-    res := sqlite3_step(stmt)
+    AList.Add(SqlReadValueData(AStmt));
+    res := sqlite3_step(AStmt)
   end;
   if res <> SQLITE_DONE then
     Db.RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
+  sqlite3_reset(AStmt);
+end;
+
+procedure TAssemblyRegistry.GetKeyValues(AKey: TRegistryKeyId; AList: TList<TRegistryValueData>);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM registryValues WHERE keyId=?');
+  sqlite3_bind_int64(stmt, 1, AKey);
+  QueryValues(stmt, AList);
+end;
+
+procedure TAssemblyRegistry.GetAssemblyValues(AAssembly: TAssemblyId; AList: TRegistryValueList);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM registryValues WHERE assemblyId=?');
+  sqlite3_bind_int64(stmt, 1, AAssembly);
+  QueryValues(stmt, AList);
 end;
 
 end.

@@ -1,6 +1,6 @@
 unit AssemblyDbBuilder;
 
-{$DEFINE PROFILE}
+//{$DEFINE PROFILE}
 
 interface
 uses AssemblyDb, ManifestParser;
