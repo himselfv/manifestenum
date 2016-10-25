@@ -23,12 +23,8 @@ object MainForm: TMainForm
     ActivePage = tsAssemblies
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 553
-    ExplicitHeight = 407
     object tsAssemblies: TTabSheet
       Caption = 'Assemblies'
-      ExplicitWidth = 545
-      ExplicitHeight = 379
       object Splitter1: TSplitter
         Left = 0
         Top = 527
@@ -49,8 +45,6 @@ object MainForm: TMainForm
         PopupMenu = PopupMenu
         TabOrder = 0
         OnClick = lbComponentsClick
-        ExplicitWidth = 545
-        ExplicitHeight = 332
       end
       object pnlFilter: TPanel
         Left = 0
@@ -60,7 +54,6 @@ object MainForm: TMainForm
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 545
         object sbFilterSettings: TSpeedButton
           Left = 672
           Top = 0
@@ -81,7 +74,6 @@ object MainForm: TMainForm
           Align = alClient
           TabOrder = 0
           OnChange = edtQuickFilterChange
-          ExplicitWidth = 496
           ExplicitHeight = 21
         end
       end
@@ -95,7 +87,6 @@ object MainForm: TMainForm
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
-        ExplicitWidth = 545
         object cbFilterByName: TCheckBox
           Left = 0
           Top = 0
@@ -165,6 +156,10 @@ object MainForm: TMainForm
     object Savemanifest1: TMenuItem
       Caption = 'Save manifest...'
       OnClick = Savemanifest1Click
+    end
+    object Uninstallassembly1: TMenuItem
+      Caption = 'Uninstall assembly'
+      OnClick = Uninstallassembly1Click
     end
   end
   object SaveManifestDialog: TSaveDialog

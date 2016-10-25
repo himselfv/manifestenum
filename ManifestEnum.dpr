@@ -24,7 +24,8 @@ uses
   AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
-  AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas';
+  AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas',
+  WinSxS in 'WinSxS.pas';
 
 {$R *.res}
 

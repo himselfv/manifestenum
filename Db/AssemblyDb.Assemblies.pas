@@ -13,6 +13,7 @@ type
     version: string;
     publicKeyToken: string;
     function ToString: string;
+    function ToStrongName: string;
   end;
   TAssemblyData = record
     id: TAssemblyId;
@@ -48,6 +49,24 @@ function TAssemblyIdentity.ToString: string;
 begin
   Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
     + '-' + Self.version + '-' + Self.publicKeyToken;
+end;
+
+function TAssemblyIdentity.ToStrongName: string;
+begin
+  Result := Self.name+', '
+    +'Version='+Self.version;
+  if Self.language <> '' then
+    Result := Result +', Culture='+Self.language
+  else
+    Result := Result +', Culture=Neutral';
+  if Self.PublicKeyToken <> '' then
+    Result := Result + ', PublicKeyToken='+Self.publicKeyToken;
+  if Self.processorArchitecture <> '' then
+    Result := Result + ', ProcessorArchitecture='+Self.processorArchitecture
+  else
+    Result := Result + ', ProcessorArchitecture=Neutral';
+  if Self.buildType <> '' then
+    Result := Result + ', BuildType='+Self.buildType;
 end;
 
 procedure TAssemblyAssemblies.CreateTables;

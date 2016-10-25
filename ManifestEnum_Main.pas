@@ -31,6 +31,7 @@ type
     Savemanifest1: TMenuItem;
     SaveManifestDialog: TSaveDialog;
     Splitter1: TSplitter;
+    Uninstallassembly1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure cbFilterByNameClick(Sender: TObject);
     procedure Loadmanifestfile1Click(Sender: TObject);
     procedure Savemanifest1Click(Sender: TObject);
+    procedure Uninstallassembly1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
@@ -59,7 +61,7 @@ var
 
 implementation
 uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand, AssemblyDb.Assemblies,
-  DelayLoadTree, AutorunsBrowser, ShellExtBrowser;
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj;
 
 {$R *.dfm}
 
@@ -232,5 +234,23 @@ begin
   end;
 end;
 
+procedure TMainForm.Uninstallassembly1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+  ACache: IAssemblyCache;
+  AInfo: ASSEMBLY_INFO;
+begin
+  if lbComponents.ItemIndex < 0 then
+    exit;
+  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+
+  OleCheck(CreateAssemblyCache(ACache, 0));
+  AInfo.cbAssemblyInfo := SizeOf(AInfo);
+  OleCheck(ACache.QueryAssemblyInfo(0, PChar(AAssemblyData.identity.ToStrongName), @AInfo));
+
+  MessageBox(Self.Handle, PChar('Assembly size: '+IntToStr(AInfo.uliAssemblySizeInKB.QuadPart)+' Kb'),
+    PChar('Assembly info'), MB_OK);
+end;
 
 end.
