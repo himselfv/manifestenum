@@ -142,9 +142,14 @@ begin
   Db.Exec('CREATE TABLE IF NOT EXISTS registryKeyReferences ('
     +'assemblyId INTEGER NOT NULL,'
     +'keyId INTEGER NOT NULL,'
-    +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(assemblyId,keyId)'
+    +'owner BOOLEAN'
+//    +',CONSTRAINT identity UNIQUE(assemblyId,keyId)'
     +')');
+
+  Db.Exec('CREATE TABLE IF NOT EXISTS registryValueNames ('
+    +'id INTEGER PRIMARY KEY,'
+    +'name TEXT NOT NULL COLLATE NOCASE UNIQUE'
+  +')');
 
   Db.Exec('CREATE TABLE IF NOT EXISTS registryValues ('
     +'assemblyId INTEGER NOT NULL,'
@@ -153,8 +158,8 @@ begin
     +'valueType INTEGER NOT NULL,'
     +'value TEXT NOT NULL COLLATE NOCASE,'
     +'operationHint TEXT NOT NULL COLLATE NOCASE,'
-    +'owner BOOLEAN,'
-    +'CONSTRAINT identity UNIQUE(assemblyId,keyId,name)'
+    +'owner BOOLEAN'
+//    +',CONSTRAINT identity UNIQUE(assemblyId,keyId,name)'
     +')');
 end;
 

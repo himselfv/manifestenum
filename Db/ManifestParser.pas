@@ -4,6 +4,17 @@ unit ManifestParser;
 //{$DEFINE XML_OMNI}
 //Использовать OmniXML вместо MSXML
 
+//{$DEFINE DRYRUN}
+//Do not add anything to DB, just parse the Xml
+
+//{$DEFINE SUPERDRY}
+//Do not even parse the xml, just read it
+
+//{$DEFINE UNUSUALPROPS}
+//Record unusual encountered properties in a special table (slower but helps figuring out manifest
+//peculiarities)
+
+
 interface
 uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies, AssemblyDb.Registry,
   {$IFDEF XML_OMNI}OmniXML{$ELSE}ComObj, MSXML{$ENDIF},
@@ -85,11 +96,13 @@ begin
   end;
 
   xmlStr := LoadManifestFile(AManifestFile);
+ {$IFDEF DRYRUN}{$IFDEF SUPERDRY}exit;{$ENDIF}{$ENDIF}
   FXml.loadXML(xmlStr);
 
   node := FXml.selectSingleNode('/assembly/assemblyIdentity');
   Assert(node <> nil);
-  aId := Db.Assemblies.AddAssembly(XmlReadAssemblyIdentityData(node), ChangeFileExt(ExtractFilename(AManifestFile), ''));
+ {$IFNDEF DRYRUN}aId := Db.Assemblies.AddAssembly({$ENDIF}XmlReadAssemblyIdentityData(node) {$IFNDEF DRYRUN}, ChangeFileExt(ExtractFilename(AManifestFile), '')){$ENDIF};
+
 
   root := FXml.selectSingleNode('/assembly');
   children := root.childNodes;
@@ -97,7 +110,7 @@ begin
     node := children.item[i];
     nodeName := node.nodeName;
     if nodeName = 'dependency' then
-      Db.AddDependency(aId, XmlReadDependencyData(node))
+     {$IFNDEF DRYRUN}Db.AddDependency(aId,{$ENDIF} XmlReadDependencyData(node){$IFNDEF DRYRUN}){$ENDIF}
     else
     if nodeName = 'file' then
       ImportFileNode(aId, node)
@@ -113,52 +126,16 @@ begin
     else
     if nodeName = 'taskScheduler' then
       ImportTaskScheduler(aId, node)
-    else
-      Db.UnusualProps.Add(aId, nodeName);
+    else begin
+     {$IFDEF UNUSUALPROPX}
+      Db.UnusualProps.Add(aId, PROP_NODENAME, nodeName);
+     {$ENDIF}
+    end;
   end;
-
-
-{
-  nodes := FXml.selectNodes('/assembly/dependency');
-  if nodes <> nil then begin
-    for i := 0 to nodes.length-1 do
-      AddDependency(aId, XmlReadDependencyData(nodes.item[i]));
-  end;
-
-  nodes := FXml.selectNodes('/assembly/file');
-  if nodes <> nil then begin
-    for i := 0 to nodes.length-1 do
-      ImportFileNode(aId, nodes.item[i]);
-  end;
-
-  nodes := FXml.selectNodes('/assembly/directories/directory');
-  if nodes <> nil then begin
-    for i := 0 to nodes.length-1 do
-      ImportDirectoryNode(aId, nodes.item[i]);
-  end;
-
-  nodes := FXml.selectNodes('/assembly/registryKeys/registryKey');
-  if nodes <> nil then begin
-    for i := 0 to nodes.length-1 do
-      ImportRegistryKeyNode(aId, nodes.item[i]);
-  end;
-
-  nodes := FXml.selectNodes('/assembly/memberships/categoryMembership/id');
-  if nodes <> nil then begin
-    for i := 0 to nodes.length-1 do
-      AddCategoryMembership(aId, XmlReadCategoryMembership(nodes.item[i]));
-  end;
-
-  nodes := FXml.selectNodes('/assembly/taskScheduler/Task/RegistrationInfo/URI');
-  if nodes <> nil then begin
-    for i := 0 to nodes.length-1 do
-      Self.AddTask(aId, nodes.item[i].text);
-  end;
-}
 end;
 
 function textAttribute(const ANode: IXmlNode; const AAttribName: string): string; inline;
-var AAttrib: IXmlDomNode;
+var AAttrib: IXmlNode;
 begin
   AAttrib := ANode.attributes.getNamedItem(AAttribName);
   if AAttrib <> nil then
@@ -193,7 +170,7 @@ begin
     Result.dependentAssembly := 0;
     Result.dependencyType := '';
   end else begin
-    Result.dependentAssembly := Db.Assemblies.NeedAssembly(XmlReadAssemblyIdentityData(depAss));
+    {$IFNDEF DRYRUN}Result.dependentAssembly := Db.Assemblies.NeedAssembly({$ENDIF}XmlReadAssemblyIdentityData(depAss){$IFNDEF DRYRUN}){$ENDIF};
     Result.dependencyType := textAttribute(ANode.selectSingleNode('dependentAssembly'), 'dependencyType');
   end;
 end;
@@ -202,17 +179,17 @@ procedure TManifestParser.ImportDirectories(const AAssembly: TAssemblyId; const 
 var i: integer;
 begin
   for i := 0 to ANode.childNodes.length-1 do
-    if ANode.childNodes[i].nodeName = 'directory' then
-      ImportDirectoryNode(AAssembly, ANode.childNodes[i]);
+    if ANode.childNodes.Item[i].nodeName = 'directory' then
+      ImportDirectoryNode(AAssembly, ANode.childNodes.Item[i]);
 end;
 
 procedure TManifestParser.ImportDirectoryNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
 var AData: TFolderReferenceData;
 begin
   AData.owner := boolAttribute(ANode, 'owner');
-  Db.AddFolder(AAssembly,
+{$IFNDEF DRYRUN}  Db.AddFolder(AAssembly,
     textAttribute(ANode, 'destinationPath'),
-    AData);
+    AData);{$ENDIF}
 end;
 
 procedure TManifestParser.ImportFileNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
@@ -221,20 +198,20 @@ var AData: TFileEntryData;
 begin
   ADestinationPath := textAttribute(ANode, 'destinationPath');
   AData.assembly := AAssembly;
-  AData.folder := Db.AddFolderPath(ADestinationPath);
+{$IFNDEF DRYRUN}  AData.folder := Db.AddFolderPath(ADestinationPath);{$ENDIF}
   AData.name := textAttribute(ANode, 'name');
   AData.sourceName := textAttribute(ANode, 'sourceName');
   AData.sourcePath := textAttribute(ANode, 'sourcePath');
   AData.importPath := textAttribute(ANode, 'importPath');
-  Db.AddFile(AData);
+{$IFNDEF DRYRUN}  Db.AddFile(AData);{$ENDIF}
 end;
 
 procedure TManifestParser.ImportRegistryKeys(const AAssembly: TAssemblyId; const ANode: IXmlNode);
 var i: integer;
 begin
   for i := 0 to ANode.childNodes.length-1 do
-    if ANode.childNodes[i].nodeName = 'registryKey' then
-      ImportRegistryKeyNode(AAssembly, ANode.childNodes[i]);
+    if ANode.childNodes.Item[i].nodeName = 'registryKey' then
+      ImportRegistryKeyNode(AAssembly, ANode.childNodes.Item[i]);
 end;
 
 procedure TManifestParser.ImportRegistryKeyNode(const AAssembly: TAssemblyId; const ANode: IXmlNode);
@@ -246,12 +223,12 @@ var AKeyName: string;
 begin
   AKeyName := textAttribute(ANode, 'keyName');
   AKeyData.owner := boolAttribute(ANode, 'owner');
-  AKeyId := Db.Registry.AddKey(AAssembly, AKeyName, AKeyData);
+{$IFNDEF DRYRUN}  AKeyId := Db.Registry.AddKey(AAssembly, AKeyName, AKeyData);{$ENDIF}
 
   nodes := ANode.selectNodes('registryValue');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      Db.Registry.AddValue(AAssembly, XmlReadRegistryValueData(AKeyId, nodes.item[i]));
+      {$IFNDEF DRYRUN}Db.Registry.AddValue(AAssembly, {$ENDIF}XmlReadRegistryValueData(AKeyId, nodes.item[i]){$IFNDEF DRYRUN}){$ENDIF};
   end;
 end;
 
@@ -272,7 +249,7 @@ begin
   nodes := ANode.selectNodes('categoryMembership/id');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      Db.AddCategoryMembership(AAssembly, XmlReadCategoryMembership(nodes.item[i]));
+     {$IFNDEF DRYRUN} Db.AddCategoryMembership(AAssembly,{$ENDIF} XmlReadCategoryMembership(nodes.item[i]){$IFNDEF DRYRUN}){$ENDIF};
   end;
 end;
 
@@ -283,7 +260,7 @@ begin
   nodes := ANode.selectNodes('Task/RegistrationInfo/URI');
   if nodes <> nil then begin
     for i := 0 to nodes.length-1 do
-      Db.AddTask(AAssembly, nodes.item[i].text);
+      {$IFNDEF DRYRUN}Db.AddTask(AAssembly,{$ENDIF} nodes.item[i].text{$IFNDEF DRYRUN}){$ENDIF};
   end;
 end;
 

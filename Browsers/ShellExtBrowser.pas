@@ -105,8 +105,7 @@ begin
    We won't check though because it's slow.
  }
 
-  stmt := FDb.PrepareStatement('SELECT * FROM registryKeys WHERE (keyName=?) OR (keyName=?) OR '
-    +'(keyName=?) OR (keyName=?) OR (keyName=?) OR (keyName=?)');
+  stmt := FDb.PrepareStatement('SELECT * FROM registryKeys WHERE keyName IN (?, ?, ?, ?, ?, ?)');
   sqlite3_bind_str(stmt, 1, 'ContextMenuHandlers');
   sqlite3_bind_str(stmt, 2, 'PropertySheetHandlers');
   sqlite3_bind_str(stmt, 3, 'DragDropHandlers');

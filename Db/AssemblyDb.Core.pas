@@ -47,7 +47,7 @@ type
     procedure Close; virtual;
   public
     constructor Create(ADb: TAssemblyDbCore);
-    destructor Destroy;
+    destructor Destroy; override;
     property Db: TAssemblyDbCore read FDb;
   end;
 
@@ -98,6 +98,11 @@ begin
     Result := false;
     exit;
   end;
+
+  Exec('PRAGMA cache_size=200000');
+  Exec('PRAGMA synchronous=OFF');
+  Exec('PRAGMA count_changes=OFF');
+  Exec('PRAGMA temp_store=2');
 
   CreateTables;
   InitStatements;

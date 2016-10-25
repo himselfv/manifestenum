@@ -1,5 +1,7 @@
 unit AssemblyDbBuilder;
 
+{$DEFINE PROFILE}
+
 interface
 uses AssemblyDb, ManifestParser;
 
@@ -11,7 +13,7 @@ procedure ImportAssemblyManifests(ADb: TAssemblyDb);
 procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
 
 implementation
-uses SysUtils, Classes, FilenameUtils, ManifestEnum_Progress;
+uses Windows, SysUtils, Classes, FilenameUtils, ManifestEnum_Progress;
 
 function SxSDir: string;
 begin
@@ -53,6 +55,9 @@ var baseDir: string;
   i: integer;
   progress: TProgressForm;
   parser: TManifestParser;
+ {$IFDEF PROFILE}
+  tm1: cardinal;
+ {$ENDIF}
 begin
   baseDir := SxSManifestDir()+'\';
   fnames := nil;
@@ -61,6 +66,10 @@ begin
   progress := TProgressForm.Create(nil);
   try
     progress.Show;
+
+   {$IFDEF PROFILE}
+    tm1 := GetTickCount();
+   {$ENDIF}
 
     //Составляем список файлов
     progress.Start('Building file list');
@@ -75,6 +84,11 @@ begin
       parser.ImportManifest(baseDir+'\'+fnames[i]);
       progress.Step();
     end;
+
+   {$IFDEF PROFILE}
+    tm1 := GetTickCount-tm1;
+    MessageBox(0, PChar('Total time: '+IntToStr(tm1)), PChar('Import completed'), MB_OK);
+   {$ENDIF}
 
     ADb.CommitTransaction;
   finally
