@@ -53,20 +53,20 @@ end;
 
 function TAssemblyIdentity.ToStrongName: string;
 begin
-  Result := Self.name+', '
-    +'Version='+Self.version;
-  if Self.language <> '' then
-    Result := Result +', Culture='+Self.language
-  else
-    Result := Result +', Culture=Neutral';
+ //We'll try to be very, very compliant to what SxS.dll expects. It fails at the
+ //slightest deviation
+ //Working example:
+ //Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32
+  Result := Self.name+',version="'+Self.version+'"';
   if Self.PublicKeyToken <> '' then
-    Result := Result + ', PublicKeyToken='+Self.publicKeyToken;
+    Result := Result + ',publicKeyToken="'+Self.publicKeyToken+'"';
   if Self.processorArchitecture <> '' then
-    Result := Result + ', ProcessorArchitecture='+Self.processorArchitecture
-  else
-    Result := Result + ', ProcessorArchitecture=Neutral';
+    Result := Result + ',processorArchitecture="'+Self.processorArchitecture+'"';
+{ Optional but works:
+  if Self.language <> '' then
+    Result := Result +',language="'+Self.language+'"';
   if Self.buildType <> '' then
-    Result := Result + ', BuildType='+Self.buildType;
+    Result := Result + ',buildType="'+Self.buildType+'"';}
 end;
 
 procedure TAssemblyAssemblies.CreateTables;

@@ -239,13 +239,18 @@ var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
   ACache: IAssemblyCache;
   AInfo: ASSEMBLY_INFO;
+  AName: IAssemblyName;
 begin
   if lbComponents.ItemIndex < 0 then
     exit;
   AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
+  AName := nil;
+  OleCheck(CreateAssemblyNameObject(AName, PChar(AAssemblyData.identity.ToStrongName), 1, nil));
+
   OleCheck(CreateAssemblyCache(ACache, 0));
+  FillChar(AInfo, SizeOf(AInfo), 0);
   AInfo.cbAssemblyInfo := SizeOf(AInfo);
   OleCheck(ACache.QueryAssemblyInfo(0, PChar(AAssemblyData.identity.ToStrongName), @AInfo));
 

@@ -74,7 +74,94 @@ type
         ref: LPFUSION_INSTALL_REFERENCE): HRESULT; stdcall;
   end;
 
+
+  ASM_NAME = (
+    ASM_NAME_PUBLIC_KEY,
+    ASM_NAME_PUBLIC_KEY_TOKEN,
+    ASM_NAME_HASH_VALUE,
+    ASM_NAME_NAME,
+    ASM_NAME_MAJOR_VERSION,
+    ASM_NAME_MINOR_VERSION,
+    ASM_NAME_BUILD_NUMBER,
+    ASM_NAME_REVISION_NUMBER,
+    ASM_NAME_CULTURE,
+    ASM_NAME_PROCESSOR_ID_ARRAY,
+    ASM_NAME_OSINFO_ARRAY,
+    ASM_NAME_HASH_ALGID,
+    ASM_NAME_ALIAS,
+    ASM_NAME_CODEBASE_URL,
+    ASM_NAME_CODEBASE_LASTMOD,
+    ASM_NAME_NULL_PUBLIC_KEY,
+    ASM_NAME_NULL_PUBLIC_KEY_TOKEN,
+    ASM_NAME_CUSTOM,
+    ASM_NAME_NULL_CUSTOM,
+    ASM_NAME_MVID,
+    ASM_NAME_MAX_PARAMS
+  );
+
+  ASM_DISPLAY_FLAGS = (
+    ASM_DISPLAYF_VERSION               = $1,
+    ASM_DISPLAYF_CULTURE               = $2,
+    ASM_DISPLAYF_PUBLIC_KEY_TOKEN      = $4,
+    ASM_DISPLAYF_PUBLIC_KEY            = $8,
+    ASM_DISPLAYF_CUSTOM                = $10,
+    ASM_DISPLAYF_PROCESSORARCHITECTURE = $20,
+    ASM_DISPLAYF_LANGUAGEID            = $40
+  );
+
+  IAssemblyName = interface['{cd193bc0-b4bc-11D2-9833-00c04fc31d2e}']
+    function SetProperty(
+        id: DWORD;
+        prop: LPVOID;
+        size: DWORD): HRESULT; stdcall;
+
+    function GetProperty(
+        id: DWORD;
+        buffer: LPVOID;
+        buflen: LPDWORD): HRESULT; stdcall;
+
+    function Finalize(): HRESULT; stdcall;
+
+    function GetDisplayName(
+        buffer: LPWSTR;
+        buflen: LPDWORD;
+        flags: DWORD): HRESULT; stdcall;
+
+    function Reserved(
+        riid: TGUID;
+        pUnkReserved1: IUnknown;
+        pUnkReserved2: IUnknown;
+        szReserved: POleStr;
+        llReserved: LONGLONG;
+        pvReserved: LPVOID;
+        cbReserved: DWORD;
+        ppReserved: pointer): HRESULT; stdcall;
+
+    function GetName(
+        buflen: LPDWORD;
+        buffer: LPWSTR): HRESULT; stdcall;
+
+    function GetVersion(
+        hi: LPDWORD;
+        low: LPDWORD): HRESULT; stdcall;
+
+    function IsEqual(
+        name: IAssemblyName;
+        flags: DWORD): HRESULT; stdcall;
+
+    function Clone(
+        out name: IAssemblyName): HRESULT; stdcall;
+  end;
+
+  CREATE_ASM_NAME_OBJ_FLAGS = (
+    CANOF_PARSE_DISPLAY_NAME = $1,
+    CANOF_SET_DEFAULT_VALUES = $2
+  );
+
 function CreateAssemblyCache(out ppAsmCache: IAssemblyCache; dwReserved: DWORD): HRESULT; stdcall; external SXSDLL;
+function CreateAssemblyNameObject(out ppAssemblyNameObj: IAssemblyName; szAssemblyName: LPCWSTR;
+    dwFlags: DWORD; pvReserved: LPVOID): HRESULT; stdcall; external SXSDLL;
+
 
 implementation
 
