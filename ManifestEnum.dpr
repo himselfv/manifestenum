@@ -6,10 +6,11 @@ uses
   ManifestEnum_Progress in 'ManifestEnum_Progress.pas' {ProgressForm},
   AssemblyDb in 'Db\AssemblyDb.pas',
   AssemblyDb.Core in 'Db\AssemblyDb.Core.pas',
-  SxsExpand in 'SxsExpand.pas',
-  MSDeltaLib in 'MSDeltaLib.pas',
+  AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas',
+  SxsExpand in 'Db\SxsExpand.pas',
+  MSDeltaLib in 'Db\MSDeltaLib.pas',
   ManifestParser in 'Db\ManifestParser.pas',
-  AssemblyDbBuilder in 'AssemblyDbBuilder.pas',
+  AssemblyDbBuilder in 'Db\AssemblyDbBuilder.pas',
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
   AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm},
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
@@ -24,7 +25,6 @@ uses
   AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
-  AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas',
   WinSxS in 'WinSxS.pas';
 
 {$R *.res}

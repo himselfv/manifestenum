@@ -68,10 +68,9 @@ end;
 
 function TAssemblyIdentity.ToStrongName: string;
 begin
- //We'll try to be very, very compliant to what SxS.dll expects. It fails at the
- //slightest deviation
+ //We'll try to be very, very compliant to what SxS.dll expects. It fails at the slightest deviation
  //Working example:
- //Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32
+ //Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32"
   Result := Self.name;
   if Self.type_ <> '' then
     Result := Result + ',type="'+Self.type_+'"';
@@ -83,12 +82,11 @@ begin
     Result := Result + ',processorArchitecture="'+Self.processorArchitecture+'"';
   if (Self.language <> '') and (Self.language <> 'neutral') and (Self.language <> '*') then
     Result := Result +',language="'+Self.language+'"';
-{ Attribute type is supported but breaks the match:
-  if Self.buildType <> '' then
-    Result := Result + ',buildType="'+Self.buildType+'"'; }
   if Self.versionScope <> '' then
     Result := Result + ',versionScope="'+Self.versionScope+'"';
- //Unsupported attribute: culture
+{ Attrtype is supported but breaks the match:
+  if Self.buildType <> '' then
+    Result := Result + ',buildType="'+Self.buildType+'"'; }
 end;
 
 procedure TAssemblyAssemblies.CreateTables;
