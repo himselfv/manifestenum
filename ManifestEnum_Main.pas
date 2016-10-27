@@ -32,6 +32,7 @@ type
     SaveManifestDialog: TSaveDialog;
     Splitter1: TSplitter;
     Uninstallassembly1: TMenuItem;
+    Getassemblysize1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -44,6 +45,7 @@ type
     procedure Loadmanifestfile1Click(Sender: TObject);
     procedure Savemanifest1Click(Sender: TObject);
     procedure Uninstallassembly1Click(Sender: TObject);
+    procedure Getassemblysize1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
@@ -234,28 +236,47 @@ begin
   end;
 end;
 
-procedure TMainForm.Uninstallassembly1Click(Sender: TObject);
+
+procedure TMainForm.Getassemblysize1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
   ACache: IAssemblyCache;
   AInfo: ASSEMBLY_INFO;
-  AName: IAssemblyName;
 begin
   if lbComponents.ItemIndex < 0 then
     exit;
   AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
-  AName := nil;
-  OleCheck(CreateAssemblyNameObject(AName, PChar(AAssemblyData.identity.ToStrongName), 1, nil));
-
   OleCheck(CreateAssemblyCache(ACache, 0));
   FillChar(AInfo, SizeOf(AInfo), 0);
   AInfo.cbAssemblyInfo := SizeOf(AInfo);
+  AInfo.dwAssemblyFlags := QUERYASMINFO_FLAG_GETSIZE;
   OleCheck(ACache.QueryAssemblyInfo(0, PChar(AAssemblyData.identity.ToStrongName), @AInfo));
 
   MessageBox(Self.Handle, PChar('Assembly size: '+IntToStr(AInfo.uliAssemblySizeInKB.QuadPart)+' Kb'),
     PChar('Assembly info'), MB_OK);
+end;
+
+procedure TMainForm.Uninstallassembly1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+  ACache: IAssemblyCache;
+  uresult: ULong;
+begin
+  if lbComponents.ItemIndex < 0 then
+    exit;
+  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+
+  if MessageBox(Self.Handle, PChar('You are going to uninstall '+AAssemblyData.identity.name+'.'#13
+      +'Do you really want to continue?'),
+    PChar('Confirm uninstall'), MB_ICONQUESTION + MB_YESNO) <> ID_YES then
+    exit;
+
+  OleCheck(CreateAssemblyCache(ACache, 0));
+  OleCheck(ACache.UninstallAssembly(0, PChar(AAssemblyData.identity.ToStrongName), nil, @uresult));
+  MessageBox(Self.Handle, PChar('Uninstall result: '+IntToStr(uresult)), PChar('Done'), MB_OK);
 end;
 
 end.

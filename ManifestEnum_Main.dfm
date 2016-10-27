@@ -157,6 +157,10 @@ object MainForm: TMainForm
       Caption = 'Save manifest...'
       OnClick = Savemanifest1Click
     end
+    object Getassemblysize1: TMenuItem
+      Caption = 'Get assembly size'
+      OnClick = Getassemblysize1Click
+    end
     object Uninstallassembly1: TMenuItem
       Caption = 'Uninstall assembly'
       OnClick = Uninstallassembly1Click
