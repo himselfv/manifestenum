@@ -153,11 +153,13 @@ end;
 function TManifestParser.XmlReadAssemblyIdentityData(const ANode: IXmlNode): TAssemblyIdentity;
 begin
   Result.name := textAttribute(ANode, 'name');
+  Result.type_ := textAttribute(ANode, 'type');
   Result.language := textAttribute(ANode, 'language');
   Result.buildType := textAttribute(ANode, 'buildType');
   Result.processorArchitecture := textAttribute(ANode, 'processorArchitecture');
   Result.version := textAttribute(ANode, 'version');
   Result.publicKeyToken := textAttribute(ANode, 'publicKeyToken');
+  Result.versionScope := textAttribute(ANode, 'versionScope');
 end;
 
 function TManifestParser.XmlReadDependencyData(const ANode: IXmlNode): TDependencyEntryData;

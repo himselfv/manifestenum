@@ -7,11 +7,14 @@ type
   TAssemblyId = int64;
   TAssemblyIdentity = record
     name: string;
+    type_: string;
     language: string;
     buildType: string;
     processorArchitecture: string;
     version: string;
     publicKeyToken: string;
+    versionScope: string;
+    procedure Clear;
     function ToString: string;
     function ToStrongName: string;
   end;
@@ -45,6 +48,18 @@ type
 
 implementation
 
+procedure TAssemblyIdentity.Clear;
+begin
+  Self.name := '';
+  Self.type_ := '';
+  Self.language := '';
+  Self.buildType := '';
+  Self.processorArchitecture := '';
+  Self.version := '';
+  Self.publicKeyToken := '';
+  Self.versionScope := '';
+end;
+
 function TAssemblyIdentity.ToString: string;
 begin
   Result := Self.name + '-' + Self.language + '-' + Self.buildType + '-' + Self.processorArchitecture
@@ -57,16 +72,23 @@ begin
  //slightest deviation
  //Working example:
  //Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32
-  Result := Self.name+',version="'+Self.version+'",type="win32"';
+  Result := Self.name;
+  if Self.type_ <> '' then
+    Result := Result + ',type="'+Self.type_+'"';
+  if Self.version <> '' then
+    Result := Result + ',version="'+Self.version+'"';
   if Self.PublicKeyToken <> '' then
     Result := Result + ',publicKeyToken="'+Self.publicKeyToken+'"';
   if Self.processorArchitecture <> '' then
     Result := Result + ',processorArchitecture="'+Self.processorArchitecture+'"';
-{ Optional but works:
-  if Self.language <> '' then
+  if (Self.language <> '') and (Self.language <> 'neutral') and (Self.language <> '*') then
     Result := Result +',language="'+Self.language+'"';
+{ Attribute type is supported but breaks the match:
   if Self.buildType <> '' then
-    Result := Result + ',buildType="'+Self.buildType+'"';}
+    Result := Result + ',buildType="'+Self.buildType+'"'; }
+  if Self.versionScope <> '' then
+    Result := Result + ',versionScope="'+Self.versionScope+'"';
+ //Unsupported attribute: culture
 end;
 
 procedure TAssemblyAssemblies.CreateTables;
@@ -74,23 +96,25 @@ begin
   Db.Exec('CREATE TABLE IF NOT EXISTS assemblies ('
     +'id INTEGER PRIMARY KEY,'
     +'name TEXT NOT NULL COLLATE NOCASE,'
+    +'type TEXT NOT NULL COLLATE NOCASE,'
     +'language TEXT NOT NULL COLLATE NOCASE,'
     +'buildType TEXT NOT NULL COLLATE NOCASE,'
     +'processorArchitecture TEXT NOT NULL COLLATE NOCASE,'
     +'version TEXT NOT NULL COLLATE NOCASE,'
     +'publicKeyToken TEXT NOT NULL,'
+    +'versionScope TEXT NOT NULL COLLATE NOCASE,'
     +'manifestName TEXT COLLATE NOCASE,'
-    +'CONSTRAINT identity UNIQUE(name,language,buildType,processorArchitecture,version,publicKeyToken)'
+    +'CONSTRAINT identity UNIQUE(name,type,language,buildType,processorArchitecture,version,publicKeyToken,versionScope)'
     +')');
 end;
 
 procedure TAssemblyAssemblies.InitStatements;
 begin
   StmTouch := Db.PrepareStatement('INSERT OR IGNORE INTO assemblies '
-    +'(name,language,buildType,processorArchitecture,version,publicKeyToken) '
-    +'VALUES (?,?,?,?,?,?)');
+    +'(name,type,language,buildType,processorArchitecture,version,publicKeyToken,versionScope) '
+    +'VALUES (?,?,?,?,?,?,?,?)');
   StmFind := Db.PrepareStatement('SELECT id FROM assemblies WHERE '
-    +'name=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=?');
+    +'name=? AND type=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=? AND versionScope=?');
   StmUpdate := Db.PrepareStatement('UPDATE assemblies SET manifestName=? '
     +'WHERE id=? ');
   StmGet := Db.PrepareStatement('SELECT * FROM assemblies WHERE id=?');
@@ -112,11 +136,13 @@ var res: integer;
 begin
   //Touch assembly
   sqlite3_bind_str(StmTouch, 1, AEntry.name);
-  sqlite3_bind_str(StmTouch, 2, AEntry.language);
-  sqlite3_bind_str(StmTouch, 3, AEntry.buildType);
-  sqlite3_bind_str(StmTouch, 4, AEntry.processorArchitecture);
-  sqlite3_bind_str(StmTouch, 5, AEntry.version);
-  sqlite3_bind_str(StmTouch, 6, AEntry.publicKeyToken);
+  sqlite3_bind_str(StmTouch, 2, AEntry.type_);
+  sqlite3_bind_str(StmTouch, 3, AEntry.language);
+  sqlite3_bind_str(StmTouch, 4, AEntry.buildType);
+  sqlite3_bind_str(StmTouch, 5, AEntry.processorArchitecture);
+  sqlite3_bind_str(StmTouch, 6, AEntry.version);
+  sqlite3_bind_str(StmTouch, 7, AEntry.publicKeyToken);
+  sqlite3_bind_str(StmTouch, 8, AEntry.versionScope);
   if sqlite3_step(StmTouch) <> SQLITE_DONE then
     Db.RaiseLastSQLiteError();
   Result := sqlite3_last_insert_rowid(FDb);
@@ -124,11 +150,13 @@ begin
 
   //Find assembly ID
   sqlite3_bind_str(StmFind, 1, AEntry.name);
-  sqlite3_bind_str(StmFind, 2, AEntry.language);
-  sqlite3_bind_str(StmFind, 3, AEntry.buildType);
-  sqlite3_bind_str(StmFind, 4, AEntry.processorArchitecture);
-  sqlite3_bind_str(StmFind, 5, AEntry.version);
-  sqlite3_bind_str(StmFind, 6, AEntry.publicKeyToken);
+  sqlite3_bind_str(StmFind, 2, AEntry.type_);
+  sqlite3_bind_str(StmFind, 3, AEntry.language);
+  sqlite3_bind_str(StmFind, 4, AEntry.buildType);
+  sqlite3_bind_str(StmFind, 5, AEntry.processorArchitecture);
+  sqlite3_bind_str(StmFind, 6, AEntry.version);
+  sqlite3_bind_str(StmFind, 7, AEntry.publicKeyToken);
+  sqlite3_bind_str(StmFind, 8, AEntry.versionScope);
   res := sqlite3_step(StmFind);
   if res <> SQLITE_ROW then
     Db.RaiseLastSQLiteError();
@@ -141,12 +169,14 @@ function TAssemblyAssemblies.SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyD
 begin
   Result.id := sqlite3_column_int64(stmt, 0);
   Result.identity.name := sqlite3_column_text16(stmt, 1);
-  Result.identity.language := sqlite3_column_text16(stmt, 2);
-  Result.identity.buildType := sqlite3_column_text16(stmt, 3);
-  Result.identity.processorArchitecture := sqlite3_column_text16(stmt, 4);
-  Result.identity.version := sqlite3_column_text16(stmt, 5);
-  Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 6);
-  Result.manifestName := sqlite3_column_text16(stmt, 7);
+  Result.identity.type_ := sqlite3_column_text16(stmt, 2);
+  Result.identity.language := sqlite3_column_text16(stmt, 3);
+  Result.identity.buildType := sqlite3_column_text16(stmt, 4);
+  Result.identity.processorArchitecture := sqlite3_column_text16(stmt, 5);
+  Result.identity.version := sqlite3_column_text16(stmt, 6);
+  Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 7);
+  Result.identity.versionScope := sqlite3_column_text16(stmt, 8);
+  Result.manifestName := sqlite3_column_text16(stmt, 9);
 end;
 
 function TAssemblyAssemblies.GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
