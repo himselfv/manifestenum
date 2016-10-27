@@ -57,7 +57,7 @@ begin
  //slightest deviation
  //Working example:
  //Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32
-  Result := Self.name+',version="'+Self.version+'"';
+  Result := Self.name+',version="'+Self.version+'",type="win32"';
   if Self.PublicKeyToken <> '' then
     Result := Result + ',publicKeyToken="'+Self.publicKeyToken+'"';
   if Self.processorArchitecture <> '' then
