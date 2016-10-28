@@ -36,14 +36,18 @@ type
 
   TAssemblyRegistry = class(TAssemblyDbModule)
   protected
+    FKeyCache: TDictionary<string, TRegistryKeyId>;
     StmTouchKey: PSQLite3Stmt;
     StmFindKey: PSQLite3Stmt;
     StmAddKeyReference: PSQLite3Stmt;
     StmAddValue: PSQLite3Stmt;
+    procedure Initialize; override;
     procedure CreateTables; override;
     procedure InitStatements; override;
     function SqlReadValueData(stmt: PSQLite3Stmt): TRegistryValueData;
   public
+    destructor Destroy; override;
+
     function AddKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId; overload;
     function AddKeyPath(APath: string): TRegistryKeyId; overload;
     procedure AddKeyReference(AAssembly: TAssemblyId; AKey: TRegistryKeyId; const AData: TRegistryKeyReferenceData);
@@ -134,6 +138,18 @@ begin
     Result := REG_NONE;
 end;
 
+procedure TAssemblyRegistry.Initialize;
+begin
+  inherited;
+  FKeyCache := TDictionary<string, TRegistryKeyId>.Create();
+end;
+
+destructor TAssemblyRegistry.Destroy;
+begin
+  FreeAndNil(FKeyCache);
+  inherited;
+end;
+
 procedure TAssemblyRegistry.CreateTables;
 begin
   Db.Exec('CREATE TABLE IF NOT EXISTS registryKeys ('
@@ -149,11 +165,6 @@ begin
     +'owner BOOLEAN'
 //    +',CONSTRAINT identity UNIQUE(assemblyId,keyId)'
     +')');
-
-  Db.Exec('CREATE TABLE IF NOT EXISTS registryValueNames ('
-    +'id INTEGER PRIMARY KEY,'
-    +'name TEXT NOT NULL COLLATE NOCASE UNIQUE'
-  +')');
 
   Db.Exec('CREATE TABLE IF NOT EXISTS registryValues ('
     +'assemblyId INTEGER NOT NULL,'
@@ -178,11 +189,18 @@ begin
   StmAddValue := Db.PrepareStatement('INSERT OR IGNORE INTO registryValues '
     +'(assemblyId,keyId,name,valueType,value,operationHint,owner) '
     +'VALUES (?,?,?,?,?,?,?)');
+  FKeyCache.Clear;
 end;
 
 
 function TAssemblyRegistry.AddKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
+var ANameLo: string;
 begin
+  //Check in the local cache
+  ANameLo := AName.ToLower;
+  if FKeyCache.TryGetValue(ANameLo, Result) then
+    exit;
+
   //Touch
   sqlite3_bind_int64(StmTouchKey, 1, AParent);
   sqlite3_bind_str(StmTouchKey, 2, AName);
@@ -197,6 +215,8 @@ begin
     Db.RaiseLastSQLiteError();
   Result := sqlite3_column_int64(StmFindKey, 0);
   sqlite3_reset(StmFindKey);
+
+  FKeyCache.Add(ANameLo, Result);
 end;
 
 //Overloaded version which parses Registry path and creates all neccessary key entries. Returns the leaf key id.
