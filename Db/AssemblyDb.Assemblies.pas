@@ -29,15 +29,19 @@ type
 
   TAssemblyAssemblies = class(TAssemblyDbModule)
   protected
+    FIdCache: TDictionary<TAssemblyIdentity, TAssemblyId>;
     StmTouch: PSQLite3Stmt;
     StmFind: PSQLite3Stmt;
     StmUpdate: PSQLite3Stmt;
     StmGet: PSQLite3Stmt;
+    procedure Initialize; override;
     procedure CreateTables; override;
     procedure InitStatements; override;
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
 
   public
+    destructor Destroy; override;
+
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string;
       AIsDeployment: boolean): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
@@ -49,6 +53,7 @@ type
   end;
 
 implementation
+uses SysUtils;
 
 procedure TAssemblyIdentity.Clear;
 begin
@@ -91,6 +96,18 @@ begin
     Result := Result + ',buildType="'+Self.buildType+'"'; }
 end;
 
+procedure TAssemblyAssemblies.Initialize;
+begin
+  inherited;
+  FIdCache := TDictionary<TAssemblyIdentity, TAssemblyId>.Create;
+end;
+
+destructor TAssemblyAssemblies.Destroy;
+begin
+  FreeAndNil(FIdCache);
+  inherited;
+end;
+
 procedure TAssemblyAssemblies.CreateTables;
 begin
   Db.Exec('CREATE TABLE IF NOT EXISTS assemblies ('
@@ -111,6 +128,7 @@ end;
 
 procedure TAssemblyAssemblies.InitStatements;
 begin
+  FIdCache.Clear;
   StmTouch := Db.PrepareStatement('INSERT OR IGNORE INTO assemblies '
     +'(name,type,language,buildType,processorArchitecture,version,publicKeyToken,versionScope) '
     +'VALUES (?,?,?,?,?,?,?,?)');
@@ -136,6 +154,9 @@ end;
 function TAssemblyAssemblies.NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
 var res: integer;
 begin
+  if FIdCache.TryGetValue(AEntry, Result) then
+    exit;
+
   //Touch assembly
   sqlite3_bind_str(StmTouch, 1, AEntry.name);
   sqlite3_bind_str(StmTouch, 2, AEntry.type_);
@@ -164,6 +185,8 @@ begin
     Db.RaiseLastSQLiteError();
   Result := sqlite3_column_int64(StmFind, 0);
   sqlite3_reset(StmFind);
+
+  FIdCache.Add(AEntry, Result);
 end;
 
 //Parses a row from the assembles table into the record

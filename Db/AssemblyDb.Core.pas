@@ -42,6 +42,7 @@ type
   TAssemblyDbModule = class
   protected
     FDb: TAssemblyDbCore;
+    procedure Initialize; virtual;
     procedure CreateTables; virtual;
     procedure InitStatements; virtual;
     procedure Close; virtual;
@@ -187,6 +188,12 @@ constructor TAssemblyDbModule.Create(ADb: TAssemblyDbCore);
 begin
   inherited Create;
   FDb := ADb;
+  Initialize;
+end;
+
+//Override to do creation initialization
+procedure TAssemblyDbModule.Initialize;
+begin
 end;
 
 destructor TAssemblyDbModule.Destroy;
