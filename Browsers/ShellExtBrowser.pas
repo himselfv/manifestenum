@@ -31,7 +31,7 @@ procedure TShellExtensionBrowserForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FMode := rmKeys;
-  FValuePresentation := vpInline;
+  FValuePresentation := vpPanel;
 end;
 
 procedure TShellExtensionBrowserForm.SetDb(ADb: TAssemblyDb);

@@ -153,6 +153,21 @@ object MainForm: TMainForm
   object PopupMenu: TPopupMenu
     Left = 248
     Top = 80
+    object Copy1: TMenuItem
+      Caption = 'Copy'
+      object Assemblyname1: TMenuItem
+        Caption = 'Name only'
+        OnClick = Assemblyname1Click
+      end
+      object Assemblydisplayname1: TMenuItem
+        Caption = 'Display name'
+        OnClick = Assemblydisplayname1Click
+      end
+      object Assemblystrongname1: TMenuItem
+        Caption = 'Strong name'
+        OnClick = Assemblystrongname1Click
+      end
+    end
     object Savemanifest1: TMenuItem
       Caption = 'Save manifest...'
       OnClick = Savemanifest1Click

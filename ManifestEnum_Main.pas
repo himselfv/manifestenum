@@ -33,6 +33,10 @@ type
     Splitter1: TSplitter;
     Uninstallassembly1: TMenuItem;
     Getassemblysize1: TMenuItem;
+    Copy1: TMenuItem;
+    Assemblyname1: TMenuItem;
+    Assemblystrongname1: TMenuItem;
+    Assemblydisplayname1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
@@ -46,6 +50,9 @@ type
     procedure Savemanifest1Click(Sender: TObject);
     procedure Uninstallassembly1Click(Sender: TObject);
     procedure Getassemblysize1Click(Sender: TObject);
+    procedure Assemblyname1Click(Sender: TObject);
+    procedure Assemblydisplayname1Click(Sender: TObject);
+    procedure Assemblystrongname1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyDetails: TAssemblyDetailsForm;
@@ -63,7 +70,7 @@ var
 
 implementation
 uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand, AssemblyDb.Assemblies,
-  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj;
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd;
 
 {$R *.dfm}
 
@@ -236,6 +243,40 @@ begin
   end;
 end;
 
+
+procedure TMainForm.Assemblyname1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  if lbComponents.ItemIndex < 0 then
+    exit;
+  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  Clipboard.AsText := AAssemblyData.identity.name;
+end;
+
+procedure TMainForm.Assemblydisplayname1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  if lbComponents.ItemIndex < 0 then
+    exit;
+  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  Clipboard.AsText := AAssemblyData.identity.ToString;
+end;
+
+
+procedure TMainForm.Assemblystrongname1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  if lbComponents.ItemIndex < 0 then
+    exit;
+  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  Clipboard.AsText := AAssemblyData.identity.ToStrongName;
+end;
 
 procedure TMainForm.Getassemblysize1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
