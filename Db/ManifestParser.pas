@@ -86,6 +86,7 @@ var root, node: IXmlNode;
   nodeName: string;
   i: integer;
   xmlStr: string;
+  isDeployment: boolean;
 begin
   if FXml = nil then begin
    {$IFDEF XML_OMNI}
@@ -101,8 +102,14 @@ begin
 
   node := FXml.selectSingleNode('/assembly/assemblyIdentity');
   Assert(node <> nil);
- {$IFNDEF DRYRUN}aId := Db.Assemblies.AddAssembly({$ENDIF}XmlReadAssemblyIdentityData(node) {$IFNDEF DRYRUN}, ChangeFileExt(ExtractFilename(AManifestFile), '')){$ENDIF};
 
+  children := FXml.selectNodes('/assembly/deployment');
+  assert(children.length <= 1);
+  isDeployment := children.length = 1;
+
+ {$IFNDEF DRYRUN}aId := Db.Assemblies.AddAssembly({$ENDIF}XmlReadAssemblyIdentityData(node) {$IFNDEF DRYRUN},
+    ChangeFileExt(ExtractFilename(AManifestFile), ''),
+    isDeployment){$ENDIF};
 
   root := FXml.selectSingleNode('/assembly');
   children := root.childNodes;

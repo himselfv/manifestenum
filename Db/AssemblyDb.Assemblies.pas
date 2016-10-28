@@ -22,6 +22,7 @@ type
     id: TAssemblyId;
     identity: TAssemblyIdentity;
     manifestName: string;
+    isDeployment: boolean;
   end;
 
   TAssemblyList = TDictionary<TAssemblyId, TAssemblyData>;
@@ -37,7 +38,8 @@ type
     function SqlReadAssemblyData(stmt: PSQLite3Stmt): TAssemblyData;
 
   public
-    function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
+    function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string;
+      AIsDeployment: boolean): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
     function GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
     procedure GetAllAssemblies(AList: TAssemblyList);
@@ -102,6 +104,7 @@ begin
     +'publicKeyToken TEXT NOT NULL,'
     +'versionScope TEXT NOT NULL COLLATE NOCASE,'
     +'manifestName TEXT COLLATE NOCASE,'
+    +'isDeployment BOOL,'
     +'CONSTRAINT identity UNIQUE(name,type,language,buildType,processorArchitecture,version,publicKeyToken,versionScope)'
     +')');
 end;
@@ -113,17 +116,18 @@ begin
     +'VALUES (?,?,?,?,?,?,?,?)');
   StmFind := Db.PrepareStatement('SELECT id FROM assemblies WHERE '
     +'name=? AND type=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=? AND versionScope=?');
-  StmUpdate := Db.PrepareStatement('UPDATE assemblies SET manifestName=? '
+  StmUpdate := Db.PrepareStatement('UPDATE assemblies SET manifestName=?, isDeployment=? '
     +'WHERE id=? ');
   StmGet := Db.PrepareStatement('SELECT * FROM assemblies WHERE id=?');
 end;
 
-function TAssemblyAssemblies.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string): TAssemblyId;
+function TAssemblyAssemblies.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string; AIsDeployment: boolean): TAssemblyId;
 begin
   Result := NeedAssembly(AEntry);
   //Update optional fields
   sqlite3_bind_str(StmUpdate, 1, AManifestName);
-  sqlite3_bind_int64(StmUpdate, 2, Result);
+  sqlite3_bind_int(StmUpdate, 2, integer(AIsDeployment));
+  sqlite3_bind_int64(StmUpdate, 3, Result);
   if sqlite3_step(StmUpdate) <> SQLITE_DONE then
     Db.RaiseLastSQLiteError();
   sqlite3_reset(StmUpdate);
@@ -175,6 +179,7 @@ begin
   Result.identity.publicKeyToken := sqlite3_column_text16(stmt, 7);
   Result.identity.versionScope := sqlite3_column_text16(stmt, 8);
   Result.manifestName := sqlite3_column_text16(stmt, 9);
+  Result.isDeployment := boolean(sqlite3_column_int(stmt, 10));
 end;
 
 function TAssemblyAssemblies.GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
