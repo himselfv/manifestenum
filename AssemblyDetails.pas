@@ -17,6 +17,7 @@ type
     tsCategories: TTabSheet;
     lbDependents: TListBox;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyId: TAssemblyId;
@@ -26,7 +27,6 @@ type
     procedure LoadDependencies;
     procedure LoadDependents;
   protected //Additional tabs
-    FilesTab: TAssemblyFilesForm;
     ResourcesTab: TAssemblyResourcesForm;
     procedure AddTab(AForm: TForm);
   public
@@ -45,13 +45,14 @@ implementation
 
 procedure TAssemblyDetailsForm.FormCreate(Sender: TObject);
 begin
-  FilesTab := TAssemblyFilesForm.Create(Self);
-  FilesTab.FollowDependencies := true;
-  AddTab(FilesTab);
-
   ResourcesTab := TAssemblyResourcesForm.Create(Self);
   ResourcesTab.ShowDependencies := true;
   AddTab(ResourcesTab);
+end;
+
+procedure TAssemblyDetailsForm.FormShow(Sender: TObject);
+begin
+  Self.pcDetails.ActivePageIndex := 0;
 end;
 
 procedure TAssemblyDetailsForm.AddTab(AForm: TForm);
@@ -68,7 +69,6 @@ end;
 procedure TAssemblyDetailsForm.SetDb(ADb: TAssemblyDb);
 begin
   FDb := ADb;
-  FilesTab.Db := ADb;
   ResourcesTab.Db := ADb;
 end;
 
@@ -78,7 +78,6 @@ begin
     FAssemblyId := AValue;
     Reload;
   end;
-  FilesTab.Assembly := AValue;
   ResourcesTab.Assemblies.Clear;
   ResourcesTab.Assemblies.Add(AValue);
   ResourcesTab.Reload;
@@ -88,7 +87,6 @@ procedure TAssemblyDetailsForm.Clear;
 begin
   lbDependencies.Clear;
   lbDependents.Clear;
-  FilesTab.Clear;
   ResourcesTab.Clear;
 end;
 
@@ -100,7 +98,6 @@ begin
   LoadAssemblyData;
   LoadDependencies;
   LoadDependents;
-  FilesTab.Reload;
   ResourcesTab.Reload;
 end;
 
