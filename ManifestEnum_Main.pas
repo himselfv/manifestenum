@@ -81,6 +81,7 @@ begin
   UpdateAssemblyList;
 
   FCategoryBrowser := TCategoryBrowserForm.Create(Application);
+  FCategoryBrowser.Db := FDb;
   AddPage(FCategoryBrowser);
 
   FFileBrowser := TFileBrowserForm.Create(Application);

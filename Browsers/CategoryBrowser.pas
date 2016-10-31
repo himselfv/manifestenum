@@ -32,6 +32,7 @@ type
     procedure TreeHeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
   protected
     FDb: TAssemblyDb;
+    procedure SetDb(AValue: TAssemblyDb);
     function AddCategoryNode(AParent: PVirtualNode; const AName: string): PVirtualNode;
     function AddAssemblyNode(AParent: PVirtualNode; const AName: string; const ATypeName: string): PVirtualNode;
     function NeedCategoryNode(const AName: string): PVirtualNode;
@@ -39,7 +40,7 @@ type
       var Abort: Boolean);
   public
     procedure Reload;
-    property Db: TAssemblyDb read FDb write FDb;
+    property Db: TAssemblyDb read FDb write SetDb;
   end;
 
 var
@@ -54,6 +55,15 @@ procedure TCategoryBrowserForm.FormShow(Sender: TObject);
 begin
   if FDb <> nil then
     Reload;
+end;
+
+procedure TCategoryBrowserForm.SetDb(AValue: TAssemblyDb);
+begin
+  if AValue <> FDb then begin
+    FDb := AValue;
+    if Self.Visible and not Self.Showing then
+      Reload;
+  end;
 end;
 
 procedure TCategoryBrowserForm.Reload;
