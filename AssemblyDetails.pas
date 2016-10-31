@@ -15,7 +15,6 @@ type
     lbDependencies: TListBox;
     tsDependents: TTabSheet;
     tsCategories: TTabSheet;
-    tsAdditionalGear: TTabSheet;
     lbDependents: TListBox;
     procedure FormCreate(Sender: TObject);
   protected

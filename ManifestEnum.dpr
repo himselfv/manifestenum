@@ -11,6 +11,7 @@ uses
   MSDeltaLib in 'Db\MSDeltaLib.pas',
   ManifestParser in 'Db\ManifestParser.pas',
   AssemblyDbBuilder in 'Db\AssemblyDbBuilder.pas',
+  AssemblyBrowser in 'Browsers\AssemblyBrowser.pas' {AssemblyBrowserForm},
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
   AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm},
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
@@ -39,5 +40,6 @@ begin
   Application.CreateForm(TCategoryBrowserForm, CategoryBrowserForm);
   Application.CreateForm(TAutorunsBrowserForm, AutorunsBrowserForm);
   Application.CreateForm(TShellExtensionBrowserForm, ShellExtensionBrowserForm);
+  Application.CreateForm(TAssemblyBrowserForm, AssemblyBrowserForm);
   Application.Run;
 end.

@@ -5,47 +5,35 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
   StdCtrls, Generics.Collections, Vcl.Menus, AssemblyDb, Vcl.ExtCtrls, Vcl.Buttons,
-  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser;
+  AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser, AssemblyBrowser,
+  AssemblyDb.Assemblies;
 
 type
   TMainForm = class(TForm)
-    lbComponents: TListBox;
     MainMenu: TMainMenu;
     F1: TMenuItem;
     Exit1: TMenuItem;
     pmRebuildAssemblyDatabase: TMenuItem;
     N1: TMenuItem;
     Reload1: TMenuItem;
-    pnlFilterSettings: TPanel;
-    pnlFilter: TPanel;
-    edtQuickFilter: TEdit;
-    sbFilterSettings: TSpeedButton;
-    cbFilterByName: TCheckBox;
-    cbFilterByFiles: TCheckBox;
     Debug1: TMenuItem;
     Loadmanifestfile1: TMenuItem;
     OpenManifestDialog: TOpenDialog;
     pcMain: TPageControl;
-    tsAssemblies: TTabSheet;
     PopupMenu: TPopupMenu;
     Savemanifest1: TMenuItem;
     SaveManifestDialog: TSaveDialog;
-    Splitter1: TSplitter;
     Uninstallassembly1: TMenuItem;
     Getassemblysize1: TMenuItem;
     Copy1: TMenuItem;
     Assemblyname1: TMenuItem;
     Assemblystrongname1: TMenuItem;
     Assemblydisplayname1: TMenuItem;
+    Splitter1: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure edtQuickFilterChange(Sender: TObject);
-    procedure lbComponentsClick(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
     procedure pmRebuildAssemblyDatabaseClick(Sender: TObject);
-    procedure Reload1Click(Sender: TObject);
-    procedure sbFilterSettingsClick(Sender: TObject);
-    procedure cbFilterByNameClick(Sender: TObject);
     procedure Loadmanifestfile1Click(Sender: TObject);
     procedure Savemanifest1Click(Sender: TObject);
     procedure Uninstallassembly1Click(Sender: TObject);
@@ -53,23 +41,24 @@ type
     procedure Assemblyname1Click(Sender: TObject);
     procedure Assemblydisplayname1Click(Sender: TObject);
     procedure Assemblystrongname1Click(Sender: TObject);
+    procedure Reload1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
+    FAssemblyBrowser: TAssemblyBrowserForm;
     FAssemblyDetails: TAssemblyDetailsForm;
     FCategoryBrowser: TCategoryBrowserForm;
     FFileBrowser: TFileBrowserForm;
     FRegistryBrowser: TRegistryBrowserForm;
     FTaskBrowser: TTaskBrowserForm;
     procedure AddPage(const AForm: TForm);
-  public
-    procedure UpdateAssemblyList;
+    procedure AssemblyBrowserAssemblySelected(Sender: TObject; AAssembly: TAssemblyId);
   end;
 
 var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand, AssemblyDb.Assemblies,
+uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd;
 
 {$R *.dfm}
@@ -78,7 +67,11 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FDb := TAssemblyDb.Create;
   InitAssemblyDb(FDb, AppFolder+'\assembly.db', true);
-  UpdateAssemblyList;
+
+  FAssemblyBrowser := TAssemblyBrowserForm.Create(Application);
+  FAssemblyBrowser.OnAssemblySelected := Self.AssemblyBrowserAssemblySelected;
+  FAssemblyBrowser.Tree.PopupMenu := Self.PopupMenu;
+  AddPage(FAssemblyBrowser);
 
   FCategoryBrowser := TCategoryBrowserForm.Create(Application);
   FCategoryBrowser.Db := FDb;
@@ -98,7 +91,7 @@ begin
 
   FAssemblyDetails := TAssemblyDetailsForm.Create(Application);
   FAssemblyDetails.Db := FDb;
-  FAssemblyDetails.ManualDock(Self.tsAssemblies, nil, alBottom);
+  FAssemblyDetails.ManualDock(Self, nil, alBottom);
   FAssemblyDetails.Align := alBottom;
   FAssemblyDetails.Visible := true;
   Splitter1.Top := FAssemblyDetails.Top - 10;
@@ -135,68 +128,17 @@ end;
 procedure TMainForm.pmRebuildAssemblyDatabaseClick(Sender: TObject);
 begin
   RebuildAssemblyDatabase(FDb, AppFolder+'\assembly.db');
-  UpdateAssemblyList;
-end;
-
-//Показывает новый отфильтрованный список пакетов
-procedure TMainForm.UpdateAssemblyList;
-var
-  filter: string;
-  list: TAssemblyList;
-  entry: TAssemblyData;
-begin
-  list := TAssemblyList.Create;
-  lbComponents.Items.BeginUpdate;
-  try
-    lbComponents.Items.Clear;
-
-    filter := edtQuickFilter.Text;
-    filter := filter.ToLower();
-
-    if filter = '' then
-      FDb.Assemblies.GetAllAssemblies(list)
-    else begin
-      if cbFilterByName.Checked then
-        FDb.FilterAssemblyByName(filter, list);
-      if cbFilterByFiles.Checked then
-        FDb.FilterAssemblyByFile(filter, list);
-    end;
-
-    for entry in list.Values do
-      lbComponents.AddItem(entry.identity.ToString, TObject(entry.id));
-  finally
-    lbComponents.Items.EndUpdate;
-    FreeAndNil(list);
-  end;
-end;
-
-procedure TMainForm.cbFilterByNameClick(Sender: TObject);
-begin
-  UpdateAssemblyList;
-end;
-
-procedure TMainForm.edtQuickFilterChange(Sender: TObject);
-begin
-  UpdateAssemblyList;
+  FAssemblyBrowser.Reload;
 end;
 
 procedure TMainForm.Reload1Click(Sender: TObject);
 begin
-  UpdateAssemblyList;
+  FAssemblyBrowser.Reload;
 end;
 
-procedure TMainForm.lbComponentsClick(Sender: TObject);
+procedure TMainForm.AssemblyBrowserAssemblySelected(Sender: TObject; AAssembly: TAssemblyId);
 begin
-  if lbComponents.ItemIndex >= 0 then
-    FAssemblyDetails.AssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex])
-  else
-    FAssemblyDetails.AssemblyId := 0;
-end;
-
-procedure TMainForm.sbFilterSettingsClick(Sender: TObject);
-begin
-//  sbFilterSettings.Down := not sbFilterSettings.Down;
-  pnlFilterSettings.Visible := sbFilterSettings.Down;
+  FAssemblyDetails.AssemblyId := AAssembly;
 end;
 
 procedure TMainForm.Loadmanifestfile1Click(Sender: TObject);
@@ -219,9 +161,9 @@ var AAssemblyId: TAssemblyId;
   AManifestPath: string;
   ATargetFile: TStringList;
 begin
-  if lbComponents.ItemIndex < 0 then
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
     exit;
-  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
   if AAssemblyData.manifestName = '' then begin
@@ -249,9 +191,9 @@ procedure TMainForm.Assemblyname1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
-  if lbComponents.ItemIndex < 0 then
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
     exit;
-  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
   Clipboard.AsText := AAssemblyData.identity.name;
 end;
@@ -260,9 +202,9 @@ procedure TMainForm.Assemblydisplayname1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
-  if lbComponents.ItemIndex < 0 then
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
     exit;
-  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
   Clipboard.AsText := AAssemblyData.identity.ToString;
 end;
@@ -272,9 +214,9 @@ procedure TMainForm.Assemblystrongname1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
-  if lbComponents.ItemIndex < 0 then
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
     exit;
-  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
   Clipboard.AsText := AAssemblyData.identity.ToStrongName;
 end;
@@ -285,9 +227,9 @@ var AAssemblyId: TAssemblyId;
   ACache: IAssemblyCache;
   AInfo: ASSEMBLY_INFO;
 begin
-  if lbComponents.ItemIndex < 0 then
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
     exit;
-  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
   OleCheck(CreateAssemblyCache(ACache, 0));
@@ -306,9 +248,9 @@ var AAssemblyId: TAssemblyId;
   ACache: IAssemblyCache;
   uresult: ULong;
 begin
-  if lbComponents.ItemIndex < 0 then
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
     exit;
-  AAssemblyId := int64(lbComponents.Items.Objects[lbComponents.ItemIndex]);
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
   if MessageBox(Self.Handle, PChar('You are going to uninstall '+AAssemblyData.identity.name+'.'#13

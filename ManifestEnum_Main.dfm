@@ -15,104 +15,23 @@ object MainForm: TMainForm
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 0
+    Top = 555
+    Width = 729
+    Height = 3
+    Cursor = crVSplit
+    Align = alBottom
+    ExplicitTop = 377
+    ExplicitWidth = 545
+  end
   object pcMain: TPageControl
     Left = 0
     Top = 0
     Width = 729
-    Height = 558
-    ActivePage = tsAssemblies
+    Height = 555
     Align = alClient
     TabOrder = 0
-    object tsAssemblies: TTabSheet
-      Caption = 'Assemblies'
-      object Splitter1: TSplitter
-        Left = 0
-        Top = 527
-        Width = 721
-        Height = 3
-        Cursor = crVSplit
-        Align = alBottom
-        ExplicitTop = 377
-        ExplicitWidth = 545
-      end
-      object lbComponents: TListBox
-        Left = 0
-        Top = 44
-        Width = 721
-        Height = 483
-        Align = alClient
-        ItemHeight = 13
-        PopupMenu = PopupMenu
-        TabOrder = 0
-        OnClick = lbComponentsClick
-      end
-      object pnlFilter: TPanel
-        Left = 0
-        Top = 21
-        Width = 721
-        Height = 23
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        object sbFilterSettings: TSpeedButton
-          Left = 672
-          Top = 0
-          Width = 49
-          Height = 23
-          Align = alRight
-          AllowAllUp = True
-          GroupIndex = 10
-          Caption = 'Filters'
-          OnClick = sbFilterSettingsClick
-          ExplicitLeft = 504
-        end
-        object edtQuickFilter: TEdit
-          Left = 0
-          Top = 0
-          Width = 672
-          Height = 23
-          Align = alClient
-          TabOrder = 0
-          OnChange = edtQuickFilterChange
-          ExplicitHeight = 21
-        end
-      end
-      object pnlFilterSettings: TPanel
-        Left = 0
-        Top = 0
-        Width = 721
-        Height = 21
-        Align = alTop
-        AutoSize = True
-        BevelOuter = bvNone
-        TabOrder = 2
-        Visible = False
-        object cbFilterByName: TCheckBox
-          Left = 0
-          Top = 0
-          Width = 97
-          Height = 21
-          Align = alLeft
-          Caption = 'Name'
-          Checked = True
-          State = cbChecked
-          TabOrder = 0
-          OnClick = cbFilterByNameClick
-        end
-        object cbFilterByFiles: TCheckBox
-          Left = 97
-          Top = 0
-          Width = 97
-          Height = 21
-          Align = alLeft
-          Caption = 'Files'
-          Checked = True
-          State = cbChecked
-          TabOrder = 1
-          OnClick = cbFilterByNameClick
-        end
-      end
-    end
   end
   object MainMenu: TMainMenu
     Left = 16
