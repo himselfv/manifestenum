@@ -163,7 +163,7 @@ begin
     +'assemblyId INTEGER NOT NULL,'
     +'keyId INTEGER NOT NULL,'
     +'owner BOOLEAN'
-//    +',CONSTRAINT identity UNIQUE(assemblyId,keyId)'
+    +',CONSTRAINT identity UNIQUE(assemblyId,keyId)'    //keeping for now, because AddKeyReference may be called multiple times for a key atm
     +')');
 
   Db.Exec('CREATE TABLE IF NOT EXISTS registryValues ('
@@ -301,7 +301,7 @@ var stmt: PSQLite3Stmt;
   res: integer;
   AData: TRegistryKeyReferenceData;
 begin
-  stmt := Db.PrepareStatement('SELECT assemblyId FROM registryKeyReferences WHERE keyId=?');
+  stmt := Db.PrepareStatement('SELECT assemblyId, owner FROM registryKeyReferences WHERE keyId=?');
   sqlite3_bind_int64(stmt, 1, AKey);
   res := sqlite3_step(stmt);
   while res = SQLITE_ROW do begin
