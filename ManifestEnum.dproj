@@ -111,6 +111,7 @@
         <DCCReference Include="Db\AssemblyDb.Registry.pas"/>
         <DCCReference Include="Db\SxsExpand.pas"/>
         <DCCReference Include="Db\MSDeltaLib.pas"/>
+        <DCCReference Include="Db\CompressApi.pas"/>
         <DCCReference Include="Db\ManifestParser.pas"/>
         <DCCReference Include="Db\AssemblyDbBuilder.pas"/>
         <DCCReference Include="AssemblyDetails.pas">

@@ -9,6 +9,7 @@ uses
   AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas',
   SxsExpand in 'Db\SxsExpand.pas',
   MSDeltaLib in 'Db\MSDeltaLib.pas',
+  CompressApi in 'Db\CompressApi.pas',
   ManifestParser in 'Db\ManifestParser.pas',
   AssemblyDbBuilder in 'Db\AssemblyDbBuilder.pas',
   AssemblyBrowser in 'Browsers\AssemblyBrowser.pas' {AssemblyBrowserForm},

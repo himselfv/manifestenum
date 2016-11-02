@@ -60,6 +60,10 @@ object MainForm: TMainForm
         Caption = 'Load manifest file...'
         OnClick = Loadmanifestfile1Click
       end
+      object Expandfile1: TMenuItem
+        Caption = 'Expand SxS file...'
+        OnClick = Expandfile1Click
+      end
     end
   end
   object OpenManifestDialog: TOpenDialog
@@ -104,6 +108,19 @@ object MainForm: TMainForm
     DefaultExt = '*.manifest'
     Filter = '*.manifest'
     Left = 104
+    Top = 136
+  end
+  object OpenAnyFileDialog: TOpenDialog
+    DefaultExt = '*.*'
+    Filter = '*.*'
+    Title = 'Open file...'
+    Left = 408
+    Top = 88
+  end
+  object SaveAnyFileDialog: TSaveDialog
+    DefaultExt = '*.*'
+    Filter = '*.*'
+    Left = 408
     Top = 136
   end
 end

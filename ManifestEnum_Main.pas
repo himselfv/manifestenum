@@ -30,6 +30,9 @@ type
     Assemblystrongname1: TMenuItem;
     Assemblydisplayname1: TMenuItem;
     Splitter1: TSplitter;
+    Expandfile1: TMenuItem;
+    OpenAnyFileDialog: TOpenDialog;
+    SaveAnyFileDialog: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
@@ -42,6 +45,7 @@ type
     procedure Assemblydisplayname1Click(Sender: TObject);
     procedure Assemblystrongname1Click(Sender: TObject);
     procedure Reload1Click(Sender: TObject);
+    procedure Expandfile1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -141,6 +145,28 @@ begin
   FAssemblyDetails.AssemblyId := AAssembly;
 end;
 
+procedure TMainForm.Expandfile1Click(Sender: TObject);
+var data: TStream;
+  fp: TFileStream;
+begin
+  if not OpenAnyFileDialog.Execute() then
+    exit;
+  data := OpenSxSFile(OpenAnyFileDialog.FileName);
+  try
+    SaveAnyFileDialog.Filename := OpenAnyFileDialog.FileName;
+    if not SaveAnyFileDialog.Execute then exit;
+
+    fp := TFileStream.Create(SaveAnyFileDialog.FileName, fmCreate);
+    try
+      fp.CopyFrom(data, data.Size);
+    finally
+      FreeAndNil(fp);
+    end;
+  finally
+    FreeAndNil(data);
+  end;
+end;
+
 procedure TMainForm.Loadmanifestfile1Click(Sender: TObject);
 var parser: TManifestParser;
 begin
@@ -208,7 +234,6 @@ begin
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
   Clipboard.AsText := AAssemblyData.identity.ToString;
 end;
-
 
 procedure TMainForm.Assemblystrongname1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
