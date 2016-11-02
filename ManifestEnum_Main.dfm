@@ -57,7 +57,7 @@ object MainForm: TMainForm
     object Debug1: TMenuItem
       Caption = 'Debug'
       object Loadmanifestfile1: TMenuItem
-        Caption = 'Load manifest file...'
+        Caption = 'Add manifest file to DB...'
         OnClick = Loadmanifestfile1Click
       end
       object Expandfile1: TMenuItem
@@ -90,10 +90,21 @@ object MainForm: TMainForm
         Caption = 'Strong name'
         OnClick = Assemblystrongname1Click
       end
+      object Manifestname1: TMenuItem
+        Caption = 'Manifest name'
+        OnClick = Manifestname1Click
+      end
     end
-    object Savemanifest1: TMenuItem
-      Caption = 'Save manifest...'
-      OnClick = Savemanifest1Click
+    object Export1: TMenuItem
+      Caption = 'Export'
+      object Savemanifest1: TMenuItem
+        Caption = 'Manifest...'
+        OnClick = Savemanifest1Click
+      end
+      object ExportPackageData1: TMenuItem
+        Caption = 'Package data...'
+        OnClick = ExportPackageData1Click
+      end
     end
     object Getassemblysize1: TMenuItem
       Caption = 'Get assembly size'
