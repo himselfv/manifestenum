@@ -218,16 +218,18 @@ end;
 
 procedure TMainForm.SaveManifest(const AManifestName: string; const ATargetName: string);
 var AManifestPath: string;
-  ATargetFile: TStringList;
+  AData: UTF8String;
+  fp: TFileStream;
 begin
   AManifestPath := GetWindowsDir()+'\WinSxS\Manifests\'+AManifestName+'.manifest';
 
-  ATargetFile := TStringList.Create();
+  AData := LoadManifestFile(AManifestPath);
+
+  fp := TFileStream.Create(ATargetName, fmCreate);
   try
-    ATargetFile.Text := LoadManifestFile(AManifestPath);
-    ATargetFile.SaveToFile(ATargetName);
+    fp.Write(AData[1], Length(AData));
   finally
-    FreeAndNil(ATargetFile);
+    FreeAndNil(fp);
   end;
 end;
 
