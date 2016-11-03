@@ -60,6 +60,10 @@ object MainForm: TMainForm
         Caption = 'Load manifest file...'
         OnClick = Loadmanifestfile1Click
       end
+      object Installassembly1: TMenuItem
+        Caption = 'Install assembly...'
+        OnClick = Installassembly1Click
+      end
     end
   end
   object OpenManifestDialog: TOpenDialog

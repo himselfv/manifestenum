@@ -30,6 +30,7 @@ type
     Assemblystrongname1: TMenuItem;
     Assemblydisplayname1: TMenuItem;
     Splitter1: TSplitter;
+    Installassembly1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure Assemblydisplayname1Click(Sender: TObject);
     procedure Assemblystrongname1Click(Sender: TObject);
     procedure Reload1Click(Sender: TObject);
+    procedure Installassembly1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -240,6 +242,21 @@ begin
 
   MessageBox(Self.Handle, PChar('Assembly size: '+IntToStr(AInfo.uliAssemblySizeInKB.QuadPart)+' Kb'),
     PChar('Assembly info'), MB_OK);
+end;
+
+procedure TMainForm.Installassembly1Click(Sender: TObject);
+var ACache: IAssemblyCache;
+  ref: FUSION_INSTALL_REFERENCE;
+begin
+  if not OpenManifestDialog.Execute then exit;
+
+  FillChar(ref, sizeof(ref), 0);
+  ref.cbSize := sizeof(ref);
+  ref.guidScheme := FUSION_REFCOUNT_OPAQUE_STRING_GUID;
+  ref.szIdentifier := PChar('manifestenum');
+
+  OleCheck(CreateAssemblyCache(ACache, 0));
+  OleCheck(ACache.InstallAssembly(0, PChar(OpenManifestDialog.FileName), @ref));
 end;
 
 procedure TMainForm.Uninstallassembly1Click(Sender: TObject);
