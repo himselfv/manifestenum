@@ -57,8 +57,12 @@ object MainForm: TMainForm
     object Debug1: TMenuItem
       Caption = 'Debug'
       object Loadmanifestfile1: TMenuItem
-        Caption = 'Load manifest file...'
+        Caption = 'Add manifest file to DB...'
         OnClick = Loadmanifestfile1Click
+      end
+      object Expandfile1: TMenuItem
+        Caption = 'Expand SxS file...'
+        OnClick = Expandfile1Click
       end
       object Installassembly1: TMenuItem
         Caption = 'Install assembly...'
@@ -90,10 +94,21 @@ object MainForm: TMainForm
         Caption = 'Strong name'
         OnClick = Assemblystrongname1Click
       end
+      object Manifestname1: TMenuItem
+        Caption = 'Manifest name'
+        OnClick = Manifestname1Click
+      end
     end
-    object Savemanifest1: TMenuItem
-      Caption = 'Save manifest...'
-      OnClick = Savemanifest1Click
+    object Export1: TMenuItem
+      Caption = 'Export'
+      object Savemanifest1: TMenuItem
+        Caption = 'Manifest...'
+        OnClick = Savemanifest1Click
+      end
+      object ExportPackageData1: TMenuItem
+        Caption = 'Package data...'
+        OnClick = ExportPackageData1Click
+      end
     end
     object Getassemblysize1: TMenuItem
       Caption = 'Get assembly size'
@@ -108,6 +123,19 @@ object MainForm: TMainForm
     DefaultExt = '*.manifest'
     Filter = '*.manifest'
     Left = 104
+    Top = 136
+  end
+  object OpenAnyFileDialog: TOpenDialog
+    DefaultExt = '*.*'
+    Filter = '*.*'
+    Title = 'Open file...'
+    Left = 408
+    Top = 88
+  end
+  object SaveAnyFileDialog: TSaveDialog
+    DefaultExt = '*.*'
+    Filter = '*.*'
+    Left = 408
     Top = 136
   end
 end

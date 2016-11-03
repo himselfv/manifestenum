@@ -31,6 +31,12 @@ type
     Assemblydisplayname1: TMenuItem;
     Splitter1: TSplitter;
     Installassembly1: TMenuItem;
+    Expandfile1: TMenuItem;
+    OpenAnyFileDialog: TOpenDialog;
+    SaveAnyFileDialog: TSaveDialog;
+    Export1: TMenuItem;
+    ExportPackageData1: TMenuItem;
+    Manifestname1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
@@ -44,6 +50,9 @@ type
     procedure Assemblystrongname1Click(Sender: TObject);
     procedure Reload1Click(Sender: TObject);
     procedure Installassembly1Click(Sender: TObject);
+    procedure Expandfile1Click(Sender: TObject);
+    procedure ExportPackageData1Click(Sender: TObject);
+    procedure Manifestname1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -54,6 +63,7 @@ type
     FTaskBrowser: TTaskBrowserForm;
     procedure AddPage(const AForm: TForm);
     procedure AssemblyBrowserAssemblySelected(Sender: TObject; AAssembly: TAssemblyId);
+    procedure SaveManifest(const AManifestName: string; const ATargetName: string);
   end;
 
 var
@@ -61,9 +71,11 @@ var
 
 implementation
 uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand,
-  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd;
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
+  IOUtils, Types;
 
 {$R *.dfm}
+{$WARN SYMBOL_PLATFORM OFF}
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
@@ -143,6 +155,32 @@ begin
   FAssemblyDetails.AssemblyId := AAssembly;
 end;
 
+procedure SaveStreamToFile(AStream: TStream; const AFilename: string);
+var fp: TFileStream;
+begin
+  fp := TFileStream.Create(AFilename, fmCreate);
+  try
+    fp.CopyFrom(AStream, AStream.Size);
+  finally
+    FreeAndNil(fp);
+  end;
+end;
+
+procedure TMainForm.Expandfile1Click(Sender: TObject);
+var data: TStream;
+begin
+  if not OpenAnyFileDialog.Execute() then
+    exit;
+  data := OpenSxSFile(OpenAnyFileDialog.FileName);
+  try
+    SaveAnyFileDialog.Filename := OpenAnyFileDialog.FileName;
+    if SaveAnyFileDialog.Execute then
+      SaveStreamToFile(data, SaveAnyFileDialog.FileName)
+  finally
+    FreeAndNil(data);
+  end;
+end;
+
 procedure TMainForm.Loadmanifestfile1Click(Sender: TObject);
 var parser: TManifestParser;
 begin
@@ -160,8 +198,6 @@ end;
 procedure TMainForm.Savemanifest1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
-  AManifestPath: string;
-  ATargetFile: TStringList;
 begin
   AAssemblyId := FAssemblyBrowser.SelectedAssembly;
   if AAssemblyId < 0 then
@@ -177,14 +213,67 @@ begin
   if not SaveManifestDialog.Execute then
     exit;
 
-  AManifestPath := GetWindowsDir()+'\WinSxS\Manifests\'+AAssemblyData.manifestName+'.manifest';
+  SaveManifest(AAssemblyData.manifestName, SaveManifestDialog.Filename);
+end;
+
+procedure TMainForm.SaveManifest(const AManifestName: string; const ATargetName: string);
+var AManifestPath: string;
+  ATargetFile: TStringList;
+begin
+  AManifestPath := GetWindowsDir()+'\WinSxS\Manifests\'+AManifestName+'.manifest';
 
   ATargetFile := TStringList.Create();
   try
     ATargetFile.Text := LoadManifestFile(AManifestPath);
-    ATargetFile.SaveToFile(SaveManifestDialog.Filename);
+    ATargetFile.SaveToFile(ATargetName);
   finally
     FreeAndNil(ATargetFile);
+  end;
+end;
+
+procedure TMainForm.ExportPackageData1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+  ATargetFolder: string;
+  AFileDir: string;
+  AFiles: TStringDynArray;
+  AInFile, AOutFile: string;
+  AStream: TStream;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+
+  if AAssemblyData.manifestName = '' then begin
+    MessageBox(Self.Handle, PChar('This assembly has no associated manifest'), PChar('Cannot save data'), MB_OK + MB_ICONEXCLAMATION);
+    exit;
+  end;
+
+  with TFileOpenDialog.Create(nil) do
+  try
+    Options := [fdoPickFolders];
+    if not Execute then exit;
+    ATargetFolder := Filename;
+  finally
+    Free;
+  end;
+
+  SaveManifest(AAssemblyData.manifestName, ATargetFolder+'\'+AAssemblyData.manifestName+'.manifest');
+
+  AFileDir := GetWindowsDir()+'\WinSxS\'+AAssemblyData.manifestName;
+  if not DirectoryExists(AFileDir) then
+    exit;
+
+  AFiles := TDirectory.GetFiles(AFileDir, '*.*', TSearchOption.soAllDirectories);
+  for AInFile in AFiles do begin
+    AStream := OpenSxSFile(AInFile);
+    try
+      AOutFile := TPath.Combine(ATargetFolder, TPath.GetFileName(AInFile));
+      SaveStreamToFile(AStream, AOutFile);
+    finally
+      FreeAndNil(AStream);
+    end;
   end;
 end;
 
@@ -211,7 +300,6 @@ begin
   Clipboard.AsText := AAssemblyData.identity.ToString;
 end;
 
-
 procedure TMainForm.Assemblystrongname1Click(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
@@ -221,6 +309,17 @@ begin
     exit;
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
   Clipboard.AsText := AAssemblyData.identity.ToStrongName;
+end;
+
+procedure TMainForm.Manifestname1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  Clipboard.AsText := AAssemblyData.manifestName;
 end;
 
 procedure TMainForm.Getassemblysize1Click(Sender: TObject);
