@@ -2,8 +2,16 @@ unit AssemblyDbBuilder;
 
 //{$DEFINE PROFILE}
 
+{$DEFINE SAX}
+//Use SAX parser instead of the DOM one
+
 interface
-uses AssemblyDb, ManifestParser;
+uses AssemblyDb, {$IFDEF SAX}ManifestSaxParser{$ELSE}ManifestParser{$ENDIF};
+
+{$IFDEF SAX}
+type
+  TManifestParser = TSaxManifestParser;
+{$ENDIF}
 
 function SxSDir: string;
 function SxSManifestDir: string;

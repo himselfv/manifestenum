@@ -11,6 +11,7 @@ uses
   MSDeltaLib in 'Db\MSDeltaLib.pas',
   CompressApi in 'Db\CompressApi.pas',
   ManifestParser in 'Db\ManifestParser.pas',
+  ManifestSaxParser in 'Db\ManifestSaxParser.pas',
   AssemblyDbBuilder in 'Db\AssemblyDbBuilder.pas',
   AssemblyBrowser in 'Browsers\AssemblyBrowser.pas' {AssemblyBrowserForm},
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},

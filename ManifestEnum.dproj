@@ -113,7 +113,11 @@
         <DCCReference Include="Db\MSDeltaLib.pas"/>
         <DCCReference Include="Db\CompressApi.pas"/>
         <DCCReference Include="Db\ManifestParser.pas"/>
+        <DCCReference Include="Db\ManifestSaxParser.pas"/>
         <DCCReference Include="Db\AssemblyDbBuilder.pas"/>
+        <DCCReference Include="Browsers\AssemblyBrowser.pas">
+            <Form>AssemblyBrowserForm</Form>
+        </DCCReference>
         <DCCReference Include="AssemblyDetails.pas">
             <Form>AssemblyDetailsForm</Form>
         </DCCReference>
@@ -149,11 +153,9 @@
         <DCCReference Include="Db\AssemblyDb.Assemblies.pas"/>
         <DCCReference Include="Browsers\AutorunsBrowser.pas">
             <Form>AutorunsBrowserForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Browsers\ShellExtBrowser.pas">
             <Form>ShellExtensionBrowserForm</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="WinSxS.pas"/>
         <BuildConfiguration Include="Release">

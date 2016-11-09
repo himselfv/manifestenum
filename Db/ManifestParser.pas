@@ -262,6 +262,14 @@ begin
   end;
 end;
 
+function TManifestParser.XmlReadCategoryMembership(const ANode: IXmlNode): TCategoryMembershipData;
+begin
+  Result.name := textAttribute(ANode, 'name');
+  Result.version := textAttribute(ANode, 'version');
+  Result.publicKeyToken := textAttribute(ANode, 'publicKeyToken');
+  Result.typeName := textAttribute(ANode, 'typeName');
+end;
+
 procedure TManifestParser.ImportTaskScheduler(const AAssembly: TAssemblyId; const ANode: IXmlNode);
 var nodes: IXmlNodeList;
   i: integer;
@@ -271,14 +279,6 @@ begin
     for i := 0 to nodes.length-1 do
       {$IFNDEF DRYRUN}Db.AddTask(AAssembly,{$ENDIF} nodes.item[i].text{$IFNDEF DRYRUN}){$ENDIF};
   end;
-end;
-
-function TManifestParser.XmlReadCategoryMembership(const ANode: IXmlNode): TCategoryMembershipData;
-begin
-  Result.name := textAttribute(ANode, 'name');
-  Result.version := textAttribute(ANode, 'version');
-  Result.publicKeyToken := textAttribute(ANode, 'publicKeyToken');
-  Result.typeName := textAttribute(ANode, 'typeName');
 end;
 
 end.
