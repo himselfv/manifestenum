@@ -17,6 +17,8 @@ type
     procedure Clear;
     function ToString: string;
     function ToStrongName: string;
+    function ToStrongNameV2: string;
+    function DeploymentSlug: string;
   end;
   TAssemblyData = record
     id: TAssemblyId;
@@ -55,6 +57,21 @@ type
 implementation
 uses SysUtils;
 
+//Truncates the string the way SxS does it:
+//  Some-Long-Component-Name -> Some-L..nt-Name
+//AMaxLen: Result must not exceed this (SxS uses different lengths for different cases)
+function SxsTruncate(AName: string; AMaxLen: integer): string;
+begin
+  if Length(AName) < AMaxLen then begin
+    Result := AName;
+    exit;
+  end;
+
+  // SxS cuts exactly in the middle, leaving two equal parts by sides.
+  // 2 additional chars needed for ..
+  Result := Copy(AName, AMaxLen div 2 - 1) + '..' + Copy(AName, Length(AName) - AMaxLen div 2 + 1, MaxInt);
+end;
+
 procedure TAssemblyIdentity.Clear;
 begin
   Self.name := '';
@@ -73,11 +90,12 @@ begin
     + '-' + Self.version + '-' + Self.publicKeyToken;
 end;
 
+//Strong name type 1:
+//  Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32"
+//Required by SxS.dll routines. Be very, very compliant, as it fails at the
+//slightest deviations.
 function TAssemblyIdentity.ToStrongName: string;
 begin
- //We'll try to be very, very compliant to what SxS.dll expects. It fails at the slightest deviation
- //Working example:
- //Microsoft.VC90.ATL,version="9.0.30729.1",publicKeyToken="1fc8b3b9a1e18e3b",processorArchitecture="amd64",type="win32"
   Result := Self.name;
   if Self.type_ <> '' then
     Result := Result + ',type="'+Self.type_+'"';
@@ -94,6 +112,33 @@ begin
 { Attrtype is supported but breaks the match:
   if Self.buildType <> '' then
     Result := Result + ',buildType="'+Self.buildType+'"'; }
+end;
+
+//Strong name type 2:
+//  Microsoft.VC90.ATL,culture=neutral,version=9.0.30729.1,publicKeyToken=1fc8b3b9a1e18e3b,processorArchitecture=amd64
+//Used in the COMPONENTS hive in some places, also in .NET (unrelated to this app)
+function TAssemblyIdentity.ToStrongNameV2: string;
+begin
+  Result := Self.name;
+  if (Self.language <> '') and (Self.language <> 'neutral') and (Self.language <> '*') then
+    Result := Result +', Culture='+Self.language
+  else
+    Result := Result +', Culture=Neutral';
+  if Self.version <> '' then
+    Result := Result + ', Version='+Self.version;
+  if Self.PublicKeyToken <> '' then
+    Result := Result + ', PublicKeyToken='+Self.publicKeyToken;
+  if Self.processorArchitecture <> '' then
+    Result := Result + ', ProcessorArchitecture='+Self.processorArchitecture;
+  if Self.versionScope <> '' then
+    Result := Result + ', VersionScope='+Self.versionScope;
+end;
+
+function TAssemblyIdentity.DeploymentSlug: string;
+begin
+  Result := SxsTruncate(Self.name, 24)+'_';
+  //TODO: write this
+  //TODO: hash of all identity at the end
 end;
 
 procedure TAssemblyAssemblies.Initialize;

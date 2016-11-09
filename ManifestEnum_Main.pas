@@ -37,6 +37,9 @@ type
     Export1: TMenuItem;
     ExportPackageData1: TMenuItem;
     Manifestname1: TMenuItem;
+    Open1: TMenuItem;
+    Componentkey1: TMenuItem;
+    Deploymentkey1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
@@ -53,6 +56,8 @@ type
     procedure Expandfile1Click(Sender: TObject);
     procedure ExportPackageData1Click(Sender: TObject);
     procedure Manifestname1Click(Sender: TObject);
+    procedure Componentkey1Click(Sender: TObject);
+    procedure Deploymentkey1Click(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -70,7 +75,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, AssemblyDbBuilder, ManifestParser, SxSExpand,
+uses FilenameUtils, OsUtils, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
   IOUtils, Types;
 
@@ -322,6 +327,31 @@ begin
     exit;
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
   Clipboard.AsText := AAssemblyData.manifestName;
+end;
+
+
+procedure TMainForm.Componentkey1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\COMPONENTS\DerivedData\Components\'
+    +AAssemblyData.identity.ToComponentSlug);
+end;
+
+procedure TMainForm.Deploymentkey1Click(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\COMPONENTS\CanonicalData\Deployments\'
+    +AAssemblyData.manifestName);
 end;
 
 procedure TMainForm.Getassemblysize1Click(Sender: TObject);

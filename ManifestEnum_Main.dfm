@@ -110,6 +110,23 @@ object MainForm: TMainForm
         OnClick = ExportPackageData1Click
       end
     end
+    object Open1: TMenuItem
+      Caption = 'Open'
+      object Componentkey1: TMenuItem
+        Caption = 'Component key'
+        Hint = 
+          'Opens the associated Component subkey in the COMPONENTS hive, if' +
+          ' it'#39's loaded'
+        OnClick = Componentkey1Click
+      end
+      object Deploymentkey1: TMenuItem
+        Caption = 'Deployment key'
+        Hint = 
+          'Opens the associated Deployment subkey in the COMPONENTS hive, i' +
+          'f it'#39's loaded and the component is a deployment'
+        OnClick = Deploymentkey1Click
+      end
+    end
     object Getassemblysize1: TMenuItem
       Caption = 'Get assembly size'
       OnClick = Getassemblysize1Click
