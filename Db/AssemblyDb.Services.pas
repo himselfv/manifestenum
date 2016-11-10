@@ -39,6 +39,7 @@ type
 
     procedure QueryServices(const AStmt: PSQLite3Stmt; AList: TServiceList); overload;
     procedure GetAllServices(AList: TServiceList);
+    procedure GetAssemblyServices(AAssembly: TAssemblyId; AList: TServiceList);
 
   end;
 
@@ -49,7 +50,7 @@ procedure TAssemblyServices.CreateTables;
 begin
   Db.Exec('CREATE TABLE IF NOT EXISTS services ('
     +'id INTEGER PRIMARY KEY,'
-    +'parentId INTEGER NOT NULL,'
+    +'assemblyId INTEGER NOT NULL,'
     +'name TEXT NOT NULL COLLATE NOCASE,'
     +'displayName TEXT COLLATE NOCASE,'
     +'errorControl TEXT COLLATE NOCASE,'
@@ -60,7 +61,7 @@ begin
     +'objectName TEXT COLLATE NOCASE,'
     +'sidType TEXT COLLATE NOCASE,'
     +'requiredPrivileges TEXT COLLATE NOCASE,'
-    +'CONSTRAINT identity UNIQUE(parentId,name)'
+    +'CONSTRAINT identity UNIQUE(assemblyId,name)'
     +')');
 
   Db.Exec('CREATE TABLE IF NOT EXISTS serviceGroupEntries ('
@@ -74,9 +75,9 @@ end;
 procedure TAssemblyServices.InitStatements;
 begin
   StmTouchService := Db.PrepareStatement('INSERT OR IGNORE INTO services '
-    +'(parentId,name) VALUES (?,?)');
+    +'(assemblyId,name) VALUES (?,?)');
   StmFindService := Db.PrepareStatement('SELECT id FROM services WHERE '
-    +'parentId=? AND name=?');
+    +'assemblyId=? AND name=?');
   StmUpdateService := Db.PrepareStatement('UPDATE services SET displayName=?, errorControl=?, '
     +'imagePath=?, start=?, type=?, description=?, objectName=?, sidType=?, requiredPrivileges=? '
     +'WHERE id=? ');
@@ -164,6 +165,14 @@ end;
 procedure TAssemblyServices.GetAllServices(AList: TServiceList);
 begin
   QueryServices(Db.PrepareStatement('SELECT * FROM services'), AList);
+end;
+
+procedure TAssemblyServices.GetAssemblyServices(AAssembly: TAssemblyId; AList: TServiceList);
+var stmt: PSQlite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM services WHERE assemblyId=?');
+  sqlite3_bind_int64(stmt, 1, AAssembly);
+  QueryServices(stmt, AList);
 end;
 
 end.

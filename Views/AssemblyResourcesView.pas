@@ -16,7 +16,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources, Generics.Collections, AssemblyDb.Assemblies, AssemblyDb.Registry;
+  CommonResources, Generics.Collections, AssemblyDb.Assemblies, AssemblyDb.Registry,
+  AssemblyDb.Services;
 
 type
   TNodeType = (
@@ -24,7 +25,8 @@ type
     ntFolder,
     ntFile,
     ntRegistryValue,
-    ntTask
+    ntTask,
+    ntService
   );
   TNodeData = record
     DelayLoad: TDelayLoadHeader;
@@ -59,6 +61,7 @@ type
     function AddFileNode(AParent: PVirtualNode; const AFileData: TFileEntryData): PVirtualNode;
     function AddRegistryValueNode(AParent: PVirtualNode; const ARegistryValueData: TRegistryValueData): PVirtualNode;
     function AddTaskNode(AParent: PVirtualNode; const ATaskData: TTaskEntryData): PVirtualNode;
+    function AddServiceNode(AParent: PVirtualNode; const AServiceData: TServiceEntryData): PVirtualNode;
     function AddAssemblyNode(AParent: PVirtualNode; const AAssemblyData: TAssemblyData): PVirtualNode;
   public
     property Assemblies: TList<TAssemblyId> read FAssemblies;
@@ -142,6 +145,7 @@ begin
         ntFile: CellText := 'File';
         ntRegistryValue: CellText := 'Key';
         ntTask: CellText := 'Task';
+        ntService: CellText := 'Service';
       else CellText := '';
       end;
   end;
@@ -166,6 +170,7 @@ begin
         ntFile: ImageIndex := imgFile;
         ntRegistryValue: ImageIndex := imgRegistryValue;
         ntTask: ImageIndex := imgTask;
+        ntService: ImageIndex := imgService;
       end;
     end;
   end;
@@ -179,7 +184,8 @@ const
     1,  //dir
     1,  //file
     2,  //regkey
-    3   //task
+    3,  //task
+    4   //service
   );
 var AData1, AData2: PNodeData;
 begin
@@ -199,6 +205,8 @@ var AData: PNodeData absolute ANodeData;
   AFiles: TList<TFileEntryData>;
   ARegistryValues: TList<TRegistryValueData>;
   ATasks: TList<TTaskEntryData>;
+  AServices: TServiceList;
+  AServiceId: TServiceId;
   AAssemblies: TAssemblyList;
   AAssemblyData: TAssemblyData;
   AFolder: TFolderId;
@@ -265,6 +273,15 @@ begin
     FreeAndNil(ATasks);
   end;
 
+  AServices := TServiceList.Create;
+  try
+    FDb.Services.GetAssemblyServices(AAssemblyId, AServices);
+    for AServiceId in AServices.Keys do
+      AddServiceNode(ANode, AServices[AServiceId]);
+  finally
+    FreeAndNil(ATasks);
+  end;
+
   if FShowDependencies then begin
     AAssemblies := TAssemblyList.Create;
     try
@@ -314,6 +331,16 @@ begin
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntTask;
   AData.Name := FDb.GetTaskFolderPath(ATaskData.folderId) + '\' + ATaskData.name;
+  AData.DelayLoad.Touched := true;
+end;
+
+function TAssemblyResourcesForm.AddServiceNode(AParent: PVirtualNode; const AServiceData: TServiceEntryData): PVirtualNode;
+var AData: PNodeData;
+begin
+  Result := inherited AddNode(AParent);
+  AData := Tree.GetNodeData(Result);
+  AData.NodeType := ntService;
+  AData.Name := AServiceData.name;
   AData.DelayLoad.Touched := true;
 end;
 

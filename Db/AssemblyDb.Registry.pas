@@ -174,7 +174,7 @@ begin
     +'value TEXT NOT NULL COLLATE NOCASE,'
     +'operationHint TEXT NOT NULL COLLATE NOCASE,'
     +'owner BOOLEAN'
-//    +',CONSTRAINT identity UNIQUE(assemblyId,keyId,name)'
+    +',CONSTRAINT identity UNIQUE(assemblyId,keyId,name)'
     +')');
 end;
 
