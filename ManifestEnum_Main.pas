@@ -21,43 +21,49 @@ type
     OpenManifestDialog: TOpenDialog;
     pcMain: TPageControl;
     PopupMenu: TPopupMenu;
-    Savemanifest1: TMenuItem;
+    miExportManifest: TMenuItem;
     SaveManifestDialog: TSaveDialog;
-    Uninstallassembly1: TMenuItem;
-    Getassemblysize1: TMenuItem;
+    miUninstallAssembly: TMenuItem;
+    miGetAssemblySize: TMenuItem;
     Copy1: TMenuItem;
-    Assemblyname1: TMenuItem;
-    Assemblystrongname1: TMenuItem;
-    Assemblydisplayname1: TMenuItem;
+    miCopyAssemblyName: TMenuItem;
+    miCopyAssemblyStrongName: TMenuItem;
+    miCopyAssemblyDisplayName: TMenuItem;
     Splitter1: TSplitter;
     Installassembly1: TMenuItem;
     Expandfile1: TMenuItem;
     OpenAnyFileDialog: TOpenDialog;
     SaveAnyFileDialog: TSaveDialog;
     Export1: TMenuItem;
-    ExportPackageData1: TMenuItem;
-    Manifestname1: TMenuItem;
+    miExportPackageData: TMenuItem;
+    miCopyAssemblyManifestName: TMenuItem;
     Open1: TMenuItem;
-    Componentkey1: TMenuItem;
-    Deploymentkey1: TMenuItem;
+    miJumpToComponentKey: TMenuItem;
+    miJumpToDeploymentKey: TMenuItem;
+    miDetachAssembly: TMenuItem;
+    cbCopyComponentKeyform: TMenuItem;
+    cbCopyDeploymentKeyform: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
     procedure pmRebuildAssemblyDatabaseClick(Sender: TObject);
     procedure Loadmanifestfile1Click(Sender: TObject);
-    procedure Savemanifest1Click(Sender: TObject);
-    procedure Uninstallassembly1Click(Sender: TObject);
-    procedure Getassemblysize1Click(Sender: TObject);
-    procedure Assemblyname1Click(Sender: TObject);
-    procedure Assemblydisplayname1Click(Sender: TObject);
-    procedure Assemblystrongname1Click(Sender: TObject);
+    procedure miExportManifestClick(Sender: TObject);
+    procedure miUninstallAssemblyClick(Sender: TObject);
+    procedure miGetAssemblySizeClick(Sender: TObject);
+    procedure miCopyAssemblyNameClick(Sender: TObject);
+    procedure miCopyAssemblyDisplayNameClick(Sender: TObject);
+    procedure miCopyAssemblyStrongNameClick(Sender: TObject);
     procedure Reload1Click(Sender: TObject);
     procedure Installassembly1Click(Sender: TObject);
     procedure Expandfile1Click(Sender: TObject);
-    procedure ExportPackageData1Click(Sender: TObject);
-    procedure Manifestname1Click(Sender: TObject);
-    procedure Componentkey1Click(Sender: TObject);
-    procedure Deploymentkey1Click(Sender: TObject);
+    procedure miExportPackageDataClick(Sender: TObject);
+    procedure miCopyAssemblyManifestNameClick(Sender: TObject);
+    procedure miJumpToComponentKeyClick(Sender: TObject);
+    procedure miJumpToDeploymentKeyClick(Sender: TObject);
+    procedure miDetachAssemblyClick(Sender: TObject);
+    procedure cbCopyComponentKeyformClick(Sender: TObject);
+    procedure cbCopyDeploymentKeyformClick(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -75,7 +81,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses FilenameUtils, OsUtils, AssemblyDbBuilder, ManifestParser, SxSExpand,
+uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
   IOUtils, Types;
 
@@ -200,7 +206,7 @@ begin
     end;
 end;
 
-procedure TMainForm.Savemanifest1Click(Sender: TObject);
+procedure TMainForm.miExportManifestClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -228,7 +234,7 @@ var AManifestPath: string;
 begin
   AManifestPath := GetWindowsDir()+'\WinSxS\Manifests\'+AManifestName+'.manifest';
 
-  AData := LoadManifestFile(AManifestPath);
+  AData := UTF8String(LoadManifestFile(AManifestPath));
 
   fp := TFileStream.Create(ATargetName, fmCreate);
   try
@@ -238,7 +244,7 @@ begin
   end;
 end;
 
-procedure TMainForm.ExportPackageData1Click(Sender: TObject);
+procedure TMainForm.miExportPackageDataClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
   ATargetFolder: string;
@@ -285,7 +291,7 @@ begin
 end;
 
 
-procedure TMainForm.Assemblyname1Click(Sender: TObject);
+procedure TMainForm.miCopyAssemblyNameClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -296,7 +302,7 @@ begin
   Clipboard.AsText := AAssemblyData.identity.name;
 end;
 
-procedure TMainForm.Assemblydisplayname1Click(Sender: TObject);
+procedure TMainForm.miCopyAssemblyDisplayNameClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -307,7 +313,7 @@ begin
   Clipboard.AsText := AAssemblyData.identity.ToString;
 end;
 
-procedure TMainForm.Assemblystrongname1Click(Sender: TObject);
+procedure TMainForm.miCopyAssemblyStrongNameClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -318,7 +324,7 @@ begin
   Clipboard.AsText := AAssemblyData.identity.ToStrongName;
 end;
 
-procedure TMainForm.Manifestname1Click(Sender: TObject);
+procedure TMainForm.miCopyAssemblyManifestNameClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -329,8 +335,7 @@ begin
   Clipboard.AsText := AAssemblyData.manifestName;
 end;
 
-
-procedure TMainForm.Componentkey1Click(Sender: TObject);
+procedure TMainForm.cbCopyComponentKeyformClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -338,11 +343,10 @@ begin
   if AAssemblyId < 0 then
     exit;
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\COMPONENTS\DerivedData\Components\'
-    +AAssemblyData.identity.ToComponentSlug);
+  Clipboard.AsText := SxsComponentKeyform(AAssemblyData.identity, SxsExtractHash(AAssemblyData.manifestName));
 end;
 
-procedure TMainForm.Deploymentkey1Click(Sender: TObject);
+procedure TMainForm.cbCopyDeploymentKeyformClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -350,11 +354,33 @@ begin
   if AAssemblyId < 0 then
     exit;
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\COMPONENTS\CanonicalData\Deployments\'
-    +AAssemblyData.manifestName);
+  Clipboard.AsText := SxsDeploymentKeyform(AAssemblyData.identity, SxsExtractHash(AAssemblyData.manifestName));
 end;
 
-procedure TMainForm.Getassemblysize1Click(Sender: TObject);
+
+procedure TMainForm.miJumpToComponentKeyClick(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsComponentsKey+'\'+AAssemblyData.manifestName);
+end;
+
+procedure TMainForm.miJumpToDeploymentKeyClick(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey+'\'+SxsDeploymentKeyform(AAssemblyData.identity, SxsExtractHash(AAssemblyData.manifestName)));
+end;
+
+procedure TMainForm.miGetAssemblySizeClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
   ACache: IAssemblyCache;
@@ -390,7 +416,7 @@ begin
   OleCheck(ACache.InstallAssembly(0, PChar(OpenManifestDialog.FileName), @ref));
 end;
 
-procedure TMainForm.Uninstallassembly1Click(Sender: TObject);
+procedure TMainForm.miUninstallAssemblyClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
   ACache: IAssemblyCache;
@@ -409,6 +435,22 @@ begin
   OleCheck(CreateAssemblyCache(ACache, 0));
   OleCheck(ACache.UninstallAssembly(0, PChar(AAssemblyData.identity.ToStrongName), nil, @uresult));
   MessageBox(Self.Handle, PChar('Uninstall result: '+IntToStr(uresult)), PChar('Done'), MB_OK);
+end;
+
+
+procedure TMainForm.miDetachAssemblyClick(Sender: TObject);
+var AAssemblyId: TAssemblyId;
+  AAssemblyData: TAssemblyData;
+begin
+  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
+  if AAssemblyId < 0 then
+    exit;
+  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+
+  if not IsComponentsHiveLoaded then
+    LoadComponentsHive();
+  SxsDetachFromDeployment(AAssemblyData.identity, AAssemblyData.manifestName);
+  SxsDeploymentAddUninstallSource(AAssemblyData.identity, AAssemblyData.manifestName);
 end;
 
 end.

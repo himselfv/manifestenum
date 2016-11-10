@@ -82,58 +82,71 @@ object MainForm: TMainForm
     Top = 80
     object Copy1: TMenuItem
       Caption = 'Copy'
-      object Assemblyname1: TMenuItem
-        Caption = 'Name only'
-        OnClick = Assemblyname1Click
+      object miCopyAssemblyName: TMenuItem
+        Caption = 'Name'
+        OnClick = miCopyAssemblyNameClick
       end
-      object Assemblydisplayname1: TMenuItem
+      object miCopyAssemblyDisplayName: TMenuItem
         Caption = 'Display name'
-        OnClick = Assemblydisplayname1Click
+        OnClick = miCopyAssemblyDisplayNameClick
       end
-      object Assemblystrongname1: TMenuItem
+      object miCopyAssemblyStrongName: TMenuItem
         Caption = 'Strong name'
-        OnClick = Assemblystrongname1Click
+        OnClick = miCopyAssemblyStrongNameClick
       end
-      object Manifestname1: TMenuItem
+      object miCopyAssemblyManifestName: TMenuItem
         Caption = 'Manifest name'
-        OnClick = Manifestname1Click
+        OnClick = miCopyAssemblyManifestNameClick
+      end
+      object cbCopyComponentKeyform: TMenuItem
+        Caption = 'Component keyform'
+        OnClick = cbCopyComponentKeyformClick
+      end
+      object cbCopyDeploymentKeyform: TMenuItem
+        Caption = 'Deployment keyform'
+        OnClick = cbCopyDeploymentKeyformClick
       end
     end
     object Export1: TMenuItem
       Caption = 'Export'
-      object Savemanifest1: TMenuItem
+      object miExportManifest: TMenuItem
         Caption = 'Manifest...'
-        OnClick = Savemanifest1Click
+        OnClick = miExportManifestClick
       end
-      object ExportPackageData1: TMenuItem
+      object miExportPackageData: TMenuItem
         Caption = 'Package data...'
-        OnClick = ExportPackageData1Click
+        OnClick = miExportPackageDataClick
       end
     end
     object Open1: TMenuItem
       Caption = 'Open'
-      object Componentkey1: TMenuItem
+      object miJumpToComponentKey: TMenuItem
         Caption = 'Component key'
         Hint = 
           'Opens the associated Component subkey in the COMPONENTS hive, if' +
           ' it'#39's loaded'
-        OnClick = Componentkey1Click
+        OnClick = miJumpToComponentKeyClick
       end
-      object Deploymentkey1: TMenuItem
+      object miJumpToDeploymentKey: TMenuItem
         Caption = 'Deployment key'
         Hint = 
           'Opens the associated Deployment subkey in the COMPONENTS hive, i' +
           'f it'#39's loaded and the component is a deployment'
-        OnClick = Deploymentkey1Click
+        OnClick = miJumpToDeploymentKeyClick
       end
     end
-    object Getassemblysize1: TMenuItem
+    object miGetAssemblySize: TMenuItem
       Caption = 'Get assembly size'
-      OnClick = Getassemblysize1Click
+      OnClick = miGetAssemblySizeClick
     end
-    object Uninstallassembly1: TMenuItem
+    object miDetachAssembly: TMenuItem
+      Caption = 'Detach from deployment'
+      OnClick = miDetachAssemblyClick
+    end
+    object miUninstallAssembly: TMenuItem
       Caption = 'Uninstall assembly'
-      OnClick = Uninstallassembly1Click
+      Hint = 'Uninstalls assembly from the assembly cache'
+      OnClick = miUninstallAssemblyClick
     end
   end
   object SaveManifestDialog: TSaveDialog
