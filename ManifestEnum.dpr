@@ -29,7 +29,7 @@ uses
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
-  OsUtils in 'OsUtils.pas';
+  SxsUtils in 'SxsUtils.pas';
 
 {$R *.res}
 
@@ -39,10 +39,5 @@ begin
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TResourceModule, ResourceModule);
-  Application.CreateForm(TFileBrowserForm, FileBrowserForm);
-  Application.CreateForm(TCategoryBrowserForm, CategoryBrowserForm);
-  Application.CreateForm(TAutorunsBrowserForm, AutorunsBrowserForm);
-  Application.CreateForm(TShellExtensionBrowserForm, ShellExtensionBrowserForm);
-  Application.CreateForm(TAssemblyBrowserForm, AssemblyBrowserForm);
   Application.Run;
 end.
