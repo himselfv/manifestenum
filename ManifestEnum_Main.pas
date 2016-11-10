@@ -40,7 +40,7 @@ type
     Open1: TMenuItem;
     miJumpToComponentKey: TMenuItem;
     miJumpToDeploymentKey: TMenuItem;
-    miDetachAssembly: TMenuItem;
+    miConvertIntoDeployment: TMenuItem;
     cbCopyComponentKeyform: TMenuItem;
     cbCopyDeploymentKeyform: TMenuItem;
     procedure FormCreate(Sender: TObject);
@@ -61,7 +61,7 @@ type
     procedure miCopyAssemblyManifestNameClick(Sender: TObject);
     procedure miJumpToComponentKeyClick(Sender: TObject);
     procedure miJumpToDeploymentKeyClick(Sender: TObject);
-    procedure miDetachAssemblyClick(Sender: TObject);
+    procedure miConvertIntoDeploymentClick(Sender: TObject);
     procedure cbCopyComponentKeyformClick(Sender: TObject);
     procedure cbCopyDeploymentKeyformClick(Sender: TObject);
   protected
@@ -428,17 +428,23 @@ begin
   AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
   if MessageBox(Self.Handle, PChar('You are going to uninstall '+AAssemblyData.identity.name+'.'#13
-      +'Do you really want to continue?'),
+    +'Do you really want to continue?'),
     PChar('Confirm uninstall'), MB_ICONQUESTION + MB_YESNO) <> ID_YES then
     exit;
 
+  if not IsComponentsHiveLoaded then
+    LoadComponentsHive();
+  if SxsIsDeployment(AAssemblyData.identity, AAssemblyData.manifestName) then
+    SxsDeploymentAddUninstallSource(AAssemblyData.identity, AAssemblyData.manifestName);
   OleCheck(CreateAssemblyCache(ACache, 0));
   OleCheck(ACache.UninstallAssembly(0, PChar(AAssemblyData.identity.ToStrongName), nil, @uresult));
-  MessageBox(Self.Handle, PChar('Uninstall result: '+IntToStr(uresult)), PChar('Done'), MB_OK);
+  MessageBox(Self.Handle, PChar('Uninstall result: '+IntToStr(uresult)+#13
+    +'Note though that this result often does not reflect actual success or failure.'),
+    PChar('Done'), MB_OK);
 end;
 
 
-procedure TMainForm.miDetachAssemblyClick(Sender: TObject);
+procedure TMainForm.miConvertIntoDeploymentClick(Sender: TObject);
 var AAssemblyId: TAssemblyId;
   AAssemblyData: TAssemblyData;
 begin
@@ -449,8 +455,9 @@ begin
 
   if not IsComponentsHiveLoaded then
     LoadComponentsHive();
-  SxsDetachFromDeployment(AAssemblyData.identity, AAssemblyData.manifestName);
+  SxsConvertIntoDeployment(AAssemblyData.identity, AAssemblyData.manifestName);
   SxsDeploymentAddUninstallSource(AAssemblyData.identity, AAssemblyData.manifestName);
+  MessageBox(Self.Handle, PChar('Done'), PChar('Done'), MB_OK);
 end;
 
 end.

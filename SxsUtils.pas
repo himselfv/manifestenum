@@ -37,8 +37,9 @@ function IsComponentsHiveLoaded: boolean;
 procedure LoadComponentsHive;
 function UnloadComponentsHive: integer;
 
+function SxsIsDeployment(const id: TAssemblyIdentity; const AComponentKeyform: string): boolean;
 procedure SxsDeploymentAddUninstallSource(const id: TAssemblyIdentity; const AComponentKeyform: string);
-procedure SxsDetachFromDeployment(const id: TAssemblyIdentity; const AComponentKeyform: string);
+procedure SxsConvertIntoDeployment(const id: TAssemblyIdentity; const AComponentKeyform: string);
 
 implementation
 uses Windows, AclHelpers, OsUtils;
@@ -228,6 +229,20 @@ CanonicalData\Deployments subkeys contain the following values
   CF               -10AU    ? 00, 0c or other values
 }
 
+
+//True if the specified assembly is registered in the registry as a deployment
+//This is different from what it's manifest says. This can be overriden (see SxsConvertIntoDeployment)
+function SxsIsDeployment(const id: TAssemblyIdentity; const AComponentKeyform: string): boolean;
+var hk: HKEY;
+  dkf: string;
+begin
+  dkf := SxsDeploymentKeyform(id, SxsExtractHash(AComponentKeyform));
+
+  Result := RegOpenKeyEx(HKEY_LOCAL_MACHINE, PChar(sSxsDeploymentsKey+'\'+dkf), 0, GENERIC_READ, hk) = 0;
+  if Result then
+    RegCloseKey(hk);
+end;
+
 {
 SxS deployments have "install sources" and you can only uninstall a deployment by passing a source
 which installed it.
@@ -308,7 +323,7 @@ This takes a normal assembly and converts it into deployment assembly as far as 
 This does not:
 - add default uninstall source (use SxsDeploymentAddUninstallSource on your assembly)
 }
-procedure SxsDetachFromDeployment(const id: TAssemblyIdentity; const AComponentKeyform: string);
+procedure SxsConvertIntoDeployment(const id: TAssemblyIdentity; const AComponentKeyform: string);
 var hk: HKEY;
   dkf: string;
   err: integer;

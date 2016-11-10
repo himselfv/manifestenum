@@ -139,9 +139,9 @@ object MainForm: TMainForm
       Caption = 'Get assembly size'
       OnClick = miGetAssemblySizeClick
     end
-    object miDetachAssembly: TMenuItem
-      Caption = 'Detach from deployment'
-      OnClick = miDetachAssemblyClick
+    object miConvertIntoDeployment: TMenuItem
+      Caption = 'Convert into deployment'
+      OnClick = miConvertIntoDeploymentClick
     end
     object miUninstallAssembly: TMenuItem
       Caption = 'Uninstall assembly'
