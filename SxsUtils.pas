@@ -264,6 +264,7 @@ begin
     val[5] := Chr($00);
     val[6] := Chr($00);
     val[7] := Chr($00);
+    val[8] := Chr($00);
     err := RegSetValueEx(hk, PChar('i!SIAW_'), 0, REG_BINARY, @val[1], length(val));
     if err <> 0 then
       raise ESxsException.CreateFmt('Cannot add install source to the deployment configuration key. '
@@ -271,6 +272,32 @@ begin
   finally
     RegCloseKey(hk);
   end;
+end;
+
+function EnumRegistryValueNames(hk: HKEY): TArray<string>;
+var i: integer;
+  valName: string;
+  valNameLen: cardinal;
+  err: integer;
+begin
+  SetLength(Result, 0);
+
+  valNameLen := 255; //since it's a c!+keyform, it should fit
+  SetLength(valName, valNameLen+1);
+
+  i := 0;
+  repeat
+    valNameLen := Length(valName)-1;
+    err := RegEnumValue(hk, i, @valName[1], valNameLen, nil, nil, nil, nil);
+    if err = ERROR_NO_MORE_ITEMS then
+      break;
+    if err <> 0 then
+      raise ESxsException.CreateFmt('Cannot enumerate registry values. '
+        +'Error %d: %s', [err, SysErrorMessage(err)]);
+    SetLength(Result, i+1);
+    Result[i] := Copy(valName, 1, valNameLen);
+    Inc(i);
+  until false;
 end;
 
 {
@@ -287,7 +314,6 @@ var hk: HKEY;
   err: integer;
   val: AnsiString;
   valName: string;
-  valNameLen: cardinal;
 begin
   dkf := SxsDeploymentKeyform(id, SxsExtractHash(AComponentKeyform));
 
@@ -320,25 +346,22 @@ begin
       +'Error %d: %s',
       [err, SysErrorMessage(err)]);
   try
-    err := RegSetValueEx(hk, PChar('!c'+dkf), 0, REG_BINARY, nil, 0);
+    //Delete all c!-s
+    for valName in EnumRegistryValueNames(hk) do
+      if valName.StartsWith('c!') then begin
+        err := RegDeleteValue(hk, PChar(@valName[1]));
+        if err <> 0 then
+          RaiseLastOsError();
+      end;
+
+    //Add our own c!
+    err := RegSetValueEx(hk, PChar('c!'+dkf), 0, REG_BINARY, nil, 0);
     if err <> 0 then
       raise ESxsException.CreateFmt('Cannot add a self-parent record. '
         +'Are you running the app with the administrator privileges? '
         +'Error %d: %s',
         [err, SysErrorMessage(err)]);
 
-    //Delete all other !c-s
-    valNameLen := 255; //since it's a c!+keyform, it should fit
-    SetLength(valName, valNameLen+1);
-    err := RegEnumValue(hk, 0, @valName[1], valNameLen, nil, nil, nil, nil);
-    while err = 0 do begin
-      err := RegDeleteValue(hk, PChar(@valName[1]));
-      if err <> ERROR_NO_MORE_ITEMS then
-        RaiseLastOsError();
-    end;
-    if err <> ERROR_NO_MORE_ITEMS then
-      raise ESxsException.CreateFmt('Cannot enumerate registry values. '
-        +'Error %d: %s', [err, SysErrorMessage(err)]);
   finally
     RegCloseKey(hk);
   end;
