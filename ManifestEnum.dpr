@@ -29,7 +29,9 @@ uses
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
-  SxsUtils in 'SxsUtils.pas';
+  SxsUtils in 'SxsUtils.pas',
+  AssemblyDb.Services in 'Db\AssemblyDb.Services.pas',
+  ServiceBrowser in 'Browsers\ServiceBrowser.pas' {ServiceBrowserForm};
 
 {$R *.res}
 

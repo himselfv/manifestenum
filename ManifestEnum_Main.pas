@@ -83,7 +83,7 @@ var
 implementation
 uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
-  IOUtils, Types;
+  IOUtils, Types, ServiceBrowser;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -107,6 +107,8 @@ begin
 
   FRegistryBrowser := TRegistryBrowserForm.Create(Application);
   AddPage(FRegistryBrowser);
+
+  AddPage(TServiceBrowserForm.Create(Application));
 
   FTaskBrowser := TTaskBrowserForm.Create(Application);
   AddPage(FTaskBrowser);

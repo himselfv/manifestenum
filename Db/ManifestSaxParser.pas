@@ -18,7 +18,7 @@ unit ManifestSaxParser;
 
 interface
 uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies, AssemblyDb.Registry,
-  ComObj, ActiveX, Generics.Collections, MSXML;
+  AssemblyDb.Services, ComObj, ActiveX, Generics.Collections, MSXML;
 
 type
   EParsingException = class(Exception);
@@ -120,6 +120,7 @@ type
 
     procedure dispMemberships(const ANode: string; const AAttributes: ISAXAttributes);
     procedure dispCategoryMembership(const ANode: string; const AAttributes: ISAXAttributes);
+    procedure dispCategoryInstance(const ANode: string; const AAttributes: ISAXAttributes);
 
     procedure dispTaskScheduler(const ANode: string; const AAttributes: ISAXAttributes);
     procedure dispTask(const ANode: string; const AAttributes: ISAXAttributes);
@@ -152,6 +153,12 @@ type
     end>;
     TMembershipList = TQuickList<TCategoryMembershipData>;
     TTaskList = TQuickList<string>;
+    TServiceList = TQuickList<TServiceEntryData>;
+    TServiceGroupEntryList = TQuickList<record
+      groupName: string;
+      serviceName: string;
+      position: string;
+    end>;
 
   protected
     FIdentity: TAssemblyIdentity;
@@ -164,6 +171,11 @@ type
     FRegistryValues: TRegistryValueList;
     FMemberships: TMembershipList;
     FTasks: TTaskList;
+    FServices: TServiceList;
+    FServiceGroupEntries: TServiceGroupEntryList;
+    FLastCategoryInstance: record
+      Subcategory: string;
+    end;
     procedure resetState;
     procedure commitState;
 
@@ -210,6 +222,8 @@ begin
   FRegistryValues := TRegistryValueList.Create;
   FMemberships := TMembershipList.Create;
   FTasks := TTaskList.Create;
+  FServices := TServiceList.Create;
+  FServiceGroupEntries := TServiceGroupEntryList.Create;
 
   FDb := ADb;
   FReader := CoSAXXMLReader.Create as ISaxXMLReader;
@@ -235,6 +249,8 @@ begin
   FreeAndNil(FRegistryValues);
   FreeAndNil(FMemberships);
   FreeAndNil(FTasks);
+  FreeAndNil(FServices);
+  FreeAndNil(FServiceGroupEntries);
   FreeAndNil(FParsingStack);
   inherited;
 end;
@@ -597,13 +613,45 @@ end;
 
 procedure TSaxManifestParser.dispCategoryMembership(const ANode: string; const AAttributes: ISAXAttributes);
 begin
-  if SameText(ANode, 'id') then
-  with FMemberships.Add^ do begin
-    name := attr(AAttributes, 'name');
-    version := attr(AAttributes, 'version');
-    publicKeyToken := attr(AAttributes, 'publicKeyToken');
-    typeName := attr(AAttributes, 'typeName');
-  end;
+  if SameStr(ANode, 'id') then begin
+    with FMemberships.Add^ do begin
+      name := attr(AAttributes, 'name');
+      version := attr(AAttributes, 'version');
+      publicKeyToken := attr(AAttributes, 'publicKeyToken');
+      typeName := attr(AAttributes, 'typeName');
+    end;
+    pushNode(nil);
+  end else
+  if SameStr(ANode, 'categoryinstance') then begin
+    FLastCategoryInstance.Subcategory := attr(AAttributes, 'subcategory'); //used by some children functions
+    pushNode(dispCategoryInstance);
+  end else
+    pushNode(nil);
+end;
+
+procedure TSaxManifestParser.dispCategoryInstance(const ANode: string; const AAttributes: ISAXAttributes);
+begin
+  if SameStr(ANode, 'servicedata') then
+    with FServices.Add^ do begin
+      name := attr(AAttributes, 'name');
+      displayName := attr(AAttributes, 'displayName');
+      errorControl := attr(AAttributes, 'errorControl');
+      imagePath := attr(AAttributes, 'imagePath');
+      start := attr(AAttributes, 'start');
+      type_ := attr(AAttributes, 'type');
+      description := attr(AAttributes, 'description');
+      objectName := attr(AAttributes, 'objectName');
+      sidType := attr(AAttributes, 'sidType');
+      requiredPrivileges := attr(AAttributes, 'requiredPrivileges');
+    end
+  else
+  if SameStr(ANode, 'servicegroup') then
+    with FServiceGroupEntries.Add^ do begin
+      groupName := FLastCategoryInstance.Subcategory;
+      serviceName := attr(AAttributes, 'serviceName');
+      position := attr(AAttributes, 'position');
+    end;
+
   pushNode(nil);
 end;
 
@@ -653,6 +701,8 @@ begin
   FRegistryValues.Clear;
   FMemberships.Clear;
   FTasks.Clear;
+  FServices.Clear;
+  FServiceGroupEntries.Clear;
 end;
 
 //Commits the collected state to the database
@@ -690,6 +740,19 @@ begin
 
   for i := 0 to FTasks.Count-1 do
     Db.AddTask(AId, FTasks[i]^);
+
+  for i := 0 to FServices.Count-1 do begin
+    FServices[i].assemblyId := AId;
+    Db.Services.AddService(FServices[i]^);
+  end;
+
+  for i := 0 to FServiceGroupEntries.Count-1 do
+    Db.Services.AddServiceGroupEntry(
+      FServiceGroupEntries[i].groupName,
+      FServiceGroupEntries[i].serviceName,
+      FServiceGroupEntries[i].position
+    );
+
 end;
 
 end.

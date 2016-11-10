@@ -2,7 +2,7 @@ unit AssemblyDb;
 
 interface
 uses SysUtils, Classes, sqlite3, Generics.Collections, AssemblyDb.Core, AssemblyDb.Assemblies,
-  AssemblyDb.Registry, AssemblyDb.UnusualProps;
+  AssemblyDb.Registry, AssemblyDb.Services, AssemblyDb.UnusualProps;
 
 type
   TDependencyEntryData = record
@@ -68,6 +68,7 @@ type
   public
     Assemblies: TAssemblyAssemblies;
     Registry: TAssemblyRegistry;
+    Services: TAssemblyServices;
     UnusualProps: TAssemblyUnusualProps;
     constructor Create;
 
@@ -133,6 +134,9 @@ begin
 
   Registry := TAssemblyRegistry.Create(Self);
   AddModule(Registry);
+
+  Services := TAssemblyServices.Create(Self);
+  AddModule(Services);
 
   UnusualProps := TAssemblyUnusualProps.Create(Self);
   AddModule(UnusualProps);

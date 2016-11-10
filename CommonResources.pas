@@ -21,6 +21,7 @@ const
   imgTask = 3;
   imgAssembly = 4;
   imgCategory = 5;
+  imgService = 6;
 
 implementation
 
