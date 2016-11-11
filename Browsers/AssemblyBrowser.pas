@@ -46,16 +46,18 @@ type
     procedure TreePaintText(Sender: TBaseVirtualTree; const TargetCanvas: TCanvas;
       Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType);
   protected
-    FOnAssemblySelected: TAssemblyEvent;
+    FOnSelectionChanged: TNotifyEvent;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     procedure LoadRootAssemblies(AParent: PVirtualNode);
     function AddAssemblyNode(AParent: PVirtualNode; const AEntry: TAssemblyData): PVirtualNode;
     procedure ApplyFilter;
-    function GetSelectedAssembly: TAssemblyId;
+    function GetFocusedAssembly: TAssemblyId;
+    function GetSelectedAssemblies: TArray<TAssemblyId>;
   public
     procedure Reload; override;
-    property SelectedAssembly: TAssemblyId read GetSelectedAssembly;
-    property OnAssemblySelected: TAssemblyEvent read FOnAssemblySelected write FOnAssemblySelected;
+    property FocusedAssembly: TAssemblyId read GetFocusedAssembly;
+    property SelectedAssemblies: TArray<TAssemblyId> read GetSelectedAssemblies;
+    property OnSelectionChanged: TNotifyEvent read FOnSelectionChanged write FOnSelectionChanged;
   end;
 
 var
@@ -110,7 +112,7 @@ begin
   Data.DelayLoad.Touched := false;
 end;
 
-function TAssemblyBrowserForm.GetSelectedAssembly: TAssemblyId;
+function TAssemblyBrowserForm.GetFocusedAssembly: TAssemblyId;
 var Data: PNodeData;
 begin
   if Tree.FocusedNode = nil then
@@ -120,6 +122,19 @@ begin
     Result := Data.Assembly;
   end;
 end;
+
+function TAssemblyBrowserForm.GetSelectedAssemblies: TArray<TAssemblyId>;
+var ANode: PVirtualNode;
+  Data: PNodeData;
+begin
+  SetLength(Result, 0);
+  for ANode in Tree.SelectedNodes() do begin
+    Data := Tree.GetNodeData(ANode);
+    SetLength(Result, Length(Result)+1);
+    Result[Length(Result)-1] := Data.Assembly;
+  end;
+end;
+
 
 procedure TAssemblyBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
   var NodeDataSize: Integer);
@@ -199,11 +214,8 @@ var Data: PNodeData;
 begin
   inherited;
   Data := Tree.GetNodeData(Node);
-  if Assigned(Self.FOnAssemblySelected) then
-    if Data <> nil then
-      Self.FOnAssemblySelected(Self, Data.Assembly)
-    else
-      Self.FOnAssemblySelected(Self, 0);
+  if Assigned(Self.FOnSelectionChanged) then
+    Self.FOnSelectionChanged(Self);
 end;
 
 // Applies visibility to root nodes according to the current quick-filter

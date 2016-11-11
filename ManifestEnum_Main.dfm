@@ -98,13 +98,13 @@ object MainForm: TMainForm
         Caption = 'Manifest name'
         OnClick = miCopyAssemblyManifestNameClick
       end
-      object cbCopyComponentKeyform: TMenuItem
+      object miCopyComponentKeyform: TMenuItem
         Caption = 'Component keyform'
-        OnClick = cbCopyComponentKeyformClick
+        OnClick = miCopyComponentKeyformClick
       end
-      object cbCopyDeploymentKeyform: TMenuItem
+      object miCopyDeploymentKeyform: TMenuItem
         Caption = 'Deployment keyform'
-        OnClick = cbCopyDeploymentKeyformClick
+        OnClick = miCopyDeploymentKeyformClick
       end
     end
     object Export1: TMenuItem

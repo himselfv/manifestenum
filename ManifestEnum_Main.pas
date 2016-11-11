@@ -9,6 +9,23 @@ uses
   AssemblyDb.Assemblies;
 
 type
+  PAssemblyEnum = ^TAssemblyEnum;
+  TAssemblyEnumerator = record
+    FEnum: PAssemblyEnum;
+    FIndex: integer;
+    function GetCurrent: TAssemblyData;
+    function MoveNext: boolean;
+    property Current: TAssemblyData read GetCurrent;
+  end;
+  TAssemblyEnum = record
+    FIds: TArray<TAssemblyId>;
+    FDb: TAssemblyDb;
+    function GetEnumerator: TAssemblyEnumerator;
+  end;
+
+  TAssemblyProc = reference to procedure(const Assembly: TAssemblyData);
+  TAssemblyStrFunc = reference to function(const Assembly: TAssemblyData): string;
+
   TMainForm = class(TForm)
     MainMenu: TMainMenu;
     F1: TMenuItem;
@@ -41,8 +58,8 @@ type
     miJumpToComponentKey: TMenuItem;
     miJumpToDeploymentKey: TMenuItem;
     miConvertIntoDeployment: TMenuItem;
-    cbCopyComponentKeyform: TMenuItem;
-    cbCopyDeploymentKeyform: TMenuItem;
+    miCopyComponentKeyform: TMenuItem;
+    miCopyDeploymentKeyform: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
@@ -54,16 +71,16 @@ type
     procedure miCopyAssemblyNameClick(Sender: TObject);
     procedure miCopyAssemblyDisplayNameClick(Sender: TObject);
     procedure miCopyAssemblyStrongNameClick(Sender: TObject);
+    procedure miCopyAssemblyManifestNameClick(Sender: TObject);
+    procedure miCopyComponentKeyformClick(Sender: TObject);
+    procedure miCopyDeploymentKeyformClick(Sender: TObject);
     procedure Reload1Click(Sender: TObject);
     procedure Installassembly1Click(Sender: TObject);
     procedure Expandfile1Click(Sender: TObject);
     procedure miExportPackageDataClick(Sender: TObject);
-    procedure miCopyAssemblyManifestNameClick(Sender: TObject);
     procedure miJumpToComponentKeyClick(Sender: TObject);
     procedure miJumpToDeploymentKeyClick(Sender: TObject);
     procedure miConvertIntoDeploymentClick(Sender: TObject);
-    procedure cbCopyComponentKeyformClick(Sender: TObject);
-    procedure cbCopyDeploymentKeyformClick(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -73,8 +90,18 @@ type
     FRegistryBrowser: TRegistryBrowserForm;
     FTaskBrowser: TTaskBrowserForm;
     procedure AddPage(const AForm: TForm);
-    procedure AssemblyBrowserAssemblySelected(Sender: TObject; AAssembly: TAssemblyId);
+    procedure AssemblyBrowserSelectionChanged(Sender: TObject);
     procedure SaveManifest(const AManifestName: string; const ATargetName: string);
+
+  protected
+    //Assembly selection
+    function SelectedAssemblyIDs: TArray<TAssemblyId>;
+    function SelectedAssemblies: TAssemblyEnum;
+    function SelectedSingleAssemblyID: TAssemblyId;
+    function GetSelectedSingleAssembly(out AAssembly: TAssemblyData): boolean;
+    procedure ForEachSelected(AFunc: TAssemblyProc);
+    function ForEachSelectedJoin(AFunc: TAssemblyStrFunc; ASep: string = #13): string;
+
   end;
 
 var
@@ -94,7 +121,7 @@ begin
   InitAssemblyDb(FDb, AppFolder+'\assembly.db', true);
 
   FAssemblyBrowser := TAssemblyBrowserForm.Create(Application);
-  FAssemblyBrowser.OnAssemblySelected := Self.AssemblyBrowserAssemblySelected;
+  FAssemblyBrowser.OnSelectionChanged := Self.AssemblyBrowserSelectionChanged;
   FAssemblyBrowser.Tree.PopupMenu := Self.PopupMenu;
   AddPage(FAssemblyBrowser);
 
@@ -163,10 +190,90 @@ begin
   FAssemblyBrowser.Reload;
 end;
 
-procedure TMainForm.AssemblyBrowserAssemblySelected(Sender: TObject; AAssembly: TAssemblyId);
+procedure TMainForm.AssemblyBrowserSelectionChanged(Sender: TObject);
+var AIds: TArray<TAssemblyId>;
 begin
-  FAssemblyDetails.AssemblyId := AAssembly;
+  AIds := FAssemblyBrowser.SelectedAssemblies;
+  if Length(AIds) = 1 then
+    FAssemblyDetails.AssemblyId := AIds[0]
+  else
+    FAssemblyDetails.AssemblyId := 0;
 end;
+
+//Returns a list of all selected assembly IDs
+function TMainForm.SelectedAssemblyIDs: TArray<TAssemblyId>;
+begin
+  Result := FAssemblyBrowser.SelectedAssemblies;
+end;
+
+//Returns a enumerator of all selected assemblies
+function TMainForm.SelectedAssemblies: TAssemblyEnum;
+begin
+  Result.FIds := FAssemblyBrowser.SelectedAssemblies;
+  Result.FDb := Self.FDb;
+end;
+
+//Returns ID of the only selected assembly, or 0 if none or multiple are selected
+function TMainForm.SelectedSingleAssemblyID: TAssemblyId;
+var AIds: TArray<TAssemblyId>;
+begin
+  AIDs := FAssemblyBrowser.SelectedAssemblies;
+  if Length(AIDs) = 1 then
+    Result := AIDs[0]
+  else
+    Result := 0;
+end;
+
+function TMainForm.GetSelectedSingleAssembly(out AAssembly: TAssemblyData): boolean;
+var AId: TAssemblyId;
+begin
+  AId := SelectedSingleAssemblyId;
+  Result := AId > 0;
+  if Result then
+    AAssembly := FDb.Assemblies.GetAssembly(AId);
+end;
+
+function TAssemblyEnum.GetEnumerator: TAssemblyEnumerator;
+begin
+  Result.FEnum := @Self;
+  Result.FIndex := -1;
+end;
+
+function TAssemblyEnumerator.GetCurrent: TAssemblyData;
+begin
+  Result := FEnum.FDb.Assemblies.GetAssembly(FEnum.FIds[FIndex]);
+end;
+
+function TAssemblyEnumerator.MoveNext: boolean;
+begin
+  Result := FIndex < Length(FEnum.FIds)-1;
+  if Result then
+    Inc(FIndex);
+end;
+
+//Calls AFunc for each selected Assembly
+procedure TMainForm.ForEachSelected(AFunc: TAssemblyProc);
+var AIds: TArray<TAssemblyId>;
+  i: integer;
+begin
+  AIDs := FAssemblyBrowser.SelectedAssemblies;
+  for i := 0 to Length(AIds)-1 do
+    AFunc(FDb.Assemblies.GetAssembly(AIds[i]));
+end;
+
+//Calls AFunc for each selected assembly and joins the results with ASep
+function TMainForm.ForEachSelectedJoin(AFunc: TAssemblyStrFunc; ASep: string = #13): string;
+var AIds: TArray<TAssemblyId>;
+  i: integer;
+begin
+  Result := '';
+  AIDs := FAssemblyBrowser.SelectedAssemblies;
+  for i := 0 to Length(AIds)-1 do
+    Result := Result + AFunc(FDb.Assemblies.GetAssembly(AIds[i])) + ASep;
+  if Length(Result) > 0 then
+    Result := Copy(Result, 1, Length(Result)-Length(ASep));
+end;
+
 
 procedure SaveStreamToFile(AStream: TStream; const AFilename: string);
 var fp: TFileStream;
@@ -209,24 +316,21 @@ begin
 end;
 
 procedure TMainForm.miExportManifestClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  for Assembly in SelectedAssemblies do begin
+    if Assembly.manifestName = '' then begin
+      MessageBox(Self.Handle, PChar(Assembly.identity.name+': this assembly has no associated manifest'),
+        PChar('Cannot save manifest'), MB_OK + MB_ICONEXCLAMATION);
+      exit;
+    end;
 
-  if AAssemblyData.manifestName = '' then begin
-    MessageBox(Self.Handle, PChar('This assembly has no associated manifest'), PChar('Cannot save manifest'), MB_OK + MB_ICONEXCLAMATION);
-    exit;
+    SaveManifestDialog.Filename := Assembly.manifestName+'.manifest';
+    if not SaveManifestDialog.Execute then
+      exit;
+
+    SaveManifest(Assembly.manifestName, SaveManifestDialog.Filename);
   end;
-
-  SaveManifestDialog.Filename := AAssemblyData.manifestName+'.manifest';
-  if not SaveManifestDialog.Execute then
-    exit;
-
-  SaveManifest(AAssemblyData.manifestName, SaveManifestDialog.Filename);
 end;
 
 procedure TMainForm.SaveManifest(const AManifestName: string; const ATargetName: string);
@@ -247,157 +351,120 @@ begin
 end;
 
 procedure TMainForm.miExportPackageDataClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
   ATargetFolder: string;
   AFileDir: string;
   AFiles: TStringDynArray;
   AInFile, AOutFile: string;
   AStream: TStream;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-
-  if AAssemblyData.manifestName = '' then begin
-    MessageBox(Self.Handle, PChar('This assembly has no associated manifest'), PChar('Cannot save data'), MB_OK + MB_ICONEXCLAMATION);
-    exit;
-  end;
-
-  with TFileOpenDialog.Create(nil) do
-  try
-    Options := [fdoPickFolders];
-    if not Execute then exit;
-    ATargetFolder := Filename;
-  finally
-    Free;
-  end;
-
-  SaveManifest(AAssemblyData.manifestName, ATargetFolder+'\'+AAssemblyData.manifestName+'.manifest');
-
-  AFileDir := GetWindowsDir()+'\WinSxS\'+AAssemblyData.manifestName;
-  if not DirectoryExists(AFileDir) then
-    exit;
-
-  AFiles := TDirectory.GetFiles(AFileDir, '*.*', TSearchOption.soAllDirectories);
-  for AInFile in AFiles do begin
-    AStream := OpenSxSFile(AInFile);
-    try
-      AOutFile := TPath.Combine(ATargetFolder, TPath.GetFileName(AInFile));
-      SaveStreamToFile(AStream, AOutFile);
-    finally
-      FreeAndNil(AStream);
+  for Assembly in SelectedAssemblies do begin
+    if Assembly.manifestName = '' then begin
+      MessageBox(Self.Handle, PChar(Assembly.identity.name+': this assembly has no associated manifest'),
+        PChar('Cannot save manifest'), MB_OK + MB_ICONEXCLAMATION);
+      exit;
     end;
+
+    with TFileOpenDialog.Create(nil) do
+    try
+      Options := [fdoPickFolders];
+      if not Execute then exit;
+      ATargetFolder := Filename;
+    finally
+      Free;
+    end;
+
+    SaveManifest(Assembly.manifestName, ATargetFolder+'\'+Assembly.manifestName+'.manifest');
+
+    AFileDir := GetWindowsDir()+'\WinSxS\'+Assembly.manifestName;
+    if not DirectoryExists(AFileDir) then
+      exit;
+
+    AFiles := TDirectory.GetFiles(AFileDir, '*.*', TSearchOption.soAllDirectories);
+    for AInFile in AFiles do begin
+      AStream := OpenSxSFile(AInFile);
+      try
+        AOutFile := TPath.Combine(ATargetFolder, TPath.GetFileName(AInFile));
+        SaveStreamToFile(AStream, AOutFile);
+      finally
+        FreeAndNil(AStream);
+      end;
+    end;
+
   end;
 end;
 
 
 procedure TMainForm.miCopyAssemblyNameClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  Clipboard.AsText := AAssemblyData.identity.name;
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := Assembly.identity.name;
+  end);
 end;
 
 procedure TMainForm.miCopyAssemblyDisplayNameClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  Clipboard.AsText := AAssemblyData.identity.ToString;
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := Assembly.identity.ToString;
+  end);
 end;
 
 procedure TMainForm.miCopyAssemblyStrongNameClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  Clipboard.AsText := AAssemblyData.identity.ToStrongName;
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := Assembly.identity.ToStrongName;
+  end);
 end;
 
 procedure TMainForm.miCopyAssemblyManifestNameClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  Clipboard.AsText := AAssemblyData.manifestName;
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := Assembly.manifestName;
+  end);
 end;
 
-procedure TMainForm.cbCopyComponentKeyformClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+procedure TMainForm.miCopyComponentKeyformClick(Sender: TObject);
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  Clipboard.AsText := SxsComponentKeyform(AAssemblyData.identity, SxsExtractHash(AAssemblyData.manifestName));
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := SxsComponentKeyform(Assembly.identity, SxsExtractHash(Assembly.manifestName));
+  end);
 end;
 
-procedure TMainForm.cbCopyDeploymentKeyformClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+procedure TMainForm.miCopyDeploymentKeyformClick(Sender: TObject);
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  Clipboard.AsText := SxsDeploymentKeyform(AAssemblyData.identity, SxsExtractHash(AAssemblyData.manifestName));
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := SxsDeploymentKeyform(Assembly.identity, SxsExtractHash(Assembly.manifestName));
+  end);
 end;
 
 
 procedure TMainForm.miJumpToComponentKeyClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsComponentsKey+'\'+AAssemblyData.manifestName);
+  if GetSelectedSingleAssembly(Assembly) then
+    RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsComponentsKey+'\'+Assembly.manifestName);
 end;
 
 procedure TMainForm.miJumpToDeploymentKeyClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey+'\'+SxsDeploymentKeyform(AAssemblyData.identity, SxsExtractHash(AAssemblyData.manifestName)));
+  if GetSelectedSingleAssembly(Assembly) then
+    RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey+'\'+SxsDeploymentKeyform(Assembly.identity, SxsExtractHash(Assembly.manifestName)));
 end;
 
 procedure TMainForm.miGetAssemblySizeClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
   ACache: IAssemblyCache;
   AInfo: ASSEMBLY_INFO;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
+  if not GetSelectedSingleAssembly(Assembly) then
     exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
 
   OleCheck(CreateAssemblyCache(ACache, 0));
   FillChar(AInfo, SizeOf(AInfo), 0);
   AInfo.cbAssemblyInfo := SizeOf(AInfo);
   AInfo.dwAssemblyFlags := QUERYASMINFO_FLAG_GETSIZE;
-  OleCheck(ACache.QueryAssemblyInfo(0, PChar(AAssemblyData.identity.ToStrongName), @AInfo));
+  OleCheck(ACache.QueryAssemblyInfo(0, PChar(Assembly.identity.ToStrongName), @AInfo));
 
   MessageBox(Self.Handle, PChar('Assembly size: '+IntToStr(AInfo.uliAssemblySizeInKB.QuadPart)+' Kb'),
     PChar('Assembly info'), MB_OK);
@@ -419,47 +486,56 @@ begin
 end;
 
 procedure TMainForm.miUninstallAssemblyClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
   ACache: IAssemblyCache;
+  ForceUninstall: boolean;
+  AssemblyNames: string;
+  ResultText: string;
   uresult: ULong;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
+  AssemblyNames := '';
+  for Assembly in SelectedAssemblies do
+    AssemblyNames := AssemblyNames+'  '+Assembly.identity.name+#13;
+  if AssemblyNames = '' then exit; //no assemblies selected
 
-  if MessageBox(Self.Handle, PChar('You are going to uninstall '+AAssemblyData.identity.name+'.'#13
+  if MessageBox(Self.Handle, PChar('You are going to uninstall these assemblies: '#13
+    +AssemblyNames
     +'Do you really want to continue?'),
     PChar('Confirm uninstall'), MB_ICONQUESTION + MB_YESNO) <> ID_YES then
     exit;
 
+  OleCheck(CreateAssemblyCache(ACache, 0));
+  ForceUninstall := (GetKeyState(VK_SHIFT) < 0); //Shift is pressed, force-uninstall
+
   if not IsComponentsHiveLoaded then
     LoadComponentsHive();
-  if SxsIsDeployment(AAssemblyData.identity, AAssemblyData.manifestName) then
-    SxsDeploymentAddUninstallSource(AAssemblyData.identity, AAssemblyData.manifestName);
-  OleCheck(CreateAssemblyCache(ACache, 0));
-  OleCheck(ACache.UninstallAssembly(0, PChar(AAssemblyData.identity.ToStrongName), nil, @uresult));
-  MessageBox(Self.Handle, PChar('Uninstall result: '+IntToStr(uresult)+#13
-    +'Note though that this result often does not reflect actual success or failure.'),
+
+  ResultText := '';
+  for Assembly in SelectedAssemblies do begin
+    if SxsIsDeployment(Assembly.identity, Assembly.manifestName) then begin
+      if ForceUninstall then
+        SxsConvertIntoDeployment(Assembly.identity, Assembly.manifestName);
+      SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
+    end;
+    OleCheck(ACache.UninstallAssembly(0, PChar(Assembly.identity.ToStrongName), nil, @uresult));
+    ResultText := ResultText+'  '+Assembly.identity.name+': '+IntToStr(uresult)+#13;
+  end;
+
+  MessageBox(Self.Handle, PChar('Uninstall results:' + ResultText
+    +'SxS uninstall results often do not reflect actual success or failure.'),
     PChar('Done'), MB_OK);
 end;
 
-
 procedure TMainForm.miConvertIntoDeploymentClick(Sender: TObject);
-var AAssemblyId: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+var Assembly: TAssemblyData;
 begin
-  AAssemblyId := FAssemblyBrowser.SelectedAssembly;
-  if AAssemblyId < 0 then
-    exit;
-  AAssemblyData := FDb.Assemblies.GetAssembly(AAssemblyId);
-
   if not IsComponentsHiveLoaded then
     LoadComponentsHive();
-  SxsConvertIntoDeployment(AAssemblyData.identity, AAssemblyData.manifestName);
-  SxsDeploymentAddUninstallSource(AAssemblyData.identity, AAssemblyData.manifestName);
-  MessageBox(Self.Handle, PChar('Done'), PChar('Done'), MB_OK);
+  for Assembly in SelectedAssemblies do begin
+    SxsConvertIntoDeployment(Assembly.identity, Assembly.manifestName);
+    SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
+  end;
+  MessageBox(Self.Handle, PChar('Conversion completed'), PChar('Done'), MB_OK);
 end;
 
 end.

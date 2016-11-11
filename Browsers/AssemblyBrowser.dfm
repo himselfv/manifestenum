@@ -15,6 +15,7 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
     Header.SortColumn = 0
     Images = ResourceModule.SmallImages
     TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowTreeLines, toThemeAware, toUseBlendedImages]
+    TreeOptions.SelectionOptions = [toMultiSelect, toRightClickSelect]
     OnCompareNodes = TreeCompareNodes
     OnFocusChanged = TreeFocusChanged
     OnFreeNode = TreeFreeNode
@@ -22,6 +23,9 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
     OnPaintText = TreePaintText
     OnGetImageIndexEx = TreeGetImageIndexEx
     OnInitNode = TreeInitNode
+    ExplicitTop = 44
+    ExplicitWidth = 512
+    ExplicitHeight = 305
     Columns = <
       item
         Position = 0
@@ -37,8 +41,6 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = -209
-    ExplicitWidth = 721
     object sbFilterSettings: TSpeedButton
       Left = 463
       Top = 0
@@ -59,7 +61,6 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
       Align = alClient
       TabOrder = 0
       OnChange = edtQuickFilterChange
-      ExplicitWidth = 672
       ExplicitHeight = 21
     end
   end
@@ -73,8 +74,6 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
-    ExplicitLeft = -209
-    ExplicitWidth = 721
     object cbFilterByName: TCheckBox
       Left = 0
       Top = 0
