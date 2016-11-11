@@ -47,9 +47,10 @@ type
       AIsDeployment: boolean): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
     function GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
-    procedure GetAllAssemblies(AList: TAssemblyList);
     procedure QueryAssemblies(const ASql: string; AList: TAssemblyList); overload;
     procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
+    procedure GetAllAssemblies(AList: TAssemblyList);
+    procedure GetNameLike(const AName: string; AList: TAssemblyList);
 
   end;
 
@@ -261,6 +262,14 @@ end;
 procedure TAssemblyAssemblies.GetAllAssemblies(AList: TAssemblyList);
 begin
   QueryAssemblies('SELECT * FROM assemblies', AList);
+end;
+
+procedure TAssemblyAssemblies.GetNameLike(const AName: string; AList: TAssemblyList);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM assemblies WHERE Name LIKE ?');
+  sqlite3_bind_str(stmt, 1, AName);
+  QueryAssemblies(stmt, AList);
 end;
 
 

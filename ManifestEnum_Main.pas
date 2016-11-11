@@ -60,9 +60,16 @@ type
     miConvertIntoDeployment: TMenuItem;
     miCopyComponentKeyform: TMenuItem;
     miCopyDeploymentKeyform: TMenuItem;
+    Options1: TMenuItem;
+    miForceUninstall: TMenuItem;
+    N2: TMenuItem;
+    miUninstallByList: TMenuItem;
+    OpenListDialog: TOpenDialog;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
+    procedure SettingsChanged(Sender: TObject);
     procedure pmRebuildAssemblyDatabaseClick(Sender: TObject);
     procedure Loadmanifestfile1Click(Sender: TObject);
     procedure miExportManifestClick(Sender: TObject);
@@ -81,6 +88,8 @@ type
     procedure miJumpToComponentKeyClick(Sender: TObject);
     procedure miJumpToDeploymentKeyClick(Sender: TObject);
     procedure miConvertIntoDeploymentClick(Sender: TObject);
+    procedure miUninstallByListClick(Sender: TObject);
+
   protected
     FDb: TAssemblyDb;
     FAssemblyBrowser: TAssemblyBrowserForm;
@@ -92,6 +101,11 @@ type
     procedure AddPage(const AForm: TForm);
     procedure AssemblyBrowserSelectionChanged(Sender: TObject);
     procedure SaveManifest(const AManifestName: string; const ATargetName: string);
+
+  protected
+    //Settings
+    procedure LoadSettings;
+    procedure SaveSettings;
 
   protected
     //Assembly selection
@@ -110,7 +124,7 @@ var
 implementation
 uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
-  IOUtils, Types, ServiceBrowser;
+  IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -157,6 +171,11 @@ begin
   FreeAndNil(FDb);
 end;
 
+procedure TMainForm.FormShow(Sender: TObject);
+begin
+  LoadSettings;
+end;
+
 procedure TMainForm.Exit1Click(Sender: TObject);
 begin
   Close;
@@ -179,6 +198,34 @@ begin
   AForm.Show;
 end;
 
+procedure TMainForm.LoadSettings;
+var ini: TRegistryIniFile;
+begin
+  ini := TRegistryIniFile.Create('ManifestEnum');
+  try
+    miForceUninstall.Checked := ini.ReadBool('', 'ForceUninstall', false);
+  finally
+    FreeAndNil(ini);
+  end;
+end;
+
+procedure TMainForm.SaveSettings;
+var ini: TRegistryIniFile;
+begin
+  ini := TRegistryIniFile.Create('ManifestEnum');
+  try
+    ini.WriteBool('', 'ForceUninstall', miForceUninstall.Checked);
+  finally
+    FreeAndNil(ini);
+  end;
+end;
+
+procedure TMainForm.SettingsChanged(Sender: TObject);
+begin
+  SaveSettings;
+end;
+
+//Common event handler for many settings controls
 procedure TMainForm.pmRebuildAssemblyDatabaseClick(Sender: TObject);
 begin
   RebuildAssemblyDatabase(FDb, AppFolder+'\assembly.db');
@@ -488,10 +535,10 @@ end;
 procedure TMainForm.miUninstallAssemblyClick(Sender: TObject);
 var Assembly: TAssemblyData;
   ACache: IAssemblyCache;
-  ForceUninstall: boolean;
   AssemblyNames: string;
   ResultText: string;
   uresult: ULong;
+  IsDeployment: boolean;
 begin
   AssemblyNames := '';
   for Assembly in SelectedAssemblies do
@@ -505,23 +552,24 @@ begin
     exit;
 
   OleCheck(CreateAssemblyCache(ACache, 0));
-  ForceUninstall := (GetKeyState(VK_SHIFT) < 0); //Shift is pressed, force-uninstall
 
   if not IsComponentsHiveLoaded then
     LoadComponentsHive();
 
   ResultText := '';
   for Assembly in SelectedAssemblies do begin
-    if SxsIsDeployment(Assembly.identity, Assembly.manifestName) then begin
-      if ForceUninstall then
-        SxsConvertIntoDeployment(Assembly.identity, Assembly.manifestName);
-      SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
+    IsDeployment := SxsIsDeployment(Assembly.identity, Assembly.manifestName);
+    if (not IsDeployment) and miForceUninstall.Checked then begin
+      SxsConvertIntoDeployment(Assembly.identity, Assembly.manifestName);
+      IsDeployment := true;
     end;
+    if IsDeployment then
+      SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
     OleCheck(ACache.UninstallAssembly(0, PChar(Assembly.identity.ToStrongName), nil, @uresult));
     ResultText := ResultText+'  '+Assembly.identity.name+': '+IntToStr(uresult)+#13;
   end;
 
-  MessageBox(Self.Handle, PChar('Uninstall results:' + ResultText
+  MessageBox(Self.Handle, PChar('Uninstall results:'#13 + ResultText
     +'SxS uninstall results often do not reflect actual success or failure.'),
     PChar('Done'), MB_OK);
 end;
@@ -536,6 +584,75 @@ begin
     SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
   end;
   MessageBox(Self.Handle, PChar('Conversion completed'), PChar('Done'), MB_OK);
+end;
+
+procedure TMainForm.miUninstallByListClick(Sender: TObject);
+var Lines: TStringList;
+  line: string;
+  List: TAssemblyList;
+  i, j: integer;
+  ACache: IAssemblyCache;
+  Assembly: TAssemblyData;
+  uresult: ULong;
+  IsDeployment: boolean;
+  hr: HRESULT;
+begin
+  if not OpenListDialog.Execute then
+    exit;
+
+  LogForm.Show;
+  LogForm.Clear;
+  List := TAssemblyList.Create;
+  try
+
+    LogForm.Log('Building assembly list...');
+    Lines := TStringList.Create;
+    try
+      Lines.LoadFromFile(OpenListDialog.FileName);
+      for i := 0 to Lines.Count-1 do begin
+        line := Lines[i];
+        j := pos('#', line);  //remove comments
+        if j > 0 then
+          line := Copy(line, 1, j-1);
+        line := Trim(line);
+        if line = '' then continue;
+        FDb.Assemblies.GetNameLike(line.Replace('*','%'), List);
+      end;
+    finally
+      FreeAndNil(Lines);
+    end;
+
+    LogForm.Log(IntToStr(List.Count)+' assemblies found.');
+    for Assembly in List.Values do
+      LogForm.Log(Assembly.identity.ToString);
+
+    if List.Count <= 0 then begin
+      MessageBox(Self.Handle, PChar('Nothing to remove'), PChar('Batch uninstall'), MB_OK);
+      exit;
+    end;
+
+    if MessageBox(Self.Handle, PChar(IntToStr(List.Count)+' assemblies will be removed. Continue?'),
+      PChar('Batch uninstall'), MB_ICONQUESTION+MB_YESNO) <> ID_YES then
+      exit;
+
+    OleCheck(CreateAssemblyCache(ACache, 0));
+
+    for Assembly in List.Values do begin
+      LogForm.Log('Uninstalling '+Assembly.manifestName+'...');
+      IsDeployment := SxsIsDeployment(Assembly.identity, Assembly.manifestName);
+      if (not IsDeployment) and miForceUninstall.Checked then begin
+        SxsConvertIntoDeployment(Assembly.identity, Assembly.manifestName);
+        IsDeployment := true;
+      end;
+      if IsDeployment then
+        SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
+      hr := ACache.UninstallAssembly(0, PChar(Assembly.identity.ToStrongName), nil, @uresult);
+      LogForm.Log(Assembly.manifestName+': 0x'+IntToHex(hr, 8)+', '+IntToStr(uresult));
+    end;
+
+  finally
+    FreeAndNil(List);
+  end;
 end;
 
 end.

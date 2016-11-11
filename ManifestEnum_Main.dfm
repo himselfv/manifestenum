@@ -13,6 +13,7 @@ object MainForm: TMainForm
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -46,12 +47,28 @@ object MainForm: TMainForm
         Caption = 'Rebuild assembly database'
         OnClick = pmRebuildAssemblyDatabaseClick
       end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object miUninstallByList: TMenuItem
+        Caption = 'Uninstall by list...'
+        OnClick = miUninstallByListClick
+      end
       object N1: TMenuItem
         Caption = '-'
       end
       object Exit1: TMenuItem
         Caption = 'Exit'
         OnClick = Exit1Click
+      end
+    end
+    object Options1: TMenuItem
+      Caption = 'Options'
+      object miForceUninstall: TMenuItem
+        AutoCheck = True
+        Caption = 'Force uninstall'
+        Hint = 'Automatically turn assemblies into deployments if needed'
+        OnClick = SettingsChanged
       end
     end
     object Debug1: TMenuItem
@@ -167,5 +184,12 @@ object MainForm: TMainForm
     Filter = '*.*'
     Left = 408
     Top = 136
+  end
+  object OpenListDialog: TOpenDialog
+    DefaultExt = '*.txt'
+    Filter = '*.txt'
+    Title = 'Open assembly list...'
+    Left = 104
+    Top = 216
   end
 end

@@ -106,9 +106,15 @@
             <Form>ProgressForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="ManifestEnum.Log.pas">
+            <Form>LogForm</Form>
+        </DCCReference>
         <DCCReference Include="Db\AssemblyDb.pas"/>
         <DCCReference Include="Db\AssemblyDb.Core.pas"/>
+        <DCCReference Include="Db\AssemblyDb.Assemblies.pas"/>
         <DCCReference Include="Db\AssemblyDb.Registry.pas"/>
+        <DCCReference Include="Db\AssemblyDb.Services.pas"/>
+        <DCCReference Include="Db\AssemblyDb.UnusualProps.pas"/>
         <DCCReference Include="Db\SxsExpand.pas"/>
         <DCCReference Include="Db\MSDeltaLib.pas"/>
         <DCCReference Include="Db\CompressApi.pas"/>
@@ -136,6 +142,9 @@
         <DCCReference Include="Browsers\RegistryBrowser.pas">
             <Form>RegistryBrowserForm</Form>
         </DCCReference>
+        <DCCReference Include="Browsers\ServiceBrowser.pas">
+            <Form>ServiceBrowserForm</Form>
+        </DCCReference>
         <DCCReference Include="Browsers\TaskBrowser.pas">
             <Form>TaskBrowserForm</Form>
         </DCCReference>
@@ -149,8 +158,6 @@
         <DCCReference Include="Browsers\CategoryBrowser.pas">
             <Form>CategoryBrowserForm</Form>
         </DCCReference>
-        <DCCReference Include="Db\AssemblyDb.UnusualProps.pas"/>
-        <DCCReference Include="Db\AssemblyDb.Assemblies.pas"/>
         <DCCReference Include="Browsers\AutorunsBrowser.pas">
             <Form>AutorunsBrowserForm</Form>
         </DCCReference>
@@ -159,10 +166,6 @@
         </DCCReference>
         <DCCReference Include="WinSxS.pas"/>
         <DCCReference Include="SxsUtils.pas"/>
-        <DCCReference Include="Db\AssemblyDb.Services.pas"/>
-        <DCCReference Include="Browsers\ServiceBrowser.pas">
-            <Form>ServiceBrowserForm</Form>
-        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
