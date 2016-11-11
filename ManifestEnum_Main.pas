@@ -586,6 +586,11 @@ begin
   MessageBox(Self.Handle, PChar('Conversion completed'), PChar('Done'), MB_OK);
 end;
 
+function NameVerStr(const Assembly: TAssemblyData): string;
+begin
+  Result := Assembly.identity.name+'_'+Assembly.identity.version;
+end;
+
 procedure TMainForm.miUninstallByListClick(Sender: TObject);
 var Lines: TStringList;
   line: string;
@@ -638,7 +643,7 @@ begin
     OleCheck(CreateAssemblyCache(ACache, 0));
 
     for Assembly in List.Values do begin
-      LogForm.Log('Uninstalling '+Assembly.manifestName+'...');
+      LogForm.Log('Uninstalling '+NameVerStr(Assembly)+'...');
       IsDeployment := SxsIsDeployment(Assembly.identity, Assembly.manifestName);
       if (not IsDeployment) and miForceUninstall.Checked then begin
         SxsConvertIntoDeployment(Assembly.identity, Assembly.manifestName);
@@ -647,7 +652,7 @@ begin
       if IsDeployment then
         SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
       hr := ACache.UninstallAssembly(0, PChar(Assembly.identity.ToStrongName), nil, @uresult);
-      LogForm.Log(Assembly.manifestName+': 0x'+IntToHex(hr, 8)+', '+IntToStr(uresult));
+      LogForm.Log(NameVerStr(Assembly)+': 0x'+IntToHex(hr, 8)+', '+IntToStr(uresult));
     end;
 
   finally

@@ -9,6 +9,8 @@ uses
 type
   TLogForm = class(TForm)
     memo: TMemo;
+  protected
+    FLastUpdate: cardinal;
   public
     procedure Clear;
     procedure Log(const AMessage: string); overload;
@@ -30,6 +32,10 @@ end;
 procedure TLogForm.Log(const AMessage: string);
 begin
   memo.Lines.Add(AMessage);
+  if GetTickCount - FLastUpdate > 250 then begin
+    Application.ProcessMessages;
+    FLastUpdate := GetTickCount;
+  end;
 end;
 
 procedure TLogForm.Log(const AMessage: string; const AArgs: array of const);
