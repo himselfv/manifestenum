@@ -32,7 +32,6 @@ type
     Exit1: TMenuItem;
     pmRebuildAssemblyDatabase: TMenuItem;
     N1: TMenuItem;
-    Reload1: TMenuItem;
     Debug1: TMenuItem;
     Loadmanifestfile1: TMenuItem;
     OpenManifestDialog: TOpenDialog;
@@ -65,6 +64,8 @@ type
     N2: TMenuItem;
     miUninstallByList: TMenuItem;
     OpenListDialog: TOpenDialog;
+    miAssemblyDatabase: TMenuItem;
+    miRefreshAssemblyDatabase: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -81,7 +82,6 @@ type
     procedure miCopyAssemblyManifestNameClick(Sender: TObject);
     procedure miCopyComponentKeyformClick(Sender: TObject);
     procedure miCopyDeploymentKeyformClick(Sender: TObject);
-    procedure Reload1Click(Sender: TObject);
     procedure Installassembly1Click(Sender: TObject);
     procedure Expandfile1Click(Sender: TObject);
     procedure miExportPackageDataClick(Sender: TObject);
@@ -89,6 +89,7 @@ type
     procedure miJumpToDeploymentKeyClick(Sender: TObject);
     procedure miConvertIntoDeploymentClick(Sender: TObject);
     procedure miUninstallByListClick(Sender: TObject);
+    procedure miRefreshAssemblyDatabaseClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -232,8 +233,9 @@ begin
   FAssemblyBrowser.Reload;
 end;
 
-procedure TMainForm.Reload1Click(Sender: TObject);
+procedure TMainForm.miRefreshAssemblyDatabaseClick(Sender: TObject);
 begin
+  RefreshAssemblyDatabase(FDb);
   FAssemblyBrowser.Reload;
 end;
 

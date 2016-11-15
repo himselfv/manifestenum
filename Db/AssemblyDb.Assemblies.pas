@@ -51,6 +51,7 @@ type
     procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
     procedure GetAllAssemblies(AList: TAssemblyList);
     procedure GetNameLike(const AName: string; AList: TAssemblyList);
+    function GetByManifestName(const AManifestName: string): TAssemblyId;
 
   end;
 
@@ -270,6 +271,22 @@ begin
   stmt := Db.PrepareStatement('SELECT * FROM assemblies WHERE Name LIKE ?');
   sqlite3_bind_str(stmt, 1, AName);
   QueryAssemblies(stmt, AList);
+end;
+
+function TAssemblyAssemblies.GetByManifestName(const AManifestName: string): TAssemblyId;
+var stmt: PSQLite3Stmt;
+  res: integer;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM assemblies WHERE manifestName=?');
+  sqlite3_bind_str(stmt, 1, AManifestName);
+  res := sqlite3_step(stmt);
+  Result := 0;
+  if res = SQLITE_ROW then
+    Result := sqlite3_column_int64(stmt, 0)
+  else
+  if res <> SQLITE_DONE then
+    Db.RaiseLastSqliteError;
+  sqlite3_reset(stmt);
 end;
 
 

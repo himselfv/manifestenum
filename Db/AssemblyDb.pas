@@ -123,7 +123,7 @@ end;
 
 procedure ResetAssemblyDb(const AFilename: string);
 begin
-  DeleteFile(AFilename);
+  SysUtils.DeleteFile(AFilename);
 end;
 
 constructor TAssemblyDb.Create;

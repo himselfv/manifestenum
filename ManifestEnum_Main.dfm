@@ -39,13 +39,16 @@ object MainForm: TMainForm
     Top = 72
     object F1: TMenuItem
       Caption = 'File'
-      object Reload1: TMenuItem
-        Caption = 'Reload'
-        OnClick = Reload1Click
-      end
-      object pmRebuildAssemblyDatabase: TMenuItem
-        Caption = 'Rebuild assembly database'
-        OnClick = pmRebuildAssemblyDatabaseClick
+      object miAssemblyDatabase: TMenuItem
+        Caption = 'Assembly database'
+        object miRefreshAssemblyDatabase: TMenuItem
+          Caption = 'Refresh'
+          OnClick = miRefreshAssemblyDatabaseClick
+        end
+        object pmRebuildAssemblyDatabase: TMenuItem
+          Caption = 'Rebuild from scratch'
+          OnClick = pmRebuildAssemblyDatabaseClick
+        end
       end
       object N2: TMenuItem
         Caption = '-'
