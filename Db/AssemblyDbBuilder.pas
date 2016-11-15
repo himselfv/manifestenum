@@ -125,7 +125,7 @@ end;
 
 function TFlagSet.GetItem(const Index: integer): boolean;
 begin
-  Result := (Bits[Index div bitno] shr ((Index mod bitno)-1)) and $01;
+  Result := Bits[Index div bitno] and ((Index mod bitno)-1)  <> 0;
 end;
 
 procedure TFlagSet.SetItem(const Index: integer; const Value: boolean);
