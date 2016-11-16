@@ -21,7 +21,8 @@ procedure RefreshAssemblyDatabase(ADb: TAssemblyDb);
 procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
 
 implementation
-uses Windows, SysUtils, Classes, FilenameUtils, ManifestEnum_Progress, AssemblyDb.Assemblies;
+uses Windows, SysUtils, Classes, FilenameUtils, ManifestEnum_Progress, AssemblyDb.Assemblies,
+ Generics.Collections, WinSxS, ComObj;
 
 function SxSDir: string;
 begin
@@ -111,6 +112,9 @@ var baseDir: string;
   ad: TAssemblyData;
   hash: TStringList;  //stores known manifest names
   found: TFlagSet;
+  cache: IAssemblyCache;
+  ai: ASSEMBLY_INFO;
+  hr: HRESULT;
  {$IFDEF PROFILE}
   tm1: cardinal;
  {$ENDIF}
@@ -119,6 +123,9 @@ begin
   fnames := nil;
   parser := nil;
   hash := nil;
+  ass := nil;
+
+  SetLength(tmp, 500);
 
   progress := TProgressForm.Create(nil);
   try
@@ -136,10 +143,11 @@ begin
     ass := TAssemblyList.Create;
     try
       ADb.Assemblies.GetAllAssemblies(ass);
-      for ad in ass.Values do
+      for ad in ass.Values do begin
         hash.AddObject(ad.manifestName, TObject(ad.id));
+      end;
     finally
-      FreeAndNil(ass);
+
     end;
 
     found.SetSize(hash.Count);
@@ -164,13 +172,26 @@ begin
       progress.Step();
     end;
 
+    OleCheck(CreateAssemblyCache(cache, 0));
+
     //Mark assemblies as missing and present.
     //We have to touch all assemblies since they can change both ways (go missing / apear after being missing)
     progress.Start('Updating assembly state');
     for i := 0 to hash.Count-1 do
-      if found[i] then
-        ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asInstalled)
-      else
+      if found[i] then begin
+        ad := ass[TAssemblyId(hash.Objects[i])];
+        fillchar(ai, sizeof(ai), 0);
+        ai.cbAssemblyInfo := sizeof(ai);
+        ai.pszCurrentAssemblyPathBuf := @tmp;
+        ai.cchBuf := Length(tmp);
+        hr := cache.QueryAssemblyInfo(0, PChar(ad.identity.ToStrongName), @ai);
+        if hr <> HRESULT($80070490) then
+          OleCheck(hr);
+        if ai.dwAssemblyFlags and ASSEMBLYINFO_FLAG_INSTALLED <> 0 then
+          ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asInstalled)
+        else
+          ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asPresent)
+      end else
         ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asMissing);
 
    {$IFDEF PROFILE}
@@ -184,6 +205,7 @@ begin
     FreeAndNil(fnames);
     FreeAndNil(progress);
     FreeAndNil(hash);
+    FreeAndNil(ass);
   end;
 end;
 
