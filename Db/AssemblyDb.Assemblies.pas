@@ -19,11 +19,17 @@ type
     function ToStrongName: string;
     function ToStrongNameNETStyle: string;
   end;
+  TAssemblyState = (
+    asMissing = 0,    //Assembly is missing from the SxS store. It's only known as a reference
+    asPresent,        //Assembly is present in the store but not deployed
+    asInstalled       //Assembly is deployed
+  );
   TAssemblyData = record
     id: TAssemblyId;
     identity: TAssemblyIdentity;
     manifestName: string;
     isDeployment: boolean;
+    state: TAssemblyState;
   end;
 
   TAssemblyList = TDictionary<TAssemblyId, TAssemblyData>;
@@ -44,9 +50,10 @@ type
     destructor Destroy; override;
 
     function AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string;
-      AIsDeployment: boolean): TAssemblyId;
+      AIsDeployment: boolean; AState: TAssemblyState): TAssemblyId;
     function NeedAssembly(const AEntry: TAssemblyIdentity): TAssemblyId;
     function GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
+    procedure SetState(AAssembly: TAssemblyId; AState: TAssemblyState);
     procedure QueryAssemblies(const ASql: string; AList: TAssemblyList); overload;
     procedure QueryAssemblies(const AStmt: PSQLite3Stmt; AList: TAssemblyList); overload;
     procedure GetAllAssemblies(AList: TAssemblyList);
@@ -146,6 +153,7 @@ begin
     +'versionScope TEXT NOT NULL COLLATE NOCASE,'
     +'manifestName TEXT COLLATE NOCASE,'
     +'isDeployment BOOL,'
+    +'state BOOL,'
     +'CONSTRAINT identity UNIQUE(name,type,language,buildType,processorArchitecture,version,publicKeyToken,versionScope)'
     +')');
 end;
@@ -158,18 +166,20 @@ begin
     +'VALUES (?,?,?,?,?,?,?,?)');
   StmFind := Db.PrepareStatement('SELECT id FROM assemblies WHERE '
     +'name=? AND type=? AND language=? AND buildType=? AND processorArchitecture=? AND version=? AND publicKeyToken=? AND versionScope=?');
-  StmUpdate := Db.PrepareStatement('UPDATE assemblies SET manifestName=?, isDeployment=? '
+  StmUpdate := Db.PrepareStatement('UPDATE assemblies SET manifestName=?, isDeployment=?, state=? '
     +'WHERE id=? ');
   StmGet := Db.PrepareStatement('SELECT * FROM assemblies WHERE id=?');
 end;
 
-function TAssemblyAssemblies.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string; AIsDeployment: boolean): TAssemblyId;
+function TAssemblyAssemblies.AddAssembly(const AEntry: TAssemblyIdentity; const AManifestName: string;
+  AIsDeployment: boolean; AState: TAssemblyState): TAssemblyId;
 begin
   Result := NeedAssembly(AEntry);
   //Update optional fields
   sqlite3_bind_str(StmUpdate, 1, AManifestName);
   sqlite3_bind_int(StmUpdate, 2, integer(AIsDeployment));
-  sqlite3_bind_int64(StmUpdate, 3, Result);
+  sqlite3_bind_int(StmUpdate, 3, integer(AState));
+  sqlite3_bind_int64(StmUpdate, 4, Result);
   if sqlite3_step(StmUpdate) <> SQLITE_DONE then
     Db.RaiseLastSQLiteError();
   sqlite3_reset(StmUpdate);
@@ -227,6 +237,7 @@ begin
   Result.identity.versionScope := sqlite3_column_text16(stmt, 8);
   Result.manifestName := sqlite3_column_text16(stmt, 9);
   Result.isDeployment := boolean(sqlite3_column_int(stmt, 10));
+  Result.state := TAssemblyState(sqlite3_column_int(stmt, 11))
 end;
 
 function TAssemblyAssemblies.GetAssembly(AAssembly: TAssemblyId): TAssemblyData;
@@ -236,6 +247,17 @@ begin
     Db.RaiseLastSQLiteError();
   Result := SqlReadAssemblyData(StmGet);
   sqlite3_reset(StmGet);
+end;
+
+procedure TAssemblyAssemblies.SetState(AAssembly: TAssemblyId; AState: TAssemblyState);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('UPDATE assemblies SET state=? WHERE id=?');
+  sqlite3_bind_int(stmt, 1, integer(AState));
+  sqlite3_bind_int64(stmt, 2, integer(AAssembly));
+  if sqlite3_step(stmt) <> SQLITE_DONE then
+    Db.RaiseLastSqliteError();
+  sqlite3_reset(stmt);
 end;
 
 //Makes an SQL query which returns a set of assembly table records.

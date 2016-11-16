@@ -710,7 +710,7 @@ procedure TSaxManifestParser.commitState;
 var AId: TAssemblyId;
   i, j: integer;
 begin
-  AId := Db.Assemblies.AddAssembly(FIdentity, FManifestName, FIsDeployment);
+  AId := Db.Assemblies.AddAssembly(FIdentity, FManifestName, FIsDeployment, TAssemblyState.asInstalled);
 
   for i := 0 to FDependencies.Count-1 do begin
     FDependencies[i]^.entry.dependentAssembly := Db.Assemblies.NeedAssembly(FDependencies[i]^.identity);

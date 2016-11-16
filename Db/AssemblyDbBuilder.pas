@@ -17,7 +17,6 @@ function SxSDir: string;
 function SxSManifestDir: string;
 
 procedure InitAssemblyDb(ADb: TAssemblyDb; const AFilename: string; AAutoRebuild: boolean = true);
-procedure ImportAssemblyManifests(ADb: TAssemblyDb);
 procedure RefreshAssemblyDatabase(ADb: TAssemblyDb);
 procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
 
@@ -42,7 +41,7 @@ begin
     ADb.Open(AFilename);
 end;
 
-//Создаёт TStringList и заполняет его файлами из папки, по маске
+//Creates TStringList and populates it with file names by mask
 function FilesByMask(const AMask: string): TStringList;
 var sr: TSearchRec;
   res: integer;
@@ -56,60 +55,12 @@ begin
   SysUtils.FindClose(sr);
 end;
 
-//Parses all manifests in WinSxS\Manifests and adds/updates their data in the database.
-//Displays progress form.
-procedure ImportAssemblyManifests(ADb: TAssemblyDb);
-var baseDir: string;
-  fnames: TStringList;
-  i: integer;
-  progress: TProgressForm;
-  parser: TManifestParser;
- {$IFDEF PROFILE}
-  tm1: cardinal;
- {$ENDIF}
-begin
-  baseDir := SxSManifestDir()+'\';
-  fnames := nil;
-  parser := nil;
-
-  progress := TProgressForm.Create(nil);
-  try
-    progress.Show;
-
-   {$IFDEF PROFILE}
-    tm1 := GetTickCount();
-   {$ENDIF}
-
-    //Составляем список файлов
-    progress.Start('Building file list');
-    fnames := FilesByMask(baseDir+'\*.manifest');
-
-    ADb.BeginTransaction;
-    parser := TManifestParser.Create(ADb);
-
-    //Теперь загружаем содержимое.
-    progress.Start('Reading manifests', fnames.Count-1);
-    for i := 0 to fnames.Count-1 do begin
-      parser.ImportManifest(baseDir+'\'+fnames[i]);
-      progress.Step();
-    end;
-
-   {$IFDEF PROFILE}
-    tm1 := GetTickCount-tm1;
-    MessageBox(0, PChar('Total time: '+IntToStr(tm1)), PChar('Import completed'), MB_OK);
-   {$ENDIF}
-
-    ADb.CommitTransaction;
-  finally
-    FreeAndNil(parser);
-    FreeAndNil(fnames);
-    FreeAndNil(progress);
-  end;
-end;
 
 type
+ //Simple boolean bit set class
   TFlagSet = record
     Bits: array of cardinal;
+    procedure Reset; inline;
     procedure SetSize(const Value: integer); inline;
     function GetItem(const Index: integer): boolean; inline;
     procedure SetItem(const Index: integer; const Value: boolean); inline;
@@ -117,6 +68,13 @@ type
   const
     bitno = sizeof(integer)*8;
   end;
+
+procedure TFlagSet.Reset;
+var i: integer;
+begin
+  for i := 0 to Length(Bits)-1 do
+    Bits[i] := 0;
+end;
 
 procedure TFlagSet.SetSize(const Value: integer);
 begin
@@ -137,10 +95,13 @@ begin
 end;
 
 
-//Rescans available manifests and updates the database. If the manifest is known, it's assumed to
-//be unchanged (they usually are).
+{
+Parses all manifests in WinSxS\Manifests and adds their data in the database. If the manifest
+is known, it's assumed to be unchanged (they almost always are).
+Displays progress form.
+Designed to be fast when updating.
+}
 procedure RefreshAssemblyDatabase(ADb: TAssemblyDb);
-const bitno = sizeof(integer)*8;
 var baseDir: string;
   fnames: TStringList;
   i, idx: integer;
@@ -148,18 +109,27 @@ var baseDir: string;
   parser: TManifestParser;
   ass: TAssemblyList;
   ad: TAssemblyData;
-  hash: TStringList;
-  found: array of integer;
+  hash: TStringList;  //stores known manifest names
+  found: TFlagSet;
+ {$IFDEF PROFILE}
+  tm1: cardinal;
+ {$ENDIF}
 begin
   baseDir := SxSManifestDir()+'\';
   fnames := nil;
   parser := nil;
+  hash := nil;
 
-  hash := TStringList.Create;
   progress := TProgressForm.Create(nil);
   try
     progress.Show;
 
+   {$IFDEF PROFILE}
+    tm1 := GetTickCount();
+   {$ENDIF}
+
+    //Build the lookup list of assemblies which we need not import
+    hash := TStringList.Create;
     hash.Sorted := true;
 
     progress.Start('Building assembly list');
@@ -167,37 +137,46 @@ begin
     try
       ADb.Assemblies.GetAllAssemblies(ass);
       for ad in ass.Values do
-        hash.Add(ad.manifestName);
+        hash.AddObject(ad.manifestName, TObject(ad.id));
     finally
       FreeAndNil(ass);
     end;
 
-    SetLength(found, hash.Count div bitno + 1);
-    for i := 0 to Length(found)-1 do
-      found[i] := 0;
+    found.SetSize(hash.Count);
+    found.Reset;
 
-    //Составляем список файлов
+
+    //Build the list of manifests to import
     progress.Start('Building file list');
     fnames := FilesByMask(baseDir+'\*.manifest');
 
     ADb.BeginTransaction;
     parser := TManifestParser.Create(ADb);
 
-    //Теперь загружаем содержимое.
+    //Parse the files
     progress.Start('Reading manifests', fnames.Count-1);
     for i := 0 to fnames.Count-1 do begin
       idx := hash.IndexOf(ChangeFileExt(fnames[i], ''));
       if idx >= 0 then
-        found[idx div bitno] := found[idx div bitno] or (1 shl ((idx mod bitno)-1))
+        found[idx] := true
       else
         parser.ImportManifest(baseDir+'\'+fnames[i]);
       progress.Step();
     end;
 
-    progress.Start('Removing assemblies');
-    for i := 0 to hash.Count-1 do begin
+    //Mark assemblies as missing and present.
+    //We have to touch all assemblies since they can change both ways (go missing / apear after being missing)
+    progress.Start('Updating assembly state');
+    for i := 0 to hash.Count-1 do
+      if found[i] then
+        ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asInstalled)
+      else
+        ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asMissing);
 
-    end;
+   {$IFDEF PROFILE}
+    tm1 := GetTickCount-tm1;
+    MessageBox(0, PChar('Total time: '+IntToStr(tm1)), PChar('Import completed'), MB_OK);
+   {$ENDIF}
 
     ADb.CommitTransaction;
   finally
@@ -213,7 +192,7 @@ begin
   ADb.Close;
   DeleteFile(AFilename);
   ADb.Open(AFilename);
-  ImportAssemblyManifests(ADb);
+  RefreshAssemblyDatabase(ADb);
 end;
 
 end.

@@ -109,7 +109,7 @@ begin
 
  {$IFNDEF DRYRUN}aId := Db.Assemblies.AddAssembly({$ENDIF}XmlReadAssemblyIdentityData(node) {$IFNDEF DRYRUN},
     ChangeFileExt(ExtractFilename(AManifestFile), ''),
-    isDeployment){$ENDIF};
+    isDeployment, asInstalled){$ENDIF};
 
   root := FXml.selectSingleNode('/assembly');
   children := root.childNodes;
