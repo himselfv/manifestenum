@@ -26,6 +26,7 @@ type
     procedure RaiseLastSqliteError;
     procedure BeginTransaction;
     procedure CommitTransaction;
+    procedure AbortTransaction;
     procedure Exec(const ASql: string);
     function PrepareStatement(const ASql: string): PSQLite3Stmt;
 
@@ -138,6 +139,11 @@ end;
 procedure TAssemblyDbCore.CommitTransaction;
 begin
   Exec('COMMIT');
+end;
+
+procedure TAssemblyDbCore.AbortTransaction;
+begin
+  Exec('ROLLBACK');
 end;
 
 procedure TAssemblyDbCore.CreateTables;

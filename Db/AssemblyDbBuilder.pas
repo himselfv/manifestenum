@@ -115,6 +115,7 @@ var baseDir: string;
   cache: IAssemblyCache;
   ai: ASSEMBLY_INFO;
   hr: HRESULT;
+  tmp: string;
  {$IFDEF PROFILE}
   tm1: cardinal;
  {$ENDIF}
@@ -159,47 +160,55 @@ begin
     fnames := FilesByMask(baseDir+'\*.manifest');
 
     ADb.BeginTransaction;
-    parser := TManifestParser.Create(ADb);
+    try
+      parser := TManifestParser.Create(ADb);
 
-    //Parse the files
-    progress.Start('Reading manifests', fnames.Count-1);
-    for i := 0 to fnames.Count-1 do begin
-      idx := hash.IndexOf(ChangeFileExt(fnames[i], ''));
-      if idx >= 0 then
-        found[idx] := true
-      else
-        parser.ImportManifest(baseDir+'\'+fnames[i]);
-      progress.Step();
-    end;
-
-    OleCheck(CreateAssemblyCache(cache, 0));
-
-    //Mark assemblies as missing and present.
-    //We have to touch all assemblies since they can change both ways (go missing / apear after being missing)
-    progress.Start('Updating assembly state');
-    for i := 0 to hash.Count-1 do
-      if found[i] then begin
-        ad := ass[TAssemblyId(hash.Objects[i])];
-        fillchar(ai, sizeof(ai), 0);
-        ai.cbAssemblyInfo := sizeof(ai);
-        ai.pszCurrentAssemblyPathBuf := @tmp;
-        ai.cchBuf := Length(tmp);
-        hr := cache.QueryAssemblyInfo(0, PChar(ad.identity.ToStrongName), @ai);
-        if hr <> HRESULT($80070490) then
-          OleCheck(hr);
-        if ai.dwAssemblyFlags and ASSEMBLYINFO_FLAG_INSTALLED <> 0 then
-          ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asInstalled)
+      //Parse the files
+      progress.Start('Reading manifests', fnames.Count-1);
+      for i := 0 to fnames.Count-1 do begin
+        idx := hash.IndexOf(ChangeFileExt(fnames[i], ''));
+        if idx >= 0 then
+          found[idx] := true
         else
-          ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asPresent)
-      end else
-        ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asMissing);
+          parser.ImportManifest(baseDir+'\'+fnames[i]);
+        progress.Step();
+      end;
 
-   {$IFDEF PROFILE}
-    tm1 := GetTickCount-tm1;
-    MessageBox(0, PChar('Total time: '+IntToStr(tm1)), PChar('Import completed'), MB_OK);
-   {$ENDIF}
+      OleCheck(CreateAssemblyCache(cache, 0));
 
-    ADb.CommitTransaction;
+      //Mark assemblies as missing and present.
+      //We have to touch all assemblies since they can change both ways (go missing / apear after being missing)
+      progress.Start('Updating assembly state');
+      for i := 0 to hash.Count-1 do
+        if found[i] then begin
+          ad := ass[TAssemblyId(hash.Objects[i])];
+          fillchar(ai, sizeof(ai), 0);
+          ai.cbAssemblyInfo := sizeof(ai);
+//          ai.pszCurrentAssemblyPathBuf := @tmp;
+//          ai.cchBuf := Length(tmp);
+          fillchar(tmp[1], Length(tmp)*SizeOf(WideChar), 0);
+          if i<6 then continue;
+
+          hr := cache.QueryAssemblyInfo(0, PChar(ad.identity.ToStrongName), @ai);
+          if hr <> HRESULT($80070490) then
+            OleCheck(hr);
+          if ai.dwAssemblyFlags and ASSEMBLYINFO_FLAG_INSTALLED <> 0 then
+            ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asInstalled)
+          else
+            ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asPresent)
+        end else
+          ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asMissing);
+
+     {$IFDEF PROFILE}
+      tm1 := GetTickCount-tm1;
+      MessageBox(0, PChar('Total time: '+IntToStr(tm1)), PChar('Import completed'), MB_OK);
+     {$ENDIF}
+
+      ADb.CommitTransaction;
+    except
+      ADb.AbortTransaction;
+      raise;
+    end;
   finally
     FreeAndNil(parser);
     FreeAndNil(fnames);
