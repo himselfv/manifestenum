@@ -187,7 +187,6 @@ begin
 //          ai.pszCurrentAssemblyPathBuf := @tmp;
 //          ai.cchBuf := Length(tmp);
           fillchar(tmp[1], Length(tmp)*SizeOf(WideChar), 0);
-          if i<6 then continue;
 
           hr := cache.QueryAssemblyInfo(0, PChar(ad.identity.ToStrongName), @ai);
           if hr <> HRESULT($80070490) then
