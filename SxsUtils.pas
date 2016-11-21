@@ -189,6 +189,10 @@ begin
     Hash := Hash * $1003f + Word(Ch);
 end;
 
+{
+Calculates a string hash the way SxS does this.
+Must match the algorithm precisely since hashes are used in keyform names.
+}
 function SxsHashString(const AValue: string): TSxsHash;
 var h1, h2, h3, h4: cardinal;
   pc: PChar;
@@ -231,16 +235,24 @@ begin
   Result := h1 * HASH_MASK + h2;
 end;
 
+{
+Hashes PropName and PropValue contents and adds it to hash.
+Skips the property if it's not defined.
+}
 procedure SxsHashProperty(var Hash: TSxsHash; const AName, AValue: string);
 begin
   if AValue <> '' then
     Hash := Hash * HASH_MASK + SxSHashPair(AName, AValue);
 end;
 
+{
+Hashes assembly identity the way SxS does this.
+If Versionless is true, skips version field to generate versionless hash.
+}
 function SxsHashIdentity(const id: TAssemblyIdentity; const Versionless: boolean): TSxsHash;
 begin
   Result := 0;
-  //The order is important! It must be exactly the same as in SxS
+  //The order and choice of the fields is important, must be exactly as in SxS
   SxsHashProperty(Result, 'name', id.name);
   if id.language <> 'neutral' then
     SxsHashProperty(Result, 'culture', id.language);
