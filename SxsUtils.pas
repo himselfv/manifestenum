@@ -26,6 +26,7 @@ function SxsValueOrNone(const AValue: string): string; inline;
 function SxsExtractHash(const AKeyform: string): string;
 function SxsDeploymentKeyform(const id: TAssemblyIdentity): string;
 function SxsComponentKeyform(const id: TAssemblyIdentity): string;
+function SxsWinnerKeyform(const id: TAssemblyIdentity): string;
 
 type
   TSxsHash = uint64;
@@ -33,6 +34,12 @@ type
 function SxsHashString(const AValue: string): TSxsHash;
 function SxsHashIdentity(const id: TAssemblyIdentity; const Versionless: boolean = false): TSxsHash;
 function SxsHashToString(const AHash: TSxsHash): string;
+
+
+const
+  sSxsWinnersKey = 'SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide\Winners';
+
+function SxSGetWinners: TArray<string>;
 
 
 const
@@ -154,6 +161,19 @@ begin
   Result := Result.ToLowerInvariant;
 end;
 
+//The keyform that's used in Software/M/W/CV/Winners registry key.
+function SxsWinnerKeyform(const id: TAssemblyIdentity): string;
+begin
+  Result := SxsValueOrNone(id.processorArchitecture)+'_'
+    +SxsTruncate(SxsSanitize(id.name), 40)+'_'
+    +id.publicKeyToken+'_'
+    +SxsValueOrNone(id.language)+'_'
+    +SxsHashToString(SxsHashIdentity(id, true));
+  Result := Result.ToLowerInvariant;
+end;
+
+
+// Hashes
 
 const
   HASH_MASK = $1FFFFFFF7;
@@ -237,6 +257,76 @@ begin
   Result := IntToHex(AHash, 16).ToLower;
 end;
 
+
+// Some registry utils
+
+function EnumRegistryKeyNames(hk: HKEY): TArray<string>;
+var i: integer;
+  name: string;
+  nameLen: cardinal;
+  err: integer;
+begin
+  SetLength(Result, 0);
+
+  nameLen := 255;
+  SetLength(name, nameLen+1);
+
+  i := 0;
+  repeat
+    nameLen := Length(name)-1;
+    err := RegEnumKeyEx(hk, i, @name[1], nameLen, nil, nil, nil, nil);
+    if err = ERROR_NO_MORE_ITEMS then
+      break;
+    if err <> 0 then
+      raise ESxsException.CreateFmt('Cannot enumerate registry keys. '
+        +'Error %d: %s', [err, SysErrorMessage(err)]);
+    SetLength(Result, i+1);
+    Result[i] := Copy(name, 1, nameLen);
+    Inc(i);
+  until false;
+end;
+
+function EnumRegistryValueNames(hk: HKEY): TArray<string>;
+var i: integer;
+  name: string;
+  nameLen: cardinal;
+  err: integer;
+begin
+  SetLength(Result, 0);
+
+  nameLen := 255; //since it's a c!+keyform, it should fit
+  SetLength(name, nameLen+1);
+
+  i := 0;
+  repeat
+    nameLen := Length(name)-1;
+    err := RegEnumValue(hk, i, @name[1], nameLen, nil, nil, nil, nil);
+    if err = ERROR_NO_MORE_ITEMS then
+      break;
+    if err <> 0 then
+      raise ESxsException.CreateFmt('Cannot enumerate registry values. '
+        +'Error %d: %s', [err, SysErrorMessage(err)]);
+    SetLength(Result, i+1);
+    Result[i] := Copy(name, 1, nameLen);
+    Inc(i);
+  until false;
+end;
+
+
+
+// Always available SxS hive
+
+function SxSGetWinners: TArray<string>;
+var hk: HKEY;
+begin
+  if RegOpenKeyEx(HKEY_LOCAL_MACHINE, PChar(sSxsWinnersKey), 0, GENERIC_READ, hk) <> 0 then
+    RaiseLastOsError();
+  try
+    Result := EnumRegistryKeyNames(hk);
+  finally
+    RegCloseKey(hk);
+  end;
+end;
 
 // COMPONENTS hive
 
@@ -379,31 +469,6 @@ begin
   end;
 end;
 
-function EnumRegistryValueNames(hk: HKEY): TArray<string>;
-var i: integer;
-  valName: string;
-  valNameLen: cardinal;
-  err: integer;
-begin
-  SetLength(Result, 0);
-
-  valNameLen := 255; //since it's a c!+keyform, it should fit
-  SetLength(valName, valNameLen+1);
-
-  i := 0;
-  repeat
-    valNameLen := Length(valName)-1;
-    err := RegEnumValue(hk, i, @valName[1], valNameLen, nil, nil, nil, nil);
-    if err = ERROR_NO_MORE_ITEMS then
-      break;
-    if err <> 0 then
-      raise ESxsException.CreateFmt('Cannot enumerate registry values. '
-        +'Error %d: %s', [err, SysErrorMessage(err)]);
-    SetLength(Result, i+1);
-    Result[i] := Copy(valName, 1, valNameLen);
-    Inc(i);
-  until false;
-end;
 
 {
 Normal assemblies are linked to deployment assemblies and cannot be uninstalled.

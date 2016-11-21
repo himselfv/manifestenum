@@ -22,7 +22,7 @@ procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
 
 implementation
 uses Windows, SysUtils, Classes, FilenameUtils, ManifestEnum_Progress, AssemblyDb.Assemblies,
- Generics.Collections, WinSxS, ComObj;
+ Generics.Collections, WinSxS, ComObj, SxSUtils;
 
 function SxSDir: string;
 begin
@@ -54,6 +54,14 @@ begin
     res := FindNext(sr);
   end;
   SysUtils.FindClose(sr);
+end;
+
+
+procedure GetInstalledAssemblies(AList: TStringList);
+var s: string;
+begin
+  for s in SxSGetWinners do
+    AList.Add(s);
 end;
 
 
@@ -112,10 +120,7 @@ var baseDir: string;
   ad: TAssemblyData;
   hash: TStringList;  //stores known manifest names
   found: TFlagSet;
-  cache: IAssemblyCache;
-  ai: ASSEMBLY_INFO;
-  hr: HRESULT;
-  tmp: string;
+  winners: TStringList;
  {$IFDEF PROFILE}
   tm1: cardinal;
  {$ENDIF}
@@ -125,8 +130,7 @@ begin
   parser := nil;
   hash := nil;
   ass := nil;
-
-  SetLength(tmp, 500);
+  winners := nil;
 
   progress := TProgressForm.Create(nil);
   try
@@ -174,7 +178,9 @@ begin
         progress.Step();
       end;
 
-      OleCheck(CreateAssemblyCache(cache, 0));
+      winners := TStringList.Create;
+      winners.Sorted := true;
+      GetInstalledAssemblies(winners);
 
       //Mark assemblies as missing and present.
       //We have to touch all assemblies since they can change both ways (go missing / apear after being missing)
@@ -182,16 +188,7 @@ begin
       for i := 0 to hash.Count-1 do
         if found[i] then begin
           ad := ass[TAssemblyId(hash.Objects[i])];
-          fillchar(ai, sizeof(ai), 0);
-          ai.cbAssemblyInfo := sizeof(ai);
-//          ai.pszCurrentAssemblyPathBuf := @tmp;
-//          ai.cchBuf := Length(tmp);
-          fillchar(tmp[1], Length(tmp)*SizeOf(WideChar), 0);
-
-          hr := cache.QueryAssemblyInfo(0, PChar(ad.identity.ToStrongName), @ai);
-          if hr <> HRESULT($80070490) then
-            OleCheck(hr);
-          if ai.dwAssemblyFlags and ASSEMBLYINFO_FLAG_INSTALLED <> 0 then
+          if winners.IndexOf(SxsWinnerKeyform(ad.identity)) >= 0 then
             ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asInstalled)
           else
             ADb.Assemblies.SetState(TAssemblyId(hash.Objects[i]), asPresent)
@@ -214,6 +211,7 @@ begin
     FreeAndNil(progress);
     FreeAndNil(hash);
     FreeAndNil(ass);
+    FreeAndNil(winners);
   end;
 end;
 
