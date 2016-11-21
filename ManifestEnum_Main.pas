@@ -66,6 +66,11 @@ type
     OpenListDialog: TOpenDialog;
     miAssemblyDatabase: TMenuItem;
     miRefreshAssemblyDatabase: TMenuItem;
+    miCopyHash: TMenuItem;
+    miCopyVersionlessHash: TMenuItem;
+    miVerifyHashes: TMenuItem;
+    N3: TMenuItem;
+    miShowLog: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -90,6 +95,10 @@ type
     procedure miConvertIntoDeploymentClick(Sender: TObject);
     procedure miUninstallByListClick(Sender: TObject);
     procedure miRefreshAssemblyDatabaseClick(Sender: TObject);
+    procedure miCopyHashClick(Sender: TObject);
+    procedure miCopyVersionlessHashClick(Sender: TObject);
+    procedure miVerifyHashesClick(Sender: TObject);
+    procedure miShowLogClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -237,6 +246,11 @@ procedure TMainForm.miRefreshAssemblyDatabaseClick(Sender: TObject);
 begin
   RefreshAssemblyDatabase(FDb);
   FAssemblyBrowser.Reload;
+end;
+
+procedure TMainForm.miShowLogClick(Sender: TObject);
+begin
+  LogForm.Show;
 end;
 
 procedure TMainForm.AssemblyBrowserSelectionChanged(Sender: TObject);
@@ -486,6 +500,19 @@ begin
   end);
 end;
 
+procedure TMainForm.miCopyHashClick(Sender: TObject);
+begin
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := IntToHex(SxsHashIdentity(Assembly.identity), 16);
+  end);
+end;
+
+procedure TMainForm.miCopyVersionlessHashClick(Sender: TObject);
+begin
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := IntToHex(SxsHashIdentity(Assembly.identity, true), 16);
+  end);
+end;
 
 procedure TMainForm.miJumpToComponentKeyClick(Sender: TObject);
 var Assembly: TAssemblyData;
@@ -657,6 +684,26 @@ begin
       LogForm.Log(NameVerStr(Assembly)+': 0x'+IntToHex(hr, 8)+', '+IntToStr(uresult));
     end;
 
+  finally
+    FreeAndNil(List);
+  end;
+end;
+
+procedure TMainForm.miVerifyHashesClick(Sender: TObject);
+var List: TAssemblyList;
+  Assembly: TAssemblyData;
+  h1, h2: string;
+begin
+  List := TAssemblyList.Create;
+  try
+    FDb.Assemblies.GetAllAssemblies(List);
+    for Assembly in List.Values do begin
+      if Assembly.manifestName = '' then continue;
+      h1 := IntToHex(SxsHashIdentity(Assembly.identity), 16).ToLower;
+      h2 := SxsExtractHash(Assembly.manifestName);
+      if not SameStr(h1, h2) then
+        LogForm.Log(Assembly.identity.ToString+': hashes differ');
+    end;
   finally
     FreeAndNil(List);
   end;

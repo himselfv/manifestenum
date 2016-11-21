@@ -27,6 +27,12 @@ function SxsExtractHash(const AKeyform: string): string;
 function SxsDeploymentKeyform(const id: TAssemblyIdentity; const hash: string): string;
 function SxsComponentKeyform(const id: TAssemblyIdentity; const hash: string): string;
 
+type
+  TSxsHash = uint64;
+
+function SxsHashString(const AValue: string): TSxsHash;
+function SxsHashIdentity(const id: TAssemblyIdentity; const Versionless: boolean = false): TSxsHash;
+
 
 const
   sSxsComponentsHive = 'COMPONENTS';
@@ -145,6 +151,84 @@ begin
     +SxsValueOrNone(id.language)+'_'
     +hash;
   Result := Result.ToLowerInvariant;
+end;
+
+
+const
+  HASH_MASK = $1FFFFFFF7;
+
+//Note: this one operates on uint32, not uint64
+procedure SxsHashCh(const Ch: char; var Hash: cardinal); inline;
+begin
+  if Word(Ch) > $7F then
+    raise Exception.Create('Cannot hash character '+Ch);
+  if (Word(Ch) >= $41) and (Word(Ch) <= $41 + $19) then
+    Hash := Hash * $1003f + Word(Ch) + $20
+  else
+    Hash := Hash * $1003f + Word(Ch);
+end;
+
+function SxsHashString(const AValue: string): TSxsHash;
+var h1, h2, h3, h4: cardinal;
+  pc: PChar;
+  idx: integer;
+begin
+  h1 := 0;
+  h2 := 0;
+  h3 := 0;
+  h4 := 0;
+  idx := Length(AValue);
+  if idx <= 0 then begin
+    Result := 0;
+    exit;
+  end;
+  pc := @AValue[1];
+  while idx > 0 do begin
+    SxsHashCh(pc^, h1); Inc(pc); Dec(idx); if idx <=0 then break;
+    SxsHashCh(pc^, h2); Inc(pc); Dec(idx); if idx <=0 then break;
+    SxsHashCh(pc^, h3); Inc(pc); Dec(idx); if idx <=0 then break;
+    SxsHashCh(pc^, h4); Inc(pc); Dec(idx);
+  end;
+  Result := uint64(h1) * uint64($1E5FFFFFD27)     //HASH_MASK^3
+    + uint64(h2) * uint64($FFFFFFDC00000051)      //HASH_MASK^2
+    + uint64(h3) * uint64($1FFFFFFF7)             //HASH_MASK
+    + uint64(h4);
+end;
+
+
+function SxsHashPair(const AName, AValue: string): TSxsHash;
+var h1, h2: TSxsHash;
+begin
+  if AName <> '' then
+    h1 := SxsHashString(AName)
+  else h1 := 0;
+
+  if AValue <> '' then
+    h2 := SxsHashString(AValue)
+  else h2 := 0;
+
+  Result := h1 * HASH_MASK + h2;
+end;
+
+procedure SxsHashProperty(var Hash: TSxsHash; const AName, AValue: string);
+begin
+  if AValue <> '' then
+    Hash := Hash * HASH_MASK + SxSHashPair(AName, AValue);
+end;
+
+function SxsHashIdentity(const id: TAssemblyIdentity; const Versionless: boolean): TSxsHash;
+begin
+  Result := 0;
+  //The order is important! It must be exactly the same as in SxS
+  SxsHashProperty(Result, 'name', id.name);
+  if id.language <> 'neutral' then
+    SxsHashProperty(Result, 'culture', id.language);
+  SxsHashProperty(Result, 'type', id.type_);
+  if not Versionless then
+    SxsHashProperty(Result, 'version', id.version);
+  SxsHashProperty(Result, 'publickeytoken', id.publicKeyToken);
+  SxsHashProperty(Result, 'processorarchitecture', id.processorArchitecture);
+  SxsHashProperty(Result, 'versionscope', id.versionScope);
 end;
 
 

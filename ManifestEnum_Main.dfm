@@ -76,6 +76,13 @@ object MainForm: TMainForm
     end
     object Debug1: TMenuItem
       Caption = 'Debug'
+      object miShowLog: TMenuItem
+        Caption = 'Show log'
+        OnClick = miShowLogClick
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
       object Loadmanifestfile1: TMenuItem
         Caption = 'Add manifest file to DB...'
         OnClick = Loadmanifestfile1Click
@@ -87,6 +94,11 @@ object MainForm: TMainForm
       object Installassembly1: TMenuItem
         Caption = 'Install assembly...'
         OnClick = Installassembly1Click
+      end
+      object miVerifyHashes: TMenuItem
+        Caption = 'Verify identity hashes'
+        Hint = 'Verify manifest name hashes by recalculating them'
+        OnClick = miVerifyHashesClick
       end
     end
   end
@@ -125,6 +137,14 @@ object MainForm: TMainForm
       object miCopyDeploymentKeyform: TMenuItem
         Caption = 'Deployment keyform'
         OnClick = miCopyDeploymentKeyformClick
+      end
+      object miCopyHash: TMenuItem
+        Caption = 'Hash'
+        OnClick = miCopyHashClick
+      end
+      object miCopyVersionlessHash: TMenuItem
+        Caption = 'Versionless hash'
+        OnClick = miCopyVersionlessHashClick
       end
     end
     object Export1: TMenuItem
