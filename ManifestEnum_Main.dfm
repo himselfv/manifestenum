@@ -126,6 +126,14 @@ object MainForm: TMainForm
         Caption = 'Deployment keyform'
         OnClick = miCopyDeploymentKeyformClick
       end
+      object miCopyHash: TMenuItem
+        Caption = 'Hash'
+        OnClick = miCopyHashClick
+      end
+      object miCopyVersionlessHash: TMenuItem
+        Caption = 'Versionless hash'
+        OnClick = miCopyVersionlessHashClick
+      end
     end
     object Export1: TMenuItem
       Caption = 'Export'

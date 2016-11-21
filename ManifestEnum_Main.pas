@@ -66,6 +66,8 @@ type
     OpenListDialog: TOpenDialog;
     miAssemblyDatabase: TMenuItem;
     miRefreshAssemblyDatabase: TMenuItem;
+    miCopyHash: TMenuItem;
+    miCopyVersionlessHash: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -90,6 +92,8 @@ type
     procedure miConvertIntoDeploymentClick(Sender: TObject);
     procedure miUninstallByListClick(Sender: TObject);
     procedure miRefreshAssemblyDatabaseClick(Sender: TObject);
+    procedure miCopyHashClick(Sender: TObject);
+    procedure miCopyVersionlessHashClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -486,6 +490,19 @@ begin
   end);
 end;
 
+procedure TMainForm.miCopyHashClick(Sender: TObject);
+begin
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := IntToHex(SxsHashIdentity(Assembly.identity), 16);
+  end);
+end;
+
+procedure TMainForm.miCopyVersionlessHashClick(Sender: TObject);
+begin
+  Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
+    Result := IntToHex(SxsHashIdentity(Assembly.identity, true), 16);
+  end);
+end;
 
 procedure TMainForm.miJumpToComponentKeyClick(Sender: TObject);
 var Assembly: TAssemblyData;

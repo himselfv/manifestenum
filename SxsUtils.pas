@@ -24,6 +24,8 @@ function SxsSanitize(const AText: string): string;
 function SxsTruncate(const AName: string; ALen: integer): string;
 function SxsValueOrNone(const AValue: string): string; inline;
 function SxsExtractHash(const AKeyform: string): string;
+function SxsHashString(const AString: string): int64;
+function SxsHashIdentity(const id: TAssemblyIdentity; Versionless: boolean = false): int64;
 function SxsDeploymentKeyform(const id: TAssemblyIdentity; const hash: string): string;
 function SxsComponentKeyform(const id: TAssemblyIdentity; const hash: string): string;
 
@@ -92,6 +94,80 @@ begin
     Result := AValue
   else
     Result := 'none';
+end;
+
+{
+Calculates a string hash the way SxS does this.
+Must match the algorithm precisely since hashes are used in keyform names.
+}
+function SxsHashString(const AString: string): int64;
+var h1, h2, h3, h4: integer;
+  pc, pe: PChar;
+
+  procedure HashChar(var h: integer; ch: char); inline;
+  begin
+    if Ord(ch) > $7f then raise Exception.Create('SxSHashString: Only latin characters are allowed');
+    if Ord(ch)-$41 <= $19 then ch := Chr(Ord(ch)+$20); //lowercase
+    h := h * $1003f + Ord(ch);
+  end;
+
+begin
+  h1 := 0;
+  h2 := 0;
+  h3 := 0;
+  h4 := 0;
+  if Length(AString) <= 0 then begin
+    Result := 0;
+    exit;
+  end;
+
+  pc := @AString[1];
+  pe := @AString[Length(AString)];
+
+  while pc <= pe do begin
+    HashChar(h1, pc^); Inc(pc); if pc > pe then break;
+    HashChar(h2, pc^); Inc(pc); if pc > pe then break;
+    HashChar(h3, pc^); Inc(pc); if pc > pe then break;
+    HashChar(h4, pc^); Inc(pc);
+  end;
+
+  Result := h1 * $1E5FFFFFD27 + h2 * $FFFFFFDC00000051
+    + h3 * $1FFFFFFF7 + h4;
+end;
+
+const
+  HASH_MASK = $1FFFFFFF7;
+
+{
+Hashes PropName and PropValue contents and adds it to hash.
+Skips the property if it's not defined.
+}
+procedure SxsHashAppendProp(var Hash: int64; const PropName: string; const PropValue: string);
+var propHash: int64;
+begin
+  if PropValue = '' then exit;
+  propHash := SxsHashString(PropName) * HASH_MASK + SxSHashString(PropValue);
+  Hash := Hash * HASH_MASK + propHash;
+end;
+
+
+{
+Hashes assembly identity the way SxS does this.
+If Versionless is true, skips version field to generate versionless hash.
+}
+function SxsHashIdentity(const id: TAssemblyIdentity; Versionless: boolean): int64;
+begin
+  Result := 0;
+  //The order of the fields is important
+  SxsHashAppendProp(Result, 'buildType', id.buildType);
+  SxsHashAppendProp(Result, 'culture', id.language);
+  SxsHashAppendProp(Result, 'name', id.name);
+  SxsHashAppendProp(Result, 'processorArchitecture', id.processorArchitecture);
+  SxsHashAppendProp(Result, 'publicKeyToken', id.publicKeyToken);
+  SxsHashAppendProp(Result, 'type', id.type_);
+  if not Versionless then
+    SxsHashAppendProp(Result, 'version', id.version);
+  SxsHashAppendProp(Result, 'versionScope', id.versionScope);
 end;
 
 
