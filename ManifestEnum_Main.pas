@@ -489,14 +489,14 @@ end;
 procedure TMainForm.miCopyComponentKeyformClick(Sender: TObject);
 begin
   Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
-    Result := SxsComponentKeyform(Assembly.identity, SxsExtractHash(Assembly.manifestName));
+    Result := SxsComponentKeyform(Assembly.identity);
   end);
 end;
 
 procedure TMainForm.miCopyDeploymentKeyformClick(Sender: TObject);
 begin
   Clipboard.AsText := ForEachSelectedJoin(function(const Assembly: TAssemblyData): string begin
-    Result := SxsDeploymentKeyform(Assembly.identity, SxsExtractHash(Assembly.manifestName));
+    Result := SxsDeploymentKeyform(Assembly.identity);
   end);
 end;
 
@@ -525,7 +525,7 @@ procedure TMainForm.miJumpToDeploymentKeyClick(Sender: TObject);
 var Assembly: TAssemblyData;
 begin
   if GetSelectedSingleAssembly(Assembly) then
-    RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey+'\'+SxsDeploymentKeyform(Assembly.identity, SxsExtractHash(Assembly.manifestName)));
+    RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey+'\'+SxsDeploymentKeyform(Assembly.identity));
 end;
 
 procedure TMainForm.miGetAssemblySizeClick(Sender: TObject);

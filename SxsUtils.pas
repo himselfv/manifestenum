@@ -24,14 +24,15 @@ function SxsSanitize(const AText: string): string;
 function SxsTruncate(const AName: string; ALen: integer): string;
 function SxsValueOrNone(const AValue: string): string; inline;
 function SxsExtractHash(const AKeyform: string): string;
-function SxsDeploymentKeyform(const id: TAssemblyIdentity; const hash: string): string;
-function SxsComponentKeyform(const id: TAssemblyIdentity; const hash: string): string;
+function SxsDeploymentKeyform(const id: TAssemblyIdentity): string;
+function SxsComponentKeyform(const id: TAssemblyIdentity): string;
 
 type
   TSxsHash = uint64;
 
 function SxsHashString(const AValue: string): TSxsHash;
 function SxsHashIdentity(const id: TAssemblyIdentity; const Versionless: boolean = false): TSxsHash;
+function SxsHashToString(const AHash: TSxsHash): string;
 
 
 const
@@ -124,12 +125,12 @@ Deployment keyforms have the following format on Windows 10 AU:
   name<24>_publicKey_version_hash
 Hash has to be given (extract it from the manifest name)
 }
-function SxsDeploymentKeyform(const id: TAssemblyIdentity; const hash: string): string;
+function SxsDeploymentKeyform(const id: TAssemblyIdentity): string;
 begin
   Result := SxsTruncate(SxsSanitize(id.name), 24)+'_'
     +id.publicKeyToken+'_'
     +id.version+'_'
-    +hash;
+    +SxsHashToString(SxsHashIdentity(id));
   Result := Result.ToLowerInvariant;
 end;
 
@@ -140,7 +141,7 @@ If the culture or processorArchitecture is missing, it's replaced with "none".
 
 This is what a manifestName uses, so if you have a manifestName, just use that.
 }
-function SxsComponentKeyform(const id: TAssemblyIdentity; const hash: string): string;
+function SxsComponentKeyform(const id: TAssemblyIdentity): string;
 begin
  //We'll hope processorArchitecture and language don't need SxsSanitize and SxsTruncate,
  //because in practice they never do.
@@ -149,7 +150,7 @@ begin
     +id.publicKeyToken+'_'
     +id.version+'_'
     +SxsValueOrNone(id.language)+'_'
-    +hash;
+    +SxsHashToString(SxsHashIdentity(id));
   Result := Result.ToLowerInvariant;
 end;
 
@@ -229,6 +230,11 @@ begin
   SxsHashProperty(Result, 'publickeytoken', id.publicKeyToken);
   SxsHashProperty(Result, 'processorarchitecture', id.processorArchitecture);
   SxsHashProperty(Result, 'versionscope', id.versionScope);
+end;
+
+function SxsHashToString(const AHash: TSxsHash): string;
+begin
+  Result := IntToHex(AHash, 16).ToLower;
 end;
 
 
@@ -320,7 +326,7 @@ function SxsIsDeployment(const id: TAssemblyIdentity; const AComponentKeyform: s
 var hk: HKEY;
   dkf: string;
 begin
-  dkf := SxsDeploymentKeyform(id, SxsExtractHash(AComponentKeyform));
+  dkf := SxsDeploymentKeyform(id);
 
   Result := RegOpenKeyEx(HKEY_LOCAL_MACHINE, PChar(sSxsDeploymentsKey+'\'+dkf), 0, GENERIC_READ, hk) = 0;
   if Result then
@@ -345,7 +351,7 @@ begin
   The binary value is unclear but it usually starts with 0C + [7 times] 00, then assembly strong
   name (as in appid).
 }
-  dkf := SxsDeploymentKeyform(id, SxsExtractHash(AComponentKeyform));
+  dkf := SxsDeploymentKeyform(id);
 
   err := RegOpenKeyEx(HKEY_LOCAL_MACHINE, PChar(sSxsDeploymentsKey+'\'+dkf), 0, GENERIC_READ or GENERIC_WRITE, hk);
   if err <> 0 then
@@ -414,7 +420,7 @@ var hk: HKEY;
   val: AnsiString;
   valName: string;
 begin
-  dkf := SxsDeploymentKeyform(id, SxsExtractHash(AComponentKeyform));
+  dkf := SxsDeploymentKeyform(id);
 
   //Create a deployment configuration key
   err := RegCreateKeyEx(HKEY_LOCAL_MACHINE, PChar(sSxsDeploymentsKey+'\'+dkf), 0, nil, 0,
