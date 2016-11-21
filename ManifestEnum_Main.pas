@@ -71,6 +71,9 @@ type
     miVerifyHashes: TMenuItem;
     N3: TMenuItem;
     miShowLog: TMenuItem;
+    miShowInstalledOnly: TMenuItem;
+    N4: TMenuItem;
+    miShowDeploymentsOnly: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -99,6 +102,8 @@ type
     procedure miCopyVersionlessHashClick(Sender: TObject);
     procedure miVerifyHashesClick(Sender: TObject);
     procedure miShowLogClick(Sender: TObject);
+    procedure miShowInstalledOnlyClick(Sender: TObject);
+    procedure miShowDeploymentsOnlyClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -134,7 +139,7 @@ var
 implementation
 uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
-  IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log;
+  IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log, CommonFilters;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -214,9 +219,14 @@ begin
   ini := TRegistryIniFile.Create('ManifestEnum');
   try
     miForceUninstall.Checked := ini.ReadBool('', 'ForceUninstall', false);
+    CommonFilters.ShowInstalledOnly := ini.ReadBool('Filter', 'ShowInstalledOnly', true);
+    CommonFilters.ShowDeploymentsOnly := ini.ReadBool('Filter', 'ShowDeploymentsOnly', false);
+    miShowInstalledOnly.Checked := CommonFilters.ShowInstalledOnly;
+    miShowDeploymentsOnly.Checked := CommonFilters.ShowDeploymentsOnly;
   finally
     FreeAndNil(ini);
   end;
+  FilterChanged(nil);
 end;
 
 procedure TMainForm.SaveSettings;
@@ -225,6 +235,8 @@ begin
   ini := TRegistryIniFile.Create('ManifestEnum');
   try
     ini.WriteBool('', 'ForceUninstall', miForceUninstall.Checked);
+    ini.WriteBool('Filter', 'ShowInstalledOnly', CommonFilters.ShowInstalledOnly);
+    ini.WriteBool('Filter', 'ShowDeploymentsOnly', CommonFilters.ShowDeploymentsOnly);
   finally
     FreeAndNil(ini);
   end;
@@ -233,6 +245,20 @@ end;
 procedure TMainForm.SettingsChanged(Sender: TObject);
 begin
   SaveSettings;
+end;
+
+procedure TMainForm.miShowInstalledOnlyClick(Sender: TObject);
+begin
+  CommonFilters.ShowInstalledOnly := miShowInstalledOnly.Checked;
+  SaveSettings;
+  FilterChanged(nil);
+end;
+
+procedure TMainForm.miShowDeploymentsOnlyClick(Sender: TObject);
+begin
+  CommonFilters.ShowDeploymentsOnly := miShowDeploymentsOnly.Checked;
+  SaveSettings;
+  FilterChanged(nil);
 end;
 
 //Common event handler for many settings controls

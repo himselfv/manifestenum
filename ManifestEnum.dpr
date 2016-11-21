@@ -5,6 +5,7 @@ uses
   ManifestEnum_Main in 'ManifestEnum_Main.pas' {MainForm},
   ManifestEnum_Progress in 'ManifestEnum_Progress.pas' {ProgressForm},
   ManifestEnum.Log in 'ManifestEnum.Log.pas' {LogForm},
+  CommonFilters in 'CommonFilters.pas',
   AssemblyDb in 'Db\AssemblyDb.pas',
   AssemblyDb.Core in 'Db\AssemblyDb.Core.pas',
   AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',

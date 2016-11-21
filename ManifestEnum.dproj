@@ -109,6 +109,7 @@
         <DCCReference Include="ManifestEnum.Log.pas">
             <Form>LogForm</Form>
         </DCCReference>
+        <DCCReference Include="CommonFilters.pas"/>
         <DCCReference Include="Db\AssemblyDb.pas"/>
         <DCCReference Include="Db\AssemblyDb.Core.pas"/>
         <DCCReference Include="Db\AssemblyDb.Assemblies.pas"/>

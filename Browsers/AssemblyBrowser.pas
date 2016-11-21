@@ -16,6 +16,7 @@ type
     Name: string;
     Assembly: TAssemblyId;
     IsDeployment: boolean;
+    State: TAssemblyState;
   end;
   PNodeData = ^TNodeData;
 
@@ -53,6 +54,7 @@ type
     procedure ApplyFilter;
     function GetFocusedAssembly: TAssemblyId;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
+    procedure FilterChanged(Sender: TObject); override;
   public
     procedure Reload; override;
     property FocusedAssembly: TAssemblyId read GetFocusedAssembly;
@@ -64,12 +66,18 @@ var
   AssemblyBrowserForm: TAssemblyBrowserForm;
 
 implementation
+uses CommonFilters;
 
 {$R *.dfm}
 
 procedure TAssemblyBrowserForm.Reload;
 begin
   inherited;
+  ApplyFilter;
+end;
+
+procedure TAssemblyBrowserForm.FilterChanged(Sender: TObject);
+begin
   ApplyFilter;
 end;
 
@@ -109,6 +117,7 @@ begin
   Data.Name := AEntry.identity.ToString;
   Data.Assembly := AEntry.id;
   Data.IsDeployment := AEntry.isDeployment;
+  Data.State := AEntry.state;
   Data.DelayLoad.Touched := false;
 end;
 
@@ -202,6 +211,9 @@ var Data: PNodeData;
 begin
   inherited;
   Data := Tree.GetNodeData(Node);
+  if Data.State <> asInstalled then
+    TargetCanvas.Font.Color := clSilver
+  else
   if Data.IsDeployment then
     TargetCanvas.Font.Color := clBlue
   else
@@ -225,6 +237,7 @@ var list: TAssemblyList;
   Node: PVirtualNode;
   Data: PNodeData;
   ShowAll: boolean;
+  Visible: boolean;
 begin
   filter := edtQuickFilter.Text;
 
@@ -238,10 +251,12 @@ begin
       FDb.FilterAssemblyByFile(filter, list);
     for Node in Tree.ChildNodes(nil) do begin
       Data := Tree.GetNodeData(Node);
-      if ShowAll or list.ContainsKey(Data.Assembly) then
-        Tree.IsVisible[Node] := true
-      else
-        Tree.IsVisible[Node] := false;
+      Visible := ShowAll or list.ContainsKey(Data.Assembly);
+      if Visible and CommonFilters.ShowInstalledOnly then
+        Visible := Data.State = asInstalled;
+      if Visible and CommonFilters.ShowDeploymentsOnly then
+        Visible := Data.IsDeployment;
+      Tree.IsVisible[Node] := Visible;
     end;
   finally
     Tree.EndUpdate;

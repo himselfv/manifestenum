@@ -28,6 +28,8 @@ type
     procedure TreeExpanding(Sender: TBaseVirtualTree; Node: PVirtualNode; var Allowed: Boolean);
     procedure TreeHeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
     procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     procedure SetDb(ADb: TAssemblyDb); virtual;
@@ -35,6 +37,7 @@ type
     procedure TouchChildren(ANode: PVirtualNode);
     function AddNode(AParent: PVirtualNode): PVirtualNode;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); virtual;
+    procedure FilterChanged(ASender: TObject); virtual;
   public
     procedure Clear;
     procedure Reload; virtual;
@@ -42,8 +45,19 @@ type
   end;
 
 implementation
+uses CommonFilters;
 
 {$R *.dfm}
+
+procedure TDelayLoadTree.FormCreate(Sender: TObject);
+begin
+  CommonFilters.OnFilterChanged.Add(Self.FilterChanged);
+end;
+
+procedure TDelayLoadTree.FormDestroy(Sender: TObject);
+begin
+  CommonFilters.OnFilterChanged.Remove(Self.FilterChanged);
+end;
 
 procedure TDelayLoadTree.Clear;
 begin
@@ -82,6 +96,11 @@ begin
       Reload
     else
       Clear;
+end;
+
+procedure TDelayLoadTree.FilterChanged(ASender: TObject);
+begin
+ //Override if you use common filters, to reload when those change
 end;
 
 procedure TDelayLoadTree.TreeGetNodeDataSize(Sender: TBaseVirtualTree;

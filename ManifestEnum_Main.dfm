@@ -73,6 +73,20 @@ object MainForm: TMainForm
         Hint = 'Automatically turn assemblies into deployments if needed'
         OnClick = SettingsChanged
       end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object miShowInstalledOnly: TMenuItem
+        AutoCheck = True
+        Caption = 'Show only installed'
+        Checked = True
+        OnClick = miShowInstalledOnlyClick
+      end
+      object miShowDeploymentsOnly: TMenuItem
+        AutoCheck = True
+        Caption = 'Show only deployments'
+        OnClick = miShowDeploymentsOnlyClick
+      end
     end
     object Debug1: TMenuItem
       Caption = 'Debug'
