@@ -16,6 +16,7 @@ inherited ServiceBrowserForm: TServiceBrowserForm
     Height = 255
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+    Header.SortColumn = 0
     Images = ResourceModule.SmallImages
     OnCompareNodes = TreeCompareNodes
     OnFocusChanged = TreeFocusChanged
