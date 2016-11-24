@@ -6,8 +6,8 @@ unit AssemblyResourcesView;
 // - Files
 // - Registry keys
 // - Tasks
-//Planned:
 // - Services
+//Planned:
 // - Event queues
 // - Event types
 
