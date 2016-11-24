@@ -37,6 +37,8 @@ type
   PNodeData = ^TNodeData;
 
   TAssemblyResourcesForm = class(TDelayLoadTree)
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -48,8 +50,6 @@ type
       var ImageList: TCustomImageList);
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
   protected
     FAssemblies: TList<TAssemblyId>;
     FShowDependencies: boolean;
@@ -164,7 +164,7 @@ begin
   case Column of
     NoColumn, 0: begin
       ImageList := ResourceModule.SmallImages;
-      case Adata.NodeType of
+      case AData.NodeType of
         ntAssembly: ImageIndex := imgAssembly;
         ntFolder: ImageIndex := imgFolder;
         ntFile: ImageIndex := imgFile;
