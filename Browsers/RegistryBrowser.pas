@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, VirtualTrees,
-  Generics.Collections, AssemblyDb, AssemblyDb.Registry, DelayLoadTree, CommonResources;
+  Generics.Collections, AssemblyDb, AssemblyDb.Registry, DelayLoadTree, CommonResources,
+  ManifestEnum.RegistryActions;
 
 type
   TRootKey = record

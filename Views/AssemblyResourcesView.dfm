@@ -1,7 +1,5 @@
 inherited AssemblyResourcesForm: TAssemblyResourcesForm
   Caption = 'Resources'
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   ExplicitWidth = 480
   ExplicitHeight = 306
   PixelsPerInch = 96
@@ -17,6 +15,7 @@ inherited AssemblyResourcesForm: TAssemblyResourcesForm
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetImageIndexEx = TreeGetImageIndexEx
+    OnGetPopupMenu = TreeGetPopupMenu
     OnInitNode = TreeInitNode
     Columns = <
       item

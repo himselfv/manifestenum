@@ -167,6 +167,11 @@
         </DCCReference>
         <DCCReference Include="WinSxS.pas"/>
         <DCCReference Include="SxsUtils.pas"/>
+        <DCCReference Include="Actions\ManifestEnum.RegistryActions.pas">
+            <Form>RegistryActions</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

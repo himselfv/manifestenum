@@ -2,8 +2,6 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
   Caption = 'Registry'
   ClientHeight = 579
   ClientWidth = 788
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   ExplicitWidth = 804
   ExplicitHeight = 617
   PixelsPerInch = 96
@@ -84,6 +82,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
     Header.SortColumn = 0
     Images = ResourceModule.SmallImages
+    PopupMenu = RegistryActions.PopupMenu
     TabOrder = 2
     TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
     TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowTreeLines, toThemeAware, toUseBlendedImages]
@@ -93,7 +92,6 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     OnGetImageIndexEx = vtValuesGetImageIndexEx
     OnGetNodeDataSize = vtValuesGetNodeDataSize
     OnInitNode = vtValuesInitNode
-    ExplicitLeft = 388
     Columns = <
       item
         Position = 0

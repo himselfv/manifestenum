@@ -33,7 +33,8 @@ uses
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
-  SxsUtils in 'SxsUtils.pas';
+  SxsUtils in 'SxsUtils.pas',
+  ManifestEnum.RegistryActions in 'Actions\ManifestEnum.RegistryActions.pas' {RegistryActions: TDataModule};
 
 {$R *.res}
 
@@ -44,5 +45,6 @@ begin
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TResourceModule, ResourceModule);
   Application.CreateForm(TLogForm, LogForm);
+  Application.CreateForm(TRegistryActions, RegistryActions);
   Application.Run;
 end.

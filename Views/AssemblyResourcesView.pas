@@ -15,7 +15,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, Vcl.Menus, DelayLoadTree, VirtualTrees, AssemblyDb,
   CommonResources, Generics.Collections, AssemblyDb.Assemblies, AssemblyDb.Registry,
   AssemblyDb.Services;
 
@@ -48,6 +48,8 @@ type
     procedure TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind;
       Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
       var ImageList: TCustomImageList);
+    procedure TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
+      const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
   protected
@@ -73,6 +75,7 @@ var
   AssemblyResourcesForm: TAssemblyResourcesForm;
 
 implementation
+uses ManifestEnum.RegistryActions;
 
 {$R *.dfm}
 
@@ -173,6 +176,19 @@ begin
         ntService: ImageIndex := imgService;
       end;
     end;
+  end;
+end;
+
+procedure TAssemblyResourcesForm.TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
+var AData: PNodeData;
+begin
+  inherited;
+  if Node = nil then exit;
+
+  AData := Sender.GetNodeData(Node);
+  case AData.NodeType of
+    ntRegistryValue: PopupMenu := RegistryActions.PopupMenu;
   end;
 end;
 
