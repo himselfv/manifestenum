@@ -402,6 +402,7 @@ DerivedData\Components subkeys contain the following values:
   S256H           7-10AU    apparently, SHA256 of manifest?
   f!filename      7-10AU    for every included file. Value=1 apparently means owned by this assembly
   c!depkf         7-10AU    deployment keyform for the parent deployment assembly (or own one, if deployment)
+  CF              7-10AU    present when the assembly has been removed (also see deployments). SxS will complain about "over-removing a TLC"
 
 
 CanonicalData\Deployments subkeys contain the following values
