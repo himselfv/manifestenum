@@ -74,6 +74,11 @@ type
     miShowInstalledOnly: TMenuItem;
     N4: TMenuItem;
     miShowDeploymentsOnly: TMenuItem;
+    miService: TMenuItem;
+    miDISMImageCleanup: TMenuItem;
+    miOpenComponentsKey: TMenuItem;
+    miOpenDeploymentsKey: TMenuItem;
+    miOpenSxSFolder: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -104,6 +109,10 @@ type
     procedure miShowLogClick(Sender: TObject);
     procedure miShowInstalledOnlyClick(Sender: TObject);
     procedure miShowDeploymentsOnlyClick(Sender: TObject);
+    procedure miDISMImageCleanupClick(Sender: TObject);
+    procedure miOpenComponentsKeyClick(Sender: TObject);
+    procedure miOpenDeploymentsKeyClick(Sender: TObject);
+    procedure miOpenSxSFolderClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -277,6 +286,31 @@ end;
 procedure TMainForm.miShowLogClick(Sender: TObject);
 begin
   LogForm.Show;
+end;
+
+procedure TMainForm.miDISMImageCleanupClick(Sender: TObject);
+begin
+  StartProcess(GetSystemDir()+'\dism.exe',
+    PChar('dism.exe /Online /Cleanup-Image /StartComponentCleanup'));
+end;
+
+procedure TMainForm.miOpenComponentsKeyClick(Sender: TObject);
+begin
+  if not IsComponentsHiveLoaded then
+    LoadComponentsHive();
+  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsComponentsKey);
+end;
+
+procedure TMainForm.miOpenDeploymentsKeyClick(Sender: TObject);
+begin
+  if not IsComponentsHiveLoaded then
+    LoadComponentsHive();
+  RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey);
+end;
+
+procedure TMainForm.miOpenSxSFolderClick(Sender: TObject);
+begin
+  ShellOpen(SxSDir());
 end;
 
 procedure TMainForm.AssemblyBrowserSelectionChanged(Sender: TObject);

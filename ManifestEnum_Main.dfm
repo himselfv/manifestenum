@@ -88,6 +88,25 @@ object MainForm: TMainForm
         OnClick = miShowDeploymentsOnlyClick
       end
     end
+    object miService: TMenuItem
+      Caption = 'Service'
+      object OpenComponentskey1: TMenuItem
+        Caption = 'Open Components key...'
+        OnClick = OpenComponentskey1Click
+      end
+      object OpenDeploymentskey1: TMenuItem
+        Caption = 'Open Deployments key...'
+        OnClick = OpenDeploymentskey1Click
+      end
+      object OpenSxSfolder1: TMenuItem
+        Caption = 'Open SxS folder...'
+        OnClick = OpenSxSfolder1Click
+      end
+      object DISMimagecleanup1: TMenuItem
+        Caption = 'DISM image cleanup...'
+        OnClick = DISMimagecleanup1Click
+      end
+    end
     object Debug1: TMenuItem
       Caption = 'Debug'
       object miShowLog: TMenuItem

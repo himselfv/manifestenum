@@ -190,7 +190,7 @@ begin
   case AData.NodeType of
     ntRegistryValue: begin
       PopupMenu := RegistryActions.PopupMenu;
-      RegistryActions.SetSelectedKeys();
+//      RegistryActions.SetSelectedKeys();
     end;
   end;
 end;
