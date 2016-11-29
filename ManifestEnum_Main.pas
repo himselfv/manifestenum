@@ -697,6 +697,9 @@ begin
 
     OleCheck(CreateAssemblyCache(ACache, 0));
 
+    if not IsComponentsHiveLoaded then
+      LoadComponentsHive();
+
     for Assembly in List.Values do begin
       LogForm.Log('Uninstalling '+NameVerStr(Assembly)+'...');
       IsDeployment := SxsIsDeployment(Assembly.identity, Assembly.manifestName);
