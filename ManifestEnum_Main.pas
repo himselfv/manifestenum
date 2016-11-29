@@ -587,6 +587,13 @@ begin
   OleCheck(ACache.InstallAssembly(0, PChar(OpenManifestDialog.FileName), @ref));
 end;
 
+resourcestring
+  sConfirmUninstallNonDeployments =
+    'You''re trying to uninstall some assemblies that aren''t deployments.'#13
+    +'Only deployment assemblies can be uninstalled with SxS. The program can automatically convert '
+    +'assemblies into deployments for you if you enable Force Uninstall in Options.'#13
+    +'Do you want to continue anyway and try to uninstall all assemblies?';
+
 procedure TMainForm.miUninstallAssemblyClick(Sender: TObject);
 var Assembly: TAssemblyData;
   ACache: IAssemblyCache;
@@ -599,6 +606,15 @@ begin
   for Assembly in SelectedAssemblies do
     AssemblyNames := AssemblyNames+'  '+Assembly.identity.name+#13;
   if AssemblyNames = '' then exit; //no assemblies selected
+
+  isDeployment := true;
+  for Assembly in SelectedAssemblies do
+    if not Assembly.isDeployment then
+      isDeployment := false;
+  if (not isDeployment) and (MessageBox(Self.Handle,
+    PChar(sConfirmUninstallNonDeployments),
+    PChar('Confirm uninstall'), MB_YESNO or MB_ICONQUESTION) <> ID_YES) then
+    exit;
 
   if MessageBox(Self.Handle, PChar('You are going to uninstall these assemblies: '#13
     +AssemblyNames
@@ -690,6 +706,15 @@ begin
       MessageBox(Self.Handle, PChar('Nothing to remove'), PChar('Batch uninstall'), MB_OK);
       exit;
     end;
+
+    isDeployment := true;
+    for Assembly in List.Values do
+      if not Assembly.isDeployment then
+        isDeployment := false;
+    if (not isDeployment) and (MessageBox(Self.Handle,
+      PChar(sConfirmUninstallNonDeployments),
+      PChar('Batch uninstall'), MB_YESNO or MB_ICONQUESTION) <> ID_YES) then
+      exit;
 
     if MessageBox(Self.Handle, PChar(IntToStr(List.Count)+' assemblies will be removed. Continue?'),
       PChar('Batch uninstall'), MB_ICONQUESTION+MB_YESNO) <> ID_YES then
