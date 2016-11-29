@@ -90,21 +90,21 @@ object MainForm: TMainForm
     end
     object miService: TMenuItem
       Caption = 'Service'
-      object OpenComponentskey1: TMenuItem
+      object miOpenComponentsKey: TMenuItem
         Caption = 'Open Components key...'
-        OnClick = OpenComponentskey1Click
+        OnClick = miOpenComponentsKeyClick
       end
-      object OpenDeploymentskey1: TMenuItem
+      object miOpenDeploymentsKey: TMenuItem
         Caption = 'Open Deployments key...'
-        OnClick = OpenDeploymentskey1Click
+        OnClick = miOpenDeploymentsKeyClick
       end
-      object OpenSxSfolder1: TMenuItem
+      object miOpenSxSFolder: TMenuItem
         Caption = 'Open SxS folder...'
-        OnClick = OpenSxSfolder1Click
+        OnClick = miOpenSxSFolderClick
       end
-      object DISMimagecleanup1: TMenuItem
+      object miDISMImageCleanup: TMenuItem
         Caption = 'DISM image cleanup...'
-        OnClick = DISMimagecleanup1Click
+        OnClick = miDISMImageCleanupClick
       end
     end
     object Debug1: TMenuItem
