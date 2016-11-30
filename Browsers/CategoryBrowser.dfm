@@ -30,6 +30,7 @@ object CategoryBrowserForm: TCategoryBrowserForm
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
     Images = ResourceModule.SmallImages
     TabOrder = 0
+    TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
     OnCompareNodes = TreeCompareNodes
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText

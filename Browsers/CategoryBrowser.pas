@@ -70,21 +70,26 @@ procedure TCategoryBrowserForm.Reload;
 var AList: TCategoryMemberships;
   AId: TAssemblyId;
   AData: TCategoryMembershipData;
-  ACat: PVirtualNode;
+  ACatNode: PVirtualNode;
 begin
   Tree.Clear;
   if FDb = nil then exit;
 
-  AList := TCategoryMemberships.Create;
+  AList := nil;
+  Tree.BeginUpdate;
   try
+    AList := TCategoryMemberships.Create;
     FDb.GetCategoryMemberships(AList);
+
+    //Reloading is slow, GetAssembly for every item is the slowest part
     for AId in AList.Keys do begin
       AData := AList[AId];
-      ACat := NeedCategoryNode(AData.name);
-      AddAssemblyNode(ACat, FDb.Assemblies.GetAssembly(AId).identity.ToString, AData.typeName)
+      ACatNode := NeedCategoryNode(AData.name);
+      AddAssemblyNode(ACatNode, FDb.Assemblies.GetAssembly(AId).identity.ToString, AData.typeName)
     end;
   finally
     FreeAndNil(AList);
+    Tree.EndUpdate;
   end;
 
   Tree.SortTree(Tree.Header.SortColumn, Tree.Header.SortDirection);
