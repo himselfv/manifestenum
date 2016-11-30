@@ -6,6 +6,7 @@ uses SysUtils, Classes, sqlite3, Generics.Collections;
 
 type
   ESqliteError = class(Exception);
+  EDatabaseError = class(Exception);
 
 type
   TAssemblyDbModule = class;

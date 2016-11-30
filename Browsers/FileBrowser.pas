@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, StdCtrls, Menus, DelayLoadTree, VirtualTrees,
-  AssemblyDb, CommonResources, AssemblyDb.Assemblies;
+  AssemblyDb, CommonResources, AssemblyDb.Assemblies, AssemblyDb.Files;
 
 type
   TNodeType = (ntFolder, ntFile);
@@ -63,7 +63,7 @@ begin
 
   AFolders := TFolderList.Create;
   try
-    FDb.GetFolders(AFolderId, AFolders);
+    FDb.Files.GetFolders(AFolderId, AFolders);
     for AChildFolderId in AFolders.Keys do
       AddFolderNode(ANode, AChildFolderId, AFolders[AChildFolderId]);
   finally
@@ -72,7 +72,7 @@ begin
 
   AFiles := TList<TFileEntryData>.Create;
   try
-    FDb.GetFiles(AFolderId, AFiles);
+    FDb.Files.GetFiles(AFolderId, AFiles);
     for i := 0 to AFiles.Count-1 do
       AddFileNode(ANode, AFiles[i]);
   finally

@@ -9,6 +9,7 @@ uses
   AssemblyDb in 'Db\AssemblyDb.pas',
   AssemblyDb.Core in 'Db\AssemblyDb.Core.pas',
   AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',
+  AssemblyDb.Files in 'Db\AssemblyDb.Files.pas',
   AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas',
   AssemblyDb.Services in 'Db\AssemblyDb.Services.pas',
   AssemblyDb.UnusualProps in 'Db\AssemblyDb.UnusualProps.pas',

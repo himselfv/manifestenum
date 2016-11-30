@@ -55,6 +55,7 @@ type
   end;
 
 implementation
+uses AssemblyDb.Files;
 
 constructor TManifestParser.Create(ADb: TAssemblyDb);
 begin
@@ -196,7 +197,7 @@ procedure TManifestParser.ImportDirectoryNode(const AAssembly: TAssemblyId; cons
 var AData: TFolderReferenceData;
 begin
   AData.owner := boolAttribute(ANode, 'owner');
-{$IFNDEF DRYRUN}  Db.AddFolder(AAssembly,
+{$IFNDEF DRYRUN}  Db.Files.AddFolder(AAssembly,
     textAttribute(ANode, 'destinationPath'),
     AData);{$ENDIF}
 end;
@@ -207,12 +208,12 @@ var AData: TFileEntryData;
 begin
   ADestinationPath := textAttribute(ANode, 'destinationPath');
   AData.assembly := AAssembly;
-{$IFNDEF DRYRUN}  AData.folder := Db.AddFolderPath(ADestinationPath);{$ENDIF}
+{$IFNDEF DRYRUN}  AData.folder := Db.Files.AddFolderPath(ADestinationPath);{$ENDIF}
   AData.name := textAttribute(ANode, 'name');
   AData.sourceName := textAttribute(ANode, 'sourceName');
   AData.sourcePath := textAttribute(ANode, 'sourcePath');
   AData.importPath := textAttribute(ANode, 'importPath');
-{$IFNDEF DRYRUN}  Db.AddFile(AData);{$ENDIF}
+{$IFNDEF DRYRUN}  Db.Files.AddFile(AData);{$ENDIF}
 end;
 
 procedure TManifestParser.ImportRegistryKeys(const AAssembly: TAssemblyId; const ANode: IXmlNode);

@@ -16,7 +16,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, Vcl.Menus, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources, Generics.Collections, AssemblyDb.Assemblies, AssemblyDb.Registry,
+  CommonResources, Generics.Collections, AssemblyDb.Assemblies, AssemblyDb.Files, AssemblyDb.Registry,
   AssemblyDb.Services;
 
 type
@@ -269,7 +269,7 @@ begin
 
   AFolders := TFolderReferences.Create;
   try
-    FDb.GetAssemblyFolders(AAssemblyId, AFolders);
+    FDb.Files.GetAssemblyFolders(AAssemblyId, AFolders);
     for AFolder in AFolders.Keys do
       AddFolderNode(ANode, AFolder, AFolders[AFolder]);
   finally
@@ -278,7 +278,7 @@ begin
 
   AFiles := TList<TFileEntryData>.Create;
   try
-    FDb.GetAssemblyFiles(AAssemblyId, AFiles);
+    FDb.Files.GetAssemblyFiles(AAssemblyId, AFiles);
     for i := 0 to AFiles.Count-1 do
       AddFileNode(ANode, AFiles[i]);
   finally
@@ -330,7 +330,7 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFolder;
-  AData.Name := FDb.GetFolderPath(AFolder);
+  AData.Name := FDb.Files.GetFolderPath(AFolder);
   AData.ResourceId := AFolder;
   AData.DelayLoad.Touched := true;
 end;
@@ -341,7 +341,7 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFile;
-  AData.Name := FDb.GetFileFullDestinationName(AFileData);
+  AData.Name := FDb.Files.GetFileFullDestinationName(AFileData);
   AData.ResourceId := AFileData.id;
   AData.DelayLoad.Touched := true;
 end;

@@ -3,7 +3,7 @@ unit ManifestEnum.FileActions;
 interface
 
 uses
-  System.SysUtils, System.Classes, Vcl.Menus, AssemblyDb;
+  System.SysUtils, System.Classes, Vcl.Menus, AssemblyDb, AssemblyDb.Files;
 
 type
   TFileActions = class(TDataModule)
@@ -115,7 +115,7 @@ begin
   SetLength(Self.FInternalFileData, Length(Items));
   SetLength(DataRefs, Length(Items));
   for i := 0 to Length(Items)-1 do begin
-    Self.FInternalFileData[i] := Db.GetFileEntryById(Items[i]);
+    Self.FInternalFileData[i] := Db.Files.GetFileEntryById(Items[i]);
     DataRefs[i] := @Self.FInternalFileData[i];
   end;
   Self.SetSelectedFiles(DataRefs);
@@ -136,7 +136,7 @@ var Id: TFolderId;
 begin
   Text := '';
   for Id in FSelectedFolders do
-    Text := Text + FDb.GetFolderName(Id) + #13;
+    Text := Text + Db.Files.GetFolderName(Id) + #13;
   Clipboard.AsText := Text;
 end;
 
@@ -146,7 +146,7 @@ var Id: TFolderId;
 begin
   Text := '';
   for Id in FSelectedFolders do
-    Text := Text + FDb.GetFolderPath(Id) + #13;
+    Text := Text + Db.Files.GetFolderPath(Id) + #13;
   Clipboard.AsText := Text;
 end;
 
@@ -154,7 +154,7 @@ procedure TFileActions.miFolderJumpToLocalClick(Sender: TObject);
 var Path: string;
 begin
   if Length(FSelectedFolders) <> 1 then exit;
-  Path := FDb.GetFolderPath(FSelectedFolders[0]); //TODO: Replace parts of the path with local locations!
+  Path := Db.Files.GetFolderPath(FSelectedFolders[0]); //TODO: Replace parts of the path with local locations!
   OsUtils.ShellOpen(Path);
 end;
 
@@ -175,7 +175,7 @@ var Entry: PFileEntryData;
 begin
   Text := '';
   for Entry in FSelectedFiles do
-    Text := Text + Db.GetFolderPath(Entry.folder)+'/'+Entry.name + #13;
+    Text := Text + Db.Files.GetFolderPath(Entry.folder)+'/'+Entry.name + #13;
   Clipboard.AsText := Text;
 end;
 
@@ -183,7 +183,7 @@ procedure TFileActions.miFileJumpToLocalClick(Sender: TObject);
 var Path: string;
 begin
   if Length(FSelectedFiles) <> 1 then exit;
-  Path := FDb.GetFolderPath(FSelectedFiles[0].folder)+'/'+FSelectedFiles[0].name; //TODO: Localize path!
+  Path := Db.Files.GetFolderPath(FSelectedFiles[0].folder)+'/'+FSelectedFiles[0].name; //TODO: Localize path!
   OsUtils.ExplorerAtFile(Path);
 end;
 

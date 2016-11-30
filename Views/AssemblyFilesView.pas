@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Generics.Collections, VirtualTrees, AssemblyDb,
-  DelayLoadTree, AssemblyDb.Assemblies;
+  DelayLoadTree, AssemblyDb.Assemblies, AssemblyDb.Files;
 
 type
   TNodeType = (ntAssembly, ntFile);
@@ -120,7 +120,7 @@ begin
   Result := AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFile;
-  AData.Name := FDb.GetFileFullDestinationName(AFileData);
+  AData.Name := FDb.Files.GetFileFullDestinationName(AFileData);
   AData.Assembly := 0;
   AData.DelayLoad.Touched := true;
 end;
@@ -153,7 +153,7 @@ begin
   //Add files
   AFiles := TList<TFileEntryData>.Create;
   try
-    FDb.GetAssemblyFiles(AAssembly, AFiles);
+    FDb.Files.GetAssemblyFiles(AAssembly, AFiles);
     for i := 0 to AFiles.Count-1 do
       AddFileNode(ANode, AFiles[i]);
   finally

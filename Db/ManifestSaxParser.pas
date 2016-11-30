@@ -17,8 +17,8 @@ unit ManifestSaxParser;
 //peculiarities)
 
 interface
-uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies, AssemblyDb.Registry,
-  AssemblyDb.Services, ComObj, ActiveX, Generics.Collections, MSXML;
+uses SysUtils, Classes, sqlite3, SxsExpand, AssemblyDb, AssemblyDb.Assemblies, AssemblyDb.Files,
+  AssemblyDb.Registry, AssemblyDb.Services, ComObj, ActiveX, Generics.Collections, MSXML;
 
 type
   EParsingException = class(Exception);
@@ -719,12 +719,12 @@ begin
 
   for i := 0 to FFiles.Count-1 do begin
     FFiles[i]^.entry.assembly := AId;
-    FFiles[i]^.entry.folder := Db.AddFolderPath(FFiles[i]^.path);
-    Db.AddFile(FFiles[i]^.entry);
+    FFiles[i]^.entry.folder := Db.Files.AddFolderPath(FFiles[i]^.path);
+    Db.Files.AddFile(FFiles[i]^.entry);
   end;
 
   for i := 0 to FDirectories.Count-1 do
-    Db.AddFolder(AId, FDirectories[i].folder, FDirectories[i].ref);
+    Db.Files.AddFolder(AId, FDirectories[i].folder, FDirectories[i].ref);
 
   for i := 0 to FRegistryKeys.Count-1 do
     FRegistryKeys[i].id := Db.Registry.AddKey(AId, FRegistryKeys[i].path, FRegistryKeys[i].ref);

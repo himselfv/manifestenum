@@ -438,7 +438,7 @@ begin
   stmt := Db.PrepareStatement('SELECT rowid, * FROM registryValues WHERE rowid=?');
   sqlite3_bind_int64(stmt, 1, AId);
   if not QueryValue(stmt, Result) then
-    raise Exception.Create('Item not found');
+    raise EDatabaseError.Create('Item not found');
 end;
 
 
