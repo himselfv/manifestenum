@@ -15,28 +15,33 @@ type
     miKeyJumpToLocalRegistry: TMenuItem;
     ValuePopupMenu: TPopupMenu;
     miValueCopy: TMenuItem;
-    miValueCopyName: TMenuItem;
+    miValueCopyNameType: TMenuItem;
     miValueCopyValue: TMenuItem;
-    miValueCopyPair: TMenuItem;
+    miValueCopyNameValue: TMenuItem;
+    miValueCopyFullEntry: TMenuItem;
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
     procedure KeyPopupMenuPopup(Sender: TObject);
     procedure ValuePopupMenuPopup(Sender: TObject);
-    procedure miValueCopyPairClick(Sender: TObject);
-    procedure miValueCopyNameClick(Sender: TObject);
+    procedure miValueCopyFullEntryClick(Sender: TObject);
+    procedure miValueCopyNameValueClick(Sender: TObject);
+    procedure miValueCopyNameTypeClick(Sender: TObject);
     procedure miValueCopyValueClick(Sender: TObject);
     procedure miKeyCopyNameClick(Sender: TObject);
     procedure miKeyCopyPathClick(Sender: TObject);
     procedure miKeyJumpToLocalRegistryClick(Sender: TObject);
-    procedure DataModuleCreate(Sender: TObject);
-    procedure DataModuleDestroy(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FSelectedKeys: TArray<TRegistryKeyId>;
     FSelectedValues: TArray<PRegistryValueData>;
+    FInternalValueData: TArray<TRegistryValueData>; //stores value data if we have been given IDs
   public
     procedure SetSelectedKey(Item: TRegistryKeyId);
     procedure SetSelectedKeys(Items: TArray<TRegistryKeyId>);
-    procedure SetSelectedValue(Item: PRegistryValueData);
+    procedure SetSelectedValue(Item: PRegistryValueData); overload;
     procedure SetSelectedValues(Items: TArray<PRegistryValueData>);
+    procedure SetSelectedValue(Item: TRegistryValueId); overload;
+    procedure SetSelectedValueIds(Items: TArray<TRegistryValueId>);
     property Db: TAssemblyDb read FDb write FDb;
   end;
 
@@ -81,6 +86,7 @@ begin
   SetSelectedKeys(arr);
 end;
 
+//Sets selected RegistryValues by value. You must not free the pointer while the menu is active
 procedure TRegistryActions.SetSelectedValues(Items: TArray<PRegistryValueData>);
 var Value: PRegistryValueData;
   Keys: TArray<TRegistryKeyId>;
@@ -103,6 +109,28 @@ begin
   SetSelectedValues(arr);
 end;
 
+//Sets selected RegistryValues by Ids
+procedure TRegistryActions.SetSelectedValueIds(Items: TArray<TRegistryValueId>);
+var DataRefs: TArray<PRegistryValueData>;
+  i: integer;
+begin
+  SetLength(Self.FInternalValueData, Length(Items));
+  SetLength(DataRefs, Length(Items));
+  for i := 0 to Length(Items)-1 do begin
+    Self.FInternalValueData[i] := Db.Registry.GetValueById(Items[i]);
+    DataRefs[i] := @Self.FInternalValueData[i];
+  end;
+  Self.SetSelectedValues(DataRefs);
+end;
+
+procedure TRegistryActions.SetSelectedValue(Item: TRegistryValueId);
+var arr: TArray<TRegistryValueId>;
+begin
+  SetLength(arr, 1);
+  arr[0] := Item;
+  SetSelectedValueIds(arr);
+end;
+
 
 
 procedure TRegistryActions.KeyPopupMenuPopup(Sender: TObject);
@@ -117,10 +145,12 @@ end;
 
 procedure TRegistryActions.ValuePopupMenuPopup(Sender: TObject);
 begin
-  miValueCopyPair.Visible := Length(FSelectedValues) > 0;
-  miValueCopyName.Visible := Length(FSelectedValues) > 0;
+  miValueCopyFullEntry.Visible := Length(FSelectedValues) > 0;
+  miValueCopyNameValue.Visible := Length(FSelectedValues) > 0;
+  miValueCopyNameType.Visible := Length(FSelectedValues) > 0;
   miValueCopyValue.Visible := Length(FSelectedValues) > 0;
-  miValueCopy.Visible := miValueCopyPair.Visible or miValueCopyName.Visible or miValueCopyValue.Visible;
+  miValueCopy.Visible := miValueCopyFullEntry.Visible or miValueCopyNameValue.Visible
+    or miValueCopyNameType.Visible or miValueCopyValue.Visible;
 end;
 
 
@@ -153,7 +183,19 @@ begin
 end;
 
 
-procedure TRegistryActions.miValueCopyPairClick(Sender: TObject);
+procedure TRegistryActions.miValueCopyFullEntryClick(Sender: TObject);
+var Entry: PRegistryValueData;
+  Text: string;
+begin
+  Text := '';
+  for Entry in FSelectedValues do
+    Text := Text + FDb.Registry.GetKeyPath(Entry.key) + '\' + Entry.name
+      + ' (' + GetRegistryValueTypeName(Entry.valueType) + ')'
+      + ' = ' + Entry.value + #13;
+  Clipboard.AsText := Text;
+end;
+
+procedure TRegistryActions.miValueCopyNameValueClick(Sender: TObject);
 var Entry: PRegistryValueData;
   Text: string;
 begin
@@ -163,7 +205,7 @@ begin
   Clipboard.AsText := Text;
 end;
 
-procedure TRegistryActions.miValueCopyNameClick(Sender: TObject);
+procedure TRegistryActions.miValueCopyNameTypeClick(Sender: TObject);
 var Entry: PRegistryValueData;
   Text: string;
 begin

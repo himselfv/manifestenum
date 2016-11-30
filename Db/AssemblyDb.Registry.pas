@@ -23,7 +23,11 @@ type
   end;
   TRegistryKeyReferees = TDictionary<TAssemblyId, TRegistryKeyReferenceData>;
 
+  TRegistryValueId = int64;
+
   TRegistryValueData = record
+    id: TRegistryValueId;
+    assembly: TAssemblyId;
     key: TRegistryKeyId;
     name: string;
     valueType: TRegistryValueType;
@@ -62,8 +66,10 @@ type
     function FindKeyByPath(const APath: string; ARoot: TRegistryKeyId = 0): TRegistryKeyId;
 
     procedure QueryValues(AStmt: PSQLite3Stmt; AList: TRegistryValueList);
+    function QueryValue(AStmt: PSQLite3Stmt; out AData: TRegistryValueData): boolean;
     procedure GetKeyValues(AKey: TRegistryKeyId; AList: TRegistryValueList);
     procedure GetAssemblyValues(AAssembly: TAssemblyId; AList: TRegistryValueList);
+    function GetValueById(AId: TRegistryValueId): TRegistryValueData;
 
   end;
 
@@ -373,12 +379,14 @@ end;
 
 function TAssemblyRegistry.SqlReadValueData(stmt: PSQLite3Stmt): TRegistryValueData;
 begin
-  Result.key := sqlite3_column_int64(stmt, 1);
-  Result.name := sqlite3_column_text16(stmt, 2);
-  Result.valueType := sqlite3_column_int(stmt, 3);
-  Result.value := sqlite3_column_text16(stmt, 4);
-  Result.operationHint := sqlite3_column_text16(stmt, 5);
-  Result.owner := boolean(sqlite3_column_int(stmt, 6));
+  Result.id := sqlite3_column_int64(stmt, 0); //rowid
+  Result.assembly := sqlite3_column_int64(stmt, 1);
+  Result.key := sqlite3_column_int64(stmt, 2);
+  Result.name := sqlite3_column_text16(stmt, 3);
+  Result.valueType := sqlite3_column_int(stmt, 4);
+  Result.value := sqlite3_column_text16(stmt, 5);
+  Result.operationHint := sqlite3_column_text16(stmt, 6);
+  Result.owner := boolean(sqlite3_column_int(stmt, 7));
 end;
 
 
@@ -395,10 +403,23 @@ begin
   sqlite3_reset(AStmt);
 end;
 
+function TAssemblyRegistry.QueryValue(AStmt: PSQLite3Stmt; out AData: TRegistryValueData): boolean;
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  Result := (res = SQLITE_ROW);
+  if Result then
+    AData := SqlReadValueData(AStmt)
+  else
+    if res <> SQLITE_DONE then
+      Db.RaiseLastSqliteError;
+  sqlite3_reset(AStmt);
+end;
+
 procedure TAssemblyRegistry.GetKeyValues(AKey: TRegistryKeyId; AList: TList<TRegistryValueData>);
 var stmt: PSQLite3Stmt;
 begin
-  stmt := Db.PrepareStatement('SELECT * FROM registryValues WHERE keyId=?');
+  stmt := Db.PrepareStatement('SELECT rowid, * FROM registryValues WHERE keyId=?');
   sqlite3_bind_int64(stmt, 1, AKey);
   QueryValues(stmt, AList);
 end;
@@ -406,9 +427,19 @@ end;
 procedure TAssemblyRegistry.GetAssemblyValues(AAssembly: TAssemblyId; AList: TRegistryValueList);
 var stmt: PSQLite3Stmt;
 begin
-  stmt := Db.PrepareStatement('SELECT * FROM registryValues WHERE assemblyId=?');
+  stmt := Db.PrepareStatement('SELECT rowid, * FROM registryValues WHERE assemblyId=?');
   sqlite3_bind_int64(stmt, 1, AAssembly);
   QueryValues(stmt, AList);
 end;
+
+function TAssemblyRegistry.GetValueById(AId: TRegistryValueId): TRegistryValueData;
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT rowid, * FROM registryValues WHERE rowid=?');
+  sqlite3_bind_int64(stmt, 1, AId);
+  if not QueryValue(stmt, Result) then
+    raise Exception.Create('Item not found');
+end;
+
 
 end.

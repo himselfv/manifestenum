@@ -33,6 +33,7 @@ type
     NodeType: TNodeType;
     Name: string;
     AssemblyId: TAssemblyId;
+    ResourceId: int64;
   end;
   PNodeData = ^TNodeData;
 
@@ -189,9 +190,8 @@ begin
   AData := Sender.GetNodeData(Node);
   case AData.NodeType of
     ntRegistryValue: begin
-      PopupMenu := RegistryActions.KeyPopupMenu;
-      //TODO: SetSelectedKeys / SetSelectedValues
-//      RegistryActions.SetSelectedKeys();
+      RegistryActions.SetSelectedValue(TRegistryValueId(AData.ResourceId));
+      PopupMenu := RegistryActions.ValuePopupMenu;
     end;
   end;
 end;
@@ -341,6 +341,7 @@ begin
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntRegistryValue;
   AData.Name := FDb.Registry.GetKeyPath(ARegistryValueData.key) + '\' + ARegistryValueData.name;
+  AData.ResourceId := ARegistryValueData.id;
   AData.DelayLoad.Touched := true;
 end;
 

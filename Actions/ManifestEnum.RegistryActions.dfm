@@ -11,11 +11,11 @@ object RegistryActions: TRegistryActions
     object miKeyCopy: TMenuItem
       Caption = 'Copy'
       object miKeyCopyName: TMenuItem
-        Caption = 'Key name'
+        Caption = 'Name'
         OnClick = miKeyCopyNameClick
       end
       object miKeyCopyPath: TMenuItem
-        Caption = 'Key path'
+        Caption = 'Path'
         OnClick = miKeyCopyPathClick
       end
     end
@@ -33,13 +33,17 @@ object RegistryActions: TRegistryActions
     Top = 16
     object miValueCopy: TMenuItem
       Caption = 'Copy'
-      object miValueCopyPair: TMenuItem
-        Caption = 'Pair'
-        OnClick = miValueCopyPairClick
+      object miValueCopyFullEntry: TMenuItem
+        Caption = 'Full entry'
+        OnClick = miValueCopyFullEntryClick
       end
-      object miValueCopyName: TMenuItem
-        Caption = 'Name'
-        OnClick = miValueCopyNameClick
+      object miValueCopyNameValue: TMenuItem
+        Caption = 'Name = Value'
+        OnClick = miValueCopyNameValueClick
+      end
+      object miValueCopyNameType: TMenuItem
+        Caption = 'Name and type'
+        OnClick = miValueCopyNameTypeClick
       end
       object miValueCopyValue: TMenuItem
         Caption = 'Value'
