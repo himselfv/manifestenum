@@ -36,7 +36,8 @@ uses
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
-  SxsUtils in 'SxsUtils.pas';
+  SxsUtils in 'SxsUtils.pas',
+  AssemblyDb.Environ in 'Db\AssemblyDb.Environ.pas';
 
 {$R *.res}
 

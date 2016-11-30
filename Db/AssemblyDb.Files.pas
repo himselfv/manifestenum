@@ -60,7 +60,6 @@ type
 
 implementation
 
-
 procedure TAssemblyFiles.CreateTables;
 begin
   Db.Exec('CREATE TABLE IF NOT EXISTS folders ('

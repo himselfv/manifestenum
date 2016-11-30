@@ -176,6 +176,7 @@
         </DCCReference>
         <DCCReference Include="WinSxS.pas"/>
         <DCCReference Include="SxsUtils.pas"/>
+        <DCCReference Include="Db\AssemblyDb.Environ.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

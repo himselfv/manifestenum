@@ -132,7 +132,6 @@ begin
 end;
 
 
-
 procedure TRegistryActions.KeyPopupMenuPopup(Sender: TObject);
 begin
   miKeyCopyName.Visible := Length(FSelectedKeys) > 0;

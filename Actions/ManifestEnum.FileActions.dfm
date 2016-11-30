@@ -5,6 +5,7 @@ object FileActions: TFileActions
   Height = 150
   Width = 215
   object FolderPopupMenu: TPopupMenu
+    OnPopup = FolderPopupMenuPopup
     Left = 32
     Top = 16
     object miFolderCopy: TMenuItem
@@ -17,6 +18,10 @@ object FileActions: TFileActions
         Caption = 'Path'
         OnClick = miFolderCopyPathClick
       end
+      object miFolderCopyModelPath: TMenuItem
+        Caption = 'Model path'
+        OnClick = miFolderCopyModelPathClick
+      end
     end
     object miFolderJumpTo: TMenuItem
       Caption = 'Jump to'
@@ -27,6 +32,7 @@ object FileActions: TFileActions
     end
   end
   object FilePopupMenu: TPopupMenu
+    OnPopup = FilePopupMenuPopup
     Left = 112
     Top = 16
     object miFileCopy: TMenuItem

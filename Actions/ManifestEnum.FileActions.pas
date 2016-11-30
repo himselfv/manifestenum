@@ -20,15 +20,19 @@ type
     miFileCopyNameAndPath: TMenuItem;
     miFileJumpToLocal: TMenuItem;
     miFileJumpToSxs: TMenuItem;
+    miFolderCopyModelPath: TMenuItem;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure miFolderCopyNameClick(Sender: TObject);
     procedure miFolderCopyPathClick(Sender: TObject);
+    procedure miFolderCopyModelPathClick(Sender: TObject);
     procedure miFolderJumpToLocalClick(Sender: TObject);
     procedure miFileCopyNameClick(Sender: TObject);
     procedure miFileCopyNameAndPathClick(Sender: TObject);
     procedure miFileJumpToLocalClick(Sender: TObject);
     procedure miFileJumpToSxsClick(Sender: TObject);
+    procedure FolderPopupMenuPopup(Sender: TObject);
+    procedure FilePopupMenuPopup(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FSelectedFolders: TArray<TFolderId>;
@@ -48,7 +52,7 @@ var
   FileActions: TFileActions;
 
 implementation
-uses Clipbrd, OsUtils, AssemblyDbBuilder, AssemblyDb.Assemblies;
+uses Clipbrd, OsUtils, AssemblyDbBuilder, AssemblyDb.Assemblies, AssemblyDb.Environ;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
@@ -130,6 +134,30 @@ begin
 end;
 
 
+procedure TFileActions.FolderPopupMenuPopup(Sender: TObject);
+begin
+  miFolderCopyName.Visible := Length(FSelectedFolders) > 0;
+  miFolderCopyPath.Visible := Length(FSelectedFolders) > 0;
+  miFolderCopyModelPath.Visible := Length(FSelectedFolders) > 0;
+  miFolderCopy.Visible := miFolderCopyName.Visible or miFolderCopyPath.Visible
+    or miFolderCopyModelPath.Visible;
+
+  miFolderJumpToLocal.Visible := Length(FSelectedFolders) = 1;
+  miFolderJumpTo.Visible := miFolderJumpToLocal.Visible;
+end;
+
+procedure TFileActions.FilePopupMenuPopup(Sender: TObject);
+begin
+  miFileCopyName.Visible := Length(FSelectedFiles) > 0;
+  miFileCopyNameAndPath.Visible := Length(FSelectedFiles) > 0;
+  miFileCopy.Visible := miFileCopyName.Visible or miFileCopyNameAndPath.Visible;
+
+  miFileJumpToLocal.Visible := Length(FSelectedFiles) = 1;
+  miFileJumpToSxs.Visible := Length(FSelectedFiles) = 1;
+  miFileJumpTo.Visible := miFileJumpToLocal.Visible or miFileJumpToSxs.Visible;
+end;
+
+
 procedure TFileActions.miFolderCopyNameClick(Sender: TObject);
 var Id: TFolderId;
   Text: string;
@@ -147,6 +175,18 @@ begin
   Text := '';
   for Id in FSelectedFolders do
     Text := Text + Db.Files.GetFolderPath(Id) + #13;
+  Clipboard.AsText := Text;
+end;
+
+procedure TFileActions.miFolderCopyModelPathClick(Sender: TObject);
+var Id: TFolderId;
+  Text: string;
+  env: TEnvironment;
+begin
+  env := GetModelEnvironmentBlock(); //TODO: specify processor architecture for every assembly
+  Text := '';
+  for Id in FSelectedFolders do
+    Text := Text + ExpandEnvironmentVariables(env, Db.Files.GetFolderPath(Id)) + #13;
   Clipboard.AsText := Text;
 end;
 
