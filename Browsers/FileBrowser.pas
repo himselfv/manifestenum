@@ -4,17 +4,15 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees, AssemblyDb,
-  CommonResources, Vcl.StdCtrls, AssemblyDb.Assemblies;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, StdCtrls, Menus, DelayLoadTree, VirtualTrees,
+  AssemblyDb, CommonResources, AssemblyDb.Assemblies;
 
 type
   TNodeType = (ntFolder, ntFile);
   TNodeData = record
     DelayLoad: TDelayLoadHeader;
     NodeType: TNodeType;
-    Name: string;
-    AssemblyId: TAssemblyId;
-    FolderId: TFolderId;
+    v: TFileEntryData;
   end;
   PNodeData = ^TNodeData;
 
@@ -32,6 +30,8 @@ type
       Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
       var ImageList: TCustomImageList);
     procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
+    procedure TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
+      const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
   protected
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     function AddFolderNode(AParent: PVirtualNode; AFolderId: TFolderId; AFolderName: string): PVirtualNode;
@@ -42,7 +42,7 @@ var
   FileBrowserForm: TFileBrowserForm;
 
 implementation
-uses Generics.Collections;
+uses Generics.Collections, ManifestEnum.FileActions;
 
 {$R *.dfm}
 
@@ -57,7 +57,7 @@ begin
   if (AData <> nil) and (AData.NodeType = ntFile) then exit;
 
   if AData <> nil then
-    AFolderId := AData.FolderId
+    AFolderId := AData.v.folder
   else
     AFolderId := 0;
 
@@ -86,9 +86,9 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFolder;
-  AData.FolderId := AFolderId;
-  AData.Name := AFolderName; //we could call Db.GetFolderName(AFolderId), but why waste cycles
-  AData.AssemblyId := 0;
+  AData.v.folder := AFolderId;
+  AData.v.name := AFolderName; //we could call Db.GetFolderName(AFolderId), but why waste cycles
+  AData.v.assembly := 0;
 end;
 
 function TFileBrowserForm.AddFileNode(AParent: PVirtualNode; AFileData: TFileEntryData): PVirtualNode;
@@ -97,9 +97,7 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFile;
-  AData.Name := AFileData.name;
-  AData.FolderId := AFileData.folder;
-  AData.AssemblyId := AFileData.assembly;
+  AData.v := AFileData;
 end;
 
 procedure TFileBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
@@ -134,7 +132,7 @@ begin
   AData := Sender.GetNodeData(Node);
   case Column of
     NoColumn, 0:
-      CellText := AData.Name;
+      CellText := AData.v.name;
   end;
 end;
 
@@ -157,6 +155,31 @@ begin
   end;
 end;
 
+procedure TFileBrowserForm.TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
+var Data: PNodeData;
+begin
+  inherited;
+  if Node = nil then begin
+    FileActions.SetSelectedFolders(nil);
+    FileActions.SetSelectedFiles(nil);
+    PopupMenu := FileActions.FolderPopupMenu;
+    exit;
+  end;
+
+  Data := Sender.GetNodeData(Node);
+  if Data.NodeType = ntFolder then begin
+    if Data.v.folder > 0 then
+      FileActions.SetSelectedFolder(Data.v.folder)
+    else
+      FileActions.SetSelectedFolders(nil);
+    PopupMenu := FileActions.FolderPopupMenu;
+  end else begin
+    FileActions.SetSelectedFile(@Data.v);
+    PopupMenu := FileActions.FilePopupMenu;
+  end;
+end;
+
 procedure TFileBrowserForm.TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
   Column: TColumnIndex; var Result: Integer);
 var AData1, AData2: PNodeData;
@@ -167,7 +190,7 @@ begin
 
   Result := integer(AData1.NodeType) - integer(AData2.NodeType);
   if Result = 0 then
-    Result := CompareText(AData1.Name, AData2.Name);
+    Result := CompareText(AData1.v.name, AData2.v.name);
 end;
 
 procedure TFileBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -176,8 +199,8 @@ var AData: PNodeData;
 begin
   inherited;
   AData := Sender.GetNodeData(Node);
-  if AData.AssemblyId > 0 then
-    lblWhoAdded.Caption := 'Component: '+FDb.Assemblies.GetAssembly(AData.AssemblyId).identity.ToString
+  if AData.v.assembly > 0 then
+    lblWhoAdded.Caption := 'Component: '+FDb.Assemblies.GetAssembly(AData.v.assembly).identity.ToString
   else
     lblWhoAdded.Caption := '';
 end;

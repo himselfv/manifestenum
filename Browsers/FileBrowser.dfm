@@ -1,5 +1,7 @@
 inherited FileBrowserForm: TFileBrowserForm
   Caption = 'Files'
+  ExplicitWidth = 480
+  ExplicitHeight = 306
   PixelsPerInch = 96
   TextHeight = 13
   object lblWhoAdded: TLabel [0]
@@ -20,6 +22,7 @@ inherited FileBrowserForm: TFileBrowserForm
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetImageIndexEx = TreeGetImageIndexEx
+    OnGetPopupMenu = TreeGetPopupMenu
     OnInitNode = TreeInitNode
     ExplicitHeight = 255
     Columns = <

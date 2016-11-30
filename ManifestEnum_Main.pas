@@ -149,7 +149,7 @@ implementation
 uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
   IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log, CommonFilters,
-  ManifestEnum.RegistryActions;
+  ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -199,6 +199,7 @@ end;
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   RegistryActions.Db := FDb;
+  FileActions.Db := FDb;
 
   LoadSettings;
 end;

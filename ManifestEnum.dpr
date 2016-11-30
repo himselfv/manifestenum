@@ -18,6 +18,8 @@ uses
   ManifestParser in 'Db\ManifestParser.pas',
   ManifestSaxParser in 'Db\ManifestSaxParser.pas',
   AssemblyDbBuilder in 'Db\AssemblyDbBuilder.pas',
+  ManifestEnum.RegistryActions in 'Actions\ManifestEnum.RegistryActions.pas' {RegistryActions: TDataModule},
+  ManifestEnum.FileActions in 'Actions\ManifestEnum.FileActions.pas' {FileActions: TDataModule},
   AssemblyBrowser in 'Browsers\AssemblyBrowser.pas' {AssemblyBrowserForm},
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
   AssemblyFilesView in 'Views\AssemblyFilesView.pas' {AssemblyFilesForm},
@@ -33,8 +35,7 @@ uses
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
-  SxsUtils in 'SxsUtils.pas',
-  ManifestEnum.RegistryActions in 'Actions\ManifestEnum.RegistryActions.pas' {RegistryActions: TDataModule};
+  SxsUtils in 'SxsUtils.pas';
 
 {$R *.res}
 
@@ -46,5 +47,6 @@ begin
   Application.CreateForm(TResourceModule, ResourceModule);
   Application.CreateForm(TLogForm, LogForm);
   Application.CreateForm(TRegistryActions, RegistryActions);
+  Application.CreateForm(TFileActions, FileActions);
   Application.Run;
 end.

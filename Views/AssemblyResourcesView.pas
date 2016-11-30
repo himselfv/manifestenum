@@ -76,7 +76,7 @@ var
   AssemblyResourcesForm: TAssemblyResourcesForm;
 
 implementation
-uses ManifestEnum.RegistryActions;
+uses ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
 {$R *.dfm}
 
@@ -189,6 +189,16 @@ begin
 
   AData := Sender.GetNodeData(Node);
   case AData.NodeType of
+    ntFolder: begin
+      FileActions.SetSelectedFiles(nil);
+      FileActions.SetSelectedFolder(TFolderId(AData.ResourceId));
+      PopupMenu := FileActions.FolderPopupMenu;
+    end;
+    ntFile: begin
+      FileActions.SetSelectedFolders(nil);
+      FileActions.SetSelectedFile(TFileEntryId(AData.ResourceId));
+      PopupMenu := FileActions.FilePopupMenu;
+    end;
     ntRegistryValue: begin
       RegistryActions.SetSelectedValue(TRegistryValueId(AData.ResourceId));
       PopupMenu := RegistryActions.ValuePopupMenu;
@@ -321,6 +331,7 @@ begin
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFolder;
   AData.Name := FDb.GetFolderPath(AFolder);
+  AData.ResourceId := AFolder;
   AData.DelayLoad.Touched := true;
 end;
 
@@ -331,6 +342,7 @@ begin
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntFile;
   AData.Name := FDb.GetFileFullDestinationName(AFileData);
+  AData.ResourceId := AFileData.id;
   AData.DelayLoad.Touched := true;
 end;
 

@@ -31,7 +31,10 @@ type
   TFolderReferees = TDictionary<TAssemblyId, TFolderReferenceData>;
   TFolderReferences = TDictionary<TFolderId, TFolderReferenceData>;
 
+  TFileEntryId = int64;
+
   TFileEntryData = record
+    id: TFileEntryId;
     assembly: TAssemblyId;
     folder: TFolderId;
     name: string;
@@ -39,6 +42,7 @@ type
     sourcePath: string;
     importPath: string;
   end;
+  PFileEntryData = ^TFileEntryData;
 
 
   TTaskFolderId = int64;
@@ -91,9 +95,12 @@ type
     function GetFolderPath(AFolder: TFolderId): string;
     function GetFileFullDestinationName(const AFile: TFileEntryData): string;
     procedure GetAssemblyFolders(AAssembly: TAssemblyId; AList: TFolderReferences);
+
     procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+    function QueryFile(AStmt: PSQLite3Stmt; out AData: TFileEntryData): boolean;
     procedure GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
     procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
+    function GetFileEntryById(AId: TFileEntryId): TFileEntryData;
 
     function AddTaskFolder(const AName: string; AParent: TTaskFolderId = 0): TTaskFolderId;
     procedure AddTask(AAssembly: TAssemblyId; AFolder: TTaskFolderId; const AName: string); overload;
@@ -454,6 +461,7 @@ begin
   if sqlite3_step(stmt) <> SQLITE_ROW then
     RaiseLastSQLiteError();
   Result := sqlite3_column_text16(stmt, 0);
+  sqlite3_reset(stmt);
 end;
 
 function TAssemblyDb.GetFolderPath(AFolder: TFolderId): string;
@@ -502,12 +510,13 @@ end;
 
 function TAssemblyDb.SqlReadFileData(stmt: PSQLite3Stmt): TFileEntryData;
 begin
-  Result.assembly := sqlite3_column_int64(stmt, 0);
-  Result.folder := sqlite3_column_int64(stmt, 1);
-  Result.name := sqlite3_column_text16(stmt, 2);
-  Result.sourceName := sqlite3_column_text16(stmt, 3);
-  Result.sourcePath := sqlite3_column_text16(stmt, 4);
-  Result.importPath := sqlite3_column_text16(stmt, 5);
+  Result.id := sqlite3_column_int64(stmt, 0);
+  Result.assembly := sqlite3_column_int64(stmt, 1);
+  Result.folder := sqlite3_column_int64(stmt, 2);
+  Result.name := sqlite3_column_text16(stmt, 3);
+  Result.sourceName := sqlite3_column_text16(stmt, 4);
+  Result.sourcePath := sqlite3_column_text16(stmt, 5);
+  Result.importPath := sqlite3_column_text16(stmt, 6);
 end;
 
 procedure TAssemblyDb.QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
@@ -523,10 +532,23 @@ begin
   sqlite3_reset(AStmt);
 end;
 
+function TAssemblyDb.QueryFile(AStmt: PSQLite3Stmt; out AData: TFileEntryData): boolean;
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  Result := (res = SQLITE_ROW);
+  if Result then
+    AData := SqlReadFileData(AStmt)
+  else
+    if res <> SQLITE_DONE then
+      RaiseLastSqliteError;
+  sqlite3_reset(AStmt);
+end;
+
 procedure TAssemblyDb.GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
 var AStmt: PSQLite3Stmt;
 begin
-  AStmt := PrepareStatement('SELECT * FROM files WHERE folderId=?');
+  AStmt := PrepareStatement('SELECT rowid, * FROM files WHERE folderId=?');
   sqlite3_bind_int64(AStmt, 1, AFolder);
   QueryFiles(AStmt, AList);
 end;
@@ -534,9 +556,18 @@ end;
 procedure TAssemblyDb.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
 var AStmt: PSQLite3Stmt;
 begin
-  AStmt := PrepareStatement('SELECT * FROM files WHERE assemblyId=?');
+  AStmt := PrepareStatement('SELECT rowid, * FROM files WHERE assemblyId=?');
   sqlite3_bind_int64(AStmt, 1, AAssembly);
   QueryFiles(AStmt, AList);
+end;
+
+function TAssemblyDb.GetFileEntryById(AId: TFileEntryId): TFileEntryData;
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := PrepareStatement('SELECT rowid, * FROM files WHERE rowid=?');
+  sqlite3_bind_int64(AStmt, 1, AId);
+  if not QueryFile(AStmt, Result) then
+    raise Exception.Create('Item not found');
 end;
 
 
