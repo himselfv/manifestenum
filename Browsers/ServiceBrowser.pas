@@ -8,7 +8,7 @@ uses
   AssemblyDb, CommonResources, AssemblyDb.Assemblies, AssemblyDb.Services;
 
 type
-  TNodeType = (ntFolder, ntService);
+  TNodeType = (ntFolder, ntService, ntServiceVersion);
   TNodeData = record
     DelayLoad: TDelayLoadHeader;
     NodeType: TNodeType;
@@ -34,7 +34,11 @@ type
     procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
   protected
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
-    function AddServiceNode(AParent: PVirtualNode; AId: TServiceId; const AServiceData: TServiceEntryData): PVirtualNode;
+    function FindServiceNode(AParent: PVirtualNode; const AServiceName: string): PVirtualNode;
+    procedure FindServiceNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
+      var Abort: Boolean);
+    function GetServiceNode(AParent: PVirtualNode; const AServiceName: string): PVirtualNode;
+    function AddServiceVersionNode(AParent: PVirtualNode; AId: TServiceId; const AServiceData: TServiceEntryData): PVirtualNode;
   end;
 
 var
@@ -49,25 +53,54 @@ procedure TServiceBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer)
 var AData: PNodeData absolute ANodeData;
   AList: TServiceList;
   AKey: TServiceId;
+  group: PVirtualNode;
 begin
-  if (AData <> nil) and (AData.NodeType = ntService) then exit;
+  if (AData <> nil) and (AData.NodeType in [ntService, ntServiceVersion]) then exit;
 
   AList := TServiceList.Create;
   try
     FDb.Services.GetAllServices(AList);
-    for AKey in AList.Keys do
-      AddServiceNode(ANode, AKey, AList.Items[AKey]);
+    for AKey in AList.Keys do begin
+      group := GetServiceNode(ANode, AList.Items[AKey].name);
+      AddServiceVersionNode(group, AKey, AList.Items[AKey]);
+    end;
   finally
     FreeAndNil(AList);
   end;
 end;
 
-function TServiceBrowserForm.AddServiceNode(AParent: PVirtualNode; AId: TServiceId; const AServiceData: TServiceEntryData): PVirtualNode;
+function TServiceBrowserForm.FindServiceNode(AParent: PVirtualNode; const AServiceName: string): PVirtualNode;
+begin
+  Result := Tree.IterateSubtree(AParent, FindServiceNode_Callback, pointer(AServiceName));
+end;
+
+procedure TServiceBrowserForm.FindServiceNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Data: Pointer; var Abort: Boolean);
+var NodeData: PNodeData;
+begin
+  NodeData := PNodeData(Sender.GetNodeData(Node));
+  Abort := (NodeData.NodeType = ntService) and SameText(NodeData.Name, string(Data));
+end;
+
+function TServiceBrowserForm.GetServiceNode(AParent: PVirtualNode; const AServiceName: string): PVirtualNode;
+var AData: PNodeData;
+begin
+  Result := FindServiceNode(AParent, AServiceName);
+  if Result = nil then begin
+    Result := inherited AddNode(AParent);
+    AData := Tree.GetNodeData(Result);
+    AData.NodeType := ntService;
+    AData.Name := AServiceName;
+    AData.ServiceId := 0;
+  end;
+end;
+
+function TServiceBrowserForm.AddServiceVersionNode(AParent: PVirtualNode; AId: TServiceId; const AServiceData: TServiceEntryData): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
-  AData.NodeType := ntService;
+  AData.NodeType := ntServiceVersion;
   AData.Name := AServiceData.name;
   AData.ServiceId := AId;
   AData.Entry := AServiceData;
@@ -122,7 +155,8 @@ begin
       ImageList := ResourceModule.SmallImages;
       case AData.NodeType of
         ntFolder: ImageIndex := imgFolder;
-        ntService: ImageIndex := imgService;
+        ntService,
+        ntServiceVersion: ImageIndex := imgService;
       end;
     end;
   end;
