@@ -183,7 +183,7 @@ var Id: TFolderId;
   Text: string;
   env: TEnvironment;
 begin
-  env := GetModelEnvironmentBlock(); //TODO: specify processor architecture for every assembly
+  env := GetModelEnvironmentBlock(); //expand with default architecture (x64)
   Text := '';
   for Id in FSelectedFolders do
     Text := Text + ExpandEnvironmentVariables(env, Db.Files.GetFolderPath(Id)) + #13;
@@ -194,7 +194,8 @@ procedure TFileActions.miFolderJumpToLocalClick(Sender: TObject);
 var Path: string;
 begin
   if Length(FSelectedFolders) <> 1 then exit;
-  Path := Db.Files.GetFolderPath(FSelectedFolders[0]); //TODO: Replace parts of the path with local locations!
+  Path := Db.Files.GetFolderPath(FSelectedFolders[0]);
+  Path := ExpandEnvironmentVariables(GetLocalEnvironmentBlock(), Path); //TODO: x64/x86? Two different jumps? Separate in list?
   OsUtils.ShellOpen(Path);
 end;
 
@@ -215,7 +216,7 @@ var Entry: PFileEntryData;
 begin
   Text := '';
   for Entry in FSelectedFiles do
-    Text := Text + Db.Files.GetFolderPath(Entry.folder)+'/'+Entry.name + #13;
+    Text := Text + Db.Files.GetFolderPath(Entry.folder)+'\'+Entry.name + #13;
   Clipboard.AsText := Text;
 end;
 
@@ -223,7 +224,8 @@ procedure TFileActions.miFileJumpToLocalClick(Sender: TObject);
 var Path: string;
 begin
   if Length(FSelectedFiles) <> 1 then exit;
-  Path := Db.Files.GetFolderPath(FSelectedFiles[0].folder)+'/'+FSelectedFiles[0].name; //TODO: Localize path!
+  Path := Db.Files.GetFolderPath(FSelectedFiles[0].folder)+'\'+FSelectedFiles[0].name;
+  Path := ExpandEnvironmentVariables(GetLocalEnvironmentBlock(), Path); //TODO: x64/x86?
   OsUtils.ExplorerAtFile(Path);
 end;
 

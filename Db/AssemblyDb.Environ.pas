@@ -23,9 +23,11 @@ function GetEnvironmentValue(env: TEnvironment; const name: string): string;
 function ExpandEnvironmentVariables(env: TEnvironment; const text: string): string;
 
 implementation
-uses SysUtils, Windows;
+uses SysUtils, Windows, ShlObj;
 
-// All environment variables in SxS are in the form $(runtime.ENVNAME)
+{
+All environment variables in SxS are in the form $(runtime.ENVNAME)
+}
 
 var
   envModelx64: TEnvironment;
@@ -33,12 +35,14 @@ var
   envLocalx64: TEnvironment;
   envLocalx86: TEnvironment;
 
-function ArcIsX64(const processorArchitecture: string): boolean;
+function ArcIsX86(const processorArchitecture: string): boolean;
 begin
-  Result := (processorArchitecture='') or (processorArchitecture='x64') or (processorArchitecture='amd64');
+  Result := (processorArchitecture='x86') or (processorArchitecture='wow64');
 end;
 
-function CreateModelEnvironmentBlock(const isX64: boolean): TEnvironment;
+// iswow64 = 32 bit assembly on 64 bit PC
+// all other modes are non-wow64 and are equal
+function CreateModelEnvironmentBlock(const iswow64: boolean): TEnvironment;
 begin
   Result := TEnvironment.Create;
 
@@ -54,22 +58,22 @@ begin
   Result.Values['help'] := 'C:\Windows\Help';
   Result.Values['inf'] := 'C:\Windows\Inf';
 
-  if isx64 then
-    Result.Values['system32'] := 'C:\Windows\System32'
-  else
-    Result.Values['system32'] := 'C:\Windows\SysWOW64';
   Result.Values['syswow64'] := 'C:\Windows\SysWOW64';
+  if iswow64 then
+    Result.Values['system32'] := 'C:\Windows\SysWOW64'
+  else
+    Result.Values['system32'] := 'C:\Windows\System32';
   Result.Values['system'] := Result.Values['system32'];
 
   Result.Values['drivers'] := Result.Values['system32']+'\drivers';
   Result.Values['wbem'] := Result.Values['system32']+'\wbem';
 
-  if isx64 then
-    Result.Values['programfiles'] := 'C:\Program Files'
+  if iswow64 then
+    Result.Values['programfiles'] := 'C:\Program Files (x86)'
   else
-    Result.Values['programfiles'] := 'C:\Program Files (x86)';
+    Result.Values['programfiles'] := 'C:\Program Files';
   Result.Values['programfilesx86'] := 'C:\Program Files (x86)';
-  Result.Values['commonfiles'] := Result.Values['programfilesx86'] + '\Common Files';
+  Result.Values['commonfiles'] := Result.Values['programfiles'] + '\Common Files';
 
   Result.Values['programdata'] := 'C:\ProgramData';
   Result.Values['documentssettings'] := 'C:\Users';
@@ -79,17 +83,17 @@ begin
 end;
 
 function GetModelEnvironmentBlock(const processorArchitecture: string = ''): TEnvironment;
-var isx64: boolean;
+var isx86: boolean;
   ptr: PEnvironment;
 begin
-  isx64 := ArcIsX64(processorArchitecture);
-  if isx64 then
-    ptr := @envModelx64
+  isx86 := ArcIsX86(processorArchitecture);
+  if isx86 then
+    ptr := @envModelx86
   else
-    ptr := @envModelx86;
+    ptr := @envModelx64;
   Result := ptr^;
   if Result = nil then begin
-    Result := CreateModelEnvironmentBlock(isx64);
+    Result := CreateModelEnvironmentBlock(isx86);
     if InterlockedCompareExchangePointer(pointer(ptr^), Result, nil) <> nil then begin
       FreeAndNil(Result);
       Result := ptr^;
@@ -97,24 +101,75 @@ begin
   end;
 end;
 
-function CreateLocalEnvironmentBlock(const isX64: boolean): TEnvironment;
+function GetKnownFolder(nFolder: integer; DefaultUser: boolean = false): string;
+var hToken: THandle;
+  hr: HRESULT;
+begin
+  SetLength(Result, MAX_PATH);
+  if DefaultUser then
+    hToken := THandle(-1)
+  else
+    hToken := THandle(0);
+  hr := SHGetFolderPath(0, nFolder, hToken, SHGFP_TYPE_CURRENT, PChar(Result));
+  if FAILED(hr) then
+    RaiseLastOsError();
+  SetLength(Result, strlen(PChar(Result)));
+end;
+
+function CreateLocalEnvironmentBlock(const isx86: boolean): TEnvironment;
 begin
   Result := TEnvironment.Create;
-  //TODO:
+
+  Result.Values['windows'] := GetKnownFolder(CSIDL_WINDOWS);
+  Result.Values['windir'] := Result.Values['windows'];
+  Result.Values['systemroot'] := Result.Values['windows'];
+
+  Result.Values[''] := ExtractFileDrive(Result.Values['windows']);
+  Result.Values['bootdrive'] := Result.Values[''];
+
+  Result.Values['apppatch'] := Result.Values['windows']+'\AppPatch';
+  Result.Values['fonts'] := Result.Values['windows']+'\Fonts';
+  Result.Values['help'] := Result.Values['windows']+'\Help';
+  Result.Values['inf'] := Result.Values['windows']+'\Inf';
+
+  Result.Values['syswow64'] := GetKnownFolder(CSIDL_SYSTEMX86);
+  if isx86 then
+    Result.Values['system'] := GetKnownFolder(CSIDL_SYSTEMX86)
+  else
+    Result.Values['system'] := GetKnownFolder(CSIDL_SYSTEM);
+  Result.Values['system32'] := Result.Values['system'];
+
+  Result.Values['drivers'] := Result.Values['system32']+'\drivers';
+  Result.Values['wbem'] := Result.Values['system32']+'\wbem';
+
+  Result.Values['programfilesx86'] := GetKnownFolder(CSIDL_PROGRAM_FILESX86);
+  if isx86 then begin
+    Result.Values['programfiles'] := GetKnownFolder(CSIDL_PROGRAM_FILESX86);
+    Result.Values['commonfiles'] := GetKnownFolder(CSIDL_PROGRAM_FILES_COMMONX86)
+  end else begin
+    Result.Values['programfiles'] := GetKnownFolder(CSIDL_PROGRAM_FILES);
+    Result.Values['commonfiles'] := GetKnownFolder(CSIDL_PROGRAM_FILES_COMMON);
+  end;
+
+  Result.Values['programdata'] := GetKnownFolder(CSIDL_COMMON_APPDATA);
+  Result.Values['public'] := ExtractFileDir(GetKnownFolder(CSIDL_COMMON_DOCUMENTS)); //best guess
+  Result.Values['documentssettings'] := ExtractFileDir(Result.Values['public']); //best guess
+  Result.Values['userprofile'] := GetKnownFolder(CSIDL_PROFILE);
+  Result.Values['startmenu'] := GetKnownFolder(CSIDL_STARTMENU);
 end;
 
 function GetLocalEnvironmentBlock(const processorArchitecture: string = ''): TEnvironment;
-var isx64: boolean;
+var isx86: boolean;
   ptr: PEnvironment;
 begin
-  isx64 := ArcIsX64(processorArchitecture);
-  if isx64 then
-    ptr := @envLocalx64
+  isx86 := ArcIsX86(processorArchitecture);
+  if isx86 then
+    ptr := @envLocalx86
   else
-    ptr := @envLocalx86;
+    ptr := @envLocalx64;
   Result := ptr^;
   if Result = nil then begin
-    Result := CreateLocalEnvironmentBlock(isx64);
+    Result := CreateLocalEnvironmentBlock(isx86);
     if InterlockedCompareExchangePointer(pointer(ptr^), Result, nil) <> nil then begin
       FreeAndNil(Result);
       Result := ptr^;

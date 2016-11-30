@@ -19,7 +19,7 @@ object FileActions: TFileActions
         OnClick = miFolderCopyPathClick
       end
       object miFolderCopyModelPath: TMenuItem
-        Caption = 'Model path'
+        Caption = 'Expanded path'
         OnClick = miFolderCopyModelPathClick
       end
     end
