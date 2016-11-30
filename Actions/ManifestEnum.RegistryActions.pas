@@ -26,6 +26,8 @@ type
     procedure miKeyCopyNameClick(Sender: TObject);
     procedure miKeyCopyPathClick(Sender: TObject);
     procedure miKeyJumpToLocalRegistryClick(Sender: TObject);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FSelectedKeys: TArray<TRegistryKeyId>;
@@ -48,6 +50,24 @@ uses Clipbrd, OsUtils;
 
 {$R *.dfm}
 
+procedure TRegistryActions.DataModuleCreate(Sender: TObject);
+var mi: TMenuItem;
+begin
+  //Programmatically add Keys popup menu to Values popup menu, to cover values parent keys
+  //This is hackish, we might be better off copying the menu and enabling-disabling both copies
+  //via actions
+  mi := TMenuItem.Create(ValuePopupMenu);
+  mi.Caption := '-';
+  ValuePopupMenu.Items.Add(mi);
+  ValuePopupMenu.Items.Add(KeyPopupMenu.Items);
+  KeyPopupMenu.Items.Caption := 'Key';
+end;
+
+procedure TRegistryActions.DataModuleDestroy(Sender: TObject);
+begin
+  ValuePopupMenu.Items.Remove(KeyPopupMenu.Items); //or it'll be destroyed with parent
+end;
+
 procedure TRegistryActions.SetSelectedKeys(Items: TArray<TRegistryKeyId>);
 begin
   FSelectedKeys := Items;
@@ -62,8 +82,17 @@ begin
 end;
 
 procedure TRegistryActions.SetSelectedValues(Items: TArray<PRegistryValueData>);
+var Value: PRegistryValueData;
+  Keys: TArray<TRegistryKeyId>;
 begin
   FSelectedValues := Items;
+
+  SetLength(Keys, 0);
+  for Value in FSelectedValues do begin
+    SetLength(Keys, Length(Keys)+1);
+    Keys[Length(Keys)-1] := Value.key;
+  end;
+  SetSelectedKeys(Keys);
 end;
 
 procedure TRegistryActions.SetSelectedValue(Item: PRegistryValueData);
@@ -73,6 +102,7 @@ begin
   arr[0] := Item;
   SetSelectedValues(arr);
 end;
+
 
 
 procedure TRegistryActions.KeyPopupMenuPopup(Sender: TObject);

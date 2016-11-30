@@ -189,7 +189,8 @@ begin
   AData := Sender.GetNodeData(Node);
   case AData.NodeType of
     ntRegistryValue: begin
-      PopupMenu := RegistryActions.PopupMenu;
+      PopupMenu := RegistryActions.KeyPopupMenu;
+      //TODO: SetSelectedKeys / SetSelectedValues
 //      RegistryActions.SetSelectedKeys();
     end;
   end;

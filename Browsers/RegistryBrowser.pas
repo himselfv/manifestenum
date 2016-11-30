@@ -423,9 +423,7 @@ begin
   Result := vtValues.AddChild(AParent);
   vtValues.ReinitNode(Result, false);
   AData := vtValues.GetNodeData(Result);
-  AData.name := AValue.name;
-  AData.valueType := AValue.valueType;
-  AData.value := AValue.value;
+  AData^ := AValue;
 end;
 
 function TRegistryBrowserForm.GetSelectedValueNodes: TArray<PVirtualNode>;
