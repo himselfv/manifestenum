@@ -244,10 +244,10 @@ begin
   list := TAssemblyList.Create;
   Tree.BeginUpdate;
   try
-    ShowAll := (not cbFilterByName.Checked) and (not cbFilterByFiles.Checked);
-    if cbFilterByName.Checked then
+    ShowAll := ((not cbFilterByName.Checked) and (not cbFilterByFiles.Checked)) or (filter = '');
+    if cbFilterByName.Checked and (filter <> '') then
       FDb.FilterAssemblyByName(filter, list);
-    if cbFilterByFiles.Checked then
+    if cbFilterByFiles.Checked and (filter <> '') then
       FDb.FilterAssemblyByFile(filter, list);
     for Node in Tree.ChildNodes(nil) do begin
       Data := Tree.GetNodeData(Node);
