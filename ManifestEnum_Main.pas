@@ -148,7 +148,8 @@ var
 implementation
 uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
-  IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log, CommonFilters;
+  IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log, CommonFilters,
+  ManifestEnum.RegistryActions;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -197,6 +198,8 @@ end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
+  RegistryActions.Db := FDb;
+
   LoadSettings;
 end;
 

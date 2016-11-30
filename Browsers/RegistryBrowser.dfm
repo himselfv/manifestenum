@@ -37,6 +37,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetImageIndexEx = TreeGetImageIndexEx
+    OnGetPopupMenu = TreeGetPopupMenu
     OnInitNode = TreeInitNode
     ExplicitWidth = 285
     ExplicitHeight = 442
@@ -82,15 +83,16 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
     Header.SortColumn = 0
     Images = ResourceModule.SmallImages
-    PopupMenu = RegistryActions.PopupMenu
     TabOrder = 2
     TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
     TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowTreeLines, toThemeAware, toUseBlendedImages]
+    TreeOptions.SelectionOptions = [toFullRowSelect, toMultiSelect, toRightClickSelect]
     OnCompareNodes = vtValuesCompareNodes
     OnFreeNode = vtValuesFreeNode
     OnGetText = vtValuesGetText
     OnGetImageIndexEx = vtValuesGetImageIndexEx
     OnGetNodeDataSize = vtValuesGetNodeDataSize
+    OnGetPopupMenu = vtValuesGetPopupMenu
     OnInitNode = vtValuesInitNode
     Columns = <
       item

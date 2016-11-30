@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, VirtualTrees,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ImgList, Menus, VirtualTrees,
   Generics.Collections, AssemblyDb, AssemblyDb.Registry, DelayLoadTree, CommonResources,
   ManifestEnum.RegistryActions;
 
@@ -18,14 +18,17 @@ type
     procedure Add(AKey: TRegistryKeyId; const ACaption: string = '');
   end;
 
-  TRegistryKeyNodeData = record
+  TRegistryNodeType = (
+    ntKey,
+    ntValue
+  );
+
+  TRegistryNodeData = record
     DelayLoad: TDelayLoadHeader;
-    keyId: TRegistryKeyId;
-    name: string;
-    valueType: dword;
-    value: string;
+    type_: TRegistryNodeType;
+    r: TRegistryValueData;
   end;
-  PRegistryKeyNodeData = ^TRegistryKeyNodeData;
+  PRegistryNodeData = ^TRegistryNodeData;
 
   TRegistryBrowserMode = (
     rmRegistry, //show all registry
@@ -42,11 +45,7 @@ type
     vpPanel     //show on a separate panel
   );
 
-  TRegistryValueNodeData = record
-    name: string;
-    valueType: dword;
-    value: string;
-  end;
+  TRegistryValueNodeData = TRegistryValueData;
   PRegistryValueNodeData = ^TRegistryValueNodeData;
 
   TRegistryBrowserForm = class(TDelayLoadTree)
@@ -56,6 +55,7 @@ type
     vtValues: TVirtualStringTree;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -66,6 +66,8 @@ type
       Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
       var ImageList: TCustomImageList);
     procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
+    procedure TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
+      const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
     procedure vtValuesGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
@@ -77,9 +79,10 @@ type
     procedure vtValuesGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
       var ImageList: TCustomImageList);
+    procedure vtValuesGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
+      Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
     procedure vtValuesCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
-    procedure FormShow(Sender: TObject);
   protected
     FMode: TRegistryBrowserMode;
     FRootKeys: TRootKeyList; //root keys to display in rmKeys mode
@@ -99,6 +102,10 @@ type
   protected
     function AddValueNode(AParent: PVirtualNode; AValue: TRegistryValueData): PVirtualNode;
     procedure ReloadValueNodes;
+    function GetSelectedValueNodes: TArray<PVirtualNode>;
+    function GetSelectedValueNodesData: TArray<PRegistryValueData>;
+    procedure vtValues_AddNodeToArray(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
+      var Abort: Boolean);
 
   protected
     procedure ReloadComponents;
@@ -126,6 +133,7 @@ begin
   inherited;
   FRootKeys := TRootKeyList.Create;
   FMode := rmRegistry;
+  FValuePresentation := vpPanel;
 end;
 
 procedure TRegistryBrowserForm.FormDestroy(Sender: TObject);
@@ -191,7 +199,7 @@ begin
 end;
 
 procedure TRegistryBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
-var AData: PRegistryKeyNodeData absolute ANodeData;
+var AData: PRegistryNodeData absolute ANodeData;
   i: integer;
 begin
   if ANode = nil then begin //root node
@@ -202,7 +210,7 @@ begin
         AddRootKey(nil, FRootKeys[i]);
     end;
   end else
-    AddChildren(ANode, AData.keyId);
+    AddChildren(ANode, AData.r.key);
 end;
 
 //Adds all registry key children as key nodes. Do not call twice for the same node (you won't
@@ -210,7 +218,7 @@ end;
 procedure TRegistryBrowserForm.AddChildren(AParent: PVirtualNode; AKeyId: TRegistryKeyId);
 var AList: TRegistryKeyList;
   ANode: PVirtualNode;
-  AData: PRegistryKeyNodeData;
+  AData: PRegistryNodeData;
   AKey: TRegistryKeyId;
   AValues: TRegistryValueList;
   i: integer;
@@ -221,8 +229,9 @@ begin
     for AKey in AList.Keys do begin
       ANode := Self.AddNode(AParent);
       AData := Tree.GetNodeData(ANode);
-      AData.keyId := AKey;
-      AData.name := AList[AKey];
+      AData.type_ := ntKey;
+      AData.r.key := AKey;
+      AData.r.name := AList[AKey];
     end;
   finally
     FreeAndNil(AList);
@@ -235,10 +244,8 @@ begin
       for i := 0 to AValues.Count-1 do begin
         ANode := Self.AddNode(AParent);
         AData := Tree.GetNodeData(ANode);
-        AData.keyId := 0; //mark as a value key
-        AData.name := AValues[i].name;
-        AData.valueType := AValues[i].valueType;
-        ADAta.value := AValues[i].value;
+        AData.type_ := ntValue;
+        AData.r := AValues[i];
         AData.DelayLoad.Touched := true;
       end;
     finally
@@ -249,25 +256,26 @@ end;
 
 //Adds a node anywhere from a root key structure
 function TRegistryBrowserForm.AddRootKey(AParent: PVirtualNode; const AKey: TRootKey): PVirtualNode;
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
 begin
   Result := Self.AddNode(AParent);
   AData := Tree.GetNodeData(Result);
-  AData.keyId := AKey.Key;
-  AData.name := AKey.Caption;
-  if AData.name = '' then
-    AData.name := Db.Registry.GetKeyName(AKey.Key);
+  AData.type_ := ntKey;
+  AData.r.key := AKey.Key;
+  AData.r.name := AKey.Caption;
+  if AData.r.name = '' then
+    AData.r.name := Db.Registry.GetKeyName(AKey.Key);
 end;
 
 procedure TRegistryBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
   var NodeDataSize: Integer);
 begin
-  NodeDataSize := SizeOf(TRegistryKeyNodeData);
+  NodeDataSize := SizeOf(TRegistryNodeData);
 end;
 
 procedure TRegistryBrowserForm.TreeInitNode(Sender: TBaseVirtualTree; ParentNode,
   Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
 begin
   inherited;
   AData := Sender.GetNodeData(Node);
@@ -275,7 +283,7 @@ begin
 end;
 
 procedure TRegistryBrowserForm.TreeFreeNode(Sender: TBaseVirtualTree; Node: PVirtualNode);
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
 begin
   inherited;
   AData := Sender.GetNodeData(Node);
@@ -284,26 +292,26 @@ end;
 
 procedure TRegistryBrowserForm.TreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
 begin
   AData := Sender.GetNodeData(Node);
   if TextType <> ttNormal then exit;
 
   case Column of
     NoColumn, 0:
-      CellText := AData.name;
+      CellText := AData.r.name;
     1:
-      if AData.keyId = 0 then
-        CellText := GetRegistryValueTypeName(AData.valueType)
+      if AData.type_ = ntValue then
+        CellText := GetRegistryValueTypeName(AData.r.valueType)
       else CellText := '';
-    2: CellText := AData.value;
+    2: CellText := AData.r.value;
   end;
 end;
 
 procedure TRegistryBrowserForm.TreeGetImageIndexEx(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean; var ImageIndex: Integer;
   var ImageList: TCustomImageList);
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
 begin
   if not (Kind in [ikNormal, ikSelected]) then exit;
   AData := Sender.GetNodeData(Node);
@@ -311,7 +319,7 @@ begin
   case Column of
     NoColumn, 0: begin
       ImageList := ResourceModule.SmallImages;
-      if AData.keyId > 0 then
+      if AData.type_ = ntKey then
         ImageIndex := imgFolder
       else
         ImageIndex := imgRegistryValue;
@@ -319,18 +327,42 @@ begin
   end;
 end;
 
+procedure TRegistryBrowserForm.TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
+var Data: PRegistryNodeData;
+begin
+  inherited;
+  if Node = nil then begin
+    RegistryActions.SetSelectedKeys(nil);
+    RegistryActions.SetSelectedValues(nil);
+    PopupMenu := RegistryActions.KeyPopupMenu;
+    exit;
+  end;
+
+  Data := Sender.GetNodeData(Node);
+  if Data.type_ = ntKey then begin
+    if Data.r.key > 0 then
+      RegistryActions.SetSelectedKey(Data.r.key)
+    else
+      RegistryActions.SetSelectedKeys(nil);
+    PopupMenu := RegistryActions.KeyPopupMenu;
+  end else begin
+    RegistryActions.SetSelectedValue(@Data.r);
+    PopupMenu := RegistryActions.ValuePopupMenu;
+  end;
+end;
+
 procedure TRegistryBrowserForm.TreeCompareNodes(Sender: TBaseVirtualTree; Node1,
   Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
-var Data1, Data2: PRegistryKeyNodeData;
+var Data1, Data2: PRegistryNodeData;
 begin
   Data1 := Tree.GetNodeData(Node1);
   Data2 := Tree.GetNodeData(Node2);
   case Column of
     NoColumn, 0: begin
-      if (Data1.keyId = 0) xor (Data2.keyId = 0) then begin
-        Result := Data2.keyId - Data1.keyId; //the one with 0 goes later
-      end else
-        Result := CompareText(Data1.name, Data2.name);
+      Result := integer(Data1.type_) - integer(Data2.type_); //values go later
+      if Result = 0 then
+        Result := CompareText(Data1.r.name, Data2.r.name);
     end
   else
     inherited;
@@ -347,7 +379,7 @@ begin
 end;
 
 function TRegistryBrowserForm.GetFocusedKey: TRegistryKeyId;
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
 begin
   if Tree.FocusedNode = nil then begin
     Result := 0;
@@ -355,7 +387,7 @@ begin
   end;
 
   AData := Tree.GetNodeData(Tree.FocusedNode);
-  Result := AData.keyId;
+  Result := AData.r.key;
 end;
 
 
@@ -394,6 +426,29 @@ begin
   AData.name := AValue.name;
   AData.valueType := AValue.valueType;
   AData.value := AValue.value;
+end;
+
+function TRegistryBrowserForm.GetSelectedValueNodes: TArray<PVirtualNode>;
+begin
+  vtValues.IterateSubtree(nil, vtValues_AddNodeToArray, @Result, [vsSelected]);
+end;
+
+procedure TRegistryBrowserForm.vtValues_AddNodeToArray(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Data: Pointer; var Abort: Boolean);
+var AArray: ^TArray<PVirtualNode> absolute Data;
+begin
+  SetLength(AArray^, Length(AArray^)+1);
+  AArray^[Length(AArray^)-1] := Node;
+end;
+
+function TRegistryBrowserForm.GetSelectedValueNodesData: TArray<PRegistryValueData>;
+var SelectedNodes: TArray<PVirtualNode>;
+  i: integer;
+begin
+  SelectedNodes := GetSelectedValueNodes;
+  SetLength(Result, Length(SelectedNodes));
+  for i := 0 to Length(SelectedNodes)-1 do
+    Result[i] := PRegistryValueData(vtValues.GetNodeData(SelectedNodes[i]));
 end;
 
 procedure TRegistryBrowserForm.vtValuesGetNodeDataSize(Sender: TBaseVirtualTree;
@@ -449,6 +504,14 @@ begin
   end;
 end;
 
+procedure TRegistryBrowserForm.vtValuesGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
+begin
+  inherited;
+  RegistryActions.SetSelectedValues(GetSelectedValueNodesData());
+  PopupMenu := RegistryActions.ValuePopupMenu;
+end;
+
 procedure TRegistryBrowserForm.vtValuesCompareNodes(Sender: TBaseVirtualTree; Node1,
   Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
 var Data1, Data2: PRegistryValueNodeData;
@@ -468,7 +531,7 @@ end;
 // Components
 
 procedure TRegistryBrowserForm.ReloadComponents;
-var AData: PRegistryKeyNodeData;
+var AData: PRegistryNodeData;
   AList: TRegistryKeyReferees;
   AAssembly: TAssemblyId;
   AAssemblyData: TAssemblyData;
@@ -480,7 +543,7 @@ begin
 
   AList := TRegistryKeyReferees.Create;
   try
-    FDb.Registry.GetKeyReferees(AData.keyId, AList);
+    FDb.Registry.GetKeyReferees(AData.r.key, AList);
     for AAssembly in AList.Keys do begin
       AAssemblyData := FDb.Assemblies.GetAssembly(AAssembly);
       lbComponents.Items.Add(AAssemblyData.identity.ToString());

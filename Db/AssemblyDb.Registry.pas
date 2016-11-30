@@ -31,6 +31,7 @@ type
     operationHint: string;
     owner: boolean;
   end;
+  PRegistryValueData = ^TRegistryValueData;
 
   TRegistryValueList = TList<TRegistryValueData>;
 
@@ -322,6 +323,7 @@ begin
   if sqlite3_step(stmt) <> SQLITE_ROW then
     Db.RaiseLastSQLiteError();
   Result := sqlite3_column_text16(stmt, 1);
+  sqlite3_reset(stmt);
 end;
 
 function TAssemblyRegistry.GetKeyPath(AKey: TRegistryKeyId): string;
