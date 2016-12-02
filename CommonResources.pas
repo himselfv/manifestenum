@@ -22,6 +22,7 @@ const
   imgAssembly = 4;
   imgCategory = 5;
   imgService = 6;
+  imgBundle = 7;
 
 implementation
 

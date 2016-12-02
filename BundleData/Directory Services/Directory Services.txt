@@ -1,0 +1,3 @@
+Microsoft-Windows-Active-Directory*
+Microsoft-Windows-Directory-Services*
+Microsoft-Windows-DirectoryServices*

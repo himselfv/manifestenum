@@ -1,0 +1,3 @@
+Microsoft-Hyper-V-*
+Microsoft-HyperV-*
+Microsoft-OneCore-HyperV*

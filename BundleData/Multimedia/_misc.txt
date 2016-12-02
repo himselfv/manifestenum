@@ -1,0 +1,2 @@
+Microsoft-Windows-3DAudio*
+Microsoft-Windows-Audio*

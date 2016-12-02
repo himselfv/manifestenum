@@ -1,0 +1,3 @@
+Microsoft-Windows-Update-Orchestrator*
+Microsoft-Windows-UsoClient*
+Microsoft-OneCore-Update-OrchestratorScheduler*

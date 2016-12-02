@@ -1,0 +1,12 @@
+# Application Experience (Compability and Telemetry)
+# В целом хорошая вещь, механизмы обеспечения совместимости и заделки багов в ПО
+Microsoft-Windows-Application-Experience-Infrastructure*	# OS shim engine, хорошая вещь, не трогать
+Microsoft-Windows-Application-Experience-Program-Data*	# pcasvc, Program Compability Assistant, прямо и не знаю. Бесит, но полезен.
+Microsoft-Windows-Application-Experience-Program-Data*		# Telemetry, Tasks\AE\ProgramDataUpdater
+Microsoft-Windows-Application-Experience-Tools*		# вкладка "Совместимость"
+Microsoft-Windows-Application-Experience-Mitigations*	# наборы патчей
+
+Microsoft-Windows-Application-Experience*
+
+# Unclear
+Microsoft-Windows-AppCompat*

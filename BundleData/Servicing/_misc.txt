@@ -1,0 +1,6 @@
+Microsoft-OneCore-Update-Ux*
+Microsoft-OneCore-UpdateAgent*
+Microsoft-OneCore-UpdatePolicy*
+
+Microsoft-Windows-Deployment
+Microsoft-Windows-Deployment-Services-Unattend*

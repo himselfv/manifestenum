@@ -1,0 +1,8 @@
+
+# StartComponentCleanup task
+Microsoft-Windows-TIScavengeTask*
+
+# May be useful to other components
+Microsoft-Windows-DeltaCompressionEngine*
+
+Microsoft-Windows-DeltaPackageExpander*

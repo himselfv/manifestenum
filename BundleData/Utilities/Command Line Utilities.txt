@@ -1,0 +1,12 @@
+Microsoft-Windows-Attrib*
+Microsoft-Windows-Choice*
+
+Microsoft-Windows-CommandLineHelp*
+
+Microsoft-Windows-clip*
+
+Microsoft-Windows-cipher*
+Microsoft-Windows-Compact
+Microsoft-Windows-Compact-*
+
+Microsoft-Windows-diskpart*

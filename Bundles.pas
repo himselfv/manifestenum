@@ -52,9 +52,11 @@ type
     function LoadBundle(const AFilename: string): TBundle;
     function MatchAssembly(const Id: TAssemblyIdentity): TBundle;
     procedure RegisterAssembly(AId: TAssemblyId; const AIdentity: TAssemblyIdentity);
-    function GetAssemblyBundle(AId: TAssemblyId): TBundle;
+    function GetAssemblyBundle(AId: TAssemblyId): TBundle; overload;
+    function GetAssemblyBundle(AId: TAssemblyId; const AIdentity: TAssemblyIdentity): TBundle; overload;
     property Folders: TObjectList<TBundleFolder> read FFolders;
     property Bundles: TObjectList<TBundle> read FBundles;
+    property Root: TBundleFolder read FRoot;
   end;
 
 var
@@ -98,7 +100,7 @@ begin
       FMasks.Delete(i);
       continue;
     end;
-    FMasks[i] := ln; //without comments
+    FMasks[i] := AnsiLowercase(ln); //without comments
   end;
 
   FName := ChangeFileExt(ExtractFilename(AFilename), '');
@@ -109,7 +111,7 @@ var i: integer;
 begin
   for i := 0 to FMasks.Count-1 do
    //For now we only match by name. Versions and cultures are ignored. Most of the time that's what we want anyway.
-    if WildcardMatchCase(PChar(Id.name), PChar(FMasks[i])) then begin
+    if WildcardMatchCase(PChar(AnsiLowercase(Id.name)), PChar(FMasks[i])) then begin
       Result := true;
       exit;
     end;
@@ -223,6 +225,14 @@ end;
 function TBundleManager.GetAssemblyBundle(AId: TAssemblyId): TBundle;
 begin
   Result := FAllAssemblies[AId];
+end;
+
+function TBundleManager.GetAssemblyBundle(AId: TAssemblyId; const AIdentity: TAssemblyIdentity): TBundle;
+begin
+  if not FAllAssemblies.TryGetValue(AId, Result) then begin
+    RegisterAssembly(AId, AIdentity);
+    Result := FAllAssemblies[AId];
+  end;
 end;
 
 end.

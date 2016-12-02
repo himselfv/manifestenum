@@ -1,0 +1,5 @@
+Microsoft-Windows-Biometrics*
+
+Microsoft-Windows-WBioSensorAdapter*
+Microsoft-Windows-WBioStorageAdapter*
+Microsoft-Windows-WBioSrvc*

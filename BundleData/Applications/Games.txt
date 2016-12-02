@@ -1,0 +1,3 @@
+Microsoft-Windows-Shell-InboxGames-*
+Microsoft-Windows-Shell-MultiplayerInboxGames-*
+Microsoft-Windows-Shell-PremiumInboxGames-*

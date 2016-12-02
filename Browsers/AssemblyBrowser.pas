@@ -8,20 +8,32 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
   Generics.Collections, DelayLoadTree, VirtualTrees, AssemblyDb.Core, AssemblyDb.Assemblies,
-  CommonResources;
+  CommonResources, Bundles;
 
 type
+  TNodeType = (
+    ntBundleFolder,
+    ntBundle,
+    ntAssembly
+  );
   TNodeData = record
     DelayLoad: TDelayLoadHeader;
+    Type_: TNodeType;
     Name: string;
     Assembly: TAssemblyId;
     IsDeployment: boolean;
     State: TAssemblyState;
+    Object_: TObject
   end;
   PNodeData = ^TNodeData;
 
   TAssemblyEvent = procedure(Sender: TObject; AAssembly: TAssemblyId) of object;
 
+  TGroupingType = (
+    gtFlatList,
+    gtBundles
+  );
+  
   TAssemblyBrowserForm = class(TDelayLoadTree)
     pnlFilter: TPanel;
     sbFilterSettings: TSpeedButton;
@@ -47,16 +59,24 @@ type
     procedure TreePaintText(Sender: TBaseVirtualTree; const TargetCanvas: TCanvas;
       Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType);
   protected
+    FGroupingType: TGroupingType;
     FOnSelectionChanged: TNotifyEvent;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
-    procedure LoadRootAssemblies(AParent: PVirtualNode);
+    procedure LoadAllAssemblies();
     function AddAssemblyNode(AParent: PVirtualNode; const AEntry: TAssemblyData): PVirtualNode;
+    function AddBundleFolderNode(AParent: PVirtualNode; const ABundleFolder: TBundleFolder): PVirtualNode;
+    function AddBundleNode(AParent: PVirtualNode; const ABundle: TBundle): PVirtualNode;
+    procedure AddBundleFolderContents(ANode: PVirtualNode; const ABundleFolder: TBundleFolder);
+    function FindBundleNode(ABundle: TBundle): PVirtualNode;
+    procedure FindBundleNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer; var Abort: Boolean);
     procedure ApplyFilter;
     function GetFocusedAssembly: TAssemblyId;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
+    procedure SetGroupingType(const Value: TGroupingType);
     procedure FilterChanged(Sender: TObject); override;
   public
     procedure Reload; override;
+    property GroupingType: TGroupingType read FGroupingType write SetGroupingType;
     property FocusedAssembly: TAssemblyId read GetFocusedAssembly;
     property SelectedAssemblies: TArray<TAssemblyId> read GetSelectedAssemblies;
     property OnSelectionChanged: TNotifyEvent read FOnSelectionChanged write FOnSelectionChanged;
@@ -84,28 +104,52 @@ end;
 procedure TAssemblyBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 begin
   if ANode = nil then begin
-    LoadRootAssemblies(nil);
+    LoadAllAssemblies();
     exit;
   end;
-  //TODO: Load dependencies
 end;
 
-procedure TAssemblyBrowserForm.LoadRootAssemblies(AParent: PVirtualNode);
+procedure TAssemblyBrowserForm.LoadAllAssemblies();
 var list: TAssemblyList;
   entry: TAssemblyData;
+  bundle: TBundle;
+  parentNode: PVirtualNode;
 begin
  //DelayLoad will be called for each of the root assemblies immediately, which is slow.
  //So we'll try to create root nodes already delay-initialized.
 
   list := TAssemblyList.Create;
   try
+    //If we're using bundles, add bundle nodes
+    if FGroupingType = gtBundles then
+      AddBundleFolderContents(nil, BundleMgr.Root);
+  
     FDb.Assemblies.GetAllAssemblies(list);
-    for entry in list.Values do
-      AddAssemblyNode(AParent, entry);
-    //TODO: Delay-init added nodes
+    for entry in list.Values do begin
+      parentNode := nil; 
+      if GroupingType = gtBundles then begin
+        bundle := BundleMgr.GetAssemblyBundle(entry.id, entry.identity);
+        if bundle <> nil then
+          parentNode := Self.FindBundleNode(bundle);
+      end;
+      AddAssemblyNode(parentNode, entry);
+    end;
   finally
     FreeAndNil(list);
   end;
+end;
+
+procedure TAssemblyBrowserForm.AddBundleFolderContents(ANode: PVirtualNode; const ABundleFolder: TBundleFolder);
+var i: integer;
+  child: PVirtualNode;
+begin
+  for i := 0 to ABundleFolder.Subfolders.Count-1 do begin
+    child := AddBundleFolderNode(ANode, ABundleFolder.Subfolders[i]);
+    AddBundleFolderContents(child, ABundleFolder.Subfolders[i]);
+  end;
+
+  for i := 0 to ABundleFolder.Bundles.Count-1 do
+    AddBundleNode(ANode, ABundleFolder.Bundles[i]);
 end;
 
 function TAssemblyBrowserForm.AddAssemblyNode(AParent: PVirtualNode; const AEntry: TAssemblyData): PVirtualNode;
@@ -114,10 +158,35 @@ begin
   Result := Tree.AddChild(AParent);
   Tree.ReinitNode(Result, false);
   Data := Tree.GetNodeData(Result);
+  Data.Type_ := ntAssembly;
   Data.Name := AEntry.identity.ToString;
   Data.Assembly := AEntry.id;
   Data.IsDeployment := AEntry.isDeployment;
   Data.State := AEntry.state;
+  Data.DelayLoad.Touched := false;
+end;
+
+function TAssemblyBrowserForm.AddBundleFolderNode(AParent: PVirtualNode; const ABundleFolder: TBundleFolder): PVirtualNode;
+var Data: PNodeData;
+begin
+  Result := Tree.AddChild(AParent);
+  Tree.ReinitNode(Result, false);
+  Data := Tree.GetNodeData(Result);
+  Data.Type_ := ntBundleFolder;
+  Data.Name := ABundleFolder.Name;
+  Data.Object_ := ABundleFolder;
+  Data.DelayLoad.Touched := false;
+end;
+
+function TAssemblyBrowserForm.AddBundleNode(AParent: PVirtualNode; const ABundle: TBundle): PVirtualNode;
+var Data: PNodeData;
+begin
+  Result := Tree.AddChild(AParent);
+  Tree.ReinitNode(Result, false);
+  Data := Tree.GetNodeData(Result);
+  Data.Type_ := ntBundle;
+  Data.Name := ABundle.Name;
+  Data.Object_ := ABundle;
   Data.DelayLoad.Touched := false;
 end;
 
@@ -128,7 +197,10 @@ begin
     Result := 0
   else begin
     Data := Tree.GetNodeData(Tree.FocusedNode);
-    Result := Data.Assembly;
+    if Data.Type_ <> ntAssembly then
+      Result := 0
+    else
+      Result := Data.Assembly;
   end;
 end;
 
@@ -142,6 +214,32 @@ begin
     SetLength(Result, Length(Result)+1);
     Result[Length(Result)-1] := Data.Assembly;
   end;
+end;
+
+procedure TAssemblyBrowserForm.SetGroupingType(const Value: TGroupingType);
+begin
+  if FGroupingType <> Value then begin
+    FGroupingType := Value;
+    if FGroupingType <> gtFlatList then
+      Tree.TreeOptions.PaintOptions := Tree.TreeOptions.PaintOptions + [toShowRoot]
+    else
+      Tree.TreeOptions.PaintOptions := Tree.TreeOptions.PaintOptions - [toShowRoot];
+    
+    if Self.Visible then
+      Reload;
+  end;
+end;
+
+function TAssemblyBrowserForm.FindBundleNode(ABundle: TBundle): PVirtualNode;
+begin
+  Result := Tree.IterateSubtree(nil, FindBundleNode_Callback, ABundle);
+end;
+
+procedure TAssemblyBrowserForm.FindBundleNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Data: Pointer; var Abort: Boolean);
+var ABundle: TBundle absolute Data;
+begin
+  Abort := PNodeData(Sender.GetNodeData(Node)).Object_ = ABundle;
 end;
 
 
@@ -189,7 +287,11 @@ begin
   case Column of
     NoColumn, 0: begin
       ImageList := ResourceModule.SmallImages;
-      ImageIndex := imgAssembly;
+      case Data.Type_ of
+        ntAssembly: ImageIndex := imgAssembly;
+        ntBundleFolder: ImageIndex := imgFolder;
+        ntBundle: ImageIndex := imgBundle;
+      end;
     end;
   end;
 end;
@@ -201,7 +303,11 @@ begin
   Data1 := Sender.GetNodeData(Node1);
   Data2 := Sender.GetNodeData(Node2);
   case Column of
-    NoColumn, 0: Result := CompareText(Data1.Name, Data2.Name);
+    NoColumn, 0: begin
+      Result := integer(Data1.Type_) - integer(Data2.Type_);
+      if Result = 0 then
+        Result := CompareText(Data1.Name, Data2.Name);
+    end;
   end;
 end;
 
@@ -211,13 +317,15 @@ var Data: PNodeData;
 begin
   inherited;
   Data := Tree.GetNodeData(Node);
-  if Data.State <> asInstalled then
-    TargetCanvas.Font.Color := clSilver
-  else
-  if Data.IsDeployment then
-    TargetCanvas.Font.Color := clBlue
-  else
-    TargetCanvas.Font.Color := clBlack;
+  if Data.Type_ = ntAssembly then begin
+    if Data.State <> asInstalled then
+      TargetCanvas.Font.Color := clSilver
+    else
+    if Data.IsDeployment then
+      TargetCanvas.Font.Color := clBlue
+    else
+      TargetCanvas.Font.Color := clBlack;
+  end;
 end;
 
 procedure TAssemblyBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -251,6 +359,7 @@ begin
       FDb.FilterAssemblyByFile(filter, list);
     for Node in Tree.ChildNodes(nil) do begin
       Data := Tree.GetNodeData(Node);
+      if Data.Type_ <> ntAssembly then continue; //other nodes are always visible atm //TODO: Hide filtered
       Visible := ShowAll or list.ContainsKey(Data.Assembly);
       if Visible and CommonFilters.ShowInstalledOnly then
         Visible := Data.State = asInstalled;

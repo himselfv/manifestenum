@@ -170,6 +170,7 @@ begin
   FAssemblyBrowser := TAssemblyBrowserForm.Create(Application);
   FAssemblyBrowser.OnSelectionChanged := Self.AssemblyBrowserSelectionChanged;
   FAssemblyBrowser.Tree.PopupMenu := Self.PopupMenu;
+  FAssemblyBrowser.GroupingType := gtBundles;
   AddPage(FAssemblyBrowser);
 
   FCategoryBrowser := TCategoryBrowserForm.Create(Application);

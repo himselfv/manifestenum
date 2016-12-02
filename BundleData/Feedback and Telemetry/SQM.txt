@@ -1,0 +1,12 @@
+# SQM
+Microsoft-Windows-Client-SQM-Consolidator-Feature*
+# And various sqmapis throughout the system
+Microsoft-Windows-ImageBasedSetup-IE-SQMAPI*
+Microsoft-Windows-Media-Format-SQM*
+Microsoft-Windows-SQMApi*
+Microsoft-Windows-WPD-PortableDeviceSQM*
+# Ceip (SQM branch)
+Microsoft-Windows-KernelCeip*
+Microsoft-Windows-UsbCeip*
+
+Microsoft-Windows-Client-SQM-Consolidator*

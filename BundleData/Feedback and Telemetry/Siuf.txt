@@ -1,0 +1,4 @@
+
+# Siuf (system initiated user feedback)
+Microsoft-Windows-Feedback-DeploymentMgrClient*
+Microsoft-Windows-Feedback-CourtesyEngine*

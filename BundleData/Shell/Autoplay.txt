@@ -1,0 +1,3 @@
+Microsoft-Windows-autoplay*
+
+# Requires ShellHWDetection (Microsoft-Windows-shsvcs)

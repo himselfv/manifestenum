@@ -1,0 +1,2 @@
+Microsoft-Windows-Deployment-Image-Servicing-Management*
+Microsoft-Windows-PackageManager*

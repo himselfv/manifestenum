@@ -1,0 +1,6 @@
+
+Microsoft-Windows-DiagnosticInfrastructure*
+Microsoft-Windows-DiagnosticHub*
+Microsoft-Windows-DiagnosticsHub*
+
+Microsoft-Windows-WDI*
