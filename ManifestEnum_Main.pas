@@ -79,6 +79,9 @@ type
     miOpenComponentsKey: TMenuItem;
     miOpenDeploymentsKey: TMenuItem;
     miOpenSxSFolder: TMenuItem;
+    Queryassemblyscavener1: TMenuItem;
+    miAssemblyDebug: TMenuItem;
+    miAssemblyProbeInstallation: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -113,6 +116,8 @@ type
     procedure miOpenComponentsKeyClick(Sender: TObject);
     procedure miOpenDeploymentsKeyClick(Sender: TObject);
     procedure miOpenSxSFolderClick(Sender: TObject);
+    procedure Queryassemblyscavener1Click(Sender: TObject);
+    procedure miAssemblyProbeInstallationClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -639,6 +644,7 @@ var Assembly: TAssemblyData;
   ResultText: string;
   uresult: ULong;
   IsDeployment: boolean;
+  hr: HRESULT;
 begin
   AssemblyNames := '';
   for Assembly in SelectedAssemblies do
@@ -674,8 +680,10 @@ begin
     end;
     if IsDeployment then
       SxsDeploymentAddUninstallSource(Assembly.identity, Assembly.manifestName);
-    OleCheck(ACache.UninstallAssembly(0, PChar(Assembly.identity.ToStrongName), nil, @uresult));
+    hr := ACache.UninstallAssembly(0, PChar(Assembly.identity.ToStrongName), nil, @uresult);
+    OleCheck(hr);
     ResultText := ResultText+'  '+Assembly.identity.name+': '+IntToStr(uresult)+#13;
+    LogForm.Log('UninstallAssembly('+Assembly.identity.name+'): 0x'+IntToHex(hr, 8)+' (state '+IntToStr(uresult)+')');
   end;
 
   MessageBox(Self.Handle, PChar('Uninstall results:'#13 + ResultText
@@ -798,6 +806,24 @@ begin
     end;
   finally
     FreeAndNil(List);
+  end;
+end;
+
+procedure TMainForm.Queryassemblyscavener1Click(Sender: TObject);
+var ACache: IAssemblyCache;
+  AScavenger: IInterface;
+begin
+   OleCheck(CreateAssemblyCache(ACache, 0));
+   OleCheck(ACache.Reserved(AScavenger)); //it's E_NOTIMPL at the time of writing
+end;
+
+procedure TMainForm.miAssemblyProbeInstallationClick(Sender: TObject);
+var Assembly: TAssemblyData;
+  Buf: array[0..4095] of byte;
+begin
+  FillChar(Buf[0], Length(Buf), $CF);
+  for Assembly in SelectedAssemblies do begin
+    OleCheck(SxsProbeAssemblyInstallation(0, PChar(Assembly.identity.ToStrongName), @Buf[0]));
   end;
 end;
 

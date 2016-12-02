@@ -133,6 +133,10 @@ object MainForm: TMainForm
         Hint = 'Verify manifest name hashes by recalculating them'
         OnClick = miVerifyHashesClick
       end
+      object Queryassemblyscavener1: TMenuItem
+        Caption = 'Query assembly scavener'
+        OnClick = Queryassemblyscavener1Click
+      end
     end
   end
   object OpenManifestDialog: TOpenDialog
@@ -208,9 +212,16 @@ object MainForm: TMainForm
         OnClick = miJumpToDeploymentKeyClick
       end
     end
-    object miGetAssemblySize: TMenuItem
-      Caption = 'Get assembly size'
-      OnClick = miGetAssemblySizeClick
+    object miAssemblyDebug: TMenuItem
+      Caption = 'Debug'
+      object miGetAssemblySize: TMenuItem
+        Caption = 'Get assembly size'
+        OnClick = miGetAssemblySizeClick
+      end
+      object miAssemblyProbeInstallation: TMenuItem
+        Caption = 'Probe installation'
+        OnClick = miAssemblyProbeInstallationClick
+      end
     end
     object miConvertIntoDeployment: TMenuItem
       Caption = 'Convert into deployment'

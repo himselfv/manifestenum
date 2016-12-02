@@ -16,6 +16,14 @@ const
   FUSION_REFCOUNT_MSI_GUID: TGUID = '{25df0fc1-7f97-4070-add7-4b13bbfd7cb8}';
   FUSION_REFCOUNT_OSINSTALL_GUID: TGUID = '{d16d444c-56d8-11d5-882d-0080c847b195}';
 
+  //These are taken from internals, they mostly repeat FUSION_REFCOUNT_*, but some are extra
+  SXS_INSTALL_REFERENCE_SCHEME_CSUTIL: TGUID = '{3B6DEF2E-5BB3-487f-B6C3-E888FF42A337}';
+  SXS_INSTALL_REFERENCE_SCHEME_UNINSTALLKEY: TGUID = '{8cedc215-ac4b-488b-93c0-a50a49cb2fb8}';
+  SXS_INSTALL_REFERENCE_SCHEME_KEYFILE: TGUID = '{b02f9d65-fb77-4f7a-afa5-b391309f11c9}';
+  SXS_INSTALL_REFERENCE_SCHEME_OPAQUESTRING: TGUID = '{2ec93463-b0c3-45e1-8364-327e96aea856}';
+  SXS_INSTALL_REFERENCE_SCHEME_OSINSTALL: TGUID = '{d16d444c-56d8-11d5-882d-0080c847b195}';
+  SXS_INSTALL_REFERENCE_SCHEME_SXS_INSTALL_ASSEMBLY: TGUID = '{27dec61e-b43c-4ac8-88db-e209a8242d90}'; //MS: Guid for the -installed by sxsinstallassemblyw, who knows?-
+
   IASSEMBLYCACHE_INSTALL_FLAG_REFRESH = $00000001;
   IASSEMBLYCACHE_INSTALL_FLAG_FORCE_REFRESH = $00000002;
 
@@ -76,6 +84,8 @@ type
         out item: IAssemblyCacheItem;
         name: LPCWSTR): HRESULT; stdcall;
 
+    //In .NET Fusion this was CreateAssemblyScavenger(), but it's E_NOTIMPL by SxS versions up to Win10
+    //The scavenger interface itself was eventually documented in coreclr
     function Reserved(
         out reserved: IUnknown): HRESULT; stdcall;
 
@@ -172,6 +182,17 @@ type
 function CreateAssemblyCache(out ppAsmCache: IAssemblyCache; dwReserved: DWORD): HRESULT; stdcall; external SXSDLL;
 function CreateAssemblyNameObject(out ppAssemblyNameObj: IAssemblyName; szAssemblyName: LPCWSTR;
     dwFlags: DWORD; pvReserved: LPVOID): HRESULT; stdcall; external SXSDLL;
+
+//These are exported from SxS.dll but not documented
+function SxsInstallW: HRESULT; stdcall; external SXSDLL;
+function SxsUninstallW: HRESULT; stdcall; external SXSDLL;
+
+const
+  SXSPROBE_FLAG_NAMEOBJECT = 1; //AssemblyName contains IAssemblyName object, otherwise a string
+
+// AssemblyName, Unknown1 are required
+function SxsProbeAssemblyInstallation(Flags: cardinal; AssemblyName: pointer; UnknownResult1: pointer): HRESULT; stdcall; external SXSDLL;
+
 
 
 implementation
