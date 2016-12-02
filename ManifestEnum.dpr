@@ -37,7 +37,8 @@ uses
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
   SxsUtils in 'SxsUtils.pas',
-  AssemblyDb.Environ in 'Db\AssemblyDb.Environ.pas';
+  AssemblyDb.Environ in 'Db\AssemblyDb.Environ.pas',
+  Bundles in 'Bundles.pas';
 
 {$R *.res}
 
