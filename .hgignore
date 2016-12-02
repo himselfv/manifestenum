@@ -61,3 +61,9 @@ dunit.ini
 
 Samples/*
 Samples/*/*
+
+# All output, unless explicitly added
+Win32/Debug
+Win32/Release
+Win64/Debug
+Win64/Release
