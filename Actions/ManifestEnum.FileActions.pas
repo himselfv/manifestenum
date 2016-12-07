@@ -52,7 +52,7 @@ var
   FileActions: TFileActions;
 
 implementation
-uses Clipbrd, OsUtils, AssemblyDbBuilder, AssemblyDb.Assemblies, AssemblyDb.Environ;
+uses Clipbrd, OsUtils, SxsUtils, AssemblyDb.Assemblies, AssemblyDb.Environ;
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 

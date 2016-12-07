@@ -6,6 +6,9 @@ uses SysUtils, AssemblyDb.Assemblies;
 type
   ESxsException = class(Exception);
 
+function SxSDir: string;
+function SxSManifestDir: string;
+
 {
 Keyform management
 
@@ -57,6 +60,17 @@ procedure SxsConvertIntoDeployment(const id: TAssemblyIdentity; const AComponent
 
 implementation
 uses Windows, AclHelpers, OsUtils;
+
+function SxSDir: string;
+begin
+  Result := GetWindowsDir()+'\WinSxS';
+end;
+
+function SxSManifestDir: string;
+begin
+  Result := GetWindowsDir()+'\WinSxS\Manifests';
+end;
+
 
 {
 Sanitizes the text in exactly the way SxS does it (see the link in the interface comments).

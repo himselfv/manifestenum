@@ -13,9 +13,6 @@ type
   TManifestParser = TSaxManifestParser;
 {$ENDIF}
 
-function SxSDir: string;
-function SxSManifestDir: string;
-
 procedure InitAssemblyDb(ADb: TAssemblyDb; const AFilename: string; AAutoRebuild: boolean = true);
 procedure RefreshAssemblyDatabase(ADb: TAssemblyDb);
 procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
@@ -23,16 +20,6 @@ procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
 implementation
 uses Windows, SysUtils, Classes, FilenameUtils, ManifestEnum_Progress, AssemblyDb.Assemblies,
  Generics.Collections, WinSxS, ComObj, SxSUtils;
-
-function SxSDir: string;
-begin
-  Result := GetWindowsDir()+'\WinSxS';
-end;
-
-function SxSManifestDir: string;
-begin
-  Result := GetWindowsDir()+'\WinSxS\Manifests';
-end;
 
 procedure InitAssemblyDb(ADb: TAssemblyDb; const AFilename: string; AAutoRebuild: boolean);
 begin
