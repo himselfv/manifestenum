@@ -109,6 +109,10 @@
         <DCCReference Include="ManifestEnum.Log.pas">
             <Form>LogForm</Form>
         </DCCReference>
+        <DCCReference Include="CommonResources.pas">
+            <Form>ResourceModule</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <DCCReference Include="CommonFilters.pas"/>
         <DCCReference Include="Db\AssemblyDb.pas"/>
         <DCCReference Include="Db\AssemblyDb.Core.pas"/>
@@ -119,9 +123,11 @@
         <DCCReference Include="Db\AssemblyDb.Registry.pas"/>
         <DCCReference Include="Db\AssemblyDb.Services.pas"/>
         <DCCReference Include="Db\AssemblyDb.UnusualProps.pas"/>
-        <DCCReference Include="Db\SxsExpand.pas"/>
-        <DCCReference Include="Db\MSDeltaLib.pas"/>
-        <DCCReference Include="Db\CompressApi.pas"/>
+        <DCCReference Include="Sxs\SxsExpand.pas"/>
+        <DCCReference Include="Sxs\MSDeltaLib.pas"/>
+        <DCCReference Include="Sxs\CompressApi.pas"/>
+        <DCCReference Include="Sxs\WinSxS.pas"/>
+        <DCCReference Include="Sxs\SxsUtils.pas"/>
         <DCCReference Include="Db\ManifestParser.pas"/>
         <DCCReference Include="Db\ManifestSaxParser.pas"/>
         <DCCReference Include="Db\AssemblyDbBuilder.pas"/>
@@ -133,20 +139,20 @@
             <Form>FileActions</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Browsers\AssemblyBrowser.pas">
-            <Form>AssemblyBrowserForm</Form>
+        <DCCReference Include="Views\DelayLoadTree.pas">
+            <Form>DelayLoadTree</Form>
         </DCCReference>
         <DCCReference Include="AssemblyDetails.pas">
             <Form>AssemblyDetailsForm</Form>
         </DCCReference>
-        <DCCReference Include="Views\AssemblyFilesView.pas">
-            <Form>AssemblyFilesForm</Form>
-        </DCCReference>
-        <DCCReference Include="Views\DelayLoadTree.pas">
-            <Form>DelayLoadTree</Form>
+        <DCCReference Include="Browsers\AssemblyBrowser.pas">
+            <Form>AssemblyBrowserForm</Form>
         </DCCReference>
         <DCCReference Include="Views\AssemblyTree.pas">
             <Form>AssemblyTreeForm</Form>
+        </DCCReference>
+        <DCCReference Include="Views\AssemblyFilesView.pas">
+            <Form>AssemblyFilesForm</Form>
         </DCCReference>
         <DCCReference Include="Views\AssemblyResourcesView.pas">
             <Form>AssemblyResourcesForm</Form>
@@ -160,10 +166,6 @@
         <DCCReference Include="Browsers\TaskBrowser.pas">
             <Form>TaskBrowserForm</Form>
         </DCCReference>
-        <DCCReference Include="CommonResources.pas">
-            <Form>ResourceModule</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="Browsers\FileBrowser.pas">
             <Form>FileBrowserForm</Form>
         </DCCReference>
@@ -176,9 +178,10 @@
         <DCCReference Include="Browsers\ShellExtBrowser.pas">
             <Form>ShellExtensionBrowserForm</Form>
         </DCCReference>
-        <DCCReference Include="WinSxS.pas"/>
-        <DCCReference Include="SxsUtils.pas"/>
         <DCCReference Include="Bundles.pas"/>
+        <UserTool Include="SxS\w10-base.manifest">
+            <ToolName>CopyToOutput</ToolName>
+        </UserTool>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,4 +1,7 @@
 unit WinSxS;
+{
+Conversion of WinSxS.h and some additional undocumented functions from SxS.dll.
+}
 
 interface
 uses Windows, ActiveX;
@@ -192,7 +195,6 @@ const
 
 // AssemblyName, Unknown1 are required
 function SxsProbeAssemblyInstallation(Flags: cardinal; AssemblyName: pointer; UnknownResult1: pointer): HRESULT; stdcall; external SXSDLL;
-
 
 
 implementation

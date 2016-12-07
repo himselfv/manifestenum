@@ -1,4 +1,9 @@
 unit SxsExpand;
+{
+Implementation of SxS packaging algorithms.
+Original implementation by:
+  https://forums.mydigitallife.info/threads/48613-Aunty-Mel-s-Cheap-And-Nasty-SxS-File-Expander-(Updated-2013-09-29)
+}
 
 interface
 uses Classes;

@@ -1,4 +1,7 @@
 unit SxsUtils;
+{
+Implementation of SxS routines which we can not import from OS libraries.
+}
 
 interface
 uses SysUtils, AssemblyDb.Assemblies;

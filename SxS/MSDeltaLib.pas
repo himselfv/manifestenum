@@ -1,4 +1,7 @@
 unit MSDeltaLib;
+{
+Header file for MSDelta.dll
+}
 
 interface
 uses Windows;
