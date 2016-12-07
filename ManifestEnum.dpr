@@ -8,7 +8,9 @@ uses
   CommonFilters in 'CommonFilters.pas',
   AssemblyDb in 'Db\AssemblyDb.pas',
   AssemblyDb.Core in 'Db\AssemblyDb.Core.pas',
+  AssemblyDb.Environ in 'Db\AssemblyDb.Environ.pas',
   AssemblyDb.Assemblies in 'Db\AssemblyDb.Assemblies.pas',
+  AssemblyDb.Bundles in 'Db\AssemblyDb.Bundles.pas',
   AssemblyDb.Files in 'Db\AssemblyDb.Files.pas',
   AssemblyDb.Registry in 'Db\AssemblyDb.Registry.pas',
   AssemblyDb.Services in 'Db\AssemblyDb.Services.pas',
@@ -37,7 +39,6 @@ uses
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
   WinSxS in 'WinSxS.pas',
   SxsUtils in 'SxsUtils.pas',
-  AssemblyDb.Environ in 'Db\AssemblyDb.Environ.pas',
   Bundles in 'Bundles.pas';
 
 {$R *.res}

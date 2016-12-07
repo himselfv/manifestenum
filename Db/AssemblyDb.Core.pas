@@ -10,6 +10,7 @@ type
 
 type
   TAssemblyDbModule = class;
+  TAssemblyDbModuleList = class;
 
   TAssemblyDbCore = class
   protected
@@ -29,15 +30,16 @@ type
     procedure CommitTransaction;
     procedure AbortTransaction;
     procedure Exec(const ASql: string);
+    procedure ExecAndReset(stmt: PSQLite3Stmt);
     function PrepareStatement(const ASql: string): PSQLite3Stmt;
 
   //Modules provide a way to extend the database object with additions to its key functions
   protected
-    FModules: TObjectList<TAssemblyDbModule>;
+    FModules: TAssemblyDbModuleList;
     procedure FreeModules;
   public
     function AddModule(AModule: TAssemblyDbModule): TAssemblyDbModule;
-    property Modules: TObjectList<TAssemblyDbModule> read FModules;
+    property Modules: TAssemblyDbModuleList read FModules;
 
   end;
 
@@ -54,6 +56,12 @@ type
     property Db: TAssemblyDbCore read FDb;
   end;
 
+  CAssemblyDbModule = class of TAssemblyDbModule;
+  TAssemblyDbModuleList = class(TObjectList<TAssemblyDbModule>)
+  public
+    function Find(AClass: CAssemblyDbModule): TAssemblyDbModule;
+  end;
+
 function sqlite3_bind_str(pStmt: PSQLite3Stmt; i: Integer; const zData: string): integer; inline;
 
 implementation
@@ -67,7 +75,7 @@ constructor TAssemblyDbCore.Create;
 begin
   inherited;
   FDb := nil;
-  FModules := TObjectList<TAssemblyDbModule>.Create;
+  FModules := TAssemblyDbModuleList.Create;
 end;
 
 destructor TAssemblyDbCore.Destroy;
@@ -132,6 +140,15 @@ begin
     RaiseLastSqliteError();
 end;
 
+procedure TAssemblyDbCore.ExecAndReset(stmt: PSQLite3Stmt);
+var res: integer;
+begin
+  res := sqlite3_step(stmt);
+  if (res <> SQLITE_DONE) and (res <> SQLITE_ROW) then
+    RaiseLastSqliteError();
+  sqlite3_reset(stmt);
+end;
+
 procedure TAssemblyDbCore.BeginTransaction;
 begin
   Exec('BEGIN');
@@ -190,6 +207,16 @@ begin
   FModules.Clear;
 end;
 
+function TAssemblyDbModuleList.Find(AClass: CAssemblyDbModule): TAssemblyDbModule;
+var i: integer;
+begin
+  Result := nil;
+  for i := 0 to Self.Count-1 do
+    if Self[i] is AClass then begin
+      Result := Self[i];
+      break;
+    end;
+end;
 
 constructor TAssemblyDbModule.Create(ADb: TAssemblyDbCore);
 begin

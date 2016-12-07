@@ -2,7 +2,8 @@ unit AssemblyDb;
 
 interface
 uses SysUtils, Classes, sqlite3, Generics.Collections, AssemblyDb.Core, AssemblyDb.Assemblies,
-  AssemblyDb.Files, AssemblyDb.Registry, AssemblyDb.Services, AssemblyDb.UnusualProps;
+  AssemblyDb.Bundles, AssemblyDb.Files, AssemblyDb.Registry, AssemblyDb.Services,
+  AssemblyDb.UnusualProps;
 
 type
   TDependencyEntryData = record
@@ -42,6 +43,7 @@ type
     function SqlReadTaskData(stmt: PSQLite3Stmt): TTaskEntryData;
   public
     Assemblies: TAssemblyAssemblies;
+    Bundles: TAssemblyBundles;
     Files: TAssemblyFiles;
     Registry: TAssemblyRegistry;
     Services: TAssemblyServices;
@@ -92,6 +94,9 @@ begin
   inherited;
   Assemblies := TAssemblyAssemblies.Create(Self);
   AddModule(Assemblies);
+
+  Bundles := TAssemblyBundles.Create(Self);
+  AddModule(Bundles);
 
   Files := TAssemblyFiles.Create(Self);
   AddModule(Files);

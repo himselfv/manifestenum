@@ -112,7 +112,9 @@
         <DCCReference Include="CommonFilters.pas"/>
         <DCCReference Include="Db\AssemblyDb.pas"/>
         <DCCReference Include="Db\AssemblyDb.Core.pas"/>
+        <DCCReference Include="Db\AssemblyDb.Environ.pas"/>
         <DCCReference Include="Db\AssemblyDb.Assemblies.pas"/>
+        <DCCReference Include="Db\AssemblyDb.Bundles.pas"/>
         <DCCReference Include="Db\AssemblyDb.Files.pas"/>
         <DCCReference Include="Db\AssemblyDb.Registry.pas"/>
         <DCCReference Include="Db\AssemblyDb.Services.pas"/>
@@ -176,7 +178,6 @@
         </DCCReference>
         <DCCReference Include="WinSxS.pas"/>
         <DCCReference Include="SxsUtils.pas"/>
-        <DCCReference Include="Db\AssemblyDb.Environ.pas"/>
         <DCCReference Include="Bundles.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
