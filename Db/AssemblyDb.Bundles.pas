@@ -1,8 +1,12 @@
 unit AssemblyDb.Bundles;
-//Stores bundle data
+{
+Manages assembly "bundles".
+Bundles are groupings one level above components and assemblies, introduced manually. They are
+stored as files, imported and linked to assemblies in the database.
+}
 
 interface
-uses Generics.Collections, sqlite3, AssemblyDb.Core, AssemblyDb.Assemblies;
+uses Classes, Generics.Collections, sqlite3, AssemblyDb.Core, AssemblyDb.Assemblies;
 
 type
   TBundleId = int64;
@@ -35,7 +39,7 @@ type
     procedure QueryBundles(AStmt: PSQLite3Stmt; AList: TBundleList);
     procedure GetAll(AList: TBundleList);
 
-    procedure ResetContents(Bundle: TBundleId);
+    procedure ResetAssemblies(Bundle: TBundleId);
     procedure AddAssembly(Bundle: TBundleId; Assembly: TAssemblyId);
     procedure GetAssemblies(Bundle: TBundleId; AList: TAssemblyList);
     procedure GetAssemblyBundles(Assembly: TAssemblyId; AList: TBundleList);
@@ -43,8 +47,40 @@ type
   end;
 
 
+{
+ Next are the classes that manage the underlying files.
+}
+type
+  TBundle = class
+  protected
+    FData: TBundleData;
+    FMasks: TStringList;
+    function GetName: string; inline;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Load(const AFilename: string);
+    function ContainsAssembly(const Id: TAssemblyIdentity): boolean;
+    property Name: string read GetName;
+  end;
+
+//    FAllPatterns: TDictionary<string, TBundle>;
+//    FAllAssemblies: TDictionary<TAssemblyId, TBundle>;
+
+  TBundleManager = class(TObjectList<TBundle>)
+  public
+    procedure Load(const ABase: string); overload;
+    procedure LoadFolder(const ABase, ADir: string);
+    function LoadBundle(const AFilename: string): TBundle;
+    function MatchAssembly(const Id: TAssemblyIdentity): TBundle;
+  end;
+
+var
+  BundleFiles: TBundleManager;
+
+
 implementation
-uses SysUtils, Windows;
+uses SysUtils, Windows, WildcardMatching;
 
 procedure TAssemblyBundles.Initialize;
 begin
@@ -160,7 +196,7 @@ begin
   QueryBundles(Db.PrepareStatement('SELECT * FROM bundles'), AList);
 end;
 
-procedure TAssemblyBundles.ResetContents(Bundle: TBundleId);
+procedure TAssemblyBundles.ResetAssemblies(Bundle: TBundleId);
 var stmt: PSQLite3Stmt;
 begin
   stmt := Db.PrepareStatement('DELETE * FROM bundleAssemblies WHERE bundleId=?');
@@ -192,5 +228,129 @@ begin
   sqlite3_bind_int64(stmt, 1, Assembly);
   QueryBundles(stmt, AList);
 end;
+
+
+{
+Bundle files
+}
+
+const
+  BUNDLE_EXT = '.txt';
+
+constructor TBundle.Create;
+begin
+  inherited;
+  FMasks := TStringList.Create;
+end;
+
+destructor TBundle.Destroy;
+begin
+  FreeAndNil(FMasks);
+  inherited;
+end;
+
+procedure TBundle.Load(const AFilename: string);
+var i, i_pos: integer;
+  ln: string;
+begin
+  FMasks.LoadFromFile(AFilename);
+
+  for i := FMasks.Count-1 downto 0 do begin
+    ln := FMasks[i];
+    //Remove comments
+    i_pos := pos('#', ln);
+    if i_pos > 0 then begin
+      SetLength(ln, i_pos-1);
+    end;
+    ln := ln.Trim;
+
+    if ln = '' then begin
+      FMasks.Delete(i);
+      continue;
+    end;
+    FMasks[i] := AnsiLowercase(ln); //without comments
+  end;
+
+  FData.name := ChangeFileExt(ExtractFilename(AFilename), '');
+end;
+
+function TBundle.ContainsAssembly(const Id: TAssemblyIdentity): boolean;
+var i: integer;
+begin
+  for i := 0 to FMasks.Count-1 do
+   //For now we only match by name. Versions and cultures are ignored. Most of the time that's what we want anyway.
+    if WildcardMatchCase(PChar(AnsiLowercase(Id.name)), PChar(FMasks[i])) then begin
+      Result := true;
+      exit;
+    end;
+  Result := false;
+end;
+
+
+
+
+
+procedure TBundleManager.Load(const ADir: string);
+begin
+  Clear;
+  LoadFolder(ABase, '');
+end;
+
+procedure TBundleManager.LoadFolder(const ABundle, ADir: string);
+var sr: TSearchRec;
+  res: integer;
+begin
+  res := FindFirst(ABase+'\'+ADir+'\*.*', faAnyFile, sr);
+  if res <> 0 then exit;
+  try
+    while res = 0 do begin
+      //File
+      if (sr.Attr and faDirectory = 0) then begin
+        if ExtractFileExt(sr.Name)=BUNDLE_EXT then
+          LoadBundle(ABase, ADir+'\'+sr.Name);
+        //else ignore file
+      end else
+      //Directory
+      if (sr.Name <> '.') and (sr.Name <> '..') then
+        Result.Subfolders.Add(LoadFolder(ADir+'\'+sr.Name));
+      res := FindNext(sr);
+    end;
+  finally
+    SysUtils.FindClose(sr);
+  end;
+end;
+
+function TBundleManager.LoadBundle(const AFilename: string): TBundle;
+begin
+  Result := TBundle.Create;
+  Self.Add(Result);
+  Result.Load(AFilename);
+end;
+
+function TBundleManager.MatchAssembly(const Id: TAssemblyIdentity): TBundle;
+var Bundle: TBundle;
+begin
+  for Bundle in Self do
+    if Bundle.ContainsAssembly(Id) then begin
+      Result := Bundle;
+      exit;
+    end;
+  Result := nil;
+end;
+
+
+procedure ReloadBundleFiles;
+begin
+  BundleFiles.Clear;
+  BundleFiles.Load();
+end;
+
+initialization
+  BundleFiles := TBundleManager.Create;
+
+finalization
+ {$IFDEF DEBUG}
+  FreeAndNil(BundleFiles);
+ {$ENDIF}
 
 end.
