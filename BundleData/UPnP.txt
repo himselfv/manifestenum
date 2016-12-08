@@ -1,1 +1,7 @@
 Microsoft-Windows-UPnP*
+fdPHost*
+fdProxy*
+FDResPub*
+fdSSDP*
+fdWNet*
+fdWSD*

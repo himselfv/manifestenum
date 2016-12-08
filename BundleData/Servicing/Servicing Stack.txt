@@ -1,1 +1,2 @@
 Microsoft-Windows-ServicingStack*
+ServicingStack-Client*

@@ -1,1 +1,2 @@
-Windows-Defender-*
+Windows-Defender*
+Security-Malware-Windows-Defender*

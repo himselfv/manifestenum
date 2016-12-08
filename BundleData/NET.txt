@@ -1,0 +1,47 @@
+# Unfortunately, .NET names are shitty
+Accessibility*
+AddInProcess*
+AddInProcess32*
+AddInUtil*
+AspNetMMCExt*
+aspnet_compiler*
+aspnet_regbrowsers*
+aspnet_regsql*
+c2wtsres*
+caspol*
+ComSvcConfig*
+CustomMarshalers*
+DataSvcUtil*
+dfsvc*
+EdmGen*
+InstallUtil*
+ISymWrapper*
+jsc* # Now this is just fucking great
+MiguiControls*
+MMCEx*
+MMCFxCommon*
+PresentationBuildTasks*
+PresentationCore*
+PresentationFramework*
+PresentationUI*
+ReachFramework*
+RegAsm*
+RegSvcs*
+ServiceModelReg*
+SMDiagnostics*
+SMSvcHost*
+System.* # There's a shitton of these
+SystemResource-*
+WCF-*
+Windows Communication Foundation*
+WindowsBase*
+WindowsFormsIntegration*
+WPF-*
+WsatConfig
+XsdBuildTask
+# Batches
+NetFx-*
+NetFx2-*
+NetFx3-*
+NetFx4-*
+NetFx4* # yeah, happens
