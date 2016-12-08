@@ -39,6 +39,7 @@ type
     function Find(const AName, APath: string): TBundleId;
     procedure Update(Data: TBundleData);
     function Get(Id: TBundleId): TBundleData;
+    procedure Delete(Id: TBundleId);
     procedure QueryBundles(AStmt: PSQLite3Stmt; AList: TBundleList);
     procedure GetAll(AList: TBundleList);
 
@@ -65,7 +66,7 @@ type
     procedure Load(const ABase, AFilename: string);
     function ContainsAssembly(const Id: TAssemblyIdentity): boolean;
     property Name: string read GetName;
-    property Data: TBundleData read FData;
+    property Data: TBundleData read FData write FData;
   end;
 
 //    FAllPatterns: TDictionary<string, TBundle>;
@@ -99,7 +100,7 @@ begin
     +'id INTEGER PRIMARY KEY,'
     +'name TEXT NOT NULL COLLATE NOCASE,'
     +'path TEXT NOT NULL COLLATE NOCASE,'
-    +'hash INTEGER NOT NULL,'
+    +'hash INTEGER,'
     +'CONSTRAINT identity UNIQUE(name,path)'
     +')');
 
@@ -195,6 +196,14 @@ begin
   sqlite3_reset(stmt);
 end;
 
+procedure TAssemblyBundles.Delete(Id: TBundleId);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('DELETE FROM bundles WHERE id=?');
+  sqlite3_bind_int64(stmt, 1, Id);
+  Db.ExecAndReset(stmt);
+end;
+
 procedure TAssemblyBundles.GetAll(AList: TBundleList);
 begin
   QueryBundles(Db.PrepareStatement('SELECT * FROM bundles'), AList);
@@ -203,7 +212,7 @@ end;
 procedure TAssemblyBundles.ResetAssemblies(Bundle: TBundleId);
 var stmt: PSQLite3Stmt;
 begin
-  stmt := Db.PrepareStatement('DELETE * FROM bundleAssemblies WHERE bundleId=?');
+  stmt := Db.PrepareStatement('DELETE FROM bundleAssemblies WHERE bundleId=?');
   sqlite3_bind_int64(stmt, 1, Bundle);
   Db.ExecAndReset(stmt);
 end;
@@ -306,6 +315,10 @@ begin
 
   FData.name := ChangeFileExt(ExtractFilename(AFilename), '');
   FData.path := ExtractFilePath(AFilename);
+  if (Length(FData.path) > 0) and (FData.path[Length(FData.path)]='\') then
+    Delete(FData.path, Length(Data.path), 1);
+  if (Length(FData.path) > 0) and (FData.path[1]='\') then
+    Delete(FData.path, 1, 1);
 
   if not GetFileAttributesEx(PChar(ABase+'\'+AFilename), GetFileExInfoStandard, @attrs) then
     RaiseLastOsError();

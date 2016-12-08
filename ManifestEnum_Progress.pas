@@ -15,6 +15,7 @@ type
   public
     procedure Start(const AOperation: string = ''; AMax: int64 = 0);
     procedure Step();
+    procedure Update(); reintroduce;
   end;
 
 var
@@ -28,13 +29,19 @@ procedure TProgressForm.Start(const AOperation: string = ''; AMax: int64 = 0);
 begin
   Self.lblOperation.Caption := AOperation;
   Self.pbProgress.Max := AMax;
+  Update();
 end;
 
 procedure TProgressForm.Step();
-var tm: cardinal;
 begin
   if Self.pbProgress.Max > 0 then
     Self.pbProgress.Position := Self.pbProgress.Position + 1;
+  Update();
+end;
+
+procedure TProgressForm.Update();
+var tm: cardinal;
+begin
   tm := GetTickCount;
   if FLastRepaint + 200 < tm then begin
     Application.ProcessMessages;
