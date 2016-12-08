@@ -152,7 +152,7 @@ var
 
 implementation
 uses FilenameUtils, OsUtils, SxsUtils, AclHelpers, AssemblyDbBuilder, ManifestParser, SxSExpand,
-  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd, Bundles,
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, winsxs, ComObj, Clipbrd,
   IOUtils, Types, ServiceBrowser, Registry, ManifestEnum.Log, CommonFilters,
   ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
@@ -163,9 +163,6 @@ procedure TMainForm.FormCreate(Sender: TObject);
 begin
   FDb := TAssemblyDb.Create;
   InitAssemblyDb(FDb, AppFolder+'\assembly.db', true);
-
-  BundleMgr := TBundleManager.Create;
-  BundleMgr.Load(AppFolder() + '\BundleData');
 
   FAssemblyBrowser := TAssemblyBrowserForm.Create(Application);
   FAssemblyBrowser.OnSelectionChanged := Self.AssemblyBrowserSelectionChanged;
@@ -202,7 +199,6 @@ end;
 
 procedure TMainForm.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil(BundleMgr);
   FreeAndNil(FDb);
 end;
 

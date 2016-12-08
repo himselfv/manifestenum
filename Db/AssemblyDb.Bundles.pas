@@ -18,7 +18,10 @@ type
     path: string;
     hash: TBundleHash;
   end;
-  TBundleList = TList<TBundleData>;
+  TBundleList = class(TList<TBundleData>)
+    function Find(const AId: TBundleId): integer; overload;
+    function Find(const AName, APath: string): integer; overload;
+  end;
 
   TAssemblyBundles = class(TAssemblyDbModule)
   protected
@@ -59,9 +62,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Load(const AFilename: string);
+    procedure Load(const ABase, AFilename: string);
     function ContainsAssembly(const Id: TAssemblyIdentity): boolean;
     property Name: string read GetName;
+    property Data: TBundleData read FData;
   end;
 
 //    FAllPatterns: TDictionary<string, TBundle>;
@@ -71,7 +75,7 @@ type
   public
     procedure Load(const ABase: string); overload;
     procedure LoadFolder(const ABase, ADir: string);
-    function LoadBundle(const AFilename: string): TBundle;
+    function LoadBundle(const ABase, AFilename: string): TBundle;
     function MatchAssembly(const Id: TAssemblyIdentity): TBundle;
   end;
 
@@ -230,6 +234,29 @@ begin
 end;
 
 
+function TBundleList.Find(const AId: TBundleId): integer;
+var i: integer;
+begin
+  Result := -1;
+  for i := 0 to Self.Count-1 do
+    if Self[i].id = AId then begin
+      Result := i;
+      break;
+    end;
+end;
+
+function TBundleList.Find(const AName, APath: string): integer;
+var i: integer;
+begin
+  Result := -1;
+  for i := 0 to Self.Count-1 do
+    if (Self[i].name = AName) and (Self[i].path = APath) then begin
+      Result := i;
+      break;
+    end;
+end;
+
+
 {
 Bundle files
 }
@@ -249,11 +276,17 @@ begin
   inherited;
 end;
 
-procedure TBundle.Load(const AFilename: string);
+function TBundle.GetName: string;
+begin
+  Result := FData.name;
+end;
+
+procedure TBundle.Load(const ABase, AFilename: string);
 var i, i_pos: integer;
   ln: string;
+  attrs: WIN32_FILE_ATTRIBUTE_DATA;
 begin
-  FMasks.LoadFromFile(AFilename);
+  FMasks.LoadFromFile(ABase+'\'+AFilename);
 
   for i := FMasks.Count-1 downto 0 do begin
     ln := FMasks[i];
@@ -272,6 +305,11 @@ begin
   end;
 
   FData.name := ChangeFileExt(ExtractFilename(AFilename), '');
+  FData.path := ExtractFilePath(AFilename);
+
+  if not GetFileAttributesEx(PChar(ABase+'\'+AFilename), GetFileExInfoStandard, @attrs) then
+    RaiseLastOsError();
+  FData.hash := PInt64(@attrs.ftLastWriteTime)^;
 end;
 
 function TBundle.ContainsAssembly(const Id: TAssemblyIdentity): boolean;
@@ -289,14 +327,13 @@ end;
 
 
 
-
-procedure TBundleManager.Load(const ADir: string);
+procedure TBundleManager.Load(const ABase: string);
 begin
   Clear;
   LoadFolder(ABase, '');
 end;
 
-procedure TBundleManager.LoadFolder(const ABundle, ADir: string);
+procedure TBundleManager.LoadFolder(const ABase, ADir: string);
 var sr: TSearchRec;
   res: integer;
 begin
@@ -311,8 +348,8 @@ begin
         //else ignore file
       end else
       //Directory
-      if (sr.Name <> '.') and (sr.Name <> '..') then
-        Result.Subfolders.Add(LoadFolder(ADir+'\'+sr.Name));
+        if (sr.Name <> '.') and (sr.Name <> '..') then
+          LoadFolder(ABase, ADir+'\'+sr.Name);
       res := FindNext(sr);
     end;
   finally
@@ -320,11 +357,11 @@ begin
   end;
 end;
 
-function TBundleManager.LoadBundle(const AFilename: string): TBundle;
+function TBundleManager.LoadBundle(const ABase, AFilename: string): TBundle;
 begin
   Result := TBundle.Create;
   Self.Add(Result);
-  Result.Load(AFilename);
+  Result.Load(ABase, AFilename);
 end;
 
 function TBundleManager.MatchAssembly(const Id: TAssemblyIdentity): TBundle;
@@ -336,13 +373,6 @@ begin
       exit;
     end;
   Result := nil;
-end;
-
-
-procedure ReloadBundleFiles;
-begin
-  BundleFiles.Clear;
-  BundleFiles.Load();
 end;
 
 initialization
