@@ -69,10 +69,8 @@ type
     procedure GetBundleFolderNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Data: Pointer; var Abort: Boolean);
     function AddBundleNode(AParent: PVirtualNode; const ABundle: TBundleData): PVirtualNode;
-{
-    function FindBundleNode(ABundle: TBundle): PVirtualNode;
+    function FindBundleNode(ABundle: TBundleId): PVirtualNode;
     procedure FindBundleNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer; var Abort: Boolean);
-}
     procedure ApplyFilter;
     function GetFocusedAssembly: TAssemblyId;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
@@ -116,26 +114,30 @@ end;
 procedure TAssemblyBrowserForm.LoadAllAssemblies();
 var list: TAssemblyList;
   entry: TAssemblyData;
-//  bundle: TBundle;
+  bundles: TBundleList;
   parentNode: PVirtualNode;
 begin
  //DelayLoad will be called for each of the root assemblies immediately, which is slow.
  //So we'll try to create root nodes already delay-initialized.
 
+   bundles := nil;
   list := TAssemblyList.Create;
   try
     //If we're using bundles, add bundle nodes
-    if FGroupingType = gtBundles then
+    if FGroupingType = gtBundles then begin
       AddBundleNodes();
+      bundles := TBundleList.Create;
+    end;
 
     FDb.Assemblies.GetAllAssemblies(list);
     for entry in list.Values do begin
       parentNode := nil;
-{      if GroupingType = gtBundles then begin
-        bundle := BundleMgr.GetAssemblyBundle(entry.id, entry.identity);
-        if bundle <> nil then
-          parentNode := Self.FindBundleNode(bundle);
-      end;}
+      if GroupingType = gtBundles then begin
+        bundles.Clear;
+        Db.Bundles.GetAssemblyBundles(entry.id, bundles);
+        if bundles.Count > 0 then
+          parentNode := Self.FindBundleNode(bundles[0].id);
+      end;
       AddAssemblyNode(parentNode, entry);
     end;
   finally
@@ -255,19 +257,17 @@ begin
   end;
 end;
 
-{
-function TAssemblyBrowserForm.FindBundleNode(ABundle: TBundle): PVirtualNode;
+function TAssemblyBrowserForm.FindBundleNode(ABundle: TBundleId): PVirtualNode;
 begin
-  Result := Tree.IterateSubtree(nil, FindBundleNode_Callback, ABundle);
+  Result := Tree.IterateSubtree(nil, FindBundleNode_Callback, @ABundle);
 end;
 
 procedure TAssemblyBrowserForm.FindBundleNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Data: Pointer; var Abort: Boolean);
-var ABundle: TBundle absolute Data;
+var ABundle: ^TBundleId absolute Data;
 begin
-  Abort := PNodeData(Sender.GetNodeData(Node)).Object_ = ABundle;
+  Abort := PNodeData(Sender.GetNodeData(Node)).Bundle = ABundle^;
 end;
-}
 
 procedure TAssemblyBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree;
   var NodeDataSize: Integer);
