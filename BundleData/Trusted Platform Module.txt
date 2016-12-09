@@ -1,0 +1,2 @@
+Microsoft-Windows-TPM-Adm*
+Microsoft-Windows-TPM-AdminSnapin*

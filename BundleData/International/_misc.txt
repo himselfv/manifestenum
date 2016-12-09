@@ -1,0 +1,6 @@
+
+Microsoft-Windows-Language
+Microsoft-Windows-Language-*
+
+# Parts are covered by other packages here
+Microsoft-Windows-International-*

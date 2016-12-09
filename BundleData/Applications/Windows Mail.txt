@@ -1,0 +1,6 @@
+Microsoft-Windows-Mail
+Microsoft-Windows-Mail-App*
+Microsoft-Windows-Mail-Core*
+
+# Not so sure about this one, it contains DLLs which may be public API
+Microsoft-Windows-Mail-Comm*

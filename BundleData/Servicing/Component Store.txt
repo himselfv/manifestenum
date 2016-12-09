@@ -6,3 +6,6 @@ Microsoft-Windows-TIScavengeTask*
 Microsoft-Windows-DeltaCompressionEngine*
 
 Microsoft-Windows-DeltaPackageExpander*
+
+Microsoft-Windows-CBS*
+Microsoft-Windows-CbsApi*

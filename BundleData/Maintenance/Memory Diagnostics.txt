@@ -1,0 +1,6 @@
+# Core
+Microsoft-Windows-Memory-Diagnostic-Schedule*
+Microsoft-Windows-Memory-Diagnostic-Results*
+
+# Extended with additions
+Microsoft-Windows-Mem-Zero-Page-Diagnostic*

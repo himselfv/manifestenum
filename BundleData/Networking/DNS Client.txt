@@ -1,0 +1,3 @@
+Microsoft-Windows-DNS-Client*
+Microsoft-Windows-DNS-ClientSnapin*
+Microsoft-Windows-DnsClient-Adm*

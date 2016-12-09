@@ -1,0 +1,24 @@
+# Console
+Microsoft-Windows-MMC-Console* # Parent
+Microsoft-Windows-Microsoft-Management-Console*
+Microsoft-Windows-MMCEx-RegEntries*
+
+# .NET parts
+Microsoft.ManagementConsole
+MMCEx
+MMCFxCommon
+
+# Snap-Ins
+Microsoft-Windows-AuthorizationManagerUI*
+Microsoft-Windows-CertificateManagerSnapinDLL*
+Microsoft-Windows-COM-ComPlus-MSC*
+Microsoft-Windows-ComputerManagementSnapin*
+Microsoft-Windows-DiskManagement*
+Microsoft-Windows-DNS-ClientSnapin*
+Microsoft-Windows-GroupPolicy-Admin-Gpedit-Snapin*
+Microsoft-Windows-Networking-NapClientConfigUI*
+Microsoft-Windows-TPM-AdminSnapin*
+Microsoft-Windows-PnpDeviceManager* # Device Manager UI
+Microsoft-Windows-SecurityConfigurationManagement-PolicyTools-Ex*
+Microsoft-Windows-ServicesSnapIn*
+TaskSchedulerSettings*

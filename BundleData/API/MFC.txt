@@ -1,0 +1,3 @@
+Microsoft-Windows-MFC40*
+Microsoft-Windows-MFC40u*
+Microsoft-Windows-MFC42x*

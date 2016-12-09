@@ -39,9 +39,12 @@ WindowsFormsIntegration*
 WPF-*
 WsatConfig
 XsdBuildTask
+
 # Batches
 NetFx-*
 NetFx2-*
 NetFx3-*
 NetFx4-*
 NetFx4* # yeah, happens
+
+.NET Framework*

@@ -10,3 +10,5 @@ Microsoft-Windows-KernelCeip*
 Microsoft-Windows-UsbCeip*
 
 Microsoft-Windows-Client-SQM-Consolidator*
+
+Microsoft-Windows-CEIPEnable-Adm*

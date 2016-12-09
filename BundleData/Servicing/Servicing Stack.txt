@@ -1,2 +1,4 @@
 Microsoft-Windows-ServicingStack*
 ServicingStack-Client*
+
+Microsoft-Windows-WindowsUpdate-Adm*

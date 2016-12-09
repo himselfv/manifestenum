@@ -10,3 +10,22 @@ Microsoft-Windows-Compact
 Microsoft-Windows-Compact-*
 
 Microsoft-Windows-diskpart*
+
+Microsoft-Windows-MiscellaneousCommandLineUtilities*
+
+# No asterisk for there are lots of similar names
+Microsoft-Windows-AT
+Microsoft-Windows-control
+
+# Converts file systems
+Microsoft-Windows-Convert
+
+Microsoft-Windows-diskraid*
+
+# Displays a list of all installed device drivers and their properties
+Microsoft-Windows-DriverQuery*
+
+# Displays or changes disk labels
+Microsoft-Windows-Label*
+
+Microsoft-Windows-makecab*

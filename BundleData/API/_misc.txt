@@ -1,0 +1,3 @@
+Microsoft-Windows-DownlevelApisets-Base*
+Microsoft-Windows-DownlevelApisets-Com*
+Microsoft-Windows-DownlevelApisets-Windows*

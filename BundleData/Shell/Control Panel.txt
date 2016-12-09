@@ -1,4 +1,0 @@
-Microsoft-Windows-themecpl*
-Microsoft-Windows-usercpl*
-Microsoft-Windows-accessibilitycpl*
-Microsoft-Windows-desk*

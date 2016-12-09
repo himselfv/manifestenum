@@ -1,1 +1,33 @@
 Microsoft-Windows-MediaCenter*
+
+# For whatever reason, Media Center is called ehome
+Microsoft-Windows-ehome-*
+ehome-BDATunePIA
+ehome-mcstoredb
+
+
+# NET components
+ehCIR
+ehCIR-NonMSIL
+ehexthost
+ehexthost-NonMSIL
+ehexthost32
+ehiActivScp
+ehiBmlDataCarousel
+ehiExtens
+ehiiTV
+ehiProxy
+ehiTVMSMusic
+ehiUPnP
+ehiUserXp
+ehiVidCtl
+ehiwmp
+ehiWUapi
+ehome-BDATunePIA
+ehome-BDATunePIA
+ehome-mcstoredb
+ehome-mcstoredb
+ehRecObj
+ehRecObj-NonMSIL
+ehshell
+ehshell-NonMSIL
