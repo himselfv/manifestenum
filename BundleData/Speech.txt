@@ -1,2 +1,0 @@
-Microsoft-OneCore-SpeechComponents*
-Microsoft-OneCore-SpeechService*

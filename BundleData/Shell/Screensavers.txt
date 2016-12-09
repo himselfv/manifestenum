@@ -1,0 +1,6 @@
+Microsoft-Windows-Bubbles*
+Microsoft-Windows-PhotoScreensaver*
+Microsoft-Windows-Mystify*
+Microsoft-Windows-Ribbons*
+Microsoft-Windows-scrnsave*
+Microsoft-Windows-ssText3d*

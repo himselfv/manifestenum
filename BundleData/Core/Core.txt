@@ -1,0 +1,2 @@
+Microsoft-Windows-LSA
+Microsoft-Windows-LSA-*

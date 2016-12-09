@@ -1,0 +1,3 @@
+# Probably should be doubled in API
+# Multilingual text formatting subsystem, heavily used
+Microsoft-Windows-mlang*

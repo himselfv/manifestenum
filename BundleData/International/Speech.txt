@@ -1,0 +1,7 @@
+
+# Win10
+Microsoft-OneCore-SpeechComponents*
+Microsoft-OneCore-SpeechService*
+
+# Win7
+Microsoft-Windows-MulanTTS*

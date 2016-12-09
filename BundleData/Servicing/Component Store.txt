@@ -9,3 +9,5 @@ Microsoft-Windows-DeltaPackageExpander*
 
 Microsoft-Windows-CBS*
 Microsoft-Windows-CbsApi*
+
+Microsoft-Windows-Component-Servicing*

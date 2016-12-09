@@ -1,1 +1,2 @@
+Microsoft-Windows-CodecPack-*
 Microsoft-Windows-Media-MP3ACM*

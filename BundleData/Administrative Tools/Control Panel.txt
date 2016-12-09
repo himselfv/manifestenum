@@ -5,7 +5,13 @@ Microsoft-Windows-intl*
 # Legacy as of Windows 7
 Microsoft-Windows-LegacyHwUi*
 
+Microsoft-Windows-appwiz*
 Microsoft-Windows-themecpl*
 Microsoft-Windows-usercpl*
 Microsoft-Windows-accessibilitycpl*
 Microsoft-Windows-desk*
+
+# main.cpl
+Microsoft-Windows-main
+Microsoft-Windows-main-*
+Microsoft-Windows-main.*

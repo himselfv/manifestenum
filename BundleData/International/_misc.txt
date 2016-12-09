@@ -4,3 +4,8 @@ Microsoft-Windows-Language-*
 
 # Parts are covered by other packages here
 Microsoft-Windows-International-*
+
+Microsoft-Windows-Hyphenation-*
+
+# Hope this is from here too
+Microsoft-Windows-ELS-Hyphenation*

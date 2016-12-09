@@ -47,4 +47,7 @@ NetFx3-*
 NetFx4-*
 NetFx4* # yeah, happens
 
+# 3, 35, 4, CoreComp
+Microsoft-Windows-NetFx*
+
 .NET Framework*

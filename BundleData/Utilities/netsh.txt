@@ -1,0 +1,16 @@
+# netsh
+Microsoft-Windows-NetSh # There's also NetShell
+Microsoft-Windows-NetSh-*
+Microsoft-Windows-NetSh.*
+
+# netsh supports plugins
+Microsoft-Windows-Dot3-Netsh-Helper*
+Microsoft-Windows-NetTrace-Netsh-Helper*
+Microsoft-Windows-NetworkAccessProtection-Netsh*
+Microsoft-Windows-NetworkBridgeNetsh*
+Microsoft-Windows-Network-Security-Domain-Clients-Netsh*
+Microsoft-Windows-PeerToPeerAdmin*
+Microsoft-Windows-RPC-Netsh*
+Microsoft-Windows-WCN-Netsh-Helper*
+Microsoft-Windows-WLan-Netsh-Helper*
+Microsoft-Windows-Wwan-Netsh-Helper*

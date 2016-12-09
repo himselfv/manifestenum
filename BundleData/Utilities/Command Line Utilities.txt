@@ -8,6 +8,7 @@ Microsoft-Windows-clip*
 Microsoft-Windows-cipher*
 Microsoft-Windows-Compact
 Microsoft-Windows-Compact-*
+Microsoft-Windows-Compact.*
 
 Microsoft-Windows-diskpart*
 
@@ -15,10 +16,14 @@ Microsoft-Windows-MiscellaneousCommandLineUtilities*
 
 # No asterisk for there are lots of similar names
 Microsoft-Windows-AT
+Microsoft-Windows-AT.*
+Microsoft-Windows-AT-*
 Microsoft-Windows-control
 
 # Converts file systems
 Microsoft-Windows-Convert
+Microsoft-Windows-Convert-*
+Microsoft-Windows-Convert.*
 
 Microsoft-Windows-diskraid*
 
@@ -29,3 +34,19 @@ Microsoft-Windows-DriverQuery*
 Microsoft-Windows-Label*
 
 Microsoft-Windows-makecab*
+
+# diantz - Cabinet maker
+Microsoft-Windows-diantz
+
+Microsoft-Windows-ICacls*
+
+# ipconfig.exe utility
+Microsoft-Windows-IPCONFIG*
+
+# Language pack setup/remove
+Microsoft-Windows-LpkSetup*
+
+Microsoft-Windows-Mountvol*
+
+# net.exe tool
+Microsoft-Windows-Net-Command-Line-Tool*

@@ -1,1 +1,5 @@
+Microsoft-Windows-Installer
 Microsoft-Windows-Installer-*
+
+# Maybe deserves a separate bundle?
+Microsoft-Windows-InstallShield-*
