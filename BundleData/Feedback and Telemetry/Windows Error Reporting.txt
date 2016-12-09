@@ -1,0 +1,4 @@
+# WER / Windows Error Reporting
+Microsoft-Windows-ErrorReporting*
+Microsoft-Windows-Feedback-Service*
+Microsoft-OneCore-Wer-*

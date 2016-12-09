@@ -1,6 +1,14 @@
+# Diagnostics Infrastructure / WDI -- related to SQM, Ceip
 
 Microsoft-Windows-DiagnosticInfrastructure*
-Microsoft-Windows-DiagnosticHub*
+# ..-Client
+# ..-Server	# DPS, WdiServiceHost, WdiSystemHost
+# ..-Settings
+# ..Core
+
+Microsoft-Windows-DiagnosticHub*	#?
 Microsoft-Windows-DiagnosticsHub*
 
 Microsoft-Windows-WDI*
+
+# DiagTrack?

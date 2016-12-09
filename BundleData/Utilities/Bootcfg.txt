@@ -1,0 +1,2 @@
+# Configures, queries, or changes Boot.ini file settings.
+Microsoft-Windows-BootConfig*

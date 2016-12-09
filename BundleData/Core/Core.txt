@@ -1,2 +1,6 @@
+# Kernal
+Microsoft-Windows-OS-Kernel*
+
+# LSA
 Microsoft-Windows-LSA
 Microsoft-Windows-LSA-*

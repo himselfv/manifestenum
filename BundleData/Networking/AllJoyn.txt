@@ -1,0 +1,6 @@
+# AllJoyn
+Microsoft-Windows-AllJoyn*
+Microsoft-Windows-AllJoyn-API*
+Microsoft-Windows-AllJoyn-Runtime*
+Microsoft-Windows-AllJoyn-Router*			# Service:AJRouter
+Networking-MPSSVC-Rules-AllJoyn*

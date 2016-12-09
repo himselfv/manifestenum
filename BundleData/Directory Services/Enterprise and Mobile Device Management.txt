@@ -1,0 +1,7 @@
+# EnterpriseMgmt / Mobile Device Management
+Microsoft-Windows-MDMAgent*
+Microsoft-Windows-EnterpriseMgmt-MdmDiagnostics*
+Microsoft-Windows-EnterpriseMgmt-MdmDiagnosticsTool*
+
+# Enterprise Management
+Microsoft-Windows-Enterprise-Management*			# Service:EntAppSvc (Enterprise applications management service)

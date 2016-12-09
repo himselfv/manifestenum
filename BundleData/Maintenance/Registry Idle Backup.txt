@@ -1,0 +1,3 @@
+
+# Scheduled Task to make backup copies of registry when idle
+Microsoft-Windows-RegistryIdle-Agent*

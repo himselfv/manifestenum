@@ -1,0 +1,7 @@
+
+# A window in "Add/remove programs" to install or remove optional OS features.
+# Can be run manually with optionalfeatures.exe
+Microsoft-Windows-OptionalFeatures*
+
+# A command line tool which will install or remove an optional component
+Microsoft-Windows-OptionalFeatures-Fondue*

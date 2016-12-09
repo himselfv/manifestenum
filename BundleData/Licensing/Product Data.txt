@@ -1,0 +1,3 @@
+# Contains registry entries for Windows version, build number etc.
+
+Microsoft-Product-Data*

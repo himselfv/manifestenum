@@ -1,0 +1,15 @@
+# Powershell itself
+Microsoft-PowerShell-Common*
+Microsoft-Windows-PowerShell-*
+Microsoft.PowerShell.*			# msil
+
+# Management assemblies
+Microsoft.BackgroundIntelligentTransfer.Management*
+Microsoft.Management.Infrastructure*
+System.Management.Automation*
+
+Policy.1.0.Microsoft.PowerShell.*
+Policy.1.0.System.Management.Automation*
+Policy.3.0.Microsoft.BackgroundIntelligentTransfer.Management*
+
+Microsoft-NetworkSwitch-Management*

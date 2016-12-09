@@ -1,0 +1,10 @@
+# EDP: Enterprise Data Protection / Windows Information Protection
+Microsoft-Windows-EDP*
+# ..-Task
+# ..-Notify
+# ..-Util
+# ..-Audit
+# ..-WpbCreds
+Microsoft-OneCore-EnterpriseDataProtection-*
+Microsoft-Windows-Security-EnterpriseData-FileRevocationManager*
+Microsoft-Windows-EnterpriseDesktopAppMgmtCSP*

@@ -1,0 +1,4 @@
+
+# EmbeddedMode
+Microsoft-OneCore-EmbeddedModeClient*
+Microsoft-OneCore-EmbeddedModeSvc*

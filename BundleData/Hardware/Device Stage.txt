@@ -1,0 +1,7 @@
+
+# DeviceStage - installs "DeviceStage shell extensions" (dxp.dll) which annoyingly reactivate itself
+Microsoft-Windows-DeviceExperiencePlatformFeature*
+Microsoft-WindowsDXP-DeviceExperience*
+Microsoft-Windows-DXPTasks-Sync*
+Microsoft-Windows-Desktop-PlayToMenu*
+Microsoft-Windows-PlayToStatusProvider*

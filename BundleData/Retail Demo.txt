@@ -1,0 +1,4 @@
+
+# RetailDemo
+Microsoft-Windows-RetailDemo-*
+Microsoft-Windows-Shell-RetailDemo-*

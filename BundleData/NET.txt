@@ -50,4 +50,6 @@ NetFx4* # yeah, happens
 # 3, 35, 4, CoreComp
 Microsoft-Windows-NetFx*
 
+Microsoft .NET Framework*
+
 .NET Framework*

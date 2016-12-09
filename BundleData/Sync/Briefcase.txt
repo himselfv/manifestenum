@@ -1,0 +1,3 @@
+# Briefcase
+Microsoft-Windows-Shell-Sync*
+Microsoft-Windows-syncu*		# contained

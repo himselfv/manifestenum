@@ -15,3 +15,8 @@ Microsoft-Windows-desk*
 Microsoft-Windows-main
 Microsoft-Windows-main-*
 Microsoft-Windows-main.*
+
+# Bluetooth
+Microsoft-Windows-BTH-CPL*
+# Some resources lack prefix
+BTH-CPL*

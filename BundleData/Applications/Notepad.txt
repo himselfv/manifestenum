@@ -1,0 +1,3 @@
+
+Microsoft-Windows-notepad*
+Microsoft-Windows-notepadwin*

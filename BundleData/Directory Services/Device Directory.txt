@@ -1,0 +1,4 @@
+# DeviceDirectory
+Microsoft-Windows-DeviceDirectory-DeviceDirectoryClient*
+Microsoft-DeviceDirectory*					# contained
+Microsoft-Windows-DeviceDirectory-MdmCommon*			# See MDM?

@@ -1,2 +1,11 @@
+
+
+# A version of Chkdsk that runs only on NTFS disks and only before Windows starts. It is run if the volume is flagged as dirty.
 Microsoft-Windows-Autochk*
 Microsoft-Windows-AutochkConfigurator*
+
+# Converts file allocation table (FAT) and FAT32 volumes to the NTFS file system, leaving existing files and directories intact at startup after Autochk runs.
+Microsoft-Windows-Autoconv*
+
+# Formats a drive or partition when called from the Windows Recovery Console.
+Microsoft-Windows-Autofmt*

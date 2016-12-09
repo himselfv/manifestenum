@@ -1,0 +1,17 @@
+# Application Experience / Program Compability Assistant
+
+# Overall a good thing:
+# 1. A shim engine which allows to hotpatch OS and change behavior of some functions for a particular application.
+# 2. A database of application and what hotpatches to apply for each.
+# 3. A service which monitors applications and applies shims from DB.
+# 3. A configuration interface for that database.
+
+Microsoft-Windows-Application-Experience*
+
+# ..-Infrastructure  = Shim Engine
+# ..-Program-Data    = PcaSvc, Scheduled task
+# ..-Tools           = Compability property page
+# ..-Mitigations     = Database
+
+# Unclear
+Microsoft-Windows-AppCompat*

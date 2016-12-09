@@ -1,0 +1,10 @@
+# Terminal Services, Remote Desktop and Remote Assistance
+
+# Quick Remote Assistance in Win10
+Microsoft-Windows-QuickAssist*
+
+# RemoteAssistance
+Microsoft-Windows-RemoteAssistance*
+
+# RemoteFX is a Terminal Services protocol enhancements
+Microsoft-Windows-RemoteFS*

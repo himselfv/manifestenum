@@ -50,3 +50,19 @@ Microsoft-Windows-Mountvol*
 
 # net.exe tool
 Microsoft-Windows-Net-Command-Line-Tool*
+
+# Performs a DNS lookup
+Microsoft-Windows-nslookup*
+
+# Shows open file and folders on this PC
+Microsoft-Windows-OpenFiles
+
+# Ping, Pathping and Tracert
+Microsoft-Windows-PING-Utilities*
+
+# Recover.exe
+Microsoft-Windows-Recover*
+
+# All of these are command-line registry editing
+Microsoft-Windows-RegINI*
+Microsoft-Windows-Registry-CommandLine-Editor*	#reg.exe

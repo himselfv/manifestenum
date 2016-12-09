@@ -1,0 +1,9 @@
+
+# NTFS
+Microsoft-Windows-NTFS*
+
+# FAT
+Microsoft-Windows-FAT
+Microsoft-Windows-exFAT
+
+Microsoft-Windows-ReFS-*

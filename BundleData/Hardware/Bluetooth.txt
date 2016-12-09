@@ -1,0 +1,13 @@
+Microsoft-OneCore-Bluetooth*
+Microsoft-OneCore-Connectivity-Bluetooth*
+Microsoft-Windows-Bluetooth*
+Microsoft-Windows-CoreSystem-Bluetooth*
+
+Microsoft-Windows-BTH-USER*
+BTH-USER*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.BLUETOOTH*
+
+# Control panel
+Microsoft-Windows-BTH-CPL*
+# Some resources lack prefix
+BTH-CPL*

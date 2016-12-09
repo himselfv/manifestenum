@@ -1,0 +1,2 @@
+# Contains openwith.exe, perhaps the Open With window?
+Microsoft-Windows-OpenWith*

@@ -1,1 +1,6 @@
 Microsoft-Windows-Bits*
+Microsoft-OneCore-BITS*
+
+# Powershell assemblies
+Microsoft.BackgroundIntelligentTransfer.Management*
+Policy.3.0.Microsoft.BackgroundIntelligentTransfer.Management*

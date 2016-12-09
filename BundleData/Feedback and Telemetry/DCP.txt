@@ -1,0 +1,3 @@
+
+# DCP (Data collection and publishing) telemetry
+Microsoft-Windows-DCP*					# Service:DcpSvc
