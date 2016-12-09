@@ -23,6 +23,8 @@ type
     function Find(const AName, APath: string): integer; overload;
   end;
 
+  TBundleAssociationDict = class(TDictionary<TAssemblyId, TBundleId>);
+
   TAssemblyBundles = class(TAssemblyDbModule)
   protected
     Assemblies: TAssemblyAssemblies;
@@ -47,6 +49,8 @@ type
     procedure AddAssembly(Bundle: TBundleId; Assembly: TAssemblyId);
     procedure GetAssemblies(Bundle: TBundleId; AList: TAssemblyList);
     procedure GetAssemblyBundles(Assembly: TAssemblyId; AList: TBundleList);
+
+    procedure GetAllAssemblyAssociations(AList: TBundleAssociationDict);
 
   end;
 
@@ -240,6 +244,26 @@ begin
   stmt := Db.PrepareStatement('SELECT * FROM bundleAssemblies WHERE assemblyId=?');
   sqlite3_bind_int64(stmt, 1, Assembly);
   QueryBundles(stmt, AList);
+end;
+
+//Returns a list of all associations where each assembly is assigned only one bundle
+procedure TAssemblyBundles.GetAllAssemblyAssociations(AList: TBundleAssociationDict);
+var stmt: PSQLite3Stmt;
+  res: integer;
+  bundle: TBundleId;
+  assembly: TAssemblyId;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM bundleAssemblies');
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    bundle := sqlite3_column_int64(stmt, 0);
+    assembly := sqlite3_column_int64(stmt, 1);
+    AList.AddOrSetValue(assembly, bundle);
+    res := sqlite3_step(stmt);
+  end;
+  if res <> SQLITE_DONE then
+    Db.RaiseLastSqliteError;
+  sqlite3_reset(stmt);
 end;
 
 

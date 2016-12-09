@@ -114,34 +114,35 @@ end;
 procedure TAssemblyBrowserForm.LoadAllAssemblies();
 var list: TAssemblyList;
   entry: TAssemblyData;
-  bundles: TBundleList;
+  bundleDict: TBundleAssociationDict;
+  bundleId: TBundleId;
   parentNode: PVirtualNode;
 begin
  //DelayLoad will be called for each of the root assemblies immediately, which is slow.
  //So we'll try to create root nodes already delay-initialized.
 
-   bundles := nil;
+  bundleDict := nil;
   list := TAssemblyList.Create;
   try
     //If we're using bundles, add bundle nodes
     if FGroupingType = gtBundles then begin
       AddBundleNodes();
-      bundles := TBundleList.Create;
+      bundleDict := TBundleAssociationDict.Create;
+      Db.Bundles.GetAllAssemblyAssociations(bundleDict);
     end;
 
     FDb.Assemblies.GetAllAssemblies(list);
     for entry in list.Values do begin
       parentNode := nil;
       if GroupingType = gtBundles then begin
-        bundles.Clear;
-        Db.Bundles.GetAssemblyBundles(entry.id, bundles);
-        if bundles.Count > 0 then
-          parentNode := Self.FindBundleNode(bundles[0].id);
+        if bundleDict.TryGetValue(entry.id, bundleId) then
+          parentNode := Self.FindBundleNode(bundleId);
       end;
       AddAssemblyNode(parentNode, entry);
     end;
   finally
     FreeAndNil(list);
+    FreeAndNil(bundleDict);
   end;
 end;
 
