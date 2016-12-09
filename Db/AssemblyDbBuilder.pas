@@ -249,6 +249,7 @@ procedure TDatabaseMaintenance.RefreshBundles;
 var bundles: TBundleList;
   found: TFlagSet;
   i, idx: integer;
+  Data: TBundleData;
 begin
   //Load actual bundle files from disk
   progress.Start('Reloading bundles', 0);
@@ -267,8 +268,13 @@ begin
       idx := bundles.Find(BundleFiles[i].Name, BundleFiles[i].Data.path);
       if idx >= 0 then begin
         found[idx] := true;
-        if bundles[idx].hash <> BundleFiles[i].Data.hash then
+        if bundles[idx].hash <> BundleFiles[i].Data.hash then begin
           UpdateBundleContents(bundles[idx].id, BundleFiles[i]);
+          Data := BundleFiles[i].Data;
+          Data.id := bundles[idx].id; //associated id with a bundle file
+          BundleFiles[i].Data := Data;
+          Db.Bundles.Update(Data); //update hash
+        end;
       end else
         ImportNewBundle(BundleFiles[i]);
       progress.Step;
