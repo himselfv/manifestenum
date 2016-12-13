@@ -158,7 +158,10 @@ begin
     Db.Bundles.GetAll(Bundles);
 
     for Bundle in Bundles do begin
-      Path := Bundle.path.Split(['\']);
+      if Bundle.path <> '' then
+        Path := Bundle.path.Split(['\'])
+      else
+        SetLength(Path, 0);
       Node := nil;
       for i := 0 to Length(Path)-1 do
         Node := GetBundleFolderNode(Node, Path[i]);
