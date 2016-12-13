@@ -1,0 +1,4 @@
+# SysPrep tool which prepares a new installation with unique keys
+Microsoft-Windows-Sysprep
+Microsoft-Windows-Sysprep.*
+Microsoft-Windows-Sysprep-*

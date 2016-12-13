@@ -1,2 +1,5 @@
 # Contains openwith.exe, perhaps the Open With window?
 Microsoft-Windows-OpenWith*
+
+# Group policy settings for shell
+Microsoft-Windows-Shell-GroupPolicy*

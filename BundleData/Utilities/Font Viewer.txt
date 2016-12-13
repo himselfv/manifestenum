@@ -1,0 +1,5 @@
+# A shell utility to view fonts
+
+Microsoft-Windows-fontview
+Microsoft-Windows-fontview.*
+Microsoft-Windows-fontview-*

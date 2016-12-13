@@ -1,2 +1,3 @@
 Microsoft-Windows-Desktop_Technologies-Text_Input_Services-IME*
 Microsoft-Windows-IME-* # Windows 7
+Microsoft-Windows-EAIME-*

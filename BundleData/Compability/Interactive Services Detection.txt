@@ -1,0 +1,8 @@
+# Interactive Services Detection detects services which try to interact with the user,
+# and lets the user switch to Session 0 to interact with them.
+
+# This is a compability measure. Services should not try to interact with users directly.
+
+# Hosts service UI0Detect
+
+Microsoft-Windows-Session0Viewer*

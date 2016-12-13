@@ -1,2 +1,4 @@
 EventViewer*
 EventViewerSettings*
+
+Microsoft-Windows-EventViewer*

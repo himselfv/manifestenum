@@ -1,0 +1,2 @@
+Microsoft-Windows-Shell-Cursors*
+Microsoft-Windows-Shell-acccursors*

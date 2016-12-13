@@ -1,0 +1,7 @@
+# Part of WDI and Reliability Infrastructure
+# Based on:
+#   Windows Diagnostics Infrastructure (WDI)
+# See also:
+#   https://technet.microsoft.com/en-us/library/cc732712(v=ws.10).aspx
+
+Microsoft-Windows-Resource-Exhaustion*

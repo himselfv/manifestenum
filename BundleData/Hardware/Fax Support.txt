@@ -1,0 +1,6 @@
+# Fax services:
+# https://technet.microsoft.com/en-us/library/cc772511(v=ws.10).aspx
+
+Microsoft-Windows-Fax
+Microsoft-Windows-Fax.*
+Microsoft-Windows-Fax-*

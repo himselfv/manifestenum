@@ -1,10 +1,13 @@
 Microsoft-Windows-MediaCenter*
 
-# For whatever reason, Media Center is called ehome
-Microsoft-Windows-ehome-*
+Microsoft-Windows-ehome-*	# For whatever reason, Media Center is called ehome
 ehome-BDATunePIA
 ehome-mcstoredb
 
+
+Microsoft-Windows-Sonic		# For whatever reason, this is also ehome => Media Center
+Microsoft-Windows-Sonic.*
+Microsoft-Windows-Sonic-*
 
 # NET components
 ehCIR

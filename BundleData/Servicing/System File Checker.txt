@@ -1,0 +1,3 @@
+Microsoft-Windows-SFC
+Microsoft-Windows-SFC.*
+Microsoft-Windows-SFC-*

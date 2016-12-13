@@ -1,0 +1,5 @@
+WindowsSearchEngine*
+
+Microsoft-Windows-SearchDiagnostic*
+
+Microsoft-Windows-Content-Indexing*

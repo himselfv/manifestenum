@@ -1,0 +1,10 @@
+# WOW64 (Windows-on-Windows-64) is a set of mostly usermode components
+# that allow running 32 bit code on 64 bit Windows.
+
+# Some support for WOW64 is required and available from kernel.
+
+# Covers file system redirection.
+
+Microsoft-Windows-WOW64*
+# -amd64: The engine itself.
+# -wow64: Support files which form the 32 bit "System32" directory.

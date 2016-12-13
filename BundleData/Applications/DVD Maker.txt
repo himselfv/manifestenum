@@ -1,0 +1,15 @@
+# DVD Maker application included with Windows 7
+# Has lots of skins and assemblies.
+
+Microsoft-Windows-OpticalMediaDisc-*
+Microsoft-Windows-GPUPipeline*
+
+# Help for it, as evidenced by its deployment
+Microsoft-Windows-Help-Video*
+Microsoft-Windows-Help-Movie*
+Microsoft-Windows-Help-Dvdburn*
+Microsoft-Windows-Help-DGloss*
+Microsoft-Windows-Help-Artuimedia*
+
+# Again, from deployment
+Microsoft-Windows-ClipsInTheLibrary*

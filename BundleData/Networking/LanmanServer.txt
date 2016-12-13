@@ -1,0 +1,9 @@
+
+# Core
+Microsoft-Windows-SMBServer
+Microsoft-Windows-SMBServer.*
+Microsoft-Windows-SMBServer-*
+
+# Shared folders UI
+# Includes MMC snap-in and a folder share wizard
+Microsoft-Windows-SharedFoldersUI*

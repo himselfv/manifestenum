@@ -1,0 +1,5 @@
+# Sticky Notes application
+
+Microsoft-Windows-StickyNotes
+Microsoft-Windows-StickyNotes.*
+Microsoft-Windows-StickyNotes-*

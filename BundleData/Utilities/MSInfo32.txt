@@ -1,1 +1,3 @@
+Microsoft-Windows-MSInfo32*
+Microsoft-Windows-MSInfo32.*
 Microsoft-Windows-MSInfo32-*

@@ -6,6 +6,9 @@
 # 3. A service which monitors applications and applies shims from DB.
 # 3. A configuration interface for that database.
 
+# Requires:
+#   May require WDI which triggers PCA when failures happen.
+
 Microsoft-Windows-Application-Experience*
 
 # ..-Infrastructure  = Shim Engine
@@ -15,3 +18,4 @@ Microsoft-Windows-Application-Experience*
 
 # Unclear
 Microsoft-Windows-AppCompat*
+Microsoft-Windows-Compat-*

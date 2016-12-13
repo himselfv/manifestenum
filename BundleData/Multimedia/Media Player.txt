@@ -1,2 +1,6 @@
 Microsoft-Windows-MediaPlayer*
 Microsoft-Windows-Media-Player*
+
+Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
+Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
+Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*

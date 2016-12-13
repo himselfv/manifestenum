@@ -1,0 +1,2 @@
+# msconfig.exe, a utility to manage a few boot time and system settings
+Microsoft-Windows-MsConfig-*

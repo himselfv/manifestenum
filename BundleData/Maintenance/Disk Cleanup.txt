@@ -1,0 +1,2 @@
+Microsoft-Windows-cleanmgr*
+Microsoft-Windows-dataclen*

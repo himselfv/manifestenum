@@ -1,1 +1,2 @@
+Microsoft-Windows-DriverVerifier*
 Microsoft-OneCore-DriverVerifier*

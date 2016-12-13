@@ -1,0 +1,5 @@
+# Disk Diagnostics over WDI
+
+Microsoft-Windows-Disk-Diagnosis-*
+Microsoft-Windows-Disk-Failure-Diagnostic-*
+Microsoft-Windows-DiskDiagnosis-*

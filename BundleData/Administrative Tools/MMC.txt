@@ -13,6 +13,7 @@ Microsoft-Windows-AuthorizationManagerUI*
 Microsoft-Windows-CertificateManagerSnapinDLL*
 Microsoft-Windows-COM-ComPlus-MSC*
 Microsoft-Windows-ComputerManagementSnapin*
+Microsoft-Windows-ComputerManagerLauncher*	# Exe to launch the snap-in
 Microsoft-Windows-DiskManagement*
 Microsoft-Windows-DNS-ClientSnapin*
 Microsoft-Windows-GroupPolicy-Admin-Gpedit-Snapin*

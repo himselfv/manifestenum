@@ -92,6 +92,7 @@ Microsoft-Windows-Securitycenter-Adm*
 Microsoft-Windows-Sensors-Adm*
 Microsoft-Windows-Setup-Adm*
 Microsoft-Windows-SharedFolders-Adm*
+Microsoft-Windows-Shell-GroupPolicy*
 Microsoft-Windows-Shell-CommandPrompt-RegEditTools-Adm*
 Microsoft-Windows-Sidebar-Adm*
 Microsoft-Windows-Sideshow-Adm*

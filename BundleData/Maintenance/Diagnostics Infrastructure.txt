@@ -1,0 +1,66 @@
+# Windows Diagnostics Infrastructure (WDI)
+# Windows components implement triggers that cause WDI to launch scenario-specific
+# troubleshooting modules to detect the occurence of problem scenario.
+# Event-based and on-demand diagnosis is available.
+
+# Diagnostic scenarios are stored in System32\diagnostics, where many plugins add their content.
+
+# Needed for:
+#   Disk Diagnostics / SMART (passes SMART warnings to WDI)
+#   Network Diagnostics and Troubleshooting (implemented on WDI)
+#   Resource Exhaustion Prevention
+#   Memory Diagnostics
+#   Windows Error Reporting (can recommend WDI to run certain scenarios)
+#   Startup Repair Tool
+#   Windows Performance Diagnostics
+#   Program Compatibility Assistant (run on WDI triggers for known failures)
+
+# Requires:
+#   Many scenarios require PowerShell as the handlers are scripts.
+
+# Services: DPS, WdiServiceHost, WdiSystemHost
+
+# Related: SQM, Ceip
+
+
+# Components:
+#  DiagonsticPolicyService
+#  DiagLog
+
+
+Microsoft-Windows-DiagnosticInfrastructure*
+# ..-Client
+# ..-Server	# DPS, WdiServiceHost, WdiSystemHost
+# ..-Settings
+# ..Core
+
+Microsoft-Windows-DiagnosticHub*	#?
+Microsoft-Windows-DiagnosticsHub*
+
+Microsoft-Windows-WDI*
+
+# DiagTrack?
+
+
+Microsoft-Windows-ScriptedDiagnostics*	# The framework for using PowerShell scripts as handlers for WDI events/scenarios.
+Microsoft.Windows.Diagnosis*		# A set of .NET classes for scripted diagnostics to use
+
+
+# Third-party plugins
+# Most are related to some other area, but are usually not a part of any particular package
+Microsoft-Windows-DeviceCenterDiagnostic*
+Microsoft-Windows-DeviceDiagnostic*
+Microsoft-Windows-EFS.TriggerProvider*
+Microsoft-Windows-PrinterDiagnostic*
+Microsoft-Windows-MaintenanceDiagnostic*
+Microsoft-Windows-NetworkDiagnostics-*
+Microsoft-Windows-NetworkDiagnosticsFramework*
+Microsoft-Windows-PCWDiagnostic* # Program Compability Wizard
+Microsoft-Windows-PerformanceDiagnostic*
+Microsoft-Windows-PowerDiagnostic*
+Microsoft-Windows-Resource-Leak-Diagnostic*
+Microsoft-Windows-SearchDiagnostic*
+Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
+Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
+Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*
+Microsoft-Windows-WindowsUpdateDiagnostic*

@@ -1,0 +1,50 @@
+# Windows Management Instrumentation,
+# an implementation of WBEM (Web-Based Enterprise Management) for Windows.
+# Glossary:
+#   CIM = Common Information Model
+#   CIMOM = CIM Object Manager
+#   MOF = Managed Object Format
+
+# It is not recommended to remove, as even local components often depend on it these days.
+
+# Will probably need to split this further.
+
+Microsoft-Windows-WMI
+Microsoft-Windows-WMI.*
+Microsoft-Windows-WMI-*
+
+Microsoft-Windows-WmiPerf*
+
+
+# Third-party WMI entries
+# Many more are included in a single assembly and are not listed
+EAIME-TraceProviders
+Microsoft-Windows-COM-DTC-Tracing*
+Microsoft-Windows-DIMS.Log*
+Microsoft-Windows-DIMS-KeyRoam.Log*
+Microsoft-Windows-Dot3svc-MOF*
+Microsoft-Windows-GroupPolicy-Base-Mof*
+Microsoft-Windows-GroupPolicy-PolicyMaker-Mof*
+Microsoft-Windows-IMAPIv2-Base-MOF*
+Microsoft-Windows-IMAPIv2-FileSystemSupport-MOF*
+Microsoft-Windows-iSCSI_Initiator_Service_Mof*
+Microsoft-Windows-L2GPStore-MOF*
+Microsoft-Windows-Mup-Mof*
+Microsoft-Windows-NlaSvc-MOF*
+Microsoft-Windows-OneX-MOF*
+Microsoft-Windows-ReliabilityMetrics-Wmi-Provider*
+Microsoft-Windows-Security-Configuration-Engine-Mof*
+Microsoft-Windows-Security-Digest-MOF*
+Microsoft-Windows-Security-Kerberos-MOF*
+Microsoft-Windows-Security-NTLM-MOF*
+Microsoft-Windows-Security-Schannel-MOF*
+Microsoft-Windows-Security-SPP-WMI*
+Microsoft-Windows-ShadowCopyWMIProvider*
+Microsoft-Windows-StorageVolumeWMIProvider*
+Microsoft-Windows-SystemRestore-WMIProvider*
+Microsoft-Windows-TCPIP-MOF*
+Microsoft-Windows-TerminalServices-WMIProviderMOF*
+Microsoft-Windows-TPM-Driver-WMI*
+Microsoft-Windows-UserModePowerService-Mof*
+Microsoft-Windows-Wininit-MOF*
+Microsoft-Windows-Winlogon-MOF*

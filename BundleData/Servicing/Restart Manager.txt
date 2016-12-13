@@ -1,0 +1,8 @@
+# Restart Manager lets applications and services register to receive notifications
+# to be shut down and restarted as a part of OS servicing.
+
+# Related: Maintenance\Reliability Infrastructure
+
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa373524(v=vs.85).aspx
+
+Microsoft-Windows-RestartManager*

@@ -1,1 +1,3 @@
+Microsoft-Windows-Defrag*
+Microsoft-Windows-Defrag.*
 Microsoft-Windows-Defrag-*

@@ -1,0 +1,9 @@
+# Service Control Manager (SCM) or services.exe
+# Core component.
+
+# Starts and stops services, performs a number of other tasks:
+# - Handles last known good configuration updates
+# - Notifies usermode of network drive changes (as reported by mup.sys)
+
+
+Microsoft-Windows-Services-ServiceController*

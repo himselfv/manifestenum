@@ -1,0 +1,12 @@
+# A shell component in Windows 7 which can host gadgets
+# Deprecated in Windows 8
+
+Microsoft-Windows-Sidebar
+Microsoft-Windows-Sidebar.*
+Microsoft-Windows-Sidebar-*
+
+# Gadgets
+Microsoft-Windows-Gadget-*
+# Microsoft-Windows-Gadget-Platform	# covered by the above
+
+Microsoft-Windows-Gadgets-SlideshowGadget-*

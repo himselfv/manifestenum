@@ -1,0 +1,5 @@
+# IMAPI enables the creation of optical media using a variety of file systems.
+# CD/CD-R/RW/DVD/BD
+
+Microsoft-Windows-IMAPI*
+# Microsoft-Windows-IMAPIv2* # included by above

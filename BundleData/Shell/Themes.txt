@@ -1,3 +1,4 @@
+Microsoft-Windows-Shell-Themes*
 Microsoft-Windows-aero*
 Microsoft-Windows-aerolite*
 Microsoft-Windows-aero_ss*

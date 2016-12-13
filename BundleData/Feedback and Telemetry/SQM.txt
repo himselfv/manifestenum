@@ -1,14 +1,30 @@
-# SQM
-Microsoft-Windows-Client-SQM-Consolidator-Feature*
+# Customer Experience Improvement Program (CEIP)
+# Collects information about how people use Microsoft products. Telemetry.
+# Basically the same as SQM - see below.
+# See also:
+#   http://www.verboon.info/2011/04/the-microsoft-customer-experience-improvement-programpart-1/
+#   https://support.microsoft.com/en-us/kb/951282
+
+# Consists of the core and a number of collector modules scattered throughout the system.
+
+Microsoft-Windows-CEIPEnable-Adm*	# Group policy file
+
+Microsoft-Windows-KernelCeip*
+Microsoft-Windows-UsbCeip*
+
+# Software Quality Metrics (SQM)
+# Basically the same as CEIP. Internal name for CEIP at Microsoft.
+
+# Main consolidator
+Microsoft-Windows-SQM-Consolidator-*
+Microsoft-Windows-Client-SQM-Consolidator*
+#Microsoft-Windows-Client-SQM-Consolidator-*
+
 # And various sqmapis throughout the system
 Microsoft-Windows-ImageBasedSetup-IE-SQMAPI*
 Microsoft-Windows-Media-Format-SQM*
 Microsoft-Windows-SQMApi*
 Microsoft-Windows-WPD-PortableDeviceSQM*
-# Ceip (SQM branch)
-Microsoft-Windows-KernelCeip*
-Microsoft-Windows-UsbCeip*
 
-Microsoft-Windows-Client-SQM-Consolidator*
-
-Microsoft-Windows-CEIPEnable-Adm*
+# Looks like a WDI plugin to monitor SQM failures
+Microsoft-Windows-AdaptiveSqmManifestPlugin*

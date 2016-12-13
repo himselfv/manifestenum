@@ -1,0 +1,17 @@
+# Encrypted File System (EFS)
+# Encypts selected files on the NTFS volumes transparently
+
+Microsoft-Windows-EFS
+Microsoft-Windows-EFS-*
+Microsoft-Windows-EFS.*
+# ...-Core
+# ...-Service
+# ...-UI
+# ...-Util
+# ....TriggerProvider
+
+# Likely related
+Microsoft-Windows-efsadu*
+
+# EFS Backup/Restore keys wizard app
+Microsoft-Windows-efs-rekeywiz*

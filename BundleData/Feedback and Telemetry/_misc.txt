@@ -1,11 +1,6 @@
 Microsoft-Windows-Unified-Telemetry*
 
-# DCP (Data collection and publishing) telemetry
-Microsoft-Windows-DCP*					# Service:DcpSvc
-
 # DeviceCensus
 Microsoft-Windows-DeviceCensus*
-
-Microsoft-Windows-Compat-*
 
 Microsoft-Windows-CoreSystem-Bluetooth-Telemetry*

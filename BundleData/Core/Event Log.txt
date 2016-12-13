@@ -1,0 +1,6 @@
+Microsoft-Windows-EventLog*
+# -Api
+# -ForwardPlugin
+
+# Wevtutil.exe
+Microsoft-Windows-EventLog-CommandLine*

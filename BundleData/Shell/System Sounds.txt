@@ -1,0 +1,5 @@
+
+Microsoft-Windows-Shell-Sounds*
+Microsoft-Windows-Shell-SoundThemes
+Microsoft-Windows-Shell-SoundThemes.*
+Microsoft-Windows-Shell-SoundThemes-*

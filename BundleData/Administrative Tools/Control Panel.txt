@@ -20,3 +20,43 @@ Microsoft-Windows-main.*
 Microsoft-Windows-BTH-CPL*
 # Some resources lack prefix
 BTH-CPL*
+
+Microsoft-Windows-IRPROPS*	# Infrared
+Microsoft-Windows-mmsys*	# Multimedia Devices
+Microsoft-Windows-powercfg*
+Microsoft-Windows-timedate*	# Time and Date
+
+
+# These are not *.cpl apps, but Control panel applets for Windows 7
+Microsoft-Windows-Backup-CPL*
+Microsoft-Windows-DiagCpl*
+Microsoft-Windows-HealthCenterCPL*
+Microsoft-Windows-PerfCenterCPL*
+Microsoft-Windows-powercpl*
+Microsoft-Windows-systemcpl*
+Microsoft-Windows-sysdm*
+Microsoft-Windows-TaskbarCPL*
+
+
+# Service Tools
+Microsoft-Windows-control			# Run CPL files
+Microsoft-Windows-control.*
+Microsoft-Windows-RunLegacyCPLElevated		# Run legacy CPL files elevated
+Microsoft-Windows-RunLegacyCPLElevated.*
+
+
+# DPI Scaling Settings
+Microsoft-Windows-DpiScaling*
+
+# Select default programs UI
+Microsoft-Windows-ComputerDefaults
+
+# Opens System Properties UI (MyComputer->Properties in XP and earlier) on one of the pages
+Microsoft-Windows-SystemPropertiesAdvanced*
+Microsoft-Windows-SystemPropertiesComputerName*
+Microsoft-Windows-SystemPropertiesHardware*
+Microsoft-Windows-SystemPropertiesProtection*
+# Shows Data Execution Prevention UI page separately
+Microsoft-Windows-SystemPropertiesDataExecutionPrevention*
+# Shows UI performance settings page separately
+Microsoft-Windows-SystemPropertiesPerformance*

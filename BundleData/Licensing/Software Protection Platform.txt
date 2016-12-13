@@ -1,0 +1,20 @@
+# Software Protection Platform (spp)
+
+# Consists of core and a number of license files under
+#   $(runtime.system32)\spp\tokens\ppdlic\*.xrm-ms
+
+# Many components include their own license files, sometimes as a separate package.
+
+# Core
+Microsoft-Windows-Security-SPP
+Microsoft-Windows-Security-SPP.*
+Microsoft-Windows-Security-SPP-*
+# Lots of subentries with license files for various components.
+
+# Probably related
+Microsoft-Windows-SPP
+Microsoft-Windows-SPP.*
+Microsoft-Windows-SPP-*
+
+# Secondary components
+Microsoft-Windows-DNS-License*
