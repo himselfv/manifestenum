@@ -6,7 +6,7 @@ uses
   ManifestEnum_Progress in 'ManifestEnum_Progress.pas' {ProgressForm},
   ManifestEnum.Log in 'ManifestEnum.Log.pas' {LogForm},
   CommonResources in 'CommonResources.pas' {ResourceModule: TDataModule},
-  CommonFilters in 'CommonFilters.pas',
+  CommonFilters in 'CommonFilters.pas' {FiltersForm},
   AssemblyDb in 'Db\AssemblyDb.pas',
   AssemblyDb.Core in 'Db\AssemblyDb.Core.pas',
   AssemblyDb.Environ in 'Db\AssemblyDb.Environ.pas',
@@ -53,5 +53,6 @@ begin
   Application.CreateForm(TAssemblyActions, AssemblyActions);
   Application.CreateForm(TRegistryActions, RegistryActions);
   Application.CreateForm(TFileActions, FileActions);
+  Application.CreateForm(TFiltersForm, FiltersForm);
   Application.Run;
 end.

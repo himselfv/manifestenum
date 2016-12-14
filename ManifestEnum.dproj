@@ -113,7 +113,9 @@
             <Form>ResourceModule</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="CommonFilters.pas"/>
+        <DCCReference Include="CommonFilters.pas">
+            <Form>FiltersForm</Form>
+        </DCCReference>
         <DCCReference Include="Db\AssemblyDb.pas"/>
         <DCCReference Include="Db\AssemblyDb.Core.pas"/>
         <DCCReference Include="Db\AssemblyDb.Environ.pas"/>

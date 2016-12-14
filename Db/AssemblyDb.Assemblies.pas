@@ -1,7 +1,7 @@
 unit AssemblyDb.Assemblies;
 
 interface
-uses Generics.Collections, sqlite3, AssemblyDb.Core;
+uses Classes, Generics.Collections, sqlite3, AssemblyDb.Core;
 
 type
   TAssemblyId = int64;
@@ -59,6 +59,13 @@ type
     procedure GetAllAssemblies(AList: TAssemblyList);
     procedure GetNameLike(const AName: string; AList: TAssemblyList);
     function GetByManifestName(const AManifestName: string): TAssemblyId;
+
+    procedure QueryStrings(AStmt: PSQLite3Stmt; AList: TStrings); overload;
+    procedure QueryStrings(const ASql: string; AList: TStrings); overload;
+    procedure GetDistinctVersions(AList: TStrings);
+    procedure GetDistinctProcessorArchitectures(AList: TStrings);
+    procedure GetDistinctLanguages(AList: TStrings);
+    procedure GetDistinctPublicKeyTokens(AList: TStrings);
 
   end;
 
@@ -309,6 +316,44 @@ begin
   if res <> SQLITE_DONE then
     Db.RaiseLastSqliteError;
   sqlite3_reset(stmt);
+end;
+
+procedure TAssemblyAssemblies.QueryStrings(AStmt: PSQLite3Stmt; AList: TStrings);
+var res: integer;
+begin
+  res := sqlite3_step(AStmt);
+  while res = SQLITE_ROW do begin
+    AList.Add(sqlite3_column_text16(AStmt, 0));
+    res := sqlite3_step(AStmt)
+  end;
+  if res <> SQLITE_DONE then
+    Db.RaiseLastSQLiteError;
+  sqlite3_reset(AStmt);
+end;
+
+procedure TAssemblyAssemblies.QueryStrings(const ASql: string; AList: TStrings);
+begin
+  QueryStrings(Db.PrepareStatement(ASql), AList);
+end;
+
+procedure TAssemblyAssemblies.GetDistinctVersions(AList: TStrings);
+begin
+  QueryStrings('SELECT DISTINCT version FROM assemblies', AList);
+end;
+
+procedure TAssemblyAssemblies.GetDistinctProcessorArchitectures(AList: TStrings);
+begin
+  QueryStrings('SELECT DISTINCT processorArchitecture FROM assemblies', AList);
+end;
+
+procedure TAssemblyAssemblies.GetDistinctLanguages(AList: TStrings);
+begin
+  QueryStrings('SELECT DISTINCT language FROM assemblies', AList);
+end;
+
+procedure TAssemblyAssemblies.GetDistinctPublicKeyTokens(AList: TStrings);
+begin
+  QueryStrings('SELECT DISTINCT publicKeyToken FROM assemblies', AList);
 end;
 
 

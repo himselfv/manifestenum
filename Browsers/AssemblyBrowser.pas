@@ -20,9 +20,7 @@ type
     DelayLoad: TDelayLoadHeader;
     Type_: TNodeType;
     Name: string;
-    Assembly: TAssemblyId;
-    IsDeployment: boolean;
-    State: TAssemblyState;
+    Assembly: TAssemblyData;
     Bundle: TBundleId;
   end;
   PNodeData = ^TNodeData;
@@ -181,9 +179,7 @@ begin
   Data := Tree.GetNodeData(Result);
   Data.Type_ := ntAssembly;
   Data.Name := AEntry.identity.ToString;
-  Data.Assembly := AEntry.id;
-  Data.IsDeployment := AEntry.isDeployment;
-  Data.State := AEntry.state;
+  Data.Assembly := AEntry;
   Data.DelayLoad.Touched := false;
 end;
 
@@ -231,7 +227,7 @@ begin
     if Data.Type_ <> ntAssembly then
       Result := 0
     else
-      Result := Data.Assembly;
+      Result := Data.Assembly.id;
   end;
 end;
 
@@ -244,7 +240,7 @@ begin
     Data := Tree.GetNodeData(ANode);
     if Data.Type_ <> ntAssembly then continue; //At this moment we don't count other nodes
     SetLength(Result, Length(Result)+1);
-    Result[Length(Result)-1] := Data.Assembly;
+    Result[Length(Result)-1] := Data.Assembly.id;
   end;
 end;
 
@@ -349,10 +345,10 @@ begin
   inherited;
   Data := Tree.GetNodeData(Node);
   if Data.Type_ = ntAssembly then begin
-    if Data.State <> asInstalled then
+    if Data.Assembly.State <> asInstalled then
       TargetCanvas.Font.Color := clSilver
     else
-    if Data.IsDeployment then
+    if Data.Assembly.IsDeployment then
       TargetCanvas.Font.Color := clBlue
     else
       TargetCanvas.Font.Color := clBlack;
@@ -388,15 +384,11 @@ begin
       FDb.FilterAssemblyByName(filter, list);
     if cbFilterByFiles.Checked and (filter <> '') then
       FDb.FilterAssemblyByFile(filter, list);
-    for Node in Tree.ChildNodes(nil) do begin
+    for Node in Tree.Nodes() do begin
       Data := Tree.GetNodeData(Node);
       if Data.Type_ <> ntAssembly then continue; //other nodes are always visible atm //TODO: Hide filtered
-      Visible := ShowAll or list.ContainsKey(Data.Assembly);
-      if Visible and CommonFilters.ShowInstalledOnly then
-        Visible := Data.State = asInstalled;
-      if Visible and CommonFilters.ShowDeploymentsOnly then
-        Visible := Data.IsDeployment;
-      Tree.IsVisible[Node] := Visible;
+      Visible := ShowAll or list.ContainsKey(Data.Assembly.id);
+      Tree.IsVisible[Node] := Visible and Filters.Test(Data.Assembly);
     end;
   finally
     Tree.EndUpdate;

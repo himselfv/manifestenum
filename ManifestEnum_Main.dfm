@@ -67,14 +67,9 @@ object MainForm: TMainForm
     end
     object Options1: TMenuItem
       Caption = 'Options'
-      object miForceUninstall: TMenuItem
-        AutoCheck = True
-        Caption = 'Force uninstall'
-        Hint = 'Automatically turn assemblies into deployments if needed'
-        OnClick = miForceUninstallClick
-      end
-      object N4: TMenuItem
-        Caption = '-'
+      object miFilters: TMenuItem
+        Caption = 'Filters...'
+        OnClick = miFiltersClick
       end
       object miShowInstalledOnly: TMenuItem
         AutoCheck = True
@@ -86,6 +81,15 @@ object MainForm: TMainForm
         AutoCheck = True
         Caption = 'Show only deployments'
         OnClick = miShowDeploymentsOnlyClick
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object miForceUninstall: TMenuItem
+        AutoCheck = True
+        Caption = 'Force uninstall'
+        Hint = 'Automatically turn assemblies into deployments if needed'
+        OnClick = miForceUninstallClick
       end
     end
     object miService: TMenuItem

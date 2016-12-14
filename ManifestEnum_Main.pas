@@ -43,6 +43,7 @@ type
     miOpenDeploymentsKey: TMenuItem;
     miOpenSxSFolder: TMenuItem;
     Queryassemblyscavener1: TMenuItem;
+    miFilters: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -64,6 +65,7 @@ type
     procedure miOpenSxSFolderClick(Sender: TObject);
     procedure Queryassemblyscavener1Click(Sender: TObject);
     procedure miForceUninstallClick(Sender: TObject);
+    procedure miFiltersClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -89,7 +91,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
+uses UITypes, Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonFilters, ManifestEnum.Log,
   ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
@@ -170,17 +172,34 @@ begin
   AForm.Show;
 end;
 
+function SplitMultiVal(const str: string): TArray<string>;
+begin
+  if str = '' then
+    Result := nil
+  else
+    Result := str.Split([',']);
+end;
+
+function JoinMultiVal(const val: TArray<string>): string;
+begin
+  Result := Result.Join(',', val);
+end;
+
 procedure TMainForm.LoadSettings;
 var ini: TRegistryIniFile;
 begin
   ini := TRegistryIniFile.Create('ManifestEnum');
   try
     AssemblyActions.ForceUninstall := ini.ReadBool('', 'ForceUninstall', false);
-    CommonFilters.ShowInstalledOnly := ini.ReadBool('Filter', 'ShowInstalledOnly', true);
-    CommonFilters.ShowDeploymentsOnly := ini.ReadBool('Filter', 'ShowDeploymentsOnly', false);
+    Filters.ShowInstalledOnly := ini.ReadBool('Filter', 'ShowInstalledOnly', true);
+    Filters.ShowDeploymentsOnly := ini.ReadBool('Filter', 'ShowDeploymentsOnly', false);
+    Filters.Versions := SplitMultiVal(ini.ReadString('Filter', 'Versions', ''));
+    Filters.ProcessorArchitectures := SplitMultiVal(ini.ReadString('Filter', 'ProcessorArchitectures', ''));
+    Filters.PublicKeyTokens := SplitMultiVal(ini.ReadString('Filter', 'PublicKeyTokens', ''));
+    Filters.Languages := SplitMultiVal(ini.ReadString('Filter', 'Languages', ''));
     miForceUninstall.Checked := AssemblyActions.ForceUninstall;
-    miShowInstalledOnly.Checked := CommonFilters.ShowInstalledOnly;
-    miShowDeploymentsOnly.Checked := CommonFilters.ShowDeploymentsOnly;
+    miShowInstalledOnly.Checked := Filters.ShowInstalledOnly;
+    miShowDeploymentsOnly.Checked := Filters.ShowDeploymentsOnly;
   finally
     FreeAndNil(ini);
   end;
@@ -193,8 +212,12 @@ begin
   ini := TRegistryIniFile.Create('ManifestEnum');
   try
     ini.WriteBool('', 'ForceUninstall', AssemblyActions.ForceUninstall);
-    ini.WriteBool('Filter', 'ShowInstalledOnly', CommonFilters.ShowInstalledOnly);
-    ini.WriteBool('Filter', 'ShowDeploymentsOnly', CommonFilters.ShowDeploymentsOnly);
+    ini.WriteBool('Filter', 'ShowInstalledOnly', Filters.ShowInstalledOnly);
+    ini.WriteBool('Filter', 'ShowDeploymentsOnly', Filters.ShowDeploymentsOnly);
+    ini.WriteString('Filter', 'Versions', JoinMultiVal(Filters.Versions));
+    ini.WriteString('Filter', 'ProcessorArchitectures', JoinMultiVal(Filters.ProcessorArchitectures));
+    ini.WriteString('Filter', 'PublicKeyTokens', JoinMultiVal(Filters.PublicKeyTokens));
+    ini.WriteString('Filter', 'Languages', JoinMultiVal(Filters.Languages));
   finally
     FreeAndNil(ini);
   end;
@@ -211,16 +234,24 @@ begin
   SaveSettings;
 end;
 
+procedure TMainForm.miFiltersClick(Sender: TObject);
+begin
+  FiltersForm.Db := Self.FDb;
+  if IsPositiveResult(FiltersForm.ShowModal) then
+    SaveSettings;
+  FilterChanged(nil);
+end;
+
 procedure TMainForm.miShowInstalledOnlyClick(Sender: TObject);
 begin
-  CommonFilters.ShowInstalledOnly := miShowInstalledOnly.Checked;
+  Filters.ShowInstalledOnly := miShowInstalledOnly.Checked;
   SaveSettings;
   FilterChanged(nil);
 end;
 
 procedure TMainForm.miShowDeploymentsOnlyClick(Sender: TObject);
 begin
-  CommonFilters.ShowDeploymentsOnly := miShowDeploymentsOnly.Checked;
+  Filters.ShowDeploymentsOnly := miShowDeploymentsOnly.Checked;
   SaveSettings;
   FilterChanged(nil);
 end;
