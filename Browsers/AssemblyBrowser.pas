@@ -242,6 +242,7 @@ begin
   SetLength(Result, 0);
   for ANode in Tree.SelectedNodes() do begin
     Data := Tree.GetNodeData(ANode);
+    if Data.Type_ <> ntAssembly then continue; //At this moment we don't count other nodes
     SetLength(Result, Length(Result)+1);
     Result[Length(Result)-1] := Data.Assembly;
   end;

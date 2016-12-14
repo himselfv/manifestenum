@@ -76,7 +76,7 @@ var
   AssemblyResourcesForm: TAssemblyResourcesForm;
 
 implementation
-uses ManifestEnum.RegistryActions, ManifestEnum.FileActions;
+uses ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
 {$R *.dfm}
 
@@ -189,6 +189,10 @@ begin
 
   AData := Sender.GetNodeData(Node);
   case AData.NodeType of
+    ntAssembly: begin
+      AssemblyActions.SetSelectedAssembly(AData.AssemblyId);
+      PopupMenu := AssemblyActions.PopupMenu;
+    end;
     ntFolder: begin
       FileActions.SetSelectedFiles(nil);
       FileActions.SetSelectedFolder(TFolderId(AData.ResourceId));

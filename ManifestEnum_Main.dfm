@@ -71,7 +71,7 @@ object MainForm: TMainForm
         AutoCheck = True
         Caption = 'Force uninstall'
         Hint = 'Automatically turn assemblies into deployments if needed'
-        OnClick = SettingsChanged
+        OnClick = miForceUninstallClick
       end
       object N4: TMenuItem
         Caption = '-'
@@ -145,99 +145,6 @@ object MainForm: TMainForm
     Title = 'Open manifest file...'
     Left = 104
     Top = 80
-  end
-  object PopupMenu: TPopupMenu
-    Left = 248
-    Top = 80
-    object Copy1: TMenuItem
-      Caption = 'Copy'
-      object miCopyAssemblyName: TMenuItem
-        Caption = 'Name'
-        OnClick = miCopyAssemblyNameClick
-      end
-      object miCopyAssemblyDisplayName: TMenuItem
-        Caption = 'Display name'
-        OnClick = miCopyAssemblyDisplayNameClick
-      end
-      object miCopyAssemblyStrongName: TMenuItem
-        Caption = 'Strong name'
-        OnClick = miCopyAssemblyStrongNameClick
-      end
-      object miCopyAssemblyManifestName: TMenuItem
-        Caption = 'Manifest name'
-        OnClick = miCopyAssemblyManifestNameClick
-      end
-      object miCopyComponentKeyform: TMenuItem
-        Caption = 'Component keyform'
-        OnClick = miCopyComponentKeyformClick
-      end
-      object miCopyDeploymentKeyform: TMenuItem
-        Caption = 'Deployment keyform'
-        OnClick = miCopyDeploymentKeyformClick
-      end
-      object miCopyHash: TMenuItem
-        Caption = 'Hash'
-        OnClick = miCopyHashClick
-      end
-      object miCopyVersionlessHash: TMenuItem
-        Caption = 'Versionless hash'
-        OnClick = miCopyVersionlessHashClick
-      end
-    end
-    object Export1: TMenuItem
-      Caption = 'Export'
-      object miExportManifest: TMenuItem
-        Caption = 'Manifest...'
-        OnClick = miExportManifestClick
-      end
-      object miExportPackageData: TMenuItem
-        Caption = 'Package data...'
-        OnClick = miExportPackageDataClick
-      end
-    end
-    object Open1: TMenuItem
-      Caption = 'Open'
-      object miJumpToComponentKey: TMenuItem
-        Caption = 'Component key'
-        Hint = 
-          'Opens the associated Component subkey in the COMPONENTS hive, if' +
-          ' it'#39's loaded'
-        OnClick = miJumpToComponentKeyClick
-      end
-      object miJumpToDeploymentKey: TMenuItem
-        Caption = 'Deployment key'
-        Hint = 
-          'Opens the associated Deployment subkey in the COMPONENTS hive, i' +
-          'f it'#39's loaded and the component is a deployment'
-        OnClick = miJumpToDeploymentKeyClick
-      end
-    end
-    object miAssemblyDebug: TMenuItem
-      Caption = 'Debug'
-      object miGetAssemblySize: TMenuItem
-        Caption = 'Get assembly size'
-        OnClick = miGetAssemblySizeClick
-      end
-      object miAssemblyProbeInstallation: TMenuItem
-        Caption = 'Probe installation'
-        OnClick = miAssemblyProbeInstallationClick
-      end
-    end
-    object miConvertIntoDeployment: TMenuItem
-      Caption = 'Convert into deployment'
-      OnClick = miConvertIntoDeploymentClick
-    end
-    object miUninstallAssembly: TMenuItem
-      Caption = 'Uninstall assembly'
-      Hint = 'Uninstalls assembly from the assembly cache'
-      OnClick = miUninstallAssemblyClick
-    end
-  end
-  object SaveManifestDialog: TSaveDialog
-    DefaultExt = '*.manifest'
-    Filter = '*.manifest'
-    Left = 104
-    Top = 136
   end
   object OpenAnyFileDialog: TOpenDialog
     DefaultExt = '*.*'

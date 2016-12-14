@@ -131,6 +131,10 @@
         <DCCReference Include="Db\ManifestParser.pas"/>
         <DCCReference Include="Db\ManifestSaxParser.pas"/>
         <DCCReference Include="Db\AssemblyDbBuilder.pas"/>
+        <DCCReference Include="Actions\ManifestEnum.AssemblyActions.pas">
+            <Form>AssemblyActions</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <DCCReference Include="Actions\ManifestEnum.RegistryActions.pas">
             <Form>RegistryActions</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -178,7 +182,6 @@
         <DCCReference Include="Browsers\ShellExtBrowser.pas">
             <Form>ShellExtensionBrowserForm</Form>
         </DCCReference>
-        <DCCReference Include="Bundles.pas"/>
         <UserTool Include="SxS\w10-base.manifest">
             <ToolName>CopyToOutput</ToolName>
         </UserTool>

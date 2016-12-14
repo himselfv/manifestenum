@@ -24,6 +24,7 @@ uses
   ManifestParser in 'Db\ManifestParser.pas',
   ManifestSaxParser in 'Db\ManifestSaxParser.pas',
   AssemblyDbBuilder in 'Db\AssemblyDbBuilder.pas',
+  ManifestEnum.AssemblyActions in 'Actions\ManifestEnum.AssemblyActions.pas' {AssemblyActions: TDataModule},
   ManifestEnum.RegistryActions in 'Actions\ManifestEnum.RegistryActions.pas' {RegistryActions: TDataModule},
   ManifestEnum.FileActions in 'Actions\ManifestEnum.FileActions.pas' {FileActions: TDataModule},
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
@@ -38,8 +39,7 @@ uses
   FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm},
   CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm},
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
-  ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
-  Bundles in 'Bundles.pas';
+  ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm};
 
 {$R *.res}
 
@@ -50,6 +50,7 @@ begin
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TResourceModule, ResourceModule);
   Application.CreateForm(TLogForm, LogForm);
+  Application.CreateForm(TAssemblyActions, AssemblyActions);
   Application.CreateForm(TRegistryActions, RegistryActions);
   Application.CreateForm(TFileActions, FileActions);
   Application.Run;
