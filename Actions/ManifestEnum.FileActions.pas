@@ -66,7 +66,7 @@ begin
   mi.Caption := '-';
   FilePopupMenu.Items.Add(mi);
   FilePopupMenu.Items.Add(FolderPopupMenu.Items);
-  FolderPopupMenu.Items.Caption := 'Parent';
+  FolderPopupMenu.Items.Caption := 'Folder';
 end;
 
 procedure TFileActions.DataModuleDestroy(Sender: TObject);
