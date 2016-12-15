@@ -109,10 +109,6 @@ begin
   FAssemblyBrowser.GroupingType := gtBundles;
   AddPage(FAssemblyBrowser);
 
-  FCategoryBrowser := TCategoryBrowserForm.Create(Application);
-  FCategoryBrowser.Db := FDb;
-  AddPage(FCategoryBrowser);
-
   FFileBrowser := TFileBrowserForm.Create(Application);
   AddPage(FFileBrowser);
 
@@ -126,6 +122,10 @@ begin
 
   AddPage(TAutorunsBrowserForm.Create(Application));
   AddPage(TShellExtensionBrowserForm.Create(Application));
+
+  FCategoryBrowser := TCategoryBrowserForm.Create(Application);
+  FCategoryBrowser.Db := FDb;
+  AddPage(FCategoryBrowser);
 
   FAssemblyDetails := TAssemblyDetailsForm.Create(Application);
   FAssemblyDetails.Db := FDb;
