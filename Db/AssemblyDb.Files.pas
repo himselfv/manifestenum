@@ -182,7 +182,7 @@ begin
   sqlite3_bind_int64(stmt, 1, AParent);
   res := sqlite3_step(stmt);
   while res = SQLITE_ROW do begin
-    AList.Add(sqlite3_column_int64(stmt, 0), sqlite3_column_text16(stmt, 1));
+    AList.AddOrSetValue(sqlite3_column_int64(stmt, 0), sqlite3_column_text16(stmt, 1));
     res := sqlite3_step(stmt)
   end;
   if res <> SQLITE_DONE then
@@ -200,7 +200,7 @@ begin
   res := sqlite3_step(stmt);
   while res = SQLITE_ROW do begin
     AData.owner := boolean(sqlite3_column_int(stmt, 1));
-    AList.Add(sqlite3_column_int64(stmt, 0), AData);
+    AList.AddOrSetValue(sqlite3_column_int64(stmt, 0), AData);
     res := sqlite3_step(stmt)
   end;
   if res <> SQLITE_DONE then
