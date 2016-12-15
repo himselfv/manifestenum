@@ -78,18 +78,6 @@ begin
   Reload;
 end;
 
-
- {
-  Assemblies of type "driverUpdate" are even worse. They don't get installed, instead their whole
-  contents goes into a personal folder in
-    System32\DriverStore\FileRepository\[assembly id]\*
-  At the moment we can't do anything with these. Ideally, we'd like to catch them at some point
-  and redirect to their folders...
-  TODO: Process driverUpdates when importing?
- }
-
-
-
 procedure TFileBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
 var AData: PNodeData absolute ANodeData;
   Anchors: TArray<TFolderId>;
