@@ -46,6 +46,7 @@ type
     miConvertIntoDeployment: TMenuItem;
     miUninstallAssembly: TMenuItem;
     SaveManifestDialog: TSaveDialog;
+    miJumpToSxsStore: TMenuItem;
     procedure miCopyAssemblyNameClick(Sender: TObject);
     procedure miCopyAssemblyDisplayNameClick(Sender: TObject);
     procedure miCopyAssemblyStrongNameClick(Sender: TObject);
@@ -62,6 +63,7 @@ type
     procedure miConvertIntoDeploymentClick(Sender: TObject);
     procedure miUninstallAssemblyClick(Sender: TObject);
     procedure miProbeInstallationClick(Sender: TObject);
+    procedure miJumpToSxsStoreClick(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FSelectedAssemblyIDs: TArray<TAssemblyId>;
@@ -263,6 +265,13 @@ begin
     RegeditOpenAndNavigate('HKEY_LOCAL_MACHINE\'+sSxsDeploymentsKey+'\'+SxsDeploymentKeyform(Assembly.identity));
 end;
 
+procedure TAssemblyActions.miJumpToSxsStoreClick(Sender: TObject);
+var Assembly: TAssemblyData;
+  Path: string;
+begin
+  if GetSelectedSingleAssembly(Assembly) then
+    OsUtils.ShellOpen(SxsDir() + '\' + Assembly.manifestName + '\');
+end;
 
 
 procedure SaveStreamToFile(AStream: TStream; const AFilename: string);

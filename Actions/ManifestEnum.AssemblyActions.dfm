@@ -67,6 +67,11 @@ object AssemblyActions: TAssemblyActions
           'f it'#39's loaded and the component is a deployment'
         OnClick = miJumpToDeploymentKeyClick
       end
+      object miJumpToSxsStore: TMenuItem
+        Caption = 'SxS store'
+        Hint = 'Opens the associated folder in the SxS store'
+        OnClick = miJumpToSxsStoreClick
+      end
     end
     object miDebug: TMenuItem
       Caption = 'Debug'
