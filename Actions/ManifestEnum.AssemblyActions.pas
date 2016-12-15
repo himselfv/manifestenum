@@ -267,7 +267,6 @@ end;
 
 procedure TAssemblyActions.miJumpToSxsStoreClick(Sender: TObject);
 var Assembly: TAssemblyData;
-  Path: string;
 begin
   if GetSelectedSingleAssembly(Assembly) then
     OsUtils.ShellOpen(SxsDir() + '\' + Assembly.manifestName + '\');

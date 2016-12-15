@@ -1,6 +1,6 @@
 unit AssemblyDbBuilder;
 
-{$DEFINE PROFILE}
+//{$DEFINE PROFILE}
 
 {$DEFINE SAX}
 //Use SAX parser instead of the DOM one
