@@ -1,0 +1,4 @@
+# Internet Connection Sharing (ICS) allows to bridge the internet
+# coming from one network connection to another.
+
+Microsoft-Windows-SharedAccess*
