@@ -1,0 +1,3 @@
+Microsoft-Windows-Music-Samples*
+Microsoft-Windows-PhotoSamples*
+Microsoft-Windows-VideoSamples*
