@@ -1,0 +1,51 @@
+# Remote Access Services (RAS) is a common name given in Windows to telephone or virtual private network connections, in other words any connections that are established on the fly and produce a new network channel.
+
+# Windows has a few user interface elements to:
+# - Manage the connections
+# - Establish the connection
+# - Autoconnect and redial
+
+
+Microsoft-Windows-RasBase*		# Not included in Deployment, probably core
+Microsoft-Windows-RasApi*		# API
+
+Microsoft-Windows-RAS-*			# Deployment
+
+# Unfortunately we can't just cover M-W-Ras*
+
+Microsoft-Windows-RasChap*
+Microsoft-Windows-RasClient*
+Microsoft-Windows-RasClientTools*	# Dialer app
+Microsoft-Windows-RasCmDial*
+Microsoft-Windows-RasConnectionManager*
+Microsoft-Windows-Rasctrs*
+Microsoft-Windows-RasDlg*		# Not in deployment
+Microsoft-Windows-RasGetConnectedWizard*
+Microsoft-Windows-RasIfmon*
+Microsoft-Windows-RasIpFilter*
+Microsoft-Windows-Rasman*
+Microsoft-Windows-RasmanService*
+# Microsoft-Windows-RASMM*		# RAS Media Manager, probably unrelated
+Microsoft-Windows-Rasmontr*
+Microsoft-Windows-RasMprDdm*
+Microsoft-Windows-RasPlap*
+Microsoft-Windows-Rasppp*
+Microsoft-Windows-RasRTUtils*
+Microsoft-Windows-RasServer*
+Microsoft-Windows-RasTapi*
+Microsoft-Windows-RasTls*
+
+
+VPN-Client-WMIv2Provider*		# Also in deployment
+
+
+# RAS Autodial
+Microsoft-Windows-RasAutoDial*
+Microsoft-Windows-RasAuto-*		# sic, language packs
+
+
+# RAS Connection Manager Administration Kit (RasCMAK)
+# A tool to customize the remote connection experience for users by creating predefined connections to remote servers and networks.
+# RasCMAK produces connection files which can be distributed.
+# https://technet.microsoft.com/en-us/library/cc752995(v=ws.11).aspx
+Microsoft-Windows-RasCMAK*

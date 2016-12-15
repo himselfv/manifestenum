@@ -1,2 +1,5 @@
 Windows-Defender*
 Security-Malware-Windows-Defender*
+
+# Windows Defender Advanced Thread Protection (Sense)
+Windows-SenseClient-*

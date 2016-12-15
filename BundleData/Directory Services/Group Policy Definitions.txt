@@ -128,3 +128,6 @@ Microsoft-Windows-WinInit-Adm*
 Microsoft-Windows-WinLogon-Adm*
 Microsoft-Windows-WinRS-Adm*
 Microsoft-Windows-Winsrv-Adm*
+
+# Windows 10 Exclusive
+Microsoft-Windows-AllowBuildPreview-Adm*

@@ -1,0 +1,5 @@
+# A small tool available in Windows 10 which records your interactions
+# with the PC into a file, which you can then send to support.
+
+Microsoft-Windows-Application-Compability-ProblemStepsRecorder*		# App
+Microsoft-Windows-Application-Compability-UI-Recording*			# Library it relies on

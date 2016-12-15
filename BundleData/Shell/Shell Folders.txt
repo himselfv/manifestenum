@@ -2,3 +2,5 @@ Microsoft-Windows-mydocs*
 
 # Contains desktop.ini files for many well-known folders
 Microsoft-Windows-Shell-DesktopIni-*
+
+Microsoft-Windows-shell32-KF-*		# Windows 10
