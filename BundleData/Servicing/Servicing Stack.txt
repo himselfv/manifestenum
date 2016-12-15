@@ -1,7 +1,4 @@
 Microsoft-Windows-ServicingStack*
 ServicingStack-Client*
 
-Microsoft-Windows-WindowsUpdate-Adm*		# Group policy files
-Microsoft-Windows-WindowsUpdateDiagnostic*	# Diagnostics plugin
-
 Microsoft-Windows-Sxs*

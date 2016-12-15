@@ -100,3 +100,11 @@ Microsoft-Windows-TaskKill-*
 Microsoft-Windows-ForFiles
 Microsoft-Windows-ForFiles.*
 Microsoft-Windows-ForFiles-*
+
+# Scheduled Task manipulation
+Microsoft-Windows-ScTasks*
+
+Microsoft-Windows-WhoAmI*	# whoami.exe
+Microsoft-Windows-Where		# where.exe
+Microsoft-Windows-Where.*
+Microsoft-Windows-Where-*

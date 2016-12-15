@@ -1,0 +1,4 @@
+# BitLocker full disk encryption
+# https://en.wikipedia.org/wiki/BitLocker
+
+Microsoft-Windows-SecureStartup*

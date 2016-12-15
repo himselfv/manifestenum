@@ -1,3 +1,7 @@
 Microsoft-Windows-Music-Samples*
+Microsoft-Windows-MusicSamples*
 Microsoft-Windows-PhotoSamples*
 Microsoft-Windows-VideoSamples*
+Microsoft-Windows-RingtoneSamples*
+Microsoft-Windows-WindowsMediaSamples*		# Package
+# Microsoft-Windows-WinSATMediaSamples*		# Even though this one is included in WindowsMediaSamples, it's related to WinSAT

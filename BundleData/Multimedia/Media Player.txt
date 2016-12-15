@@ -1,6 +1,7 @@
 Microsoft-Windows-MediaPlayer*
 Microsoft-Windows-Media-Player*
-
-Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
-Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
-Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*
+Microsoft-Windows-WindowsMediaPlayer*
+# Covered by the above
+#Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
+#Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
+#Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*

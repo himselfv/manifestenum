@@ -1,7 +1,15 @@
+# DeviceStage is a facility for manufacturers to provide custom devices
+# for Devices and Printers folder.
+# This allows them to present their device with all its custom functions.
+# https://msdn.microsoft.com/en-us/windows/hardware/drivers/print/what-is-device-stage-
 
-# DeviceStage - installs "DeviceStage shell extensions" (dxp.dll) which annoyingly reactivate itself
+# Installs "DeviceStage shell extensions" (dxp.dll) which annoyingly reactivate itself
+# But if you want Devices and Printers to function then I guess you need it.
+
 Microsoft-Windows-DeviceExperiencePlatformFeature*
+Microsoft-Windows-DXP-DeviceExperience*
 Microsoft-WindowsDXP-DeviceExperience*
-Microsoft-Windows-DXPTasks-Sync*
+Microsoft-Windows-DXPTasks-*
+
 Microsoft-Windows-Desktop-PlayToMenu*
 Microsoft-Windows-PlayToStatusProvider*

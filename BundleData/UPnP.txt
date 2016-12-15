@@ -5,3 +5,10 @@ FDResPub*
 fdSSDP*
 fdWNet*
 fdWSD*
+
+# Function Discovery -- not sure if related
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa814070(v=vs.85).aspx
+
+FunDisc
+FunDisc.*
+FunDisc-*

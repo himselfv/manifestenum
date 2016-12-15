@@ -1,2 +1,16 @@
 Microsoft-Windows-CodecPack-*
 Microsoft-Windows-Media-MP3ACM*
+
+Microsoft-Windows-WindowsMedia-Codecs*
+Microsoft-Windows-MP43DECD*
+Microsoft-Windows-MP4SDECD*
+Microsoft-Windows-MPG4DECD*
+Microsoft-Windows-WMADMOD*
+Microsoft-Windows-WMADMOE*
+Microsoft-Windows-WMCODECDSPPS*
+Microsoft-Windows-WMSPDMOE*
+Microsoft-Windows-WMVDECOD*
+Microsoft-Windows-WMVENCOD*
+Microsoft-Windows-WMVSDECD*
+Microsoft-Windows-WMVSENCD*
+Microsoft-Windows-WMVXENCD*

@@ -1,0 +1,3 @@
+Microsoft-Windows-WindowsUpdateClient*
+Microsoft-Windows-WindowsUpdate-Adm*		# Group policy files
+Microsoft-Windows-WindowsUpdateDiagnostic*	# Diagnostics plugin
