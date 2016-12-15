@@ -20,9 +20,10 @@ type
   PNodeData = ^TNodeData;
 
   TFileBrowserForm = class(TDelayLoadTree)
-    lblWhoAdded: TLabel;
     Panel: TPanel;
     cbViewMode: TComboBox;
+    Label1: TLabel;
+    lbComponents: TListBox;
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -381,13 +382,29 @@ end;
 procedure TFileBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
 var AData: PNodeData;
+  Id: TFolderId;
+  Refs: TFolderReferees;
+  AsmID: TassemblyId;
+  Assembly: TAssemblyData;
 begin
   inherited;
   AData := Sender.GetNodeData(Node);
-  if AData.v.assembly > 0 then
-    lblWhoAdded.Caption := 'Component: '+FDb.Assemblies.GetAssembly(AData.v.assembly).identity.ToString
-  else
-    lblWhoAdded.Caption := '';
+  lbComponents.Clear;
+  if AData.v.assembly > 0 then begin
+    lbComponents.Items.Add(FDb.Assemblies.GetAssembly(AData.v.assembly).identity.ToString);
+  end else begin
+    Refs := TFolderReferees.Create;
+    try
+      for Id in AData.Anchors do
+        Db.Files.GetFolderReferees(Id, Refs);
+      for AsmID in Refs.Keys do begin
+        Assembly := Db.Assemblies.GetAssembly(AsmId);
+        lbComponents.Items.Add(Assembly.identity.ToString);
+      end;
+    finally
+      FreeAndNil(Refs);
+    end;
+  end;
 end;
 
 end.
