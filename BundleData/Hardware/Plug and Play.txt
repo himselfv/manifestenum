@@ -1,9 +1,13 @@
 
 # User mode Plug and Play components
 Microsoft-Windows-CoreUserModePnp*
+Microsoft-Windows-PnpUi*
 
 # New device installation user interface elements
 Microsoft-Windows-NewDev*
 
 # Safely Remove Device UI
 Microsoft-Windows-PnpHotPlugUi*
+
+# PnpUtil command line tool
+Microsoft-Windows-PnPutil*

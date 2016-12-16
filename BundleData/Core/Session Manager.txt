@@ -1,0 +1,3 @@
+# Session Manager (SMSS) runs after boot and initializes avialable subsystems
+
+Microsoft-Windows-Smss*

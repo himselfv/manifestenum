@@ -2,3 +2,6 @@
 Microsoft-Windows-Sysprep
 Microsoft-Windows-Sysprep.*
 Microsoft-Windows-Sysprep-*
+
+# Probably related?
+Microsoft-Windows-PnpSysprep*		# Windows 7

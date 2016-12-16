@@ -1,1 +1,2 @@
-Desktop_Shell-GettingStarted*
+Desktop_Shell-GettingStarted*		# Windows 10
+Microsoft-Windows-GettingStarted*	# Windows 7

@@ -1,0 +1,19 @@
+
+
+Microsoft-Windows-Backup-Deployment*
+
+# Opens backup and restore control panel
+Microsoft-Windows-SafeDocs-*
+
+# Backup and restore control panel
+Microsoft-Windows-Backup-CPL
+Microsoft-Windows-Backup-CPL.*
+Microsoft-Windows-Backup-CPL-*
+
+
+
+# This is NOT the Software Protection Platform
+# I'm not sure what it is, but all Backup/Restore components use it
+Microsoft-Windows-SPP
+Microsoft-Windows-SPP.*
+Microsoft-Windows-SPP-*

@@ -1,0 +1,23 @@
+# Microsoft Windows Kernel
+# Only the kernelest assemblies go here
+
+Microsoft-Windows-OS-Kernel*
+
+# Hardware abstraction layer
+Microsoft-Windows-HAL
+Microsoft-Windows-HAL.*
+Microsoft-Windows-HAL-*
+
+# Platform-specific hardware error driver. HAL depends on this.
+Microsoft-Windows-PSHED
+Microsoft-Windows-PSHED.*
+Microsoft-Windows-PSHED-*
+
+# Boot video driver. Kernel depends on this, though there are boot settings to disable it
+Microsoft-Windows-bootvid
+Microsoft-Windows-bootvid.*
+Microsoft-Windows-bootvid-*
+
+# kdcom.dll, Kernel Debugger Protocol
+# ci.dll, Code Integrity Library
+# clfs.dll, common logging file system driver

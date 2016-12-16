@@ -60,3 +60,7 @@ Microsoft-Windows-SystemPropertiesProtection*
 Microsoft-Windows-SystemPropertiesDataExecutionPrevention*
 # Shows UI performance settings page separately
 Microsoft-Windows-SystemPropertiesPerformance*
+Microsoft-Windows-performance.*				# SystemPropertiesPerformance resources
+
+
+Microsoft-Windows-Netplwiz-*		# Opens User passwords configuration window (what you get by control userpasswords2)

@@ -11,10 +11,5 @@ Microsoft-Windows-Security-SPP.*
 Microsoft-Windows-Security-SPP-*
 # Lots of subentries with license files for various components.
 
-# Probably related
-Microsoft-Windows-SPP
-Microsoft-Windows-SPP.*
-Microsoft-Windows-SPP-*
-
 # Secondary components
 Microsoft-Windows-DNS-License*

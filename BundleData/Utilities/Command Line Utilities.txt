@@ -108,3 +108,20 @@ Microsoft-Windows-WhoAmI*	# whoami.exe
 Microsoft-Windows-Where		# where.exe
 Microsoft-Windows-Where.*
 Microsoft-Windows-Where-*
+Microsoft-Windows-Findstr*	# findstr.exe
+
+# comp.exe and fc.exe
+Microsoft-Windows-FileSystemCompareUtilities*
+
+# FS filter manager utility
+Microsoft-Windows-FilterManager-Utils*
+
+Microsoft-Windows-GetMAC*	# getmac.exe, prints MAC addresses for network adapters
+
+Microsoft-Windows-NBTSTAT*	# NetBIOS-over-TCPIP stats in command line
+
+Microsoft-Windows-PnPutil*	# PnpUtil command line tool
+
+Microsoft-Windows-PowerManagement-Configuration-Cmdline*	# powercfg.exe
+
+Microsoft-Windows-Robocopy*	# Robust File Copy utility for command line

@@ -1,15 +1,23 @@
+# Windows Media Center, aka ehome, aka Sonic
 Microsoft-Windows-MediaCenter*
-
 Microsoft-Windows-ehome-*	# For whatever reason, Media Center is called ehome
-ehome-BDATunePIA
-ehome-mcstoredb
+Microsoft.MediaCenter
+Microsoft.MediaCenter.*
+MediaCenter-*			# There's -LicensePolicies
+ehome-*
 
-
-Microsoft-Windows-Sonic		# For whatever reason, this is also ehome => Media Center
+Microsoft-Windows-Sonic		# For whatever reason, this is also ehome (Media Center)
 Microsoft-Windows-Sonic.*
 Microsoft-Windows-Sonic-*
+SonicMCEBurnEngine*
 
-# NET components
+# Help
+Microsoft-Windows-Help-medctr
+Microsoft-Windows-Help-medctr.*
+Microsoft-Windows-Help-medctr-*
+
+# Other parts of MediaCenter deployment and .NET components
+BDATunePIA*
 ehCIR
 ehCIR-NonMSIL
 ehexthost
@@ -26,11 +34,28 @@ ehiUserXp
 ehiVidCtl
 ehiwmp
 ehiWUapi
-ehome-BDATunePIA
-ehome-BDATunePIA
-ehome-mcstoredb
-ehome-mcstoredb
 ehRecObj
 ehRecObj-NonMSIL
 ehshell
 ehshell-NonMSIL
+loadmxf
+mcepg
+MCESidebarCtrl
+mcglidhostobj
+mcplayerinterop
+mcstore
+mcstore.*
+mcstore-*
+mcstoredb
+mcstoredb.*
+mcstoredb-*
+mcupdate
+mcupdate.*
+mcupdate-*
+Mcx2Dvcs
+Mcx2Dvcs.*
+Mcx2Dvcs-*
+Microsoft-Windows-iTVData*
+policy.6.0.ehRecObj*
+policy.6.0.Microsoft.MediaCenter*
+

@@ -5,3 +5,7 @@ Microsoft-Windows-OptionalFeatures*
 
 # A command line tool which will install or remove an optional component
 Microsoft-Windows-OptionalFeatures-Fondue*
+
+
+# On older versions this was called Optional Components
+Microsoft-Windows-OcSetup*		# Windows 7

@@ -1,0 +1,23 @@
+# Windows Subsystem
+
+# Main subsystem process
+Microsoft-Windows-Csrss*
+
+# Libraries used by CSRSS
+Microsoft-Windows-Basesrv
+Microsoft-Windows-Winsrv
+Microsoft-Windows-Csrsrv
+
+# Kernel-mode subsystem driver
+Microsoft-Windows-Win32k
+Microsoft-Windows-Win32k.*
+Microsoft-Windows-Win32k-*
+
+# Main subsystem DLLs
+Microsoft-Windows-Kernel32*
+Microsoft-Windows-Advapi32*
+Microsoft-Windows-User32*
+Microsoft-Windows-Gdi32*
+
+# Windows Internals puts conhost.exe here,
+# but let's not include it for now.

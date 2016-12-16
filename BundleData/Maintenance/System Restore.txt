@@ -1,0 +1,2 @@
+Microsoft-Windows-SystemRestore*
+Microsoft-Windows-SrDelayed*
