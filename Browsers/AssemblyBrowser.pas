@@ -39,6 +39,8 @@ type
     pnlFilterSettings: TPanel;
     cbFilterByName: TCheckBox;
     cbFilterByFiles: TCheckBox;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -59,6 +61,7 @@ type
   protected
     FGroupingType: TGroupingType;
     FOnSelectionChanged: TNotifyEvent;
+    FBundleNodes: TDictionary<TBundleId, PVirtualNode>;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     procedure LoadAllAssemblies();
     function AddAssemblyNode(AParent: PVirtualNode; const AEntry: TAssemblyData): PVirtualNode;
@@ -68,13 +71,13 @@ type
       Data: Pointer; var Abort: Boolean);
     function AddBundleNode(AParent: PVirtualNode; const ABundle: TBundleData): PVirtualNode;
     function FindBundleNode(ABundle: TBundleId): PVirtualNode;
-    procedure FindBundleNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer; var Abort: Boolean);
     procedure ApplyFilter;
     function GetFocusedAssembly: TAssemblyId;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
     procedure SetGroupingType(const Value: TGroupingType);
     procedure FilterChanged(Sender: TObject); override;
   public
+    procedure Clear; override;
     procedure Reload; override;
     property GroupingType: TGroupingType read FGroupingType write SetGroupingType;
     property FocusedAssembly: TAssemblyId read GetFocusedAssembly;
@@ -89,6 +92,24 @@ implementation
 uses CommonFilters;
 
 {$R *.dfm}
+
+procedure TAssemblyBrowserForm.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FBundleNodes := TDictionary<TBundleId, PVirtualNode>.Create;
+end;
+
+procedure TAssemblyBrowserForm.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(FBundleNodes);
+  inherited;
+end;
+
+procedure TAssemblyBrowserForm.Clear;
+begin
+  inherited;
+  FBundleNodes.Clear;
+end;
 
 procedure TAssemblyBrowserForm.Reload;
 begin
@@ -112,35 +133,51 @@ end;
 procedure TAssemblyBrowserForm.LoadAllAssemblies();
 var list: TAssemblyList;
   entry: TAssemblyData;
-  bundleDict: TBundleAssociationDict;
-  bundleId: TBundleId;
+  assocList: TBundleAssociationList;
+  assoc: TBundleAssociation;
+  asmFound: TDictionary<TAssemblyId, boolean>;
+  asmFoundVal: boolean;
   parentNode: PVirtualNode;
 begin
  //DelayLoad will be called for each of the root assemblies immediately, which is slow.
  //So we'll try to create root nodes already delay-initialized.
 
-  bundleDict := nil;
+  asmFound := nil;
   list := TAssemblyList.Create;
   try
     //If we're using bundles, add bundle nodes
-    if FGroupingType = gtBundles then begin
+    if FGroupingType = gtBundles then
       AddBundleNodes();
-      bundleDict := TBundleAssociationDict.Create;
-      Db.Bundles.GetAllAssemblyAssociations(bundleDict);
-    end;
 
     FDb.Assemblies.GetAllAssemblies(list);
-    for entry in list.Values do begin
-      parentNode := nil;
-      if GroupingType = gtBundles then begin
-        if bundleDict.TryGetValue(entry.id, bundleId) then
-          parentNode := Self.FindBundleNode(bundleId);
+
+    asmFound := TDictionary<TAssemblyId, boolean>.Create;
+
+    //If we're using bundles, add assembly instance to every node that has it
+    if FGroupingType = gtBundles then begin
+      assocList := TBundleAssociationList.Create;
+      try
+        Db.Bundles.GetAllAssemblyAssociations(assocList);
+        for assoc in assocList do begin
+          parentNode := Self.FindBundleNode(assoc.bundle);
+          AddAssemblyNode(parentNode, list[assoc.assembly]);
+          asmFound.AddOrSetValue(assoc.assembly, true);
+        end;
+      finally
+        FreeAndNil(assocList);
       end;
-      AddAssemblyNode(parentNode, entry);
     end;
+
+    //Add the assemblies that had no parents
+    for entry in list.Values do begin
+      if asmFound.TryGetValue(entry.id, asmFoundVal) then
+        continue;
+      AddAssemblyNode(nil, entry);
+    end;
+
   finally
     FreeAndNil(list);
-    FreeAndNil(bundleDict);
+    FreeAndNil(asmFound);
   end;
 end;
 
@@ -151,6 +188,7 @@ var Bundles: TBundleList;
   Node: PVirtualNode;
   i: integer;
 begin
+  FBundleNodes.Clear;
   Bundles := TBundleList.Create;
   try
     Db.Bundles.GetAll(Bundles);
@@ -163,7 +201,7 @@ begin
       Node := nil;
       for i := 0 to Length(Path)-1 do
         Node := GetBundleFolderNode(Node, Path[i]);
-      AddBundleNode(Node, Bundle);
+      FBundleNodes.Add(Bundle.id, AddBundleNode(Node, Bundle));
     end;
 
   finally
@@ -260,14 +298,7 @@ end;
 
 function TAssemblyBrowserForm.FindBundleNode(ABundle: TBundleId): PVirtualNode;
 begin
-  Result := Tree.IterateSubtree(nil, FindBundleNode_Callback, @ABundle);
-end;
-
-procedure TAssemblyBrowserForm.FindBundleNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
-  Data: Pointer; var Abort: Boolean);
-var ABundle: ^TBundleId absolute Data;
-begin
-  Abort := PNodeData(Sender.GetNodeData(Node)).Bundle = ABundle^;
+  Result := FBundleNodes[ABundle];
 end;
 
 procedure TAssemblyBrowserForm.TreeGetNodeDataSize(Sender: TBaseVirtualTree;

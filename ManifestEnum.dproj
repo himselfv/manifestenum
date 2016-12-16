@@ -184,6 +184,7 @@
         <DCCReference Include="Browsers\ShellExtBrowser.pas">
             <Form>ShellExtensionBrowserForm</Form>
         </DCCReference>
+        <DCCReference Include="Utils\BitSets.pas"/>
         <UserTool Include="SxS\w10-base.manifest">
             <ToolName>CopyToOutput</ToolName>
         </UserTool>

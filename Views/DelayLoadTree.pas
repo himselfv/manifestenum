@@ -39,7 +39,7 @@ type
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); virtual;
     procedure FilterChanged(ASender: TObject); virtual;
   public
-    procedure Clear;
+    procedure Clear; virtual;
     procedure Reload; virtual;
     property Db: TAssemblyDb read FDb write SetDb;
   end;

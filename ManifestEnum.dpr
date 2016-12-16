@@ -39,7 +39,8 @@ uses
   FileBrowser in 'Browsers\FileBrowser.pas' {FileBrowserForm},
   CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm},
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
-  ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm};
+  ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
+  BitSets in 'Utils\BitSets.pas';
 
 {$R *.res}
 
