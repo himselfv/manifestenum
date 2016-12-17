@@ -1,2 +1,4 @@
 # Accessibility utility manager
 Microsoft-Windows-Utilman*
+
+Microsoft-Windows-Narrator*

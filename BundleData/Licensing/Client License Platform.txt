@@ -1,0 +1,8 @@
+# Present in Windows 10, missing in Windows 7
+# Service: ClipSVC.
+# Difference from SPPSVC is unclear
+
+Microsoft-Client-License-Platform*
+Microsoft-Client-Licensing-Platform*
+
+Microsoft-Windows-License-Security-Processor*

@@ -5,5 +5,6 @@
 # - Handles last known good configuration updates
 # - Notifies usermode of network drive changes (as reported by mup.sys)
 
-
 Microsoft-Windows-Services-ServiceController*
+
+Microsoft-Windows-Services-Svchost*		# Runs services

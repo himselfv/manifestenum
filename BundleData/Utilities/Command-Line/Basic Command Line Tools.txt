@@ -1,0 +1,34 @@
+Microsoft-Windows-Attrib*
+Microsoft-Windows-Choice*
+
+Microsoft-Windows-clip*		# copies the text to the clipboard
+
+Microsoft-Windows-CommandLineHelp*	# help command
+
+Microsoft-Windows-FileSystemCompareUtilities*		# comp.exe and fc.exe
+
+Microsoft-Windows-Findstr*	# findstr.exe
+
+Microsoft-Windows-ForFiles	# forfiles.exe -- similar to FOR, but only for files
+Microsoft-Windows-ForFiles.*
+Microsoft-Windows-ForFiles-*
+
+Microsoft-Windows-Label*	# displays or changes disk labels
+
+Microsoft-Windows-MiscellaneousCommandLineUtilities*		# chcp, doskey, find, mode, print, replace, subst, tree
+Microsoft-Windows-More*
+
+Microsoft-Windows-Sort		# sort.exe command-line tool
+Microsoft-Windows-Sort.*
+
+Microsoft-Windows-TimeOut*	# pauses for a while
+
+Microsoft-Windows-WaitFor*	# sends to, or waits for receive of a "signal" with a givel name
+
+Microsoft-Windows-WhoAmI*	# whoami.exe
+Microsoft-Windows-Where		# where.exe
+Microsoft-Windows-Where.*
+Microsoft-Windows-Where-*
+
+Microsoft-Windows-Robocopy*	# Robust File Copy utility for command line
+Microsoft-Windows-Xcopy*

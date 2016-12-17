@@ -1,0 +1,2 @@
+
+Microsoft-Windows-winver*	# Display a window with Windows version information

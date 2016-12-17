@@ -4,3 +4,5 @@ Microsoft-OneCore-UpdatePolicy*
 
 Microsoft-Windows-Deployment
 Microsoft-Windows-Deployment-Services-Unattend*
+
+Microsoft-Windows-Update-*

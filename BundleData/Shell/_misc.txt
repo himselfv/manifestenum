@@ -3,3 +3,6 @@ Microsoft-Windows-OpenWith*
 
 # Group policy settings for shell
 Microsoft-Windows-Shell-GroupPolicy*
+
+# Service utilities
+Microsoft-Windows-thumbexthost*		# Hosts thumb extraction COM objects

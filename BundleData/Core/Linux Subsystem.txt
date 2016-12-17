@@ -1,0 +1,4 @@
+# Linux subsystem LXSS from Windows 10 AU.
+# Unrelated to Subsystem for Unix Applications.
+
+Microsoft-Windows-Lxss*

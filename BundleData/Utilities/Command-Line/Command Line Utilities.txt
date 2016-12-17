@@ -1,0 +1,103 @@
+
+
+
+Microsoft-Windows-cipher*
+
+Microsoft-Windows-SetX*		# setx.exe - Configures environment variables at any PC and for any user, remotely
+
+Microsoft-Windows-LpkSetup*		# Language pack setup/remove
+Microsoft-Windows-LpkInstall*		# Same on Windows 10
+
+Microsoft-Windows-OpenFiles		# Shows open file and folders on this PC
+Microsoft-Windows-OpenFiles.*
+Microsoft-Windows-OpenFiles-*
+
+Microsoft-Windows-Security-Secedit
+
+Microsoft-Windows-PowerManagement-Configuration-Cmdline*	# powercfg.exe
+
+
+Microsoft-Windows-DriverQuery*	# Displays a list of all installed device drivers and their properties
+Microsoft-Windows-PnPutil*	# PnpUtil command line tool
+
+Microsoft-Windows-FsUtil*
+
+Microsoft-Windows-FilterManager-Utils*		# FS filter manager utility
+Microsoft-Windows-Mountvol*	# Manages volume mount points
+
+
+Microsoft-Windows-KtmUtil*	# Kernel Transaction Manager command-line utility
+
+
+# Deployments
+Microsoft-OneCore-CmdLineTools*		# Windows 10 Deployment
+
+
+# Administrative Utilities
+Microsoft-Windows-Net-Command-Line-Tool*	# net.exe - manages local users and groups, shares and some services
+Microsoft-Windows-Net1-Command-Line-Tool*	# a copy of net.exe, for whatever reason
+Microsoft-Windows-MSAuditTools*			# auditpol.exe - manages audit policy
+
+
+# Diagnostics
+Microsoft-Windows-Sysinfo	# Command line tool which outputs loads of information about the OS and PC
+Microsoft-Windows-Sysinfo.*
+Microsoft-Windows-Sysinfo-*
+
+
+# Ownership and access
+Microsoft-Windows-ICacls*		# controls access control lists
+Microsoft-Windows-TakeOwn		# takeown.exe, takes ownership of files and folders
+Microsoft-Windows-TakeOwn.*
+Microsoft-Windows-TakeOwn-*
+
+# Running programs
+Microsoft-Windows-TaskList*		# tasklist.exe
+Microsoft-Windows-TaskKill*		# taskkill.exe
+
+# Registry
+Microsoft-Windows-RegINI*			# Command-line registry editing
+Microsoft-Windows-Registry-CommandLine-Editor*	# reg.exe - another command-line registry editing
+
+# EventLog
+Microsoft-Windows-EventCreate*	# Eventcreate.exe
+
+# Scheduled tasks
+Microsoft-Windows-ScTasks*		# Scheduled Task manipulation
+Microsoft-Windows-AT			# Schedule a task at the specified time. No asterisk for there are lots of similar names
+Microsoft-Windows-AT.*
+Microsoft-Windows-AT-*
+
+# Services
+Microsoft-Windows-ServiceControllerCommandLineTool*	# sc.exe - manages Services
+
+
+# Packaging
+Microsoft-Windows-Compact
+Microsoft-Windows-Compact-*
+Microsoft-Windows-Compact.*
+Microsoft-Windows-makecab*
+Microsoft-Windows-diantz	# diantz - Cabinet maker
+Microsoft-Windows-extrac32*	# extrac32.exe
+Microsoft-Windows-expand*
+
+
+# Disk maintenance
+Microsoft-Windows-Chkdsk*		# Also in Maintenance
+Microsoft-Windows-Format*		#
+Microsoft-Windows-diskpart*
+Microsoft-Windows-Convert		# Converts file systems
+Microsoft-Windows-Convert-*
+Microsoft-Windows-Convert.*
+Microsoft-Windows-Recover*		# Recover.exe - recovers lost data on a damaged disk
+Microsoft-Windows-diskraid*
+
+
+# Networking configuration
+Microsoft-Windows-PING-Utilities*	# Ping, Pathping and Tracert
+Microsoft-Windows-IPCONFIG*		# ipconfig.exe utility
+Microsoft-Windows-GetMAC*		# getmac.exe, prints MAC addresses for network adapters
+Microsoft-Windows-NBTSTAT*		# NetBIOS-over-TCPIP stats in command line
+Microsoft-Windows-nslookup*		# Performs a DNS lookup
+#Microsoft-Windows-NetSh*		# Has its own packet + plugins
+Microsoft-Windows-TCPIP-Utility*	# arp.exe, finger.exe, hostname.exe, mrinfo.exe, netstat.exe, route.exe, tcpsvcs.exe

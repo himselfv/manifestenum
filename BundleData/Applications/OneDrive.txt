@@ -1,0 +1,3 @@
+Microsoft-Windows-OneDrive-*
+
+# Shipped as setup (-OneDrive-Setup)

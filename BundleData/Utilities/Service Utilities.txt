@@ -1,0 +1,5 @@
+
+Microsoft-Windows-Regsvr32*	# Registers a COM server in a DLL
+Microsoft-Windows-rundll32*	# Executes arbitary function from a DLL
+Microsoft-Windows-RunAs*	# Runs the command as a user
+Microsoft-Windows-runonce*	# Schedules a command to be run once on a restart

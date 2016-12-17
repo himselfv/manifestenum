@@ -1,0 +1,2 @@
+# VBScript and JScript
+Microsoft-Windows-Scripting*

@@ -1,0 +1,4 @@
+# Friends to: Service Controller
+
+Microsoft-Windows-TaskHost*			# Runs scheduled tasks
+Microsoft-Windows-Services-Taskhost*		# Some resources

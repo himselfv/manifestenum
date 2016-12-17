@@ -1,2 +1,0 @@
-Microsoft-Windows-FsUtil
-Microsoft-Windows-FsUtil.*
