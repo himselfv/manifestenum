@@ -1,2 +1,3 @@
 Desktop_Shell-GettingStarted*		# Windows 10
 Microsoft-Windows-GettingStarted*	# Windows 7
+Microsoft-Windows-OOBE*			# Windows 7

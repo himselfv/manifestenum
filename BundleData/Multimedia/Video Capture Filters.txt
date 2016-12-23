@@ -1,0 +1,4 @@
+
+
+Microsoft-Windows-Video-Capture-Filters-*
+Microsoft-Windows-Video-Capture-Filter-*

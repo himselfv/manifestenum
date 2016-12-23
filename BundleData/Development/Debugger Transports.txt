@@ -1,0 +1,4 @@
+
+Microsoft-Windows-Base Technologies-DebuggerTransports
+Microsoft-Windows-Base Technologies-DebuggerTransports.*
+Microsoft-Windows-Base Technologies-DebuggerTransport-*

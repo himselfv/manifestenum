@@ -1,0 +1,5 @@
+# Collaboration Data Objects (CDO) is a COM component designed to simplify
+# writing programs that create or manipulate Internet messages.
+# https://msdn.microsoft.com/en-us/library/ms527525(v=exchg.10).aspx
+
+Microsoft-Windows-Cdosys*

@@ -2,6 +2,11 @@ Microsoft-Windows-CodecPack-*
 Microsoft-Windows-Media-MP3ACM*
 
 Microsoft-Windows-WindowsMedia-Codecs*
+
+Microsoft-Windows-MSMPEG2ADEC*
+Microsoft-Windows-MSMPEG2ENC*
+Microsoft-Windows-MSMPEG2VDEC*
+
 Microsoft-Windows-MP43DECD*
 Microsoft-Windows-MP4SDECD*
 Microsoft-Windows-MPG4DECD*
@@ -15,4 +20,9 @@ Microsoft-Windows-WMVSDECD*
 Microsoft-Windows-WMVSENCD*
 Microsoft-Windows-WMVXENCD*
 
+Microsoft-Windows-Indeo4-Codecs*
 Microsoft-Windows-Indeo5-Codecs*
+
+# Probably?
+Microsoft-Windows-Photo-Image-Codec*
+Microsoft-Windows-MFDVDec*

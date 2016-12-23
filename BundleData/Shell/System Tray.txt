@@ -1,0 +1,6 @@
+
+Microsoft-Windows-Shell-SysTray*	# Deployment
+Microsoft-Windows-stobject*		# Shell service object implementing tray
+Microsoft-Windows-batmeter*		# Battery meter helper DLL
+
+Microsoft-Windows-systray*		# systray.exe stub

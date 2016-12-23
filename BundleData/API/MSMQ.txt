@@ -1,0 +1,5 @@
+# Microsoft Messaging Queues (MSMSQ)
+
+Microsoft-Windows-msmq
+Microsoft-Windows-msmq.*
+Microsoft-Windows-msmq-*

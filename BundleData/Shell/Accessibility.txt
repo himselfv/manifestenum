@@ -1,5 +1,7 @@
-# Accessibility utility manager
-Microsoft-Windows-Utilman*
+
+Microsoft-Windows-Utilman*	# Accessibility utility manager
+
+Microsoft-Windows-AtBroker*	# Support component for accessibility
 
 Microsoft-Windows-Narrator*
 Narrator			# Windows 7

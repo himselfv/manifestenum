@@ -1,2 +1,7 @@
 Microsoft-Windows-Help*
 Server-Help-*
+
+# This is not precisely help, but related
+
+# A tool to view CHM files
+Microsoft-Windows-HtmlHelp*

@@ -56,3 +56,9 @@ Microsoft-Windows-NetFx*
 Microsoft .NET Framework*
 
 .NET Framework*
+
+
+# Infocard service
+infocard
+infocard.*
+infocard-*

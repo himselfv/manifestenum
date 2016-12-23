@@ -4,4 +4,7 @@ Fonts-MinConsoleFonts-*
 # Not everything under Microsoft-Windows-Font-* is a font
 Microsoft-Windows-Font-Bitmap-*
 Microsoft-Windows-Font-TrueType-*
+Microsoft-Windows-Font-Vector
 Microsoft-Windows-Font-Vector-*
+
+Microsoft-Windows-Font-Required		# W7: Empty, defines Font category

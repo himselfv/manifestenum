@@ -1,0 +1,4 @@
+# Extensible Storage engine (ESENT) is a lightweight database engine
+# built into Windows and used by many components for internal bookkeeping.
+
+Microsoft-Windows-ExtensibleStorageEngine*

@@ -61,6 +61,8 @@ Microsoft-Windows-SystemPropertiesDataExecutionPrevention*
 # Shows UI performance settings page separately
 Microsoft-Windows-SystemPropertiesPerformance*
 Microsoft-Windows-performance.*				# SystemPropertiesPerformance resources
+# Opens System Properties UI on Remote assistance settings page
+Microsoft-Windows-SystemPropertiesRemote*
 
 
 Microsoft-Windows-Netplwiz-*		# Opens User passwords configuration window (what you get by control userpasswords2)

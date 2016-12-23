@@ -66,3 +66,4 @@ Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*
 Microsoft-Windows-WindowsUpdateDiagnostic*
 
 Microsoft-Windows-Troubleshooting-Events*
+Microsoft-Windows-PlugPlay-Troubleshooter*

@@ -22,14 +22,26 @@ Microsoft-Windows-Recover*
 
 # Common user-mode libraries for IFS (installable file systems)
 Microsoft-Windows-FileSystemUtilityLibraries
+Microsoft-Windows-FileSystemUtilityLibraries.*
 Microsoft-Windows-Fmifs
 Microsoft-Windows-IFSUtilX
 
 
+# Empty packages in Windows 7
+Microsoft-Windows-FileSystems-Common
+Microsoft-Windows-FileSystems-Core
+Microsoft-Windows-FileSystems-Pro
+
+
 # NTFS
 Microsoft-Windows-NTFS
+Microsoft-Windows-NTFS.*
 Microsoft-Windows-NTFS-*
 Microsoft-Windows-FileSystemUtilityNtfsLibrary
+Microsoft-Windows-NtfsChkdsk*
+Microsoft-Windows-NtfsFormat*
+Microsoft-Windows-NtfsRecover*
+Microsoft-Windows-NtfsTransactionApi*
 
 
 # FAT

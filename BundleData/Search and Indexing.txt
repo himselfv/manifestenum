@@ -1,5 +1,7 @@
 WindowsSearchEngine*
 
+Microsoft-Windows-Indexing-Service*
+
 Microsoft-Windows-SearchDiagnostic*
 
 Microsoft-Windows-Content-Indexing*
@@ -7,3 +9,5 @@ Microsoft-Windows-Content-Indexing*
 Microsoft-Windows-SearchEngine*
 Microsoft-Windows-Search-*
 Microsoft-Windows-SearchFolder*		# Supposedly related
+
+Desktop_Shell-Search-SrchAdmin*		# Indexer Settings

@@ -1,2 +1,2 @@
 
-Microsoft-Windows-TextServicesFramwork-*
+Microsoft-Windows-TextServicesFramework-*

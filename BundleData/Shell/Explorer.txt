@@ -1,8 +1,15 @@
 # Windows Explorer components
 
+Microsoft-Windows-explorer
+Microsoft-Windows-explorer.*
 
 
 Microsoft-Windows-propsys*			# Property page system
 
-
 Microsoft-Windows-ThumbnailCache*		# Thumbnail cache
+
+Microsoft-Windows-IconCodecService*		# Decodes new PNG icons
+
+
+# Extensions
+Microsoft-Windows-ntshrui*			# Sharing extension

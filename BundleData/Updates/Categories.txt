@@ -1,0 +1,5 @@
+# A list of empty assemblies that were used only to define categories.
+# There's a bunch of these in Windows 7 at least.
+
+Microsoft-Configuration-Online
+Microsoft-Windows-Foundation-Drivers		# Entirely empty
