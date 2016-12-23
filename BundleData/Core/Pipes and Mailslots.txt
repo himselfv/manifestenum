@@ -1,0 +1,7 @@
+
+
+# Named pipe file system
+Microsoft-Windows-NPFS
+
+# Mailslot file system
+Microsoft-Windows-MSFS

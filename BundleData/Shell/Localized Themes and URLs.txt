@@ -1,0 +1,13 @@
+# Configures national themes, URLs and RSS feeds for each user based on their location.
+
+# Core
+# mctadmin.exe registers as RunOnce
+Microsoft-Windows-MarketTheme-MCT*
+
+# Themes are stored in Windows\Globalization\MCT
+# and registered in HKLM\Software\Microsoft\Windows\CurrentVersion\MCT
+Microsoft-Windows-MarketTheme-AU-*
+Microsoft-Windows-MarketTheme-GB-*
+Microsoft-Windows-MarketTheme-RU-*
+Microsoft-Windows-MarketTheme-US-*
+Microsoft-Windows-MarketTheme-ZA-*

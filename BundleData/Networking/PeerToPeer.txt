@@ -1,0 +1,15 @@
+# Peer to peer networking layer for Windows. Works only over IPv6.
+# More or less optional, though with time more apps may turn to rely on it. Or maybe not.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa371704%28v=vs.85%29.aspx
+
+# Includes Peer Name Resolution Protocol (PNRP)
+
+# Deployment
+Microsoft-Windows-PeerNetworkingFull-*
+
+# Assemblies
+Microsoft-Windows-PeerToPeer*
+
+# Included in deployment, also related
+Microsoft-Windows-GroupingHelperClass*
+Microsoft-Windows-PnrpHelperClass*

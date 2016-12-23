@@ -1,0 +1,16 @@
+# Distributed File System (DFS) is an extension for LanmanServer (Samba)
+# which replicates the share between several servers and transparently merges these mirrors on the client.
+# https://en.wikipedia.org/wiki/Distributed_File_System_(Microsoft)
+
+# Strictly speaking, the replication service and the client service are unrelated.
+# Either may be used alone.
+
+# This is not a filesystem, despite the name. It's only an extension for Samba.
+
+# Client
+Microsoft-Windows-DFSClient
+Microsoft-Windows-DFSClient.*
+Microsoft-Windows-DFSClient-*
+
+# UI
+Microsoft-Windows-DFSUI*

@@ -1,0 +1,7 @@
+# Required for Ctrl-Alt-Del -> Task Manager to work
+
+Microsoft-Windows-taskmgr
+Microsoft-Windows-taskmgr.*
+Microsoft-Windows-taskmgr-*
+
+Microsoft-Windows-TaskManager-Events*

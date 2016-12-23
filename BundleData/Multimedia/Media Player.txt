@@ -1,7 +1,15 @@
 Microsoft-Windows-MediaPlayer*
 Microsoft-Windows-Media-Player*
 Microsoft-Windows-WindowsMediaPlayer*
+Microsoft-Windows-WMP-*
 # Covered by the above
 #Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
 #Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
 #Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*
+
+# Network sharing service
+Microsoft-Windows-WMPNetworkSharingService*
+Microsoft-Windows-WMPNSS*
+
+Microsoft-Windows-WmpDui*
+Microsoft-Windows-WMPDMC*

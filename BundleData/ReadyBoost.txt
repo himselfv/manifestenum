@@ -1,0 +1,12 @@
+# ReadyBoost is a special disk cache service that uses fast removable devices,
+# such as USB flash drives, SD and CompactFlash memory cards for speeding up
+# smaller random disk reads
+# AKA: Sysmain, SystemMaintenanceService
+
+# Service
+Microsoft-Windows-SystemMaintenanceService
+Microsoft-Windows-SystemMaintenanceService.*
+Microsoft-Windows-SystemMaintenanceService-*
+
+# Driver
+Microsoft-Windows-ReadyBoostDriver*

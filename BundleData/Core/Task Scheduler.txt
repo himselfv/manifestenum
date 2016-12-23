@@ -2,3 +2,11 @@
 
 Microsoft-Windows-TaskHost*			# Runs scheduled tasks
 Microsoft-Windows-Services-Taskhost*		# Some resources
+
+Microsoft-Windows-TaskScheduler*
+# -Service
+# -Engine*
+# -Compatibility*
+# -Client*
+# -APIs*
+# -Proxy*

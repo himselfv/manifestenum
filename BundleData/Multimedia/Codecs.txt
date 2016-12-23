@@ -14,3 +14,5 @@ Microsoft-Windows-WMVENCOD*
 Microsoft-Windows-WMVSDECD*
 Microsoft-Windows-WMVSENCD*
 Microsoft-Windows-WMVXENCD*
+
+Microsoft-Windows-Indeo5-Codecs*

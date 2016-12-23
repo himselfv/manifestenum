@@ -1,0 +1,4 @@
+# Simple TCP Services: chargen, daytime, discard, echo, quote
+# https://technet.microsoft.com/en-us/library/cc725973(v=ws.11).aspx
+
+Microsoft-Windows-SimpleTCP*

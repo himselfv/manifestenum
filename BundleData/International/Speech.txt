@@ -1,3 +1,10 @@
+# Speech Recognition and Text-to-Speech
+
+Microsoft-Windows-SpeechCommon*
+Microsoft-Windows-SpeechEngine*
+Microsoft-Windows-SpeechRecognizer*
+Microsoft-Windows-Speech-UserExperience*
+Microsoft-Windows-Speech-IEKillBits*
 
 # Win10
 Microsoft-OneCore-SpeechComponents*

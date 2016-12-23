@@ -1,0 +1,3 @@
+Microsoft-Windows-themeservice*
+Microsoft-Windows-themeui*
+Microsoft-Windows-uxtheme*

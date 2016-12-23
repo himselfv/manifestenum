@@ -1,0 +1,12 @@
+# Access Control List UI used by Explorer
+# Reusable by applications via public API
+
+Microsoft-Windows-Shell-ACLUI-*
+Microsoft-Windows-ACLUI*
+# -ACLUIFileFolderTool
+
+Microsoft-Windows-AclEdit*
+
+# Directory services security interface.
+# ACLUI part that lets you query the directory services for security principals, I presume
+Microsoft-Windows-dssec*

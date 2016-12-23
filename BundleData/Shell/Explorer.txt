@@ -1,0 +1,8 @@
+# Windows Explorer components
+
+
+
+Microsoft-Windows-propsys*			# Property page system
+
+
+Microsoft-Windows-ThumbnailCache*		# Thumbnail cache

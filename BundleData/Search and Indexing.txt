@@ -3,3 +3,7 @@ WindowsSearchEngine*
 Microsoft-Windows-SearchDiagnostic*
 
 Microsoft-Windows-Content-Indexing*
+
+Microsoft-Windows-SearchEngine*
+Microsoft-Windows-Search-*
+Microsoft-Windows-SearchFolder*		# Supposedly related

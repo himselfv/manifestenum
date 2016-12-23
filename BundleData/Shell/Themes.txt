@@ -4,3 +4,6 @@ Microsoft-Windows-aerolite*
 Microsoft-Windows-aero_ss*
 Microsoft-Windows-classic*
 Microsoft-Windows-class_ss*
+
+Microsoft-Windows-ThemeFile-Aero*		# Windows 7
+Microsoft-Windows-ThemeFiles-Personalization*	# Windows 7

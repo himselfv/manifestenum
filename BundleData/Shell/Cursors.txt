@@ -1,2 +1,3 @@
 Microsoft-Windows-Shell-Cursors*
 Microsoft-Windows-Shell-acccursors*
+Microsoft-Windows-Shell-Other-Cursors*

@@ -4,4 +4,4 @@ Microsoft-Windows-Mystify*
 Microsoft-Windows-Ribbons*
 Microsoft-Windows-scrnsave*
 Microsoft-Windows-ssText3d*
-Microsoft-Windows-Shell-ScreenSavers-*
+Microsoft-Windows-Shell-ScreenSavers*

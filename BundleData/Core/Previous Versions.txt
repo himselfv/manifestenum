@@ -1,0 +1,6 @@
+# Previous Versions / File History feature
+
+# Previous Versions property page
+Microsoft-Windows-twext
+Microsoft-Windows-twext.*
+Microsoft-Windows-twext-*

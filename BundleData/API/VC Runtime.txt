@@ -1,0 +1,6 @@
+
+Microsoft-Windows-VCRuntime*
+Microsoft-Windows-ATL*
+Microsoft-Windows-MSVCIRT*
+Microsoft-Windows-MSVCP60*
+Microsoft-Windows-MSVCRT*

@@ -1,0 +1,3 @@
+
+# Even though it's called that, it's a well-known tool shutdown.exe
+Microsoft-Windows-Shutdown-Event-Tracker*		# Windows 7

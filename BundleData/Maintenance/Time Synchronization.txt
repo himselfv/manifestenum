@@ -3,6 +3,9 @@ Microsoft-Windows-TimeZone-Sync*
 
 # Time service
 Microsoft-Windows-W32Time*
+Microsoft-Windows-Time-Service*			# Windows 7
+Microsoft-Windows-Time-Help*			# Windows 7, contains help files for Time Service (it's empty, there are none)
+Microsoft-Windows-Time				# Windows 7, contains description for Time-Service
 
 # Time zone updater
 Microsoft-Windows-Auto-Time-Zone-Updater*

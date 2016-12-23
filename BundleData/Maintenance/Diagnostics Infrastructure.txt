@@ -64,3 +64,5 @@ Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
 Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
 Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*
 Microsoft-Windows-WindowsUpdateDiagnostic*
+
+Microsoft-Windows-Troubleshooting-Events*

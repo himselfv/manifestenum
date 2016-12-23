@@ -1,0 +1,13 @@
+# Remote Differential Compression (RDC) is an API and an algorithm
+# to transfer only differences between files while computing those
+# differences on the fly.
+# https://en.wikipedia.org/wiki/Remote_Differential_Compression
+
+# The feature is optional and used by a very few components, notably:
+#   DFS
+#   Windows Live Messenger
+# https://blogs.technet.microsoft.com/askds/2009/06/26/debunking-the-vista-remote-differential-compression-myth/
+
+Microsoft-Windows-RDC
+Microsoft-Windows-RDC.*
+Microsoft-Windows-RDC-*

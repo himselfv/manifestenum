@@ -1,8 +1,12 @@
 # Powershell itself
 Microsoft-PowerShell-Common*
+Microsoft-Windows-PowerShell
+Microsoft-Windows-PowerShell.*
 Microsoft-Windows-PowerShell-*
 Microsoft.PowerShell.*			# msil
 Microsoft-Windows-GPowerShell*		# Development environment (Powershell ISE)
+
+
 
 # Management assemblies
 Microsoft.BackgroundIntelligentTransfer.Management*

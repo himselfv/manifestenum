@@ -1,0 +1,5 @@
+# BranchCache (PeerDist)
+# Enterprise feature which caches main office data locally. Not used on personal PCs.
+# https://technet.microsoft.com/en-us/library/dd637832%28v=ws.10%29.aspx
+
+Microsoft-Windows-PeerDist*

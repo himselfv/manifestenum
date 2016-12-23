@@ -1,0 +1,3 @@
+# Remote registry service
+
+Microsoft-Windows-RemoteRegistry-*

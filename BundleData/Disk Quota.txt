@@ -1,0 +1,10 @@
+# Allows the administrator to limit User Profile size (and all data used by the user)
+# Core quota is implemented with support from NTFS. This is mostly usermode support.
+
+
+Microsoft-Windows-dskquota*
+Microsoft-Windows-dskquoui*
+
+Microsoft-Windows-Proquota*			# Utility
+
+Microsoft-Windows-Shell-DiskQuotaSupport*

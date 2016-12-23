@@ -1,0 +1,4 @@
+# Tablet and Ink services
+# Contains a boatload of things, but all indeed seem related (at least as of Windows 7)
+
+Microsoft-Windows-TabletPC-*

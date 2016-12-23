@@ -1,0 +1,63 @@
+# Contains file system drivers and common file system utilities
+# May later be split.
+
+# Three common utilities have extensions for most supported systems:
+#   chkdsk
+#   format
+#   recover
+# There is often a group package "[fs]Chkdsk/Format/Recover" which
+# references both the utility and the FS access library.
+
+# Not included -- see own components:
+#  Network File System (NFS) -- it's unlike others.
+#  Mailslot FS and Named Pipe FS
+#  Distributed File System (DFS) - not an FS but an extension for Samba
+
+
+# Common utilities - Also in Command Line Utilities
+Microsoft-Windows-Autochk*
+Microsoft-Windows-Chkdsk*
+Microsoft-Windows-Format*
+Microsoft-Windows-Recover*
+
+# Common user-mode libraries for IFS (installable file systems)
+Microsoft-Windows-FileSystemUtilityLibraries
+Microsoft-Windows-Fmifs
+Microsoft-Windows-IFSUtilX
+
+
+# NTFS
+Microsoft-Windows-NTFS
+Microsoft-Windows-NTFS-*
+Microsoft-Windows-FileSystemUtilityNtfsLibrary
+
+
+# FAT
+Microsoft-Windows-FAT
+Microsoft-Windows-FileSystemUtilityFatLibrary
+Microsoft-Windows-FatChkdsk
+Microsoft-Windows-FatFormat
+Microsoft-Windows-FatRecover
+
+
+# exFAT
+Microsoft-Windows-exFAT
+Microsoft-Windows-FileSystemUtilityEXFatLibrary
+Microsoft-Windows-EXFatFormat
+
+
+# ReFS
+Microsoft-Windows-ReFS-*
+
+
+# UDFS - Universal Disk Format FS - mostly used for DVDs
+# https://en.wikipedia.org/wiki/Universal_Disk_Format
+Microsoft-Windows-UDFS
+Microsoft-Windows-FileSystemUtilityUdfsLibrary*
+Microsoft-Windows-UdfsChkdsk
+Microsoft-Windows-UdfsFormat
+Microsoft-Windows-UdfsRecover
+
+
+# CDFS - Compact Disk FS
+Microsoft-Windows-CDFS

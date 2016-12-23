@@ -1,5 +1,8 @@
 # Windows Subsystem
 
+# Deployment/misc
+Microsoft-Windows-Subsys
+
 # Main subsystem process
 Microsoft-Windows-Csrss*
 

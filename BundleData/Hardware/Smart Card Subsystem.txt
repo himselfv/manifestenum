@@ -1,0 +1,7 @@
+
+Microsoft-Windows-SmartCardSubsystem*
+Microsoft-Windows-SmartCardSubsystemClient*
+Microsoft-Windows-SmartCardPlugins*
+Microsoft-Windows-SmartCardKsp*			# Key storage provider
+
+Microsoft-Windows-Authentication-SmartcardCredentialProvider*	# For authUI
