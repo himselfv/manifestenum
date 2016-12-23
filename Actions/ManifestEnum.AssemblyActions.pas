@@ -47,6 +47,7 @@ type
     miUninstallAssembly: TMenuItem;
     SaveManifestDialog: TSaveDialog;
     miJumpToSxsStore: TMenuItem;
+    miViewManifest: TMenuItem;
     procedure miCopyAssemblyNameClick(Sender: TObject);
     procedure miCopyAssemblyDisplayNameClick(Sender: TObject);
     procedure miCopyAssemblyStrongNameClick(Sender: TObject);
@@ -64,6 +65,7 @@ type
     procedure miUninstallAssemblyClick(Sender: TObject);
     procedure miProbeInstallationClick(Sender: TObject);
     procedure miJumpToSxsStoreClick(Sender: TObject);
+    procedure miViewManifestClick(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FSelectedAssemblyIDs: TArray<TAssemblyId>;
@@ -460,5 +462,19 @@ begin
     PChar('Done'), MB_OK);
 end;
 
+procedure TAssemblyActions.miViewManifestClick(Sender: TObject);
+var Assembly: TAssemblyData;
+  tempName: string;
+begin
+  for Assembly in SelectedAssemblies do begin
+    if Assembly.manifestName = '' then continue; //no manifest, skip
+
+    tempName := TPath.GetTempPath() + '\' + TPath.GetGUIDFileName() + '\';
+    ForceDirectories(tempName);
+    tempName := tempName + Assembly.manifestName+'.manifest.txt';
+    SaveManifest(Assembly.manifestName, tempName);
+    ShellOpen(tempName);
+  end;
+end;
 
 end.

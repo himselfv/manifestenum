@@ -84,6 +84,10 @@ object AssemblyActions: TAssemblyActions
         OnClick = miProbeInstallationClick
       end
     end
+    object miViewManifest: TMenuItem
+      Caption = 'View manifest'
+      OnClick = miViewManifestClick
+    end
     object miConvertIntoDeployment: TMenuItem
       Caption = 'Convert into deployment'
       OnClick = miConvertIntoDeploymentClick
