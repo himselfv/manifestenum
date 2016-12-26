@@ -389,6 +389,11 @@ begin
   Form := Self.ParentForm;
   if Form = nil then exit;
 
+  if Node = nil then begin
+    CommonMessages.SetAssemblySelection(Form.Handle, nil);
+    exit;
+  end;
+
   AData := Sender.GetNodeData(Node);
   if AData.v.assembly > 0 then begin
     SetLength(AIDs, 1);
@@ -404,7 +409,7 @@ begin
     end;
   end;
 
-  SetAssemblySelection(Form.Handle, AIds);
+  CommonMessages.SetAssemblySelection(Form.Handle, AIds);
 end;
 
 end.

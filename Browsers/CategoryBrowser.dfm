@@ -32,6 +32,7 @@ object CategoryBrowserForm: TCategoryBrowserForm
     TabOrder = 0
     TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
     OnCompareNodes = TreeCompareNodes
+    OnFocusChanged = TreeFocusChanged
     OnFreeNode = TreeFreeNode
     OnGetText = TreeGetText
     OnGetImageIndexEx = TreeGetImageIndexEx

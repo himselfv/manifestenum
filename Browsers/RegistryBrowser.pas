@@ -49,8 +49,6 @@ type
   PRegistryValueNodeData = ^TRegistryValueNodeData;
 
   TRegistryBrowserForm = class(TDelayLoadTree)
-    Label1: TLabel;
-    lbComponents: TListBox;
     splValues: TSplitter;
     vtValues: TVirtualStringTree;
     procedure FormCreate(Sender: TObject);
@@ -83,6 +81,8 @@ type
       Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
     procedure vtValuesCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
+    procedure vtValuesFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+      Column: TColumnIndex);
   protected
     FMode: TRegistryBrowserMode;
     FRootKeys: TRootKeyList; //root keys to display in rmKeys mode
@@ -107,16 +107,13 @@ type
     procedure vtValues_AddNodeToArray(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
       var Abort: Boolean);
 
-  protected
-    procedure ReloadComponents;
-
   end;
 
 var
   RegistryBrowserForm: TRegistryBrowserForm;
 
 implementation
-uses AssemblyDb.Assemblies;
+uses AssemblyDb.Assemblies, CommonMessages;
 
 {$R *.dfm}
 
@@ -371,12 +368,31 @@ end;
 
 procedure TRegistryBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
+var AData: PRegistryNodeData;
+  Form: TWinControl;
+  AList: TRegistryKeyReferees;
 begin
   inherited;
   if vtValues.Visible then
     ReloadValueNodes;
-  ReloadComponents;
+
+  //Pass assembly selection
+  Form := Self.ParentForm;
+  if Form <> nil then
+    if Node = nil then
+      CommonMessages.SetAssemblySelection(Form.Handle, nil)
+    else begin
+      AData := Tree.GetNodeData(Node);
+      AList := TRegistryKeyReferees.Create;
+      try
+        FDb.Registry.GetKeyReferees(AData.r.key, AList);
+        CommonMessages.SetAssemblySelection(Form.Handle, AList.Keys.ToArray);
+      finally
+        FreeAndNil(AList);
+      end;
+    end;
 end;
+
 
 function TRegistryBrowserForm.GetFocusedKey: TRegistryKeyId;
 var AData: PRegistryNodeData;
@@ -525,32 +541,21 @@ begin
   end;
 end;
 
-
-// Components
-
-procedure TRegistryBrowserForm.ReloadComponents;
-var AData: PRegistryNodeData;
-  AList: TRegistryKeyReferees;
-  AAssembly: TAssemblyId;
-  AAssemblyData: TAssemblyData;
+procedure TRegistryBrowserForm.vtValuesFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex);
+var Data: PRegistryValueNodeData;
+  Form: TWinControl;
 begin
-  lbComponents.Clear;
-  if Tree.FocusedNode = nil then exit;
+  inherited;
+  Form := Self.ParentForm;
+  if Form = nil then exit;
 
-  AData := Tree.GetNodeData(Tree.FocusedNode);
-
-  AList := TRegistryKeyReferees.Create;
-  try
-    FDb.Registry.GetKeyReferees(AData.r.key, AList);
-    for AAssembly in AList.Keys do begin
-      AAssemblyData := FDb.Assemblies.GetAssembly(AAssembly);
-      lbComponents.Items.Add(AAssemblyData.identity.ToString());
-    end;
-
-  finally
-    FreeAndNil(AList);
+  if Node = nil then
+    CommonMessages.SetAssemblySelection(Form.Handle, nil)
+  else begin
+    Data := vtValues.GetNodeData(Node);
+    CommonMessages.SetAssemblySelection(Form.Handle, Data.assembly);
   end;
 end;
-
 
 end.

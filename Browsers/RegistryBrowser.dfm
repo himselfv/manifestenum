@@ -6,26 +6,17 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
   ExplicitHeight = 617
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel [0]
-    Left = 0
-    Top = 442
-    Width = 788
-    Height = 13
-    Align = alBottom
-    Caption = 'Components which use this key:'
-    ExplicitWidth = 154
-  end
-  object splValues: TSplitter [1]
+  object splValues: TSplitter [0]
     Left = 285
     Top = 0
-    Height = 442
+    Height = 579
     ExplicitLeft = 496
     ExplicitTop = 128
     ExplicitHeight = 100
   end
   inherited Tree: TVirtualStringTree
     Width = 285
-    Height = 442
+    Height = 579
     Align = alLeft
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs]
@@ -44,7 +35,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Columns = <
       item
         Position = 0
-        Width = 23
+        Width = 29
         WideText = 'Name'
       end
       item
@@ -58,20 +49,11 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
         WideText = 'Value'
       end>
   end
-  object lbComponents: TListBox
-    Left = 0
-    Top = 455
-    Width = 788
-    Height = 124
-    Align = alBottom
-    ItemHeight = 13
-    TabOrder = 1
-  end
   object vtValues: TVirtualStringTree
     Left = 288
     Top = 0
     Width = 500
-    Height = 442
+    Height = 579
     Align = alClient
     BorderWidth = 1
     Header.AutoSizeIndex = 2
@@ -83,17 +65,19 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
     Header.SortColumn = 0
     Images = ResourceModule.SmallImages
-    TabOrder = 2
+    TabOrder = 1
     TreeOptions.MiscOptions = [toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
     TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toShowTreeLines, toThemeAware, toUseBlendedImages]
     TreeOptions.SelectionOptions = [toFullRowSelect, toMultiSelect, toRightClickSelect]
     OnCompareNodes = vtValuesCompareNodes
+    OnFocusChanged = vtValuesFocusChanged
     OnFreeNode = vtValuesFreeNode
     OnGetText = vtValuesGetText
     OnGetImageIndexEx = vtValuesGetImageIndexEx
     OnGetNodeDataSize = vtValuesGetNodeDataSize
     OnGetPopupMenu = vtValuesGetPopupMenu
     OnInitNode = vtValuesInitNode
+    ExplicitHeight = 442
     Columns = <
       item
         Position = 0
@@ -107,7 +91,7 @@ inherited RegistryBrowserForm: TRegistryBrowserForm
       end
       item
         Position = 2
-        Width = 174
+        Width = 180
         WideText = 'Value'
       end>
   end

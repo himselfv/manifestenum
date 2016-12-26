@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, VirtualTrees, CommonResources, AssemblyDb;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, VirtualTrees, CommonResources, AssemblyDb,
+  AssemblyDb.Assemblies;
 
 type
   TNodeType = (ntCategory, ntAssembly);
@@ -12,6 +13,7 @@ type
     NodeType: TNodeType;
     Name: string;
     TypeName: string;
+    Assembly: TAssemblyId;
   end;
   PNodeData = ^TNodeData;
 
@@ -30,11 +32,12 @@ type
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
     procedure TreeHeaderClick(Sender: TVTHeader; HitInfo: TVTHeaderHitInfo);
+    procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
   protected
     FDb: TAssemblyDb;
     procedure SetDb(AValue: TAssemblyDb);
     function AddCategoryNode(AParent: PVirtualNode; const AName: string): PVirtualNode;
-    function AddAssemblyNode(AParent: PVirtualNode; const AName: string; const ATypeName: string): PVirtualNode;
+    function AddAssemblyNode(AParent: PVirtualNode; const AAsmData: TAssemblyData; const ATypeName: string): PVirtualNode;
     function NeedCategoryNode(const AName: string): PVirtualNode;
     procedure FindCategoryNodeCallback(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
       var Abort: Boolean);
@@ -47,7 +50,7 @@ var
   CategoryBrowserForm: TCategoryBrowserForm;
 
 implementation
-uses AssemblyDb.Assemblies;
+uses CommonMessages;
 
 {$R *.dfm}
 
@@ -85,7 +88,7 @@ begin
     for AId in AList.Keys do begin
       AData := AList[AId];
       ACatNode := NeedCategoryNode(AData.name);
-      AddAssemblyNode(ACatNode, FDb.Assemblies.GetAssembly(AId).identity.ToString, AData.typeName)
+      AddAssemblyNode(ACatNode, FDb.Assemblies.GetAssembly(AId), AData.typeName)
     end;
   finally
     FreeAndNil(AList);
@@ -103,17 +106,20 @@ begin
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntCategory;
   AData.Name := AName;
+  AData.Assembly := 0;
 end;
 
-function TCategoryBrowserForm.AddAssemblyNode(AParent: PVirtualNode; const AName: string; const ATypeName: string): PVirtualNode;
+function TCategoryBrowserForm.AddAssemblyNode(AParent: PVirtualNode; const AAsmData: TAssemblyData;
+  const ATypeName: string): PVirtualNode;
 var AData: PNodeData;
 begin
   Result := Tree.AddChild(AParent);
   Tree.ReinitNode(Result, false);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntAssembly;
-  AData.Name := AName;
+  AData.Name := AAsmData.identity.ToString;
   AData.TypeName := ATypeName;
+  AData.Assembly := AAsmData.id;
 end;
 
 function TCategoryBrowserForm.NeedCategoryNode(const AName: string): PVirtualNode;
@@ -221,6 +227,28 @@ begin
   else
     Sender.SortDirection := sdAscending;
   Sender.Treeview.SortTree(Sender.SortColumn, Sender.SortDirection);
+end;
+
+procedure TCategoryBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Column: TColumnIndex);
+var Form: TWinControl;
+  Data: PNodeData;
+begin
+  Form := Self.Parent;
+  while (Form <> nil) and not (Form is TForm) do
+    Form := Form.Parent;
+  if Form = nil then exit;
+
+  if Node = nil then begin
+    SetAssemblySelection(Form.Handle, nil);
+    exit;
+  end;
+
+  Data := Tree.GetNodeData(Node);
+  if Data.Assembly = 0 then
+    SetAssemblySelection(Form.Handle, nil)
+  else
+    SetAssemblySelection(Form.Handle, Data.Assembly);
 end;
 
 

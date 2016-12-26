@@ -19,7 +19,6 @@ type
   PNodeData = ^TNodeData;
 
   TServiceBrowserForm = class(TDelayLoadTree)
-    lblWhoAdded: TLabel;
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -45,7 +44,7 @@ var
   ServiceBrowserForm: TServiceBrowserForm;
 
 implementation
-uses Generics.Collections;
+uses Generics.Collections, CommonMessages;
 
 {$R *.dfm}
 
@@ -178,13 +177,22 @@ end;
 procedure TServiceBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
 var AData: PNodeData;
+  Form: TWinControl;
 begin
   inherited;
+  Form := Self.ParentForm;
+  if Form = nil then exit;
+
+  if Node = nil then begin
+    CommonMessages.SetAssemblySelection(Form.Handle, nil);
+    exit;
+  end;
+
   AData := Sender.GetNodeData(Node);
   if AData.Entry.assemblyId > 0 then
-    lblWhoAdded.Caption := 'Component: '+FDb.Assemblies.GetAssembly(AData.Entry.assemblyId).identity.ToString
+    CommonMessages.SetAssemblySelection(Form.Handle, AData.Entry.assemblyId)
   else
-    lblWhoAdded.Caption := '';
+    CommonMessages.SetAssemblySelection(Form.Handle, nil);
 end;
 
 

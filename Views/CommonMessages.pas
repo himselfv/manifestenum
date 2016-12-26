@@ -34,13 +34,22 @@ type
     Result: LRESULT;
   end;
 
-procedure SetAssemblySelection(hWnd: HWND; const AAssemblies: TArray<TAssemblyId>);
+procedure SetAssemblySelection(hWnd: HWND; const AAssembly: TAssemblyId); overload;
+procedure SetAssemblySelection(hWnd: HWND; const AAssemblies: TArray<TAssemblyId>); overload;
 
 implementation
 
 procedure SetQuickFilter(hWnd: HWND; const AFilter: string);
 begin
   SendMessage(hWnd, WM_SET_QUICKFILTER, NativeUInt(@AFilter), 0);
+end;
+
+procedure SetAssemblySelection(hWnd: HWND; const AAssembly: TAssemblyId);
+var AIds: TArray<TAssemblyId>;
+begin
+  SetLength(AIDs, 1);
+  AIDs[0] := AAssembly;
+  SetAssemblySelection(hWnd, AIDs);
 end;
 
 procedure SetAssemblySelection(hWnd: HWND; const AAssemblies: TArray<TAssemblyId>);
