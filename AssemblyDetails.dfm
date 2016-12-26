@@ -20,15 +20,26 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     Top = 0
     Width = 461
     Height = 166
-    ActivePage = tsCategories
+    ActivePage = tsGeneral
     Align = alClient
     TabOrder = 0
+    OnChange = pcDetailsChange
     object tsGeneral: TTabSheet
       Caption = 'General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      object lblName: TLabel
+        Left = 0
+        Top = 0
+        Width = 453
+        Height = 13
+        Align = alTop
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 3
+      end
     end
     object tsDependencies: TTabSheet
       Caption = 'Depends on'
@@ -59,6 +70,10 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     object tsCategories: TTabSheet
       Caption = 'Categories'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
 end

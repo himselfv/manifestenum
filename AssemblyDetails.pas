@@ -16,19 +16,24 @@ type
     tsDependents: TTabSheet;
     tsCategories: TTabSheet;
     lbDependents: TListBox;
+    lblName: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure pcDetailsChange(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FAssemblyId: TAssemblyId;
+    FData: TAssemblyData;
     procedure SetDb(ADb: TAssemblyDb);
     procedure SetAssemblyId(const AValue: TAssemblyId);
     procedure LoadAssemblyData;
     procedure LoadDependencies;
     procedure LoadDependents;
   protected //Additional tabs
-    ResourcesTab: TAssemblyResourcesForm;
-    procedure AddTab(AForm: TForm);
+    ResourcesForm: TAssemblyResourcesForm;
+    ResourcesTab: TTabSheet;
+    ResourcesTabFirstReloadDone: boolean;
+    function AddTab(AForm: TForm): TTabSheet;
   public
     procedure Clear;
     procedure Reload;
@@ -45,9 +50,9 @@ implementation
 
 procedure TAssemblyDetailsForm.FormCreate(Sender: TObject);
 begin
-  ResourcesTab := TAssemblyResourcesForm.Create(Self);
-  ResourcesTab.ShowDependencies := true;
-  AddTab(ResourcesTab);
+  ResourcesForm := TAssemblyResourcesForm.Create(Self);
+  ResourcesForm.ShowDependencies := true;
+  ResourcesTab := AddTab(ResourcesForm);
 end;
 
 procedure TAssemblyDetailsForm.FormShow(Sender: TObject);
@@ -55,13 +60,12 @@ begin
   Self.pcDetails.ActivePageIndex := 0;
 end;
 
-procedure TAssemblyDetailsForm.AddTab(AForm: TForm);
-var ATab: TTabSheet;
+function TAssemblyDetailsForm.AddTab(AForm: TForm): TTabSheet;
 begin
-  ATab := TTabSheet.Create(pcDetails);
-  ATab.PageControl := pcDetails;
-  ATab.Caption := AForm.Caption;
-  AForm.ManualDock(ATab, ATab, alClient);
+  Result := TTabSheet.Create(pcDetails);
+  Result.PageControl := pcDetails;
+  Result.Caption := AForm.Caption;
+  AForm.ManualDock(Result, Result, alClient);
   AForm.Align := alClient;
   AForm.Visible := true;
 end;
@@ -69,25 +73,24 @@ end;
 procedure TAssemblyDetailsForm.SetDb(ADb: TAssemblyDb);
 begin
   FDb := ADb;
-  ResourcesTab.Db := ADb;
+  ResourcesForm.Db := ADb;
 end;
 
 procedure TAssemblyDetailsForm.SetAssemblyId(const AValue: TAssemblyId);
 begin
   if AValue <> FAssemblyId then begin
     FAssemblyId := AValue;
+    ResourcesForm.Assemblies.Clear;
+    ResourcesForm.Assemblies.Add(AValue);
     Reload;
   end;
-  ResourcesTab.Assemblies.Clear;
-  ResourcesTab.Assemblies.Add(AValue);
-  ResourcesTab.Reload;
 end;
 
 procedure TAssemblyDetailsForm.Clear;
 begin
   lbDependencies.Clear;
   lbDependents.Clear;
-  ResourcesTab.Clear;
+  ResourcesForm.Clear;
 end;
 
 procedure TAssemblyDetailsForm.Reload;
@@ -98,12 +101,28 @@ begin
   LoadAssemblyData;
   LoadDependencies;
   LoadDependents;
-  ResourcesTab.Reload;
+  if ResourcesTab.Visible then
+    ResourcesForm.Reload;
+end;
+
+procedure TAssemblyDetailsForm.pcDetailsChange(Sender: TObject);
+begin
+ //It won't reload by itself the second+ time (when already "Visible" by its internal bookkeeping).
+  if ResourcesTab.Visible then
+    if ResourcesTabFirstReloadDone then
+      ResourcesForm.Reload
+    else
+      ResourcesTabFirstReloadDone := true;
 end;
 
 procedure TAssemblyDetailsForm.LoadAssemblyData;
 begin
-
+  if Self.FAssemblyId <> 0 then begin
+    FData := Db.Assemblies.GetAssembly(Self.FAssemblyId);
+    lblName.Caption := FData.identity.ToString;
+  end else begin
+    lblName.Caption := '';
+  end;
 end;
 
 procedure TAssemblyDetailsForm.LoadDependencies;
