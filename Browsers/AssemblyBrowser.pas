@@ -69,21 +69,16 @@ type
     function GetFocusedAssembly: TAssemblyId;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
     procedure SetGroupingType(const Value: TGroupingType);
-    procedure FilterChanged(Sender: TObject); override;
-    procedure WmSetQuickfilter(var msg: TWmSetQuickFilter); message WM_SET_QUICKFILTER;
 
   protected
-    FFilterText: string;
-    procedure SetNodePathVisible(Node: PVirtualNode);
-    procedure SetNodeContentsVisible(Node: PVirtualNode);
-    procedure Tree_SetNodeVisible(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
-      var Abort: Boolean);
-    procedure ApplyFilter;
+    FQuickFilterText: string;
+    procedure ApplyFilter; override;
     procedure ApplyNodeNameFilter(Node: PVirtualNode; const AFilterText: string);
+    procedure CommonFilterChanged(Sender: TObject); override;
+    procedure WmSetQuickfilter(var msg: TWmSetQuickFilter); message WM_SET_QUICKFILTER;
 
   public
     procedure Clear; override;
-    procedure Reload; override;
     property GroupingType: TGroupingType read FGroupingType write SetGroupingType;
     property FocusedAssembly: TAssemblyId read GetFocusedAssembly;
     property SelectedAssemblies: TArray<TAssemblyId> read GetSelectedAssemblies;
@@ -94,7 +89,7 @@ var
   AssemblyBrowserForm: TAssemblyBrowserForm;
 
 implementation
-uses StrUtils, CommonFilters;
+uses StrUtils, VirtualTreeviewUtils, CommonFilters;
 
 {$R *.dfm}
 
@@ -119,21 +114,15 @@ begin
   FBundleFolderNodes.Clear;
 end;
 
-procedure TAssemblyBrowserForm.Reload;
-begin
-  inherited;
-  ApplyFilter;
-end;
-
-procedure TAssemblyBrowserForm.FilterChanged(Sender: TObject);
+procedure TAssemblyBrowserForm.CommonFilterChanged(Sender: TObject);
 begin
   ApplyFilter;
 end;
 
 procedure TAssemblyBrowserForm.WmSetQuickfilter(var msg: TWmSetQuickFilter);
 begin
-  if FFilterText <> msg.FilterText^ then begin
-    FFilterText := msg.FilterText^;
+  if FQuickFilterText <> msg.FilterText^ then begin
+    FQuickFilterText := msg.FilterText^;
     ApplyFilter;
   end;
 end;
@@ -421,33 +410,7 @@ var Data: PNodeData;
 begin
   Data := PNodeData(Tree.GetNodeData(Node));
   if AnsiContainsText(Data^.Name, AFilterText) then
-    SetNodeContentsVisible(Node);
-end;
-
-//Sets node and all of its parents to be visible
-procedure TAssemblyBrowserForm.SetNodePathVisible(Node: PVirtualNode);
-begin
- //If it's already visible then the path above has already been covered due to how we call this
-  Node := Tree.NodeParent[Node];
-  while (Node <> nil) and not Tree.IsVisible[Node] do begin
-    Tree.IsVisible[Node] := true;
-    Node := Tree.NodeParent[Node];
-  end;
-end;
-
-//Sets node and all of its children visible
-procedure TAssemblyBrowserForm.SetNodeContentsVisible(Node: PVirtualNode);
-begin
-  //Can't optimize this away by checking if already visible: not all children may be visible
-  Tree.IsVisible[Node] := true;
-  SetNodePathVisible(Node); //it and all parents
-  Tree.IterateSubtree(Node, Tree_SetNodeVisible, pointer(true));
-end;
-
-procedure TAssemblyBrowserForm.Tree_SetNodeVisible(Sender: TBaseVirtualTree; Node: PVirtualNode;
-  Data: Pointer; var Abort: Boolean);
-begin
-  Tree.IsVisible[Node] := boolean(Data);
+    Tree.MakeNodeContentVisible(Node);
 end;
 
 // Applies visibility to root nodes according to the current quick-filter
@@ -459,7 +422,7 @@ var list: TAssemblyList;
   ShowAll: boolean;
   NodeVisible: boolean;
 begin
-  filter := FFilterText;
+  filter := FQuickFilterText;
 
   list := TAssemblyList.Create;
   Tree.BeginUpdate;
@@ -484,7 +447,7 @@ begin
       NodeVisible := (ShowAll or list.ContainsKey(Data.Assembly.id)) and Filters.Test(Data.Assembly);
       if NodeVisible then begin
         Tree.IsVisible[Node] := true; //may already be visible, still has to check parents
-        SetNodePathVisible(Node)
+        Tree.MakeNodePathVisible(Node)
       end else //just hide it
         Tree.IsVisible[Node] := false;
     end;

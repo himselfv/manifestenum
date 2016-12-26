@@ -41,7 +41,8 @@ uses
   CategoryBrowser in 'Browsers\CategoryBrowser.pas' {CategoryBrowserForm},
   AutorunsBrowser in 'Browsers\AutorunsBrowser.pas' {AutorunsBrowserForm},
   ShellExtBrowser in 'Browsers\ShellExtBrowser.pas' {ShellExtensionBrowserForm},
-  BitSets in 'Utils\BitSets.pas';
+  BitSets in 'Utils\BitSets.pas',
+  VirtualTreeviewUtils in 'Utils\VirtualTreeviewUtils.pas';
 
 {$R *.res}
 

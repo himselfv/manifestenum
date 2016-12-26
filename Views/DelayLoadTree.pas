@@ -37,7 +37,8 @@ type
     procedure TouchChildren(ANode: PVirtualNode);
     function AddNode(AParent: PVirtualNode): PVirtualNode;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); virtual;
-    procedure FilterChanged(ASender: TObject); virtual;
+    procedure CommonFilterChanged(ASender: TObject); virtual;
+    procedure ApplyFilter; virtual;
     function ParentForm: TWinControl;
   public
     procedure Clear; virtual;
@@ -52,12 +53,12 @@ uses CommonFilters;
 
 procedure TDelayLoadTree.FormCreate(Sender: TObject);
 begin
-  CommonFilters.OnFilterChanged.Add(Self.FilterChanged);
+  CommonFilters.OnFilterChanged.Add(Self.CommonFilterChanged);
 end;
 
 procedure TDelayLoadTree.FormDestroy(Sender: TObject);
 begin
-  CommonFilters.OnFilterChanged.Remove(Self.FilterChanged);
+  CommonFilters.OnFilterChanged.Remove(Self.CommonFilterChanged);
 end;
 
 procedure TDelayLoadTree.Clear;
@@ -77,6 +78,7 @@ begin
     TouchChildren(nil);
     if Tree.Header.SortColumn <> NoColumn then
       Tree.SortTree(Tree.Header.SortColumn, Tree.Header.SortDirection);
+    ApplyFilter;
   finally
     Tree.EndUpdate;
   end;
@@ -106,9 +108,16 @@ begin
     Result := Result.Parent;
 end;
 
-procedure TDelayLoadTree.FilterChanged(ASender: TObject);
+procedure TDelayLoadTree.CommonFilterChanged(ASender: TObject);
 begin
  //Override if you use common filters, to reload when those change
+ //We do not call ApplyFilter by default because your implementation might not care about common filters
+end;
+
+//Called when local filter conditions change. Called once on reload.
+procedure TDelayLoadTree.ApplyFilter;
+begin
+ //Override to filter nodes and hide those not visible according to your filtering rules
 end;
 
 procedure TDelayLoadTree.TreeGetNodeDataSize(Sender: TBaseVirtualTree;

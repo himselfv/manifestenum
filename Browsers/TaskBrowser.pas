@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees,
-  AssemblyDb, CommonResources, AssemblyDb.Assemblies;
+  CommonMessages, CommonResources, AssemblyDb, AssemblyDb.Assemblies;
 
 type
   TNodeType = (ntFolder, ntTask);
@@ -35,13 +35,17 @@ type
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     function AddFolderNode(AParent: PVirtualNode; ATaskFolderId: TTaskFolderId): PVirtualNode;
     function AddTaskNode(AParent: PVirtualNode; ATaskData: TTaskEntryData): PVirtualNode;
+  protected
+    FQuickFilterText: string;
+    procedure ApplyFilter; override;
+    procedure WmSetQuickfilter(var msg: TWmSetQuickFilter); message WM_SET_QUICKFILTER;
   end;
 
 var
   TaskBrowserForm: TTaskBrowserForm;
 
 implementation
-uses Generics.Collections, CommonMessages;
+uses StrUtils, Generics.Collections, VirtualTreeviewUtils;
 
 {$R *.dfm}
 
@@ -187,6 +191,54 @@ begin
     CommonMessages.SetAssemblySelection(Form.Handle, AData.AssemblyId)
   else
     CommonMessages.SetAssemblySelection(Form.Handle, nil);
+end;
+
+
+// Filtering
+
+procedure TTaskBrowserForm.ApplyFilter;
+var Node: PVirtualNode;
+  Data: PNodeData;
+begin
+ //We ignore common filtes atm and only honor quickfilter
+
+  Tree.BeginUpdate;
+  try
+    //Typical item-folder filtering: hide all folders, then only show folders leading to visible leafs
+    for Node in Tree.Nodes do begin
+      Data := Tree.GetNodeData(Node);
+      if Data.NodeType <> ntTask then
+        Tree.IsVisible[Node] := false;
+    end;
+
+    for Node in Tree.Nodes do begin
+      Data := Tree.GetNodeData(Node);
+      if Data.NodeType <> ntTask then continue;
+
+      if (Self.FQuickFilterText = '') or AnsiContainsText(Data.Name, Self.FQuickFilterText) then
+        Tree.MakeNodePathVisible(Node)
+      else
+        Tree.IsVisible[Node] := false;
+    end;
+
+    for Node in Tree.Nodes do begin
+      Data := Tree.GetNodeData(Node);
+      if Data.NodeType <> ntTask then
+        if (Self.FQuickFilterText = '') or AnsiContainsText(Data.Name, Self.FQuickFilterText) then
+          Tree.MakeNodeContentVisible(Node);
+    end;
+
+  finally
+    Tree.EndUpdate;
+  end;
+end;
+
+procedure TTaskBrowserForm.WmSetQuickfilter(var msg: TWmSetQuickFilter);
+begin
+  if FQuickFilterText <> msg.FilterText^ then begin
+    FQuickFilterText := msg.FilterText^;
+    ApplyFilter;
+  end;
 end;
 
 
