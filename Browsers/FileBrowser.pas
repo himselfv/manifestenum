@@ -22,8 +22,7 @@ type
   TFileBrowserForm = class(TDelayLoadTree)
     Panel: TPanel;
     cbViewMode: TComboBox;
-    Label1: TLabel;
-    lbComponents: TListBox;
+    procedure FormCreate(Sender: TObject);
     procedure TreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
     procedure TreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
       var InitialStates: TVirtualNodeInitStates);
@@ -39,7 +38,6 @@ type
     procedure TreeGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
       const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
     procedure cbViewModeChange(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   protected
     RootAnchors: TArray<TFolderId>;
     modelEnv: TEnvironment;
@@ -58,7 +56,7 @@ var
   FileBrowserForm: TFileBrowserForm;
 
 implementation
-uses Generics.Collections, ManifestEnum.FileActions;
+uses Generics.Collections, CommonMessages, ManifestEnum.FileActions;
 
 {$R *.dfm}
 
@@ -382,29 +380,31 @@ end;
 procedure TFileBrowserForm.TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex);
 var AData: PNodeData;
-  Id: TFolderId;
+  Form: TWinControl;
+  AIds: TArray<TAssemblyID>;
+  Flid: TFolderId;
   Refs: TFolderReferees;
-  AsmID: TassemblyId;
-  Assembly: TAssemblyData;
 begin
   inherited;
+  Form := Self.ParentForm;
+  if Form = nil then exit;
+
   AData := Sender.GetNodeData(Node);
-  lbComponents.Clear;
   if AData.v.assembly > 0 then begin
-    lbComponents.Items.Add(FDb.Assemblies.GetAssembly(AData.v.assembly).identity.ToString);
+    SetLength(AIDs, 1);
+    AIDs[0] := AData.v.assembly;
   end else begin
     Refs := TFolderReferees.Create;
     try
-      for Id in AData.Anchors do
-        Db.Files.GetFolderReferees(Id, Refs);
-      for AsmID in Refs.Keys do begin
-        Assembly := Db.Assemblies.GetAssembly(AsmId);
-        lbComponents.Items.Add(Assembly.identity.ToString);
-      end;
+      for Flid in AData.Anchors do
+        Db.Files.GetFolderReferees(Flid, Refs);
+      AIDs := Refs.Keys.ToArray;
     finally
       FreeAndNil(Refs);
     end;
   end;
+
+  SetAssemblySelection(Form.Handle, AIds);
 end;
 
 end.

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ComCtrls,
-  StdCtrls, Menus, ExtCtrls,  Generics.Collections, VirtualTrees, AssemblyDb,
+  StdCtrls, Menus, ExtCtrls,  Generics.Collections, VirtualTrees, CommonMessages, AssemblyDb,
   AssemblyDetails, FileBrowser, RegistryBrowser, TaskBrowser, CategoryBrowser, AssemblyBrowser,
   AssemblyDb.Assemblies;
 
@@ -82,6 +82,7 @@ type
     procedure AssemblyBrowserSelectionChanged(Sender: TObject);
     procedure AssemblyBrowserGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
+    procedure WmSetAssemblySelection(var msg: TWmSetAssemblySelection); message WM_SET_ASSEMBLY_SELECTION;
 
   protected
     //Settings
@@ -95,7 +96,7 @@ var
 
 implementation
 uses UITypes, Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
-  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonMessages, CommonFilters,
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonFilters,
   ManifestEnum.Log, ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
 {$R *.dfm}
@@ -309,6 +310,14 @@ procedure TMainForm.AssemblyBrowserGetPopupMenu(Sender: TBaseVirtualTree; Node: 
 begin
   AssemblyActions.SetSelectedAssemblies(FAssemblyBrowser.SelectedAssemblies);
   PopupMenu := AssemblyActions.PopupMenu;
+end;
+
+procedure TMainForm.WmSetAssemblySelection(var msg: TWmSetAssemblySelection);
+begin
+  if Length(msg.Assemblies) >= 1 then
+    FAssemblyDetails.AssemblyId := msg.Assemblies[0]  //TODO: The rest of the selection
+  else
+    FAssemblyDetails.AssemblyId := 0;
 end;
 
 procedure TMainForm.miDISMImageCleanupClick(Sender: TObject);

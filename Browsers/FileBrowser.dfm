@@ -4,17 +4,8 @@ inherited FileBrowserForm: TFileBrowserForm
   ExplicitHeight = 306
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel [0]
-    Left = 0
-    Top = 195
-    Width = 464
-    Height = 13
-    Align = alBottom
-    Caption = 'Components which use this key:'
-    ExplicitWidth = 154
-  end
   inherited Tree: TVirtualStringTree
-    Height = 174
+    Height = 247
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
     Header.SortColumn = 0
@@ -37,7 +28,7 @@ inherited FileBrowserForm: TFileBrowserForm
   end
   object Panel: TPanel
     Left = 0
-    Top = 174
+    Top = 247
     Width = 464
     Height = 21
     Align = alBottom
@@ -59,14 +50,5 @@ inherited FileBrowserForm: TFileBrowserForm
         'Non-expanded'
         'Model PC')
     end
-  end
-  object lbComponents: TListBox
-    Left = 0
-    Top = 208
-    Width = 464
-    Height = 60
-    Align = alBottom
-    ItemHeight = 13
-    TabOrder = 2
   end
 end

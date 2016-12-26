@@ -38,6 +38,7 @@ type
     function AddNode(AParent: PVirtualNode): PVirtualNode;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); virtual;
     procedure FilterChanged(ASender: TObject); virtual;
+    function ParentForm: TWinControl;
   public
     procedure Clear; virtual;
     procedure Reload; virtual;
@@ -96,6 +97,13 @@ begin
       Reload
     else
       Clear;
+end;
+
+function TDelayLoadTree.ParentForm: TWinControl;
+begin
+  Result := Self.Parent;
+  while (Result <> nil) and not (Result is TCustomForm) do
+    Result := Result.Parent;
 end;
 
 procedure TDelayLoadTree.FilterChanged(ASender: TObject);
