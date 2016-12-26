@@ -57,22 +57,30 @@ type
     FGroupingType: TGroupingType;
     FOnSelectionChanged: TNotifyEvent;
     FBundleNodes: TDictionary<TBundleId, PVirtualNode>;
-    FFilterText: string;
+    FBundleFolderNodes: TList<PVirtualNode>;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     procedure LoadAllAssemblies();
     function AddAssemblyNode(AParent: PVirtualNode; const AEntry: TAssemblyData): PVirtualNode;
     procedure AddBundleNodes;
     function GetBundleFolderNode(AParent: PVirtualNode; const AFolderName: string): PVirtualNode;
-    procedure GetBundleFolderNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
-      Data: Pointer; var Abort: Boolean);
     function AddBundleNode(AParent: PVirtualNode; const ABundle: TBundleData): PVirtualNode;
     function FindBundleNode(ABundle: TBundleId): PVirtualNode;
-    procedure ApplyFilter;
+
     function GetFocusedAssembly: TAssemblyId;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
     procedure SetGroupingType(const Value: TGroupingType);
     procedure FilterChanged(Sender: TObject); override;
     procedure WmSetQuickfilter(var msg: TWmSetQuickFilter); message WM_SET_QUICKFILTER;
+
+  protected
+    FFilterText: string;
+    procedure ApplyFilter;
+    procedure ApplyNodeNameFilter(Node: PVirtualNode; const AFilterText: string);
+    procedure SetNodePathVisible(Node: PVirtualNode);
+    procedure SetNodeContentsVisible(Node: PVirtualNode);
+    procedure Tree_SetNodeVisible(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
+      var Abort: Boolean);
+
   public
     procedure Clear; override;
     procedure Reload; override;
@@ -86,7 +94,7 @@ var
   AssemblyBrowserForm: TAssemblyBrowserForm;
 
 implementation
-uses CommonFilters;
+uses StrUtils, CommonFilters;
 
 {$R *.dfm}
 
@@ -94,10 +102,12 @@ procedure TAssemblyBrowserForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FBundleNodes := TDictionary<TBundleId, PVirtualNode>.Create;
+  FBundleFolderNodes := TList<PVirtualNode>.Create;
 end;
 
 procedure TAssemblyBrowserForm.FormDestroy(Sender: TObject);
 begin
+  FreeAndNil(FBundleFolderNodes);
   FreeAndNil(FBundleNodes);
   inherited;
 end;
@@ -106,6 +116,7 @@ procedure TAssemblyBrowserForm.Clear;
 begin
   inherited;
   FBundleNodes.Clear;
+  FBundleFolderNodes.Clear;
 end;
 
 procedure TAssemblyBrowserForm.Reload;
@@ -228,9 +239,15 @@ end;
 
 function TAssemblyBrowserForm.GetBundleFolderNode(AParent: PVirtualNode; const AFolderName: string): PVirtualNode;
 var Data: PNodeData;
+  Node: PVirtualNode;
 begin
-  Result := Tree.IterateSubtree(AParent, GetBundleFolderNode_Callback, @AFolderName);
-  if Result <> nil then exit;
+  for Node in FBundleFolderNodes do begin
+    Data := Tree.GetNodeData(Node);
+    if Data.Name = AFolderName then begin
+      Result := Node;
+      exit;
+    end;
+  end;
 
   Result := Tree.AddChild(AParent);
   Tree.ReinitNode(Result, false);
@@ -238,14 +255,7 @@ begin
   Data.Type_ := ntBundleFolder;
   Data.Name := AFolderName;
   Data.DelayLoad.Touched := true;
-end;
-
-procedure TAssemblyBrowserForm.GetBundleFolderNode_Callback(Sender: TBaseVirtualTree; Node: PVirtualNode;
-  Data: Pointer; var Abort: Boolean);
-var NodeData: PNodeData;
-begin
-  NodeData := Sender.GetNodeData(Node);
-  Abort := (NodeData.Name = PString(Data)^);
+  FBundleFolderNodes.Add(Result);
 end;
 
 function TAssemblyBrowserForm.AddBundleNode(AParent: PVirtualNode; const ABundle: TBundleData): PVirtualNode;
@@ -408,13 +418,22 @@ var list: TAssemblyList;
   Node: PVirtualNode;
   Data: PNodeData;
   ShowAll: boolean;
-  Visible: boolean;
+  NodeVisible: boolean;
 begin
   filter := FFilterText;
 
   list := TAssemblyList.Create;
   Tree.BeginUpdate;
   try
+    //Assembly nodes are visible if they match the filter
+    //Bundle nodes are by default invisible and are only made visible if any of their childs is
+    //visible (or if they themselves match the filter).
+
+    for Node in Self.FBundleNodes.Values do
+      Tree.IsVisible[Node] := false;
+    for Node in Self.FBundleFolderNodes do
+      Tree.IsVisible[Node] := false;
+
     ShowAll := ((not cbFilterByName.Checked) and (not cbFilterByFiles.Checked)) or (filter = '');
     if cbFilterByName.Checked and (filter <> '') then
       FDb.FilterAssemblyByName(filter, list);
@@ -422,14 +441,63 @@ begin
       FDb.FilterAssemblyByFile(filter, list);
     for Node in Tree.Nodes() do begin
       Data := Tree.GetNodeData(Node);
-      if Data.Type_ <> ntAssembly then continue; //other nodes are always visible atm //TODO: Hide filtered
-      Visible := ShowAll or list.ContainsKey(Data.Assembly.id);
-      Tree.IsVisible[Node] := Visible and Filters.Test(Data.Assembly);
+      if Data.Type_ <> ntAssembly then continue;
+      NodeVisible := (ShowAll or list.ContainsKey(Data.Assembly.id)) and Filters.Test(Data.Assembly);
+      if NodeVisible then begin
+        Tree.IsVisible[Node] := true; //may already be visible, still has to check parents
+        SetNodePathVisible(Node)
+      end else //just hide it
+        Tree.IsVisible[Node] := false;
     end;
+
+    //Make explicitly matched bundles visible
+    if filter <> '' then begin
+      for Node in Self.FBundleNodes.Values do
+        ApplyNodeNameFilter(Node, filter);
+      for Node in Self.FBundleFolderNodes do
+        ApplyNodeNameFilter(Node, filter);
+    end;
+
   finally
     Tree.EndUpdate;
     FreeAndNil(list);
   end;
+end;
+
+//Makes a given node visible with all its children if it matches the filter text.
+//Mostly used for Bundles and Folders after much more nuanced Assembly filtering takes place.
+procedure TAssemblyBrowserForm.ApplyNodeNameFilter(Node: PVirtualNode; const AFilterText: string);
+var Data: PNodeData;
+begin
+  Data := PNodeData(Tree.GetNodeData(Node));
+  if AnsiContainsText(Data^.Name, AFilterText) then
+    SetNodeContentsVisible(Node);
+end;
+
+//Sets node and all of its parents to be visible
+procedure TAssemblyBrowserForm.SetNodePathVisible(Node: PVirtualNode);
+begin
+ //If it's already visible then the path above has already been covered due to how we call this
+  Node := Tree.NodeParent[Node];
+  while (Node <> nil) and not Tree.IsVisible[Node] do begin
+    Tree.IsVisible[Node] := true;
+    Node := Tree.NodeParent[Node];
+  end;
+end;
+
+//Sets node and all of its children visible
+procedure TAssemblyBrowserForm.SetNodeContentsVisible(Node: PVirtualNode);
+begin
+  //Can't optimize this away by checking if already visible: not all children may be visible
+  Tree.IsVisible[Node] := true;
+  SetNodePathVisible(Node); //it and all parents
+  Tree.IterateSubtree(Node, Tree_SetNodeVisible, pointer(true));
+end;
+
+procedure TAssemblyBrowserForm.Tree_SetNodeVisible(Sender: TBaseVirtualTree; Node: PVirtualNode;
+  Data: Pointer; var Abort: Boolean);
+begin
+  Sender.IsVisible[Node] := boolean(Data);
 end;
 
 procedure TAssemblyBrowserForm.cbFilterByNameClick(Sender: TObject);

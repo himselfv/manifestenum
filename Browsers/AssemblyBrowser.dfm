@@ -23,9 +23,9 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
     OnPaintText = TreePaintText
     OnGetImageIndexEx = TreeGetImageIndexEx
     OnInitNode = TreeInitNode
-    ExplicitTop = 44
+    ExplicitTop = 21
     ExplicitWidth = 512
-    ExplicitHeight = 305
+    ExplicitHeight = 328
     Columns = <
       item
         Position = 0
