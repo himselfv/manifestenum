@@ -22,7 +22,6 @@ type
     Name: string;
     Assembly: TAssemblyData;
     Bundle: TBundleId;
-    Visible: boolean;
   end;
   PNodeData = ^TNodeData;
 
@@ -75,15 +74,12 @@ type
 
   protected
     FFilterText: string;
-    function GetNodeVisible(Node: PVirtualNode): boolean; inline;
-    procedure SetNodeVisible(Node: PVirtualNode; Visible: boolean); inline;
     procedure SetNodePathVisible(Node: PVirtualNode);
     procedure SetNodeContentsVisible(Node: PVirtualNode);
     procedure Tree_SetNodeVisible(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer;
       var Abort: Boolean);
     procedure ApplyFilter;
     procedure ApplyNodeNameFilter(Node: PVirtualNode; const AFilterText: string);
-    property IsNodeVisible[Node: PVirtualNode]: boolean read GetNodeVisible write SetNodeVisible;
 
   public
     procedure Clear; override;
@@ -418,20 +414,6 @@ end;
 
 // Filters
 
-//Since VirtualTreeView's Get/SetVisible is not without cost, even in Update mode,
-//we've implemented our own flag to track visibility while we're recalculating it.
-//All the following functions work with it. We only apply it after recalculation is done.
-
-function TAssemblyBrowserForm.GetNodeVisible(Node: PVirtualNode): boolean;
-begin
-  Result := PNodeData(Tree.GetNodeData(Node))^.Visible;
-end;
-
-procedure TAssemblyBrowserForm.SetNodeVisible(Node: PVirtualNode; Visible: boolean);
-begin
-  PNodeData(Tree.GetNodeData(Node))^.Visible := Visible;
-end;
-
 //Makes a given node visible with all its children if it matches the filter text.
 //Mostly used for Bundles and Folders after much more nuanced Assembly filtering takes place.
 procedure TAssemblyBrowserForm.ApplyNodeNameFilter(Node: PVirtualNode; const AFilterText: string);
@@ -447,8 +429,8 @@ procedure TAssemblyBrowserForm.SetNodePathVisible(Node: PVirtualNode);
 begin
  //If it's already visible then the path above has already been covered due to how we call this
   Node := Tree.NodeParent[Node];
-  while (Node <> nil) and not Self.IsNodeVisible[Node] do begin
-    Self.IsNodeVisible[Node] := true;
+  while (Node <> nil) and not Tree.IsVisible[Node] do begin
+    Tree.IsVisible[Node] := true;
     Node := Tree.NodeParent[Node];
   end;
 end;
@@ -457,7 +439,7 @@ end;
 procedure TAssemblyBrowserForm.SetNodeContentsVisible(Node: PVirtualNode);
 begin
   //Can't optimize this away by checking if already visible: not all children may be visible
-  Self.IsNodeVisible[Node] := true;
+  Tree.IsVisible[Node] := true;
   SetNodePathVisible(Node); //it and all parents
   Tree.IterateSubtree(Node, Tree_SetNodeVisible, pointer(true));
 end;
@@ -465,7 +447,7 @@ end;
 procedure TAssemblyBrowserForm.Tree_SetNodeVisible(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Data: Pointer; var Abort: Boolean);
 begin
-  Self.IsNodeVisible[Node] := boolean(Data);
+  Tree.IsVisible[Node] := boolean(Data);
 end;
 
 // Applies visibility to root nodes according to the current quick-filter
@@ -487,9 +469,9 @@ begin
     //visible (or if they themselves match the filter).
 
     for Node in Self.FBundleNodes.Values do
-      Self.IsNodeVisible[Node] := false;
+      Tree.IsVisible[Node] := false;
     for Node in Self.FBundleFolderNodes do
-      Self.IsNodeVisible[Node] := false;
+      Tree.IsVisible[Node] := false;
 
     ShowAll := ((not cbFilterByName.Checked) and (not cbFilterByFiles.Checked)) or (filter = '');
     if cbFilterByName.Checked and (filter <> '') then
@@ -501,10 +483,10 @@ begin
       if Data.Type_ <> ntAssembly then continue;
       NodeVisible := (ShowAll or list.ContainsKey(Data.Assembly.id)) and Filters.Test(Data.Assembly);
       if NodeVisible then begin
-        Self.IsNodeVisible[Node] := true; //may already be visible, still has to check parents
+        Tree.IsVisible[Node] := true; //may already be visible, still has to check parents
         SetNodePathVisible(Node)
       end else //just hide it
-        Self.IsNodeVisible[Node] := false;
+        Tree.IsVisible[Node] := false;
     end;
 
     //Make explicitly matched bundles visible
@@ -514,10 +496,6 @@ begin
       for Node in Self.FBundleFolderNodes do
         ApplyNodeNameFilter(Node, filter);
     end;
-
-    //Apply
-    for Node in Tree.Nodes do
-      Tree.IsVisible[Node] := PNodeData(Tree.GetNodeData(Node))^.Visible;
 
   finally
     Tree.EndUpdate;
