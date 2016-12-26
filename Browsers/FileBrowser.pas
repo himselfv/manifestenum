@@ -143,7 +143,7 @@ begin
     //Root folder + model paths == expand root children folders
     FDb.Files.GetFolders(0, AFolders);
     for AChildFolderId in AFolders.Keys do
-      AddFolderAnchor(ANode, ExpandPath(AFolders[AChildFolderId]), AChildFolderId);
+      AddFolderAnchor(ANode, ExpandPath(AFolders[AChildFolderId].name), AChildFolderId);
   finally
     FreeAndNil(AFolders);
   end;
@@ -161,7 +161,7 @@ begin
       if (Anchors[i] <> 0) or (ANode = nil) then //when root is anchored anywhere else, we mean to anchor only files
         Db.Files.GetFolders(Anchors[i], AFolders);
       for AChildFolderId in AFolders.Keys do
-        AddFolderNode(ANode, AFolders[AChildFolderId], AChildFolderId);
+        AddFolderNode(ANode, AFolders[AChildFolderId].name, AChildFolderId);
   finally
     FreeAndNil(AFolders);
   end;

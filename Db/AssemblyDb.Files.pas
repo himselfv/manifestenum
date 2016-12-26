@@ -5,7 +5,12 @@ uses Generics.Collections, sqlite3, AssemblyDb.Core, AssemblyDb.Assemblies;
 
 type
   TFolderId = int64;
-  TFolderList = TDictionary<TFolderId, string>;
+  TFolderData = record
+    id: TFolderId;
+    parent: TFolderId;
+    name: string;
+  end;
+  TFolderList = TDictionary<TFolderId, TFolderData>;
 
   TFolderReferenceData = record
     owner: boolean;
@@ -25,6 +30,7 @@ type
     importPath: string;
   end;
   PFileEntryData = ^TFileEntryData;
+  TFileList = TList<TFileEntryData>;
 
   TAssemblyFiles = class(TAssemblyDbModule)
   protected
@@ -42,18 +48,22 @@ type
     procedure AddFolderReference(AAssembly: TAssemblyId; AFolder: TFolderId; const AData: TFolderReferenceData);
     function AddFolder(AAssembly: TAssemblyId; APath: string; const AData: TFolderReferenceData): TFolderId; overload;
     procedure AddFile(const AData: TFileEntryData);
+    procedure QueryFolders(AStmt: PSQLite3Stmt; AList: TFolderList);
     procedure GetFolders(const AParent: TFolderId; AList: TFolderList);
     procedure GetFolderReferees(AFolder: TFolderId; AList: TFolderReferees);
+    procedure FindFolders(const AMask: string; AList: TFolderList);
     function GetFolderName(AFolder: TFolderId): string;
     function GetFolderPath(AFolder: TFolderId): string;
     function GetFileFullDestinationName(const AFile: TFileEntryData): string;
     procedure GetAssemblyFolders(AAssembly: TAssemblyId; AList: TFolderReferences);
 
-    procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+
+    procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TFileList);
     function QueryFile(AStmt: PSQLite3Stmt; out AData: TFileEntryData): boolean;
-    procedure GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
-    procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
+    procedure GetFiles(AFolder: TFolderId; AList: TFileList);
+    procedure GetAssemblyFiles(AAssembly: TAssemblyId; AList: TFileList);
     function GetFileEntryById(AId: TFileEntryId): TFileEntryData;
+    procedure FindFiles(const AMask: string; AList: TFileList);
 
   end;
 
@@ -173,21 +183,38 @@ begin
   sqlite3_reset(StmAddFile);
 end;
 
-//Retrieves the list of children folders for a given parent (0 for root)
-procedure TAssemblyFiles.GetFolders(const AParent: TFolderId; AList: TFolderList);
-var stmt: PSQLite3Stmt;
-  res: integer;
+procedure TAssemblyFiles.QueryFolders(AStmt: PSQLite3Stmt; AList: TFolderList);
+var res: integer;
+  data: TFolderData;
 begin
-  stmt := Db.PrepareStatement('SELECT id, name FROM folders WHERE parentId=?');
-  sqlite3_bind_int64(stmt, 1, AParent);
-  res := sqlite3_step(stmt);
+  res := sqlite3_step(AStmt);
   while res = SQLITE_ROW do begin
-    AList.AddOrSetValue(sqlite3_column_int64(stmt, 0), sqlite3_column_text16(stmt, 1));
-    res := sqlite3_step(stmt)
+    data.id := sqlite3_column_int64(AStmt, 0);
+    data.parent := sqlite3_column_int64(AStmt, 1);
+    data.name := sqlite3_column_text16(AStmt, 1);
+    AList.AddOrSetValue(data.id, data);
+    res := sqlite3_step(AStmt)
   end;
   if res <> SQLITE_DONE then
     Db.RaiseLastSQLiteError;
-  sqlite3_reset(stmt);
+  sqlite3_reset(AStmt);
+end;
+
+//Retrieves the list of children folders for a given parent (0 for root)
+procedure TAssemblyFiles.GetFolders(const AParent: TFolderId; AList: TFolderList);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM folders WHERE parentId=?');
+  sqlite3_bind_int64(stmt, 1, AParent);
+  QueryFolders(stmt, AList);
+end;
+
+procedure TAssemblyFiles.FindFolders(const AMask: string; AList: TFolderList);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('SELECT * FROM folders WHERE name LIKE ?');
+  sqlite3_bind_str(stmt, 1, AMask);
+  QueryFolders(stmt, AList);
 end;
 
 procedure TAssemblyFiles.GetFolderReferees(AFolder: TFolderId; AList: TFolderReferees);
@@ -274,7 +301,7 @@ begin
   Result.importPath := sqlite3_column_text16(stmt, 6);
 end;
 
-procedure TAssemblyFiles.QueryFiles(AStmt: PSQLite3Stmt; AList: TList<TFileEntryData>);
+procedure TAssemblyFiles.QueryFiles(AStmt: PSQLite3Stmt; AList: TFileList);
 var res: integer;
 begin
   res := sqlite3_step(AStmt);
@@ -300,7 +327,7 @@ begin
   sqlite3_reset(AStmt);
 end;
 
-procedure TAssemblyFiles.GetFiles(AFolder: TFolderId; AList: TList<TFileEntryData>);
+procedure TAssemblyFiles.GetFiles(AFolder: TFolderId; AList: TFileList);
 var AStmt: PSQLite3Stmt;
 begin
   AStmt := Db.PrepareStatement('SELECT rowid, * FROM files WHERE folderId=?');
@@ -308,7 +335,7 @@ begin
   QueryFiles(AStmt, AList);
 end;
 
-procedure TAssemblyFiles.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TList<TFileEntryData>);
+procedure TAssemblyFiles.GetAssemblyFiles(AAssembly: TAssemblyId; AList: TFileList);
 var AStmt: PSQLite3Stmt;
 begin
   AStmt := Db.PrepareStatement('SELECT rowid, * FROM files WHERE assemblyId=?');
@@ -323,6 +350,14 @@ begin
   sqlite3_bind_int64(AStmt, 1, AId);
   if not QueryFile(AStmt, Result) then
     raise EDatabaseError.Create('Item not found');
+end;
+
+procedure TAssemblyFiles.FindFiles(const AMask: string; AList: TFileList);
+var AStmt: PSQLite3Stmt;
+begin
+  AStmt := Db.PrepareStatement('SELECT rowid, * FROM files WHERE name LIKE ?');
+  sqlite3_bind_str(AStmt, 1, AMask);
+  QueryFiles(AStmt, AList);
 end;
 
 
