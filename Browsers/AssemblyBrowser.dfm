@@ -7,9 +7,9 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
   PixelsPerInch = 96
   TextHeight = 13
   inherited Tree: TVirtualStringTree
-    Top = 44
+    Top = 21
     Width = 512
-    Height = 305
+    Height = 328
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs]
     Header.SortColumn = 0
@@ -33,37 +33,6 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
         WideText = 'Name'
       end>
   end
-  object pnlFilter: TPanel
-    Left = 0
-    Top = 21
-    Width = 512
-    Height = 23
-    Align = alTop
-    BevelOuter = bvNone
-    TabOrder = 1
-    object sbFilterSettings: TSpeedButton
-      Left = 463
-      Top = 0
-      Width = 49
-      Height = 23
-      Align = alRight
-      AllowAllUp = True
-      GroupIndex = 10
-      Caption = 'Filters'
-      OnClick = sbFilterSettingsClick
-      ExplicitLeft = 504
-    end
-    object edtQuickFilter: TEdit
-      Left = 0
-      Top = 0
-      Width = 463
-      Height = 23
-      Align = alClient
-      TabOrder = 0
-      OnChange = edtQuickFilterChange
-      ExplicitHeight = 21
-    end
-  end
   object pnlFilterSettings: TPanel
     Left = 0
     Top = 0
@@ -72,8 +41,7 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
-    TabOrder = 2
-    Visible = False
+    TabOrder = 1
     object cbFilterByName: TCheckBox
       Left = 0
       Top = 0

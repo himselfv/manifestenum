@@ -8,7 +8,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
   Generics.Collections, DelayLoadTree, VirtualTrees, AssemblyDb.Core, AssemblyDb.Assemblies,
-  CommonResources, AssemblyDb.Bundles;
+  CommonMessages, CommonResources, AssemblyDb.Bundles;
 
 type
   TNodeType = (
@@ -33,9 +33,6 @@ type
   );
   
   TAssemblyBrowserForm = class(TDelayLoadTree)
-    pnlFilter: TPanel;
-    sbFilterSettings: TSpeedButton;
-    edtQuickFilter: TEdit;
     pnlFilterSettings: TPanel;
     cbFilterByName: TCheckBox;
     cbFilterByFiles: TCheckBox;
@@ -52,16 +49,15 @@ type
       var ImageList: TCustomImageList);
     procedure TreeCompareNodes(Sender: TBaseVirtualTree; Node1, Node2: PVirtualNode;
       Column: TColumnIndex; var Result: Integer);
-    procedure cbFilterByNameClick(Sender: TObject);
-    procedure edtQuickFilterChange(Sender: TObject);
-    procedure sbFilterSettingsClick(Sender: TObject);
     procedure TreeFocusChanged(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex);
     procedure TreePaintText(Sender: TBaseVirtualTree; const TargetCanvas: TCanvas;
       Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType);
+    procedure cbFilterByNameClick(Sender: TObject);
   protected
     FGroupingType: TGroupingType;
     FOnSelectionChanged: TNotifyEvent;
     FBundleNodes: TDictionary<TBundleId, PVirtualNode>;
+    FFilterText: string;
     procedure DelayLoad(ANode: PVirtualNode; ANodeData: pointer); override;
     procedure LoadAllAssemblies();
     function AddAssemblyNode(AParent: PVirtualNode; const AEntry: TAssemblyData): PVirtualNode;
@@ -76,6 +72,7 @@ type
     function GetSelectedAssemblies: TArray<TAssemblyId>;
     procedure SetGroupingType(const Value: TGroupingType);
     procedure FilterChanged(Sender: TObject); override;
+    procedure WmSetQuickfilter(var msg: TWmSetQuickFilter); message WM_SET_QUICKFILTER;
   public
     procedure Clear; override;
     procedure Reload; override;
@@ -120,6 +117,14 @@ end;
 procedure TAssemblyBrowserForm.FilterChanged(Sender: TObject);
 begin
   ApplyFilter;
+end;
+
+procedure TAssemblyBrowserForm.WmSetQuickfilter(var msg: TWmSetQuickFilter);
+begin
+  if FFilterText <> msg.FilterText^ then begin
+    FFilterText := msg.FilterText^;
+    ApplyFilter;
+  end;
 end;
 
 procedure TAssemblyBrowserForm.DelayLoad(ANode: PVirtualNode; ANodeData: pointer);
@@ -405,7 +410,7 @@ var list: TAssemblyList;
   ShowAll: boolean;
   Visible: boolean;
 begin
-  filter := edtQuickFilter.Text;
+  filter := FFilterText;
 
   list := TAssemblyList.Create;
   Tree.BeginUpdate;
@@ -427,23 +432,10 @@ begin
   end;
 end;
 
-procedure TAssemblyBrowserForm.edtQuickFilterChange(Sender: TObject);
-begin
-  inherited;
-  ApplyFilter;
-end;
-
 procedure TAssemblyBrowserForm.cbFilterByNameClick(Sender: TObject);
 begin
   inherited;
   ApplyFilter;
 end;
-
-procedure TAssemblyBrowserForm.sbFilterSettingsClick(Sender: TObject);
-begin
-  inherited;
-  pnlFilterSettings.Visible := sbFilterSettings.Down;
-end;
-
 
 end.

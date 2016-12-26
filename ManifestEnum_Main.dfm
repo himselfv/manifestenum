@@ -28,11 +28,24 @@ object MainForm: TMainForm
   end
   object pcMain: TPageControl
     Left = 0
-    Top = 0
+    Top = 21
     Width = 729
-    Height = 555
+    Height = 534
     Align = alClient
     TabOrder = 0
+    OnChange = pcMainChange
+    ExplicitTop = 0
+    ExplicitHeight = 555
+  end
+  object edtQuickFilter: TEdit
+    Left = 0
+    Top = 0
+    Width = 729
+    Height = 21
+    Align = alTop
+    TabOrder = 1
+    TextHint = 'Quick Search'
+    OnChange = edtQuickFilterChange
   end
   object MainMenu: TMainMenu
     Left = 16

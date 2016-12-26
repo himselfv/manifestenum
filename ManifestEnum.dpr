@@ -27,6 +27,7 @@ uses
   ManifestEnum.AssemblyActions in 'Actions\ManifestEnum.AssemblyActions.pas' {AssemblyActions: TDataModule},
   ManifestEnum.RegistryActions in 'Actions\ManifestEnum.RegistryActions.pas' {RegistryActions: TDataModule},
   ManifestEnum.FileActions in 'Actions\ManifestEnum.FileActions.pas' {FileActions: TDataModule},
+  CommonMessages in 'Views\CommonMessages.pas',
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
   AssemblyBrowser in 'Browsers\AssemblyBrowser.pas' {AssemblyBrowserForm},

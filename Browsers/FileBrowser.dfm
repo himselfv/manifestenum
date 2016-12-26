@@ -11,12 +11,9 @@ inherited FileBrowserForm: TFileBrowserForm
     Height = 13
     Align = alBottom
     Caption = 'Components which use this key:'
-    ExplicitLeft = -324
-    ExplicitTop = 255
     ExplicitWidth = 154
   end
   inherited Tree: TVirtualStringTree
-    Top = 21
     Height = 174
     Header.MainColumn = 0
     Header.Options = [hoAutoResize, hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
@@ -29,8 +26,8 @@ inherited FileBrowserForm: TFileBrowserForm
     OnGetImageIndexEx = TreeGetImageIndexEx
     OnGetPopupMenu = TreeGetPopupMenu
     OnInitNode = TreeInitNode
-    ExplicitTop = 15
-    ExplicitHeight = 110
+    ExplicitTop = 21
+    ExplicitHeight = 174
     Columns = <
       item
         Position = 0
@@ -40,12 +37,13 @@ inherited FileBrowserForm: TFileBrowserForm
   end
   object Panel: TPanel
     Left = 0
-    Top = 0
+    Top = 174
     Width = 464
     Height = 21
-    Align = alTop
+    Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 0
     object cbViewMode: TComboBox
       Left = 319
       Top = 0
@@ -53,9 +51,9 @@ inherited FileBrowserForm: TFileBrowserForm
       Height = 21
       Align = alRight
       Style = csDropDownList
-      ItemIndex = 0
+      ItemIndex = 1
       TabOrder = 0
-      Text = 'Non-expanded'
+      Text = 'Model PC'
       OnChange = cbViewModeChange
       Items.Strings = (
         'Non-expanded'

@@ -145,6 +145,7 @@
             <Form>FileActions</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="Views\CommonMessages.pas"/>
         <DCCReference Include="Views\DelayLoadTree.pas">
             <Form>DelayLoadTree</Form>
         </DCCReference>

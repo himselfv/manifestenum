@@ -44,6 +44,7 @@ type
     miOpenSxSFolder: TMenuItem;
     Queryassemblyscavener1: TMenuItem;
     miFilters: TMenuItem;
+    edtQuickFilter: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -66,6 +67,8 @@ type
     procedure Queryassemblyscavener1Click(Sender: TObject);
     procedure miForceUninstallClick(Sender: TObject);
     procedure miFiltersClick(Sender: TObject);
+    procedure edtQuickFilterChange(Sender: TObject);
+    procedure pcMainChange(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -92,8 +95,8 @@ var
 
 implementation
 uses UITypes, Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
-  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonFilters, ManifestEnum.Log,
-  ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions;
+  DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonMessages, CommonFilters,
+  ManifestEnum.Log, ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -272,6 +275,23 @@ end;
 procedure TMainForm.miShowLogClick(Sender: TObject);
 begin
   LogForm.Show;
+end;
+
+procedure TMainForm.edtQuickFilterChange(Sender: TObject);
+var page: TTabSheet;
+  i: integer;
+begin
+  page := pcMain.ActivePage;
+  if page = nil then exit;
+  for i := 0 to page.ControlCount-1 do
+    if page.Controls[i] is TCustomForm then
+      SetQuickFilter(TForm(page.Controls[i]).Handle, edtQuickFilter.Text);
+end;
+
+procedure TMainForm.pcMainChange(Sender: TObject);
+begin
+  //Apply quickfilter to new page
+  edtQuickFilterChange(edtQuickFilter);
 end;
 
 procedure TMainForm.AssemblyBrowserSelectionChanged(Sender: TObject);
