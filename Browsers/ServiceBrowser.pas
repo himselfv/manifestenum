@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Vcl.Dialogs, Vcl.ImgList, DelayLoadTree, VirtualTrees,
-  AssemblyDb, CommonResources, AssemblyDb.Assemblies, AssemblyDb.Services;
+  CommonMessages, CommonResources, AssemblyDb, AssemblyDb.Assemblies, AssemblyDb.Services;
 
 type
   TNodeType = (ntFolder, ntService, ntServiceVersion);
@@ -38,13 +38,17 @@ type
       var Abort: Boolean);
     function GetServiceNode(AParent: PVirtualNode; const AServiceName: string): PVirtualNode;
     function AddServiceVersionNode(AParent: PVirtualNode; AId: TServiceId; const AServiceData: TServiceEntryData): PVirtualNode;
+  protected
+    FQuickFilterText: string;
+    procedure ApplyFilter; override;
+    procedure WmSetQuickfilter(var msg: TWmSetQuickFilter); message WM_SET_QUICKFILTER;
   end;
 
 var
   ServiceBrowserForm: TServiceBrowserForm;
 
 implementation
-uses Generics.Collections, CommonMessages;
+uses StrUtils, Generics.Collections, VirtualTreeviewUtils;
 
 {$R *.dfm}
 
@@ -193,6 +197,41 @@ begin
     CommonMessages.SetAssemblySelection(Form.Handle, AData.Entry.assemblyId)
   else
     CommonMessages.SetAssemblySelection(Form.Handle, nil);
+end;
+
+
+// Filters
+
+
+procedure TServiceBrowserForm.ApplyFilter;
+var Node: PVirtualNode;
+  Data: PNodeData;
+begin
+ //We ignore common filtes atm and only honor quickfilter
+
+  Tree.BeginUpdate;
+  try
+    //This tree is too simple to bother with complicated strategies for now.
+    //Just show every matching item fully and with parents
+    for Node in Tree.Nodes do begin
+      Data := Tree.GetNodeData(Node);
+      if (Self.FQuickFilterText = '') or AnsiContainsText(Data.Name, Self.FQuickFilterText) then
+        Tree.MakeNodeContentVisible(Node)
+      else
+        Tree.IsVisible[Node] := false;
+    end;
+
+  finally
+    Tree.EndUpdate;
+  end;
+end;
+
+procedure TServiceBrowserForm.WmSetQuickfilter(var msg: TWmSetQuickFilter);
+begin
+  if FQuickFilterText <> msg.FilterText^ then begin
+    FQuickFilterText := msg.FilterText^;
+    ApplyFilter;
+  end;
 end;
 
 

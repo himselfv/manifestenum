@@ -32,10 +32,8 @@ object MainForm: TMainForm
     Width = 729
     Height = 534
     Align = alClient
-    TabOrder = 0
+    TabOrder = 1
     OnChange = pcMainChange
-    ExplicitTop = 0
-    ExplicitHeight = 555
   end
   object edtQuickFilter: TEdit
     Left = 0
@@ -43,7 +41,7 @@ object MainForm: TMainForm
     Width = 729
     Height = 21
     Align = alTop
-    TabOrder = 1
+    TabOrder = 0
     TextHint = 'Quick Search'
     OnChange = edtQuickFilterChange
   end
