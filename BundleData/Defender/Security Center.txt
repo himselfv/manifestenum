@@ -1,3 +1,14 @@
-# Integratees
+# Action and health center / Security center
+# Watches that your firewall, antivirus and so on are installed and running.
+# Allows you to check the overall health state of the system from one place in Control panel.
+
+# Unrelated to the Windows 10 Action Center flyout (just uses it to display notifications)
+# Can be uninstalled.
+
+# In Windows 10, there are packages both for HealthCenter and SecurityCenter.
+# Both seem to be parts of the same.
 
 Microsoft-Windows-SecurityCenter*
+
+Microsoft-Windows-Shell-HealthCenter*
+Microsoft-Windows-HealthCenter*

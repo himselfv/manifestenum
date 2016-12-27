@@ -5,3 +5,6 @@ Microsoft-Windows-taskmgr.*
 Microsoft-Windows-taskmgr-*
 
 Microsoft-Windows-TaskManager-Events*
+
+# In Windows 10 replaced with Advanced Task Manager
+Microsoft-Windows-AdvancedTaskManager*

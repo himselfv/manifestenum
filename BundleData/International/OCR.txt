@@ -1,3 +1,6 @@
 Microsoft-Windows-WinOCR
 Microsoft-Windows-WinOCR.*
 Microsoft-Windows-WinOCR-*
+
+Media-Ocr-Deployment*
+Windows-Media-Ocr*

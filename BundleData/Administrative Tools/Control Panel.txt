@@ -66,3 +66,7 @@ Microsoft-Windows-SystemPropertiesRemote*
 
 
 Microsoft-Windows-Netplwiz-*		# Opens User passwords configuration window (what you get by control userpasswords2)
+
+
+# Computer name UI
+Microsoft-Windows-Computer-Name-UI*

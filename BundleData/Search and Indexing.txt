@@ -1,13 +1,39 @@
-WindowsSearchEngine*
 
-Microsoft-Windows-Indexing-Service*
+
+# Search engine
+Microsoft-Windows-SearchEngine*
+WindowsSearchEngine*
+WindowsSearchComponent*			# Empty as of W10AU
+Microsoft-Windows-Search-*
+
 
 Microsoft-Windows-SearchDiagnostic*
 
-Microsoft-Windows-Content-Indexing*
+Microsoft-Windows-MobileCore-SearchFolder-Library*
+Microsoft-Windows-SearchFolder-Library*
 
-Microsoft-Windows-SearchEngine*
-Microsoft-Windows-Search-*
-Microsoft-Windows-SearchFolder*		# Supposedly related
 
 Desktop_Shell-Search-SrchAdmin*		# Indexer Settings
+Microsoft-Windows-Shell-Search*		# Refers to MW-Shell-Search
+
+
+# A few deployments in W10
+Microsoft-Windows-Search2-*
+
+# Indexing service
+Microsoft-Windows-Content-Indexing*
+Microsoft-Windows-Indexing-Service*	# W7
+
+# Content filters to index various file formats
+# Normally there are HTML, MIME, Office and RTF
+Microsoft-Windows-Content-Filter-*
+
+# UI
+Microsoft-Windows-UI-Search*				# Taskbar search box. Also in Explorer
+
+# Powershell Search extensions
+Microsoft.WindowsSearch.*
+
+Microsoft-Windows-ConfigureExpandedStorage*		# In W10 deployment, registers some kind of extension for Windows.Storage classes
+
+Microsoft-Windows-ConnectedSearch-*			# Single setting, enables using web for connected search

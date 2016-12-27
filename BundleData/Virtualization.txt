@@ -1,0 +1,13 @@
+
+# Hyper-V
+Microsoft-Hyper-V-*
+Microsoft-HyperV-*
+Microsoft-OneCore-HyperV*
+HyperV-*
+InspectVhdDialog*
+
+# Windows Containers (since W10)
+# Containers are an isolated, resource controlled, and portable operating environment.
+# https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/
+Microsoft-OneCore-Containers-*			# Several deployments
+Microsoft-Windows-Containers-*			# and assemblies

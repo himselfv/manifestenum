@@ -73,3 +73,7 @@ Microsoft-Windows-UdfsRecover
 
 # CDFS - Compact Disk FS
 Microsoft-Windows-CDFS
+
+
+# Pointless empty package which probably defined the category
+Microsoft-Windows-Base Technologies-File Systems (Core)

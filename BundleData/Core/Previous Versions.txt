@@ -4,3 +4,5 @@
 Microsoft-Windows-twext
 Microsoft-Windows-twext.*
 Microsoft-Windows-twext-*
+
+Microsoft-Windows-FileHistory*

@@ -1,0 +1,16 @@
+# Core packages
+# These are kind of assorted, but mostly cover the basic file system folders, permissions etc.
+
+Microsoft-Windows-Core		# Empty as of W10AU
+Microsoft-Windows-Core.*
+
+Microsoft-Windows-MinWin		# MinWin feature, empty
+Microsoft-Windows-MinWin-Security	# Default security for core OS folders
+Microsoft-Windows-ClientRootSecurity	# Default security for boot drive
+Microsoft-Windows-MinWin-Foundation-Security	# Mostly empty
+
+Microsoft-Windows-CoreOS
+Microsoft-Windows-CoreOS.*
+Microsoft-Windows-CoreOS-Revision*
+Microsoft-Windows-CoreOS-MinWin*
+Microsoft-Windows-CoreOS-16Bit*

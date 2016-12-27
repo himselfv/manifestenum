@@ -21,3 +21,9 @@ Microsoft-Windows-bootvid-*
 # kdcom.dll, Kernel Debugger Protocol
 # ci.dll, Code Integrity Library
 # clfs.dll, common logging file system driver
+
+# Common Log File System (clfs) - Kernel logging facility widely regarded as required
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff548131(v=vs.85).aspx
+Microsoft-Windows-CommonLog*
+#Microsoft-Windows-CommonLogServicesApi* # covered by above
+

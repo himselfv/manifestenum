@@ -1,6 +1,8 @@
 # Explorer extension where you can browse the contents of ZIP files like normal folders.
 # Useless if you use other archiver.
 
-Microsoft-Windows-zipfldr
-Microsoft-Windows-zipfldr.*
-Microsoft-Windows-zipfldr-*
+Microsoft-Windows-Compression-shell-Deployment*
+Microsoft-Windows-Compression-WOW64-shell-Deployment*
+
+Microsoft-Windows-zipfldr*
+Microsoft-Windows-cabview*	# Cab Folders

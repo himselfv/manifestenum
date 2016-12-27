@@ -1,0 +1,40 @@
+# Windows 10 Immersive Control Panel and Windows 10 Universal Settings Facility
+
+
+# Mostly self-contained package with an application implementing W10 Universal-style control panel
+microsoft-windows-immersivecontrolpanel*
+
+# The app itself is standalone, but depends on a number of things,
+# many of which are filed under MW-SystemSettings
+
+
+# Contains some files from the Immersive Control Panel
+Microsoft-Windows-SystemSettingsThreshold*
+
+
+# Provides system settings to clients
+Microsoft-Windows-SystemSettings-DataModel*
+
+# Additional classes
+Microsoft-Windows-SystemSettings-PinEnrollment-EnrollmentHelper*
+
+# A number of plugin DLLs which implement various settings for the data model
+Microsoft-Windows-SystemSettings-SettingsHandlers-*
+Microsoft-Windows-SystemSettings-HandlersPlugin*
+Microsoft-Windows-SystemSettings-NetworkDesktopHandlers*
+Microsoft-Windows-SystemSettings-NetworkMobileHandlers*
+Microsoft-OneCore-SystemSettings-Bluetooth-*		# Deployments
+Microsoft-OneCore-SystemSettings-Privacy-*
+
+# Search data
+Microsoft-Windows-SystemSettings-ClassicSearchData*
+Microsoft-Windows-SystemSettings-SearchData*
+Microsoft-Windows-SystemSettings-SearchDataOther*
+
+# Pointless empty package
+Microsoft-Windows-SystemSettingsFeature*
+
+# Some additional apps with unclear purpose at the moment
+Microsoft-Windows-SystemSettings-DataSenseLiveTile*		# There seemed to be data sense live tile in 8.1 mobile, but this is W10AU
+Microsoft-Windows-SystemSettings-DataSenseLiveTileExe*
+Microsoft-Windows-SystemSettings-RemoveDevice*

@@ -1,0 +1,2 @@
+# Shows "You have too many autostart programs"
+StartupApp-Task-*

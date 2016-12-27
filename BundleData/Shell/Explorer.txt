@@ -10,6 +10,12 @@ Microsoft-Windows-ThumbnailCache*		# Thumbnail cache
 
 Microsoft-Windows-IconCodecService*		# Decodes new PNG icons
 
+# sihost.exe - Shell Infrastructure Host
+Microsoft-OneCore-ShellHost*
+Microsoft-Windows-ShellHost*
+
+Microsoft-Windows-explorer-shortcuts*		# A few shell shortcuts: Quick Launch, Start Button Right-click menu
+Microsoft-Windows-UI-Search*			# Task bar search box. Also in Search and Indexing
 
 # Extensions
 Microsoft-Windows-ntshrui*			# Sharing extension

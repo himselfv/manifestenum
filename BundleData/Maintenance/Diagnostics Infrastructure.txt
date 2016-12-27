@@ -67,3 +67,7 @@ Microsoft-Windows-WindowsUpdateDiagnostic*
 
 Microsoft-Windows-Troubleshooting-Events*
 Microsoft-Windows-PlugPlay-Troubleshooter*
+
+# Despite the name, this is cdrom.sys diagnostics trace provider as of W10AU
+Microsoft-Windows-Cdrom
+Microsoft-Windows-Cdrom.*

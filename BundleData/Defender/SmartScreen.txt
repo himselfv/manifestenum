@@ -1,0 +1,3 @@
+
+Microsoft-Windows-SmartScreen*
+Microsoft-Windows-SmartScreenSettings*

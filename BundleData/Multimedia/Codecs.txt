@@ -26,3 +26,36 @@ Microsoft-Windows-Indeo5-Codecs*
 # Probably?
 Microsoft-Windows-Photo-Image-Codec*
 Microsoft-Windows-MFDVDec*
+
+
+# Windows 10 codecs
+Multimedia-RestrictedCodecsCore-*		# Deployments
+Microsoft-Windows-ALACDecoder*
+Microsoft-Windows-FLACDecoder*
+Microsoft-Windows-MFAACEnc*
+Microsoft-Windows-MFH263Enc*
+Microsoft-Windows-MFH264Enc*
+Microsoft-Windows-MFH265Enc*
+Microsoft-Windows-MP3DMOD*
+Microsoft-Windows-MP4SDECD*
+Microsoft-Windows-MSAudDecMFT*
+Microsoft-Windows-MSMPEG2VDEC*
+Microsoft-Windows-MSVP9DEC*
+Microsoft-Windows-MSVPXENC*
+Microsoft-Windows-OPUSDecoder*
+Microsoft-Windows-RESAMPLEDMO*
+Microsoft-Windows-WMADMOD*
+Microsoft-Windows-WMVDECOD*
+Multimedia-AMRCodecs*
+Multimedia-HEVCDECODER*
+# Microsoft-Windows-MF-VFW*		# Seems to be not a codec but an API?
+
+Multimedia-RestrictedCodecsExt-*		# Deployments
+Microsoft-Windows-DolbyDecMFT*
+Microsoft-Windows-MFDVDec*
+Microsoft-Windows-MFMJPEGDec*
+Microsoft-Windows-MP43DECD*
+Microsoft-Windows-MPG4DECD*
+Microsoft-Windows-MSMPEG2ADEC*
+Microsoft-Windows-WMADMOE*
+Microsoft-Windows-WMVSDECD*

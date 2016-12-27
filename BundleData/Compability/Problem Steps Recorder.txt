@@ -3,3 +3,6 @@
 
 Microsoft-Windows-Application-Compability-ProblemStepsRecorder*		# App
 Microsoft-Windows-Application-Compability-UI-Recording*			# Library it relies on
+
+Microsoft-Windows-Application-Compatibility-ProblemStepsRecorder*
+Microsoft-Windows-Application-Compatibility-UI-Recording*

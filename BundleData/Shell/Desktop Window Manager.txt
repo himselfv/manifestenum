@@ -1,2 +1,10 @@
 Microsoft-Windows-DesktopWindowManager*
 Microsoft-Windows-DWM-Adm*
+
+# Windows 10 deployments related exclusively to DWM
+Microsoft-Windows-Composition-onecoreuap-*
+Microsoft-Windows-Composition-windows-*
+Composition-Core-onecoreuap-*
+Composition-Core-windows-*
+Composition-Core-WOW64-onecoreuap-*
+Composition-Core-WOW64-windows-*
