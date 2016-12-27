@@ -44,6 +44,7 @@ object MainForm: TMainForm
     TabOrder = 0
     TextHint = 'Quick Search'
     OnChange = edtQuickFilterChange
+    OnKeyDown = edtQuickFilterKeyDown
   end
   object MainMenu: TMainMenu
     Left = 16

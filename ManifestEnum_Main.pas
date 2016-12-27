@@ -69,6 +69,7 @@ type
     procedure miFiltersClick(Sender: TObject);
     procedure edtQuickFilterChange(Sender: TObject);
     procedure pcMainChange(Sender: TObject);
+    procedure edtQuickFilterKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 
   protected
     FDb: TAssemblyDb;
@@ -287,6 +288,12 @@ begin
   for i := 0 to page.ControlCount-1 do
     if page.Controls[i] is TCustomForm then
       SetQuickFilter(TForm(page.Controls[i]).Handle, edtQuickFilter.Text);
+end;
+
+procedure TMainForm.edtQuickFilterKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+    edtQuickFilter.Text := '';
 end;
 
 procedure TMainForm.pcMainChange(Sender: TObject);
