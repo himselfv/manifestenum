@@ -212,7 +212,7 @@ procedure TAssemblyFiles.FindFolders(const AMask: string; AList: TFolderList);
 var stmt: PSQLite3Stmt;
 begin
   stmt := Db.PrepareStatement('SELECT * FROM folders WHERE name LIKE ?');
-  sqlite3_bind_str(stmt, 1, AMask);
+  sqlite3_bind_str(stmt, 1, '%'+AMask+'%');
   QueryFolders(stmt, AList);
 end;
 
@@ -355,7 +355,7 @@ procedure TAssemblyFiles.FindFiles(const AMask: string; AList: TFileList);
 var AStmt: PSQLite3Stmt;
 begin
   AStmt := Db.PrepareStatement('SELECT rowid, * FROM files WHERE name LIKE ?');
-  sqlite3_bind_str(AStmt, 1, AMask);
+  sqlite3_bind_str(AStmt, 1, '%'+AMask+'%');
   QueryFiles(AStmt, AList);
 end;
 
