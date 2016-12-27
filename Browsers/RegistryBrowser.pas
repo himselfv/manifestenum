@@ -496,7 +496,11 @@ begin
   if TextType <> ttNormal then exit;
 
   case Column of
-    NoColumn, 0: CellText := AData.name;
+    NoColumn, 0: begin
+      CellText := AData.name;
+      if CellText = '' then
+        CellText := '(Default)';
+    end;
     1: CellText := GetRegistryValueTypeName(AData.valueType);
     2: CellText := AData.value;
   end;
