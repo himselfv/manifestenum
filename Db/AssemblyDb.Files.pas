@@ -57,7 +57,6 @@ type
     function GetFileFullDestinationName(const AFile: TFileEntryData): string;
     procedure GetAssemblyFolders(AAssembly: TAssemblyId; AList: TFolderReferences);
 
-
     procedure QueryFiles(AStmt: PSQLite3Stmt; AList: TFileList);
     function QueryFile(AStmt: PSQLite3Stmt; out AData: TFileEntryData): boolean;
     procedure GetFiles(AFolder: TFolderId; AList: TFileList);
@@ -191,7 +190,7 @@ begin
   while res = SQLITE_ROW do begin
     data.id := sqlite3_column_int64(AStmt, 0);
     data.parent := sqlite3_column_int64(AStmt, 1);
-    data.name := sqlite3_column_text16(AStmt, 1);
+    data.name := sqlite3_column_text16(AStmt, 2);
     AList.AddOrSetValue(data.id, data);
     res := sqlite3_step(AStmt)
   end;
