@@ -12,6 +12,18 @@ type
   end;
   TFolderList = TDictionary<TFolderId, TFolderData>;
 
+  //Folder path as a chain of IDs. Leftmost item is the topmost
+  TFolderIDPath = array of TFolderID;
+
+  TFolderIDPathHelper = record helper for TFolderIDPath
+    function Root: TFolderID; inline;
+    function Leaf: TFolderID; inline;
+    function PopRoot: TFolderID; inline;
+    function PopLeaf: TFolderID; inline;
+    procedure PushRoot(const Id: TFolderId); inline;
+    procedure PushLeaf(const Id: TFolderId); inline;
+  end;
+
   TFolderReferenceData = record
     owner: boolean;
   end;
@@ -54,6 +66,7 @@ type
     procedure FindFolders(const AMask: string; AList: TFolderList);
     function GetFolderName(AFolder: TFolderId): string;
     function GetFolderPath(AFolder: TFolderId): string;
+    function GetFolderPathAsIDs(AFolder: TFolderId): TFolderIDPath;
     function GetFileFullDestinationName(const AFile: TFileEntryData): string;
     procedure GetAssemblyFolders(AAssembly: TAssemblyId; AList: TFolderReferences);
 
@@ -68,6 +81,43 @@ type
 
 
 implementation
+
+function TFolderIDPathHelper.Root: TFolderID;
+begin
+  Result := Self[0];
+end;
+
+function TFolderIDPathHelper.Leaf: TFolderID;
+begin
+  Result := Self[Length(Self)-1]
+end;
+
+function TFolderIDPathHelper.PopRoot: TFolderID;
+begin
+  Result := Self[0];
+  Move(Self[1], Self[0], (Length(Self)-1)*SizeOf(Result));
+  SetLength(Self, Length(Self)-1);
+end;
+
+function TFolderIDPathHelper.PopLeaf: TFolderID;
+begin
+  Result := Self[Length(Self)-1];
+  SetLength(Self, Length(Self)-1);
+end;
+
+procedure TFolderIDPathHelper.PushRoot(const Id: TFolderId);
+begin
+  SetLength(Self, Length(Self)+1);
+  Move(Self[0], Self[1], (Length(Self)-1)*SizeOf(Id));
+  Self[0] := Id;
+end;
+
+procedure TFolderIDPathHelper.PushLeaf(const Id: TFolderId);
+begin
+  SetLength(Self, Length(Self)+1);
+  Self[Length(Self)-1] := Id;
+end;
+
 
 procedure TAssemblyFiles.CreateTables;
 begin
@@ -259,6 +309,23 @@ begin
       Result := sqlite3_column_text16(stmt, 1)
     else
       Result := sqlite3_column_text16(stmt, 1) + '\' + Result;
+    sqlite3_reset(stmt);
+  end;
+end;
+
+function TAssemblyFiles.GetFolderPathAsIDs(AFolder: TFolderId): TFolderIDPath;
+var stmt: PSQLite3Stmt;
+begin
+  SetLength(Result, 1);
+  Result[0] := AFolder;
+  stmt := Db.PrepareStatement('SELECT parentId FROM folders WHERE id=?');
+  while AFolder > 0 do begin
+    sqlite3_bind_int64(stmt, 1, AFolder);
+    if sqlite3_step(stmt) <> SQLITE_ROW then
+      Db.RaiseLastSQLiteError();
+    AFolder := sqlite3_column_int64(stmt, 0); //parent
+    if AFolder <> 0 then //no point in pushing 0: every path ends with it
+      Result.PushRoot(AFolder);
     sqlite3_reset(stmt);
   end;
 end;
