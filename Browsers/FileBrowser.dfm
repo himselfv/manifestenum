@@ -51,4 +51,10 @@ inherited FileBrowserForm: TFileBrowserForm
         'Model PC')
     end
   end
+  object FilterTimer: TTimer
+    Interval = 250
+    OnTimer = FilterTimerTimer
+    Left = 16
+    Top = 32
+  end
 end
