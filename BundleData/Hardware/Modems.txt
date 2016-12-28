@@ -1,0 +1,15 @@
+
+# Unimodem is the software component that controls devices belonging to the Windows modem device setup class.
+# On Microsoft Windows operating systems, a "modem" is any device that is supported by Unimodem.
+
+# This package includes Class Driver, kernel support and user mode API.
+
+Microsoft-Windows-Unimodem
+Microsoft-Windows-Unimodem.*
+Microsoft-Windows-Unimodem-*
+# -Config
+# -Core
+# -Core-ATMini
+# -Core-ClassDriver
+# -Core-TSP
+# -Voice

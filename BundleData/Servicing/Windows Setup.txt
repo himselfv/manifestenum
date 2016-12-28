@@ -1,0 +1,11 @@
+# Components that are used during Windows Installation / Migration
+
+Microsoft-Windows-Setup*			# Builder settings for setup (empty in runtime)
+
+Microsoft-Windows-Setup-Component*		# Setup app itself + Setup OOBE
+Microsoft-Windows-Setup-Unattend*		# Unattended installation support
+
+Microsoft-Windows-Setup-Events*			# ETW
+Microsoft-Windows-Setup-Instrumentation*	# Event details
+
+Microsoft-Windows-Setup-Navigation-Wizard-Framework*	# Setup/Migration Wizard framework, should not be reused anywhere

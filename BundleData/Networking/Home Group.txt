@@ -1,2 +1,2 @@
 Microsoft-Windows-HomeGroup*
-Microsoft-Windows-Shell-HomeGroup-*
+Microsoft-Windows-Shell-HomeGroup*

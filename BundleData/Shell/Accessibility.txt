@@ -7,3 +7,5 @@ Microsoft-Windows-Narrator*
 Narrator			# Windows 7
 Narrator.*
 Narrator-*
+
+Microsoft-Windows-sethc*	# Accessibility hotkey support app (shift 5 times activates sticky keys and so on)
