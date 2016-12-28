@@ -1,3 +1,5 @@
 # Briefcase
-Microsoft-Windows-Shell-Sync*
-Microsoft-Windows-syncu*		# contained
+Microsoft-Windows-syncui*
+Microsoft-Windows-synceng*		# Briefcase engine
+
+# Requires Sync Center for management UI

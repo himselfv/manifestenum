@@ -1,0 +1,7 @@
+# A component and API for keeping a shared address book.
+# Deprecated as of Vista.
+# Needed for: Windows Mail, Outlook Express
+
+Microsoft-Windows-WAB
+Microsoft-Windows-WAB.*
+Microsoft-Windows-WAB-*

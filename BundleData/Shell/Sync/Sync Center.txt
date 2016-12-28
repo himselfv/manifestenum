@@ -1,0 +1,17 @@
+# Sync Center
+# Enables users to synchronize their data with other computers and devices from one place.
+# https://msdn.microsoft.com/en-us/library/aa369140(v=vs.85).aspx
+
+# Provides interfaces for developers to add custom facilities to be synchronized.
+# This is different from adding your Windows Sync (DeviceSync) or MSF provider. In this case,
+# you're only plugging into the UI and your handler can synchronize the data however you like.
+
+# Introduced in Vista.
+
+# Provides UI for: Briefcase, Offline Files.
+# Both work on their own, and Offline Files UI is self-contained (cscui.dll).
+
+Microsoft-Windows-Shell-Sync*		# Deployment, also references Briefcase
+
+Microsoft-Windows-mobsync*
+# Microsoft-Windows-mobsyncexe*		# covered

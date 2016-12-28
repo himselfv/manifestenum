@@ -1,0 +1,25 @@
+# Windows Sync / DeviceSync
+# An engine and a number of synchronization providers plus an API to write custom ones.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd317274(v=vs.85).aspx
+
+# Since Windows 7.
+
+# Not to be confused with various other syncs around:
+#  Sync Center (Shell-Sync) - provides common interface for synchronization
+#  ActiveSync
+#  Briefcase (synceng/syncui)
+
+Microsoft-Windows-DeviceSyncFeature*
+
+Microsoft-Windows-SyncHost*
+Microsoft-Windows-SyncInfrastructure*
+Microsoft-Windows-SyncProviders*
+
+# Microsoft Sync Framework (MSF) - Since Windows Vista
+# Older common synchronization infrastructure. Still supported by Windows Sync transparently and even recommended.
+# https://msdn.microsoft.com/en-us/library/mt763482.aspx
+Microsoft-Windows-MSF*
+
+# DeviceStage task to Sync with device, I guess.
+# Also in Hardware-DeviceStage
+Microsoft-Windows-DXPTasks-Sync*
