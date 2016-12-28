@@ -1,0 +1,11 @@
+# Microsoft MSBuild
+# Based on .NET and related to it, but a separate tool.
+
+# The tool
+MSBuild
+MSBuild.*
+
+# The engine
+Microsoft.Build
+Microsoft.Build.*
+# .Conversion, .Engine, .Framework, .Tasks, .Utilities

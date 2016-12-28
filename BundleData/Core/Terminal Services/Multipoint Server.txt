@@ -1,0 +1,14 @@
+# Windows Multipoint Services / Server
+# A set of tools and enhancements to host multiple simultaneous independent computing terminals
+# connected to a single computer using Remote Desktop Services technology.
+# https://en.wikipedia.org/wiki/Windows_MultiPoint_Server
+
+# Windows Multipoint Server was an edition of Windows Server tailored exclusively for MPS.
+# WMPS 2012 was the final release and has been superseded by the MPS role in Server 2016.
+
+# Includes a lot of tools and features which can be described in detail some day:
+# - Administrative tools
+# - Shell enhancements
+# - Powershell applets
+
+Multipoint.*

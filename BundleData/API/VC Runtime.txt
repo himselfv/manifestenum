@@ -4,3 +4,10 @@ Microsoft-Windows-ATL*
 Microsoft-Windows-MSVCIRT*
 Microsoft-Windows-MSVCP60*
 Microsoft-Windows-MSVCRT*
+
+Microsoft.VC80.*
+Microsoft.VC90.*
+
+# Assembly redirect policies for various exact versions
+policy.8.0.Microsoft.VC80.*
+policy.9.0.Microsoft.VC90.*

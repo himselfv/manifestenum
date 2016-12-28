@@ -1,0 +1,9 @@
+# OneGet / Package Management for Powershell
+# A set of Powershell commands which emulate a command-line package manager:
+# - Gather a list of installed software packages from various providers (MSI, Windows Components)
+# - Download and install packages by their name from various sources (Chocolatey protocol provider is available)
+
+# Originally called OneGet, but renamed to Package Management when included into Windows distribution.
+
+Microsoft.PackageManagement
+Microsoft.PackageManagement.*
