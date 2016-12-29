@@ -1,0 +1,3 @@
+# Required for the Explorer to work
+
+Microsoft-Windows-ShellExperienceHost*

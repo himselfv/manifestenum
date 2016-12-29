@@ -59,3 +59,20 @@ Microsoft-Windows-MPG4DECD*
 Microsoft-Windows-MSMPEG2ADEC*
 Microsoft-Windows-WMADMOE*
 Microsoft-Windows-WMVSDECD*
+
+Microsoft-Windows-Multimedia-RestrictedCodecs-*		# Deployments
+Microsoft-Windows-ALACEncoder*
+Microsoft-Windows-FLACEncoder*
+Microsoft-Windows-Media-MFTWrapper-MP3ACM*
+Microsoft-Windows-MFVDSP*
+Microsoft-Windows-MFWMAAEC*
+Microsoft-Windows-MSAC3ENC*
+Microsoft-Windows-MSMPEG2ENC*
+Microsoft-Windows-WMCODECDSPPS*
+Microsoft-Windows-WMSPDMOE*
+Microsoft-Windows-WMVDSPA*
+Microsoft-Windows-WMVENCOD*
+Microsoft-Windows-WMVIDDSP*
+Microsoft-Windows-WMVSENCD*
+Microsoft-Windows-WMVXENCD*
+Microsoft-Windows-Media-MP3ACM*

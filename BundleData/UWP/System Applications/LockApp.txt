@@ -1,0 +1,4 @@
+# Lock screen application
+# Probably required for boot, though I'm curious to try deleting it
+
+Microsoft-Windows-LockApp*

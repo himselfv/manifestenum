@@ -2,6 +2,12 @@
 # See also:
 #   Disk Quota
 
-Microsoft-Windows-Profiles-Basic	# Builder feature
-
+Microsoft-Windows-Profiles-Basic*	# Builder feature
 Microsoft-Windows-Profsvc*		# Service responsible for loading and unloading user profiles.
+
+
+# UserManager service
+# Purpose unclear, but seems to provide some functions related to user sessions
+Microsoft-System-User-Service*		# The service itself
+Microsoft-System-User-Ext*		# Client DLL (API)
+Microsoft-System-User-Component*	# Provides WinRT classes around this API. Huh, maybe move this to WinRT then?

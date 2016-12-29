@@ -1,0 +1,4 @@
+UWP applications in this folder are not meant for direct end-user use.
+They are used by the OS to implement various functions and are usually protected from uninstall.
+
+These are put into Windows\SystemApps and cannot be deleted, they are not managed by Store.

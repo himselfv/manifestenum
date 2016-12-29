@@ -1,6 +1,7 @@
 # Terminal Services, Remote Desktop and Remote Assistance
 
 Microsoft-Windows-TerminalServices*
+Microsoft-Windows-TS-*			# W10 deployments
 
 # Quick Remote Assistance in Win10
 Microsoft-Windows-QuickAssist*

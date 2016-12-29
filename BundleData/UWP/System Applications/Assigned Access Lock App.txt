@@ -1,0 +1,2 @@
+# https://technet.microsoft.com/en-us/itpro/windows/manage/guidelines-for-assigned-access-app
+Microsoft-Windows-AssignedAccessLockApp*

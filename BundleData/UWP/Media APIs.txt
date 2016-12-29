@@ -1,0 +1,24 @@
+
+Microsoft-Windows-Runtime-Windows-Media
+Microsoft-Windows-Runtime-Windows-Media.*
+Microsoft-Windows-Runtime-Windows-Media-*
+
+Microsoft-Windows-Media-Audio*
+Microsoft-Media-Capture-BroadcastDVR*
+Microsoft-Media-Capture-Internal-BroadcastDVR*
+Microsoft-Windows-Media-Capture-AppCapture*
+Microsoft-Windows-Media-Import-API*
+Media-Ocr-*
+Windows-Media-Ocr*
+Multimedia-Windows-Media-Protection-PlayReady*
+
+# Missing:
+# Windows.Media.Capture.Core
+# Windows.Media.Casting
+# Windows.Media.ContentRestrictions
+# Windows.Media.DialProtocol
+# Windows.Media.FaceAnalysis
+# Windows.Media.Playlists
+# Windows.Media.PlayTo
+# Windows.Media.Render
+

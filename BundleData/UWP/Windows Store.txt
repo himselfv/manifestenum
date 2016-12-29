@@ -1,0 +1,19 @@
+# Windows Store is a component of Universal Platform
+# which manages the list of installed applications
+
+Microsoft-OneCore-UniversalStore-*
+Microsoft-Windows-Store-*
+Microsoft-Windows-StorePreview-Capabilities*
+
+Microsoft-Windows-Install-Agent-Instrumentation*		# More Windows Store instrumentation
+
+# Windows Store deployment also references some packages from Microsoft-Windows-WindowsUpdateClient.
+# Windows Update Clients itself is not Store-specific, but of those referenced assemblies some are.
+#Microsoft-Windows-WindowsUpdateClient-API-Host*
+#Microsoft-Windows-WindowsUpdateClient-AutoAppUpdate*
+#Microsoft-Windows-WindowsUpdateClient-InstallAgent*
+
+# APIs for Windows Store
+# See APIs for general comments and full API list
+Microsoft-Windows-Store-Runtime*
+Windows-ApplicationModel-Store-SDK-Instrumentation*	# There are some remnants

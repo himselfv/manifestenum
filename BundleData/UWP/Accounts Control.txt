@@ -1,0 +1,5 @@
+# Contains an API, a Appx component and a SystemResource component.
+
+Microsoft-OneCore-AccountsControl*
+Microsoft-Windows-AccountsControl*
+SystemResource-Windows-UI-AccountsControl*

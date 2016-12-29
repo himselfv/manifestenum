@@ -1,0 +1,10 @@
+# Windows 10 on PCs does not have a functional Wallet, but there's still
+# a service and a bunch of assemblies for whatever reason.
+# Maybe compability.
+
+Microsoft-OneCore-Wallet-*
+Microsoft-Windows-Wallet-*
+
+# Covers WinRT APIs:
+#    ApplicationModel.Wallet
+#    ApplicationModel.Wallet.System

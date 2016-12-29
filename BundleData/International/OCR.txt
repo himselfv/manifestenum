@@ -2,5 +2,7 @@ Microsoft-Windows-WinOCR
 Microsoft-Windows-WinOCR.*
 Microsoft-Windows-WinOCR-*
 
-Media-Ocr-Deployment*
-Windows-Media-Ocr*
+# Not included:
+#   Media-Ocr-Deployment*
+#   Windows-Media-Ocr*
+# This is Windows Runtime API providers.

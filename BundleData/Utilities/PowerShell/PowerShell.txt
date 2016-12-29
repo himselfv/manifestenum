@@ -18,3 +18,4 @@ Policy.1.0.System.Management.Automation*
 Policy.3.0.Microsoft.BackgroundIntelligentTransfer.Management*
 
 Microsoft-NetworkSwitch-Management*
+Microsoft-Windows-Appx-Modules*		# Powershell module

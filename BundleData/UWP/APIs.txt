@@ -1,0 +1,25 @@
+# Windows RT apps have their own set of APIs in DLLs named like
+#   Windows.Entry.Entry
+# Most have their own assembly (as they should), but unlike .NET it's
+# not dots but dashes there:
+#   Windows-Entry-Entry
+# Most are listed in the docs:
+# https://msdn.microsoft.com/en-us/library/windows/apps/br211377.aspx
+
+Windows-ApplicationModel
+Windows-ApplicationModel-AppContracts*
+Windows-ApplicationModel-AppExtension*
+Windows-ApplicationModel-AppHostRegistrationVerifier*
+Windows-ApplicationModel-Background-SystemEventsBroker*
+Windows-ApplicationModel-Background-TimeBroker-WinRT*
+Windows-ApplicationModel-ClipboardServer*
+Windows-ApplicationModel-Core-WinRT*
+Windows-ApplicationModel-DataSharingSvc*
+Windows-ApplicationModel-DataSharingSvc-NTService*
+Windows-ApplicationModel-Store-SDK-Instrumentation
+
+Microsoft-Windows-ApplicationModel-*
+
+Microsoft-Windows-Globalization-PhoneNumberFormatting
+
+Microsoft-Windows-WindowUI*

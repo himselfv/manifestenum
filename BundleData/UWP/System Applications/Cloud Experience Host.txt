@@ -1,0 +1,7 @@
+# CloudExperienceHost seems to be a corporate version of WorkplaceJoin,
+# in other words yet another way to join some kind of a domain-like thing.
+# https://www.anoopcnair.com/2015/02/03/connect-cloud-option-windows-10/
+
+# Safe to delete, but that part of Control Panel will not work (harmlessly).
+
+Microsoft-Windows-CloudExperienceHost*

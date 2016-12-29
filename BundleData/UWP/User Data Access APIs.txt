@@ -1,0 +1,18 @@
+# See APIs for general comments and full API list
+# User data access APIs cover many of the standard APIs
+# They also contain the dreaded UnistoreSvcs, PimIndexMaintenanceSvcs and others
+Microsoft-OneCore-UserDataAccess-*
+Microsoft-Windows-UserDataAccess-*
+
+# UserDataApis:
+# ApplicationModel.Appointments
+# ApplicationModel.Background
+# ApplicationModel.Calls
+# ApplicationModel.Chat
+# ApplicationModel.Contacts
+# ApplicationModel.Email
+# ApplicationModel.UserDataAccounts
+
+# SocialRTComponents:
+# ApplicationModel.SocialInfo
+# ApplicationModel.SocialInfo.Provider

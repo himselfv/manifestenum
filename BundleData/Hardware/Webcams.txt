@@ -1,0 +1,7 @@
+
+Microsoft-Windows-WebcamExperience*		# UWP: Implements Windows.Media.Capture.CameraOptionsUI
+Microsoft-OneCore-CameraCaptureUI*
+Microsoft-Windows-CameraCaptureUI*		# UWP: Implements Windows.Media.Capture.CameraCaptureUI
+# TODO: The above should maybe go / be copied to UWP?
+
+Microsoft-Windows-Camera-Adm*

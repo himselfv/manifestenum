@@ -1,0 +1,6 @@
+
+# Windows.Media.SpeechSynthesis
+# Windows.Media.SpeechRecognition
+
+# This is not all there is, but research is needed
+Windows-Media-Speech-WinRT*

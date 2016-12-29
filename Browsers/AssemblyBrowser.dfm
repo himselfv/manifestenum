@@ -3,7 +3,7 @@ inherited AssemblyBrowserForm: TAssemblyBrowserForm
   ClientHeight = 349
   ClientWidth = 512
   ExplicitWidth = 528
-  ExplicitHeight = 387
+  ExplicitHeight = 388
   PixelsPerInch = 96
   TextHeight = 13
   inherited Tree: TVirtualStringTree

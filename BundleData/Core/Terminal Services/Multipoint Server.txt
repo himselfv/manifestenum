@@ -12,3 +12,4 @@
 # - Powershell applets
 
 Multipoint.*
+Multipoint-*

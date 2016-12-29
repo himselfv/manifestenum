@@ -1,0 +1,5 @@
+# Appx package containing Edge, which seems to be a wrapper for IE.
+
+Internet-Browser-License*
+Microsoft-Windows-Internet-Browser-*
+Microsoft-Windows-MicrosoftEdge*

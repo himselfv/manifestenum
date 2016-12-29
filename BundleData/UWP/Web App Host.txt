@@ -1,0 +1,10 @@
+# Windows Web Applications (WWA) are Windows Runtime applications
+# built from HTML, CSS and Javascript.
+# They can be deployed to Windows Store on par with normal WinRT apps.
+
+# This package provides support for such apps (host application).
+
+Microsoft-OneCore-WWA-*
+Microsoft-Windows-Web-App-Host
+Microsoft-Windows-Web-App-Host.*
+Microsoft-Windows-Web-App-Host-*
