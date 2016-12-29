@@ -1,0 +1,10 @@
+# Mail API
+# Allows applications to manipulate email messages in a mail client.
+# Initially meant for Outlook, but other vendors have plugged into this.
+# https://en.wikipedia.org/wiki/MAPI
+
+# Exists in Simple version (covers Outlook Express, ships with OS)
+# and Extended version (covers Outlook)
+Microsoft-Windows-Mapi
+Microsoft-Windows-Mapi.*
+Microsoft-Windows-Mapi-*

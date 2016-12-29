@@ -6,3 +6,13 @@ Microsoft-Windows-ProcessModel*
 # Leftovers from Microsoft-Windows-IIS-FTPSvc
 Microsoft-Windows-ftpsvc.*
 Microsoft-Windows-ftpsvc-*
+
+# ASP.NET leftovers
+# There are also ASP.NET related components in .NET framework itself,
+# so be careful when categorizing.
+# Look at the parent package, the descriptions, the dependencies.
+Microsoft-Windows-ASPNET
+Microsoft-Windows-ASPNET.*
+Microsoft-Windows-ASPNET-*
+Microsoft.Web.Management.Aspnet-*
+Microsoft.Web.Management.AspnetClient-*

@@ -6,6 +6,8 @@ Microsoft-Windows-Sidebar.*
 Microsoft-Windows-Sidebar-*
 
 # Gadgets
+Microsoft-Windows-Gadgets
+Microsoft-Windows-Gadgets.*
 Microsoft-Windows-Gadgets-*
 Microsoft-Windows-Gadget-*
 # Microsoft-Windows-Gadget-Platform	# covered by the above

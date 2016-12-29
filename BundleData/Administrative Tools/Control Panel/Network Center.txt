@@ -1,0 +1,11 @@
+# Network Center
+# A location in Control Panel which shows a summary of your network connections,
+# internet availability and location.
+
+# Present since: Windows 7
+# Replaced Network Connections Folder as the go-to place to configure network,
+# though lets you through to Network Connections Folder for some tasks.
+
+Microsoft-Windows-NetworkCenter
+Microsoft-Windows-NetworkCenter.*
+Microsoft-Windows-NetworkCenter-*

@@ -1,19 +1,36 @@
-
+# Backup/Restore infrastructure
+# Volume Shadow Copy Services
 
 Microsoft-Windows-Backup-Deployment*
 
-# Opens backup and restore control panel
-Microsoft-Windows-SafeDocs-*
+# Empty builder manifest for a backup infrastructure (W7)
+Microsoft-Windows-ShadowCopyInfrastructure*
+
+# Volume Shadow Copy Services
+Microsoft-Windows-VssService*
+Microsoft-Windows-VssApi*
+Microsoft-Windows-VssProxyStub*
+Microsoft-Windows-VSSWriters*
+Microsoft-Windows-VssAdmin*
+
+# Shadow Copy providers take shadow copies of volumes.
+# There can be many providers on a system, and one built-in provider. (Core)
+Microsoft-Windows-VSSProviders*
+Microsoft-Windows-VssSystemProvider*
+
+# Shared Protection Points
+# This is NOT the Software Protection Platform but a part of Volume Shadow Copy Services
+# Many Backup/Restore components use it
+Microsoft-Windows-SPP
+Microsoft-Windows-SPP.*
+Microsoft-Windows-SPP-*
 
 # Backup and restore control panel
 Microsoft-Windows-Backup-CPL
 Microsoft-Windows-Backup-CPL.*
 Microsoft-Windows-Backup-CPL-*
 
-
-
-# This is NOT the Software Protection Platform
-# I'm not sure what it is, but all Backup/Restore components use it
-Microsoft-Windows-SPP
-Microsoft-Windows-SPP.*
-Microsoft-Windows-SPP-*
+# Opens backup and restore control panel
+Microsoft-Windows-SafeDocs
+Microsoft-Windows-SafeDocs.*
+Microsoft-Windows-SafeDocs-*

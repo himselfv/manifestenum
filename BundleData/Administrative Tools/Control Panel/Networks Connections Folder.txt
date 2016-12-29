@@ -1,0 +1,9 @@
+# Network Connections Shell Folder
+# A location in control panel which shows all network connections,
+# lets you enable or disable them, see status or open properties.
+
+# Present since Windows XP
+
+Microsoft-Windows-Netshell
+Microsoft-Windows-Netshell.*
+Microsoft-Windows-Netshell-*

@@ -1,0 +1,4 @@
+# Secondary Logon and runas services
+
+Microsoft-Windows-SecondaryLogonService*
+Microsoft-Windows-RunAs*			# Runs an application with a given credentials. Also in utilities.

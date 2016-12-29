@@ -1,2 +1,8 @@
 # Recovery Disk Creation Tool
+Microsoft-Windows-RecDisc
+Microsoft-Windows-RecDisc.*
 Microsoft-Windows-RecDisc-*
+
+# Requires:
+# Microsoft-Windows-BootEnvironment-DVD
+# Microsoft-Windows-SPP

@@ -48,8 +48,7 @@ Microsoft-Windows-RunLegacyCPLElevated.*
 # DPI Scaling Settings
 Microsoft-Windows-DpiScaling*
 
-# Select default programs UI
-Microsoft-Windows-ComputerDefaults
+
 
 # Opens System Properties UI (MyComputer->Properties in XP and earlier) on one of the pages
 Microsoft-Windows-SystemPropertiesAdvanced*
