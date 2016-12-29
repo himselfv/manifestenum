@@ -1,0 +1,1 @@
+SELECT * FROM (SELECT bundleId, COUNT(*) AS count FROM bundleAssemblies GROUP BY bundleId ORDER BY count DESC) AS bundleUsage, bundles WHERE bundles.id=bundleUsage.bundleId

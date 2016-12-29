@@ -122,6 +122,13 @@ object MainForm: TMainForm
         Caption = 'DISM image cleanup...'
         OnClick = miDISMImageCleanupClick
       end
+      object N5: TMenuItem
+        Caption = '-'
+      end
+      object miStatistics: TMenuItem
+        Caption = 'Statistics'
+        OnClick = miStatisticsClick
+      end
     end
     object Debug1: TMenuItem
       Caption = 'Debug'

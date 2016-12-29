@@ -45,6 +45,8 @@ type
     Queryassemblyscavener1: TMenuItem;
     miFilters: TMenuItem;
     edtQuickFilter: TEdit;
+    N5: TMenuItem;
+    miStatistics: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -70,6 +72,7 @@ type
     procedure edtQuickFilterChange(Sender: TObject);
     procedure pcMainChange(Sender: TObject);
     procedure edtQuickFilterKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure miStatisticsClick(Sender: TObject);
 
   protected
     FDb: TAssemblyDb;
@@ -98,7 +101,8 @@ var
 implementation
 uses UITypes, Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonFilters,
-  ManifestEnum.Log, ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions;
+  ManifestEnum.Log, ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions,
+  AssemblyDb.Bundles;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -520,5 +524,85 @@ begin
    OleCheck(CreateAssemblyCache(ACache, 0));
    OleCheck(ACache.Reserved(AScavenger)); //it's E_NOTIMPL at the time of writing
 end;
+
+procedure TMainForm.miStatisticsClick(Sender: TObject);
+var asmList: TAssemblyList;
+  assembly: TAssemblyData;
+  assocList: TBundleAssociationList;
+  assoc: TBundleAssociation;
+  assocAsms: TDictionary<TAssemblyId, integer>;
+  assocBundles: TDictionary<TBundleId, integer>;
+  val: integer;
+  Stats: record
+    count: integer;
+    deploymentCount: integer;
+    missingCount: integer;
+    presentCount: integer;
+    installedCount: integer;
+    bundleCount: integer;
+    bundledCount: integer;
+  end;
+begin
+  FillChar(Stats, SizeOf(Stats), 0);
+
+  asmList := TAssemblyList.Create;
+  try
+    FDb.Assemblies.GetAllAssemblies(asmList);
+    Stats.count := asmList.Count;
+    for assembly in asmList.Values do begin
+      if assembly.isDeployment then Inc(Stats.deploymentCount);
+      case assembly.state of
+        asMissing: Inc(Stats.missingCount);
+        asPresent: Inc(Stats.presentCount);
+        asInstalled: Inc(Stats.installedCount);
+      end;
+    end;
+  finally
+    FreeAndNil(asmList);
+  end;
+
+  assocAsms := nil;
+  assocBundles := nil;
+  assocList := TBundleAssociationList.Create;
+  FDb.Bundles.GetAllAssemblyAssociations(assocList);
+  try
+    assocAsms := TDictionary<TAssemblyId, integer>.Create;
+    assocBundles := TDictionary<TBundleId, integer>.Create;
+
+    for assoc in assocList do begin
+      if assocAsms.TryGetValue(assoc.assembly, val) then
+        val := val + 1
+      else
+        val := 1;
+      assocAsms.AddOrSetValue(assoc.assembly, val);
+
+      if assocBundles.TryGetValue(assoc.bundle, val) then
+        val := val + 1
+      else
+        val := 1;
+      assocBundles.AddOrSetValue(assoc.bundle, val);
+    end;
+
+    Stats.bundledCount := assocAsms.Keys.Count;
+    Stats.bundleCount := assocBundles.Keys.Count;
+  finally
+    FreeAndNil(assocList);
+    FreeAndNil(assocAsms);
+    FreeAndNil(assocBundles);
+  end;
+
+  MessageBox(
+    Self.Handle,
+    PChar(Format(
+      '%d assemblies in the database (%d installed, %d missing)'#13+
+      '%d assemblies in %d bundles, %d uncategorized',
+      [Stats.count, Stats.installedCount, Stats.missingCount,
+      Stats.bundledCount, Stats.bundleCount, Stats.count-Stats.bundledCount]
+      )),
+    PChar(Application.Title),
+    MB_OK + MB_TASKMODAL
+  );
+end;
+
 
 end.
