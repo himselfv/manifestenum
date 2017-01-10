@@ -1,0 +1,24 @@
+# COM is a set of rules and supporting facilities for:
+# - Laying out language-neutral interfaces in memory and calling their functions
+# - Implementing these interfaces and declaring your support for them
+# - Registering your implementations for the operating system to create on demand
+# - Querying the OS to create an in-process or out-of-process implementations
+# - Managing memory and tracking lifetime of objects
+
+Microsoft-Windows-COM-Base*
+Microsoft-Windows-COM-Surrogate*	# dllhost.exe, hosts out of process COM objects
+
+
+# OLE and ActiveX
+# The terms are used interchangeably for a set of extensions to COM
+# which were released together:
+# 1. Interfaces and support proxies which let an object expose its functions to scripting languages.
+# 2. A set of interfaces and contracts to embed one application into another to edit sub-document in-place.
+
+Microsoft-Windows-COM-LegacyOLE*
+Microsoft-Windows-COM-OleUI*
+Microsoft-Windows-ActiveXProxy*
+
+
+# Probably more related to IE
+Microsoft-Windows-ActiveXCompat*

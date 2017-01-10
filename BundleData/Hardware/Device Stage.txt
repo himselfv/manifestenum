@@ -13,3 +13,7 @@ Microsoft-Windows-DXPTasks-*
 
 Microsoft-Windows-Desktop-PlayToMenu*
 Microsoft-Windows-PlayToStatusProvider*
+
+
+# In Windows 7, this was called Device Center
+Microsoft-Windows-DeviceCenter*

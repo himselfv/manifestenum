@@ -1,0 +1,7 @@
+# Manages file system filters
+Microsoft-Windows-FilterManager*
+
+# Various filters
+Microsoft-Windows-FileTraceFilter*	# ETW logging filter
+Microsoft-Windows-FileSystemDependencyMiniFilter*	# Tracks the dependencies associated with the various nested volumes/filesystems
+Microsoft-Windows-FileInfoMinifilter*	# Collects information about files in memory to be consumed by other system services.

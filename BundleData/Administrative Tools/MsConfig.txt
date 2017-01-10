@@ -1,0 +1,3 @@
+# A well-known tool to manage some boot and performance settings in Windows
+
+Microsoft-Windows-MsConfig*

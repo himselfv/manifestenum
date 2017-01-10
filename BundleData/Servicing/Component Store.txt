@@ -11,3 +11,12 @@ Microsoft-Windows-CBS*
 Microsoft-Windows-CbsApi*
 
 Microsoft-Windows-Component-Servicing*
+
+Microsoft-Windows-CMI
+Microsoft-Windows-CMI.*
+Microsoft-Windows-CmiAdapter*
+Microsoft-Windows-CMIPluginInstallers*
+Microsoft-Windows-CmiSetup-*
+Microsoft-Windows-CmiTrustInfoInstallers*
+
+Microsoft-Windows-HotpatchInstaller*

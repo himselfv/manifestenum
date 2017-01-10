@@ -1,0 +1,2 @@
+Microsoft-Windows-Editions-*
+Microsoft-Windows-Client-Editions-*

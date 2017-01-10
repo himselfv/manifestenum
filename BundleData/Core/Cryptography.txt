@@ -63,3 +63,16 @@ Microsoft-Windows-cngaudit-dll*			# Audits crypto operations, apparently
 
 # Utilities
 Microsoft-Windows-Sigverif*		# Signature verification
+
+
+# Certificate services
+Microsoft-Windows-CertCredProvider*
+Microsoft-Windows-CertificateRequestTool*
+Microsoft-Windows-CertificationAuthorityClient*
+Microsoft-Windows-CertUtil*
+
+
+
+# Misc
+Microsoft-Windows-Cryptography*
+Microsoft-Windows-Crypto-keys*

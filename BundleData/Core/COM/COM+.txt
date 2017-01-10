@@ -1,0 +1,10 @@
+# COM+ is a distributed extension for COM which let you instantiate
+# objects on any computer with which mutual trust can be established.
+
+# Clumsy and dubiously engineered, it never hit off in popularity,
+# but it's sometimes used as a remoting solution,
+# and by this time some technologies rely on it.
+
+Microsoft-Windows-COM-ComPlus
+Microsoft-Windows-COM-ComPlus.*
+Microsoft-Windows-COM-ComPlus-*

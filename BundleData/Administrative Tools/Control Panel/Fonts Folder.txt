@@ -1,0 +1,4 @@
+# Fonts folder
+# See also: Utilities\Font Viewer
+
+Microsoft-Windows-fontext*

@@ -1,4 +1,5 @@
 # A shell utility to view fonts
+# See also: Administrative Tools\Fonts Folder
 
 Microsoft-Windows-fontview
 Microsoft-Windows-fontview.*

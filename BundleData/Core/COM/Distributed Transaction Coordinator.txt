@@ -1,0 +1,3 @@
+Microsoft-Windows-COM-DTC
+Microsoft-Windows-COM-DTC.*
+Microsoft-Windows-COM-DTC-*

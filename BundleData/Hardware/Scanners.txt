@@ -1,0 +1,4 @@
+
+Microsoft-Windows-ScanProfiles*
+
+Microsoft-Windows-BusinessScanning-*

@@ -1,0 +1,5 @@
+# Magnification API:
+Microsoft-Windows-Magnification*
+
+# Required by Magnifying glass and Windows Ink and Tablet services,
+# also probably public.

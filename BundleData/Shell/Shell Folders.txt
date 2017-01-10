@@ -4,3 +4,9 @@ Microsoft-Windows-mydocs*
 Microsoft-Windows-Shell-DesktopIni-*
 
 Microsoft-Windows-shell32-KF-*		# Windows 10
+
+# Known Folder redirection
+Microsoft-Windows-fde			# Shell extension
+Microsoft-Windows-fde.*
+Microsoft-Windows-fde-*
+Microsoft-Windows-fdeploy*		# Group policy

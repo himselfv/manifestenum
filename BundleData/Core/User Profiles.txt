@@ -2,7 +2,8 @@
 # See also:
 #   Disk Quota
 
-Microsoft-Windows-Profiles-Basic*	# Builder feature
+Microsoft-Windows-Profiles-Basic*	# W7 builder feature
+Microsoft-Windows-Profiles		# Same
 Microsoft-Windows-Profsvc*		# Service responsible for loading and unloading user profiles.
 
 
