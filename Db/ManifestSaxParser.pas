@@ -731,6 +731,7 @@ begin
 
   for i := 0 to FRegistryValues.Count-1 do begin
     j := FRegistryValues[i].keyIndex;
+    FRegistryValues[i].data.assembly := AId;
     FRegistryValues[i].data.key := FRegistryKeys[j].id;
     Db.Registry.AddValue(AId, FRegistryValues[i].data);
   end;

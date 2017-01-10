@@ -23,6 +23,11 @@ type
   end;
   TRegistryKeyReferees = TDictionary<TAssemblyId, TRegistryKeyReferenceData>;
 
+  TRegistryKeyIdentity = record
+    parent: TRegistryKeyId;
+    name: string;
+  end;
+
   TRegistryValueId = int64;
 
   TRegistryValueData = record
@@ -41,7 +46,7 @@ type
 
   TAssemblyRegistry = class(TAssemblyDbModule)
   protected
-    FKeyCache: TDictionary<string, TRegistryKeyId>;
+    FKeyCache: TDictionary<TRegistryKeyIdentity, TRegistryKeyId>;
     StmTouchKey: PSQLite3Stmt;
     StmFindKey: PSQLite3Stmt;
     StmAddKeyReference: PSQLite3Stmt;
@@ -148,7 +153,7 @@ end;
 procedure TAssemblyRegistry.Initialize;
 begin
   inherited;
-  FKeyCache := TDictionary<string, TRegistryKeyId>.Create();
+  FKeyCache := TDictionary<TRegistryKeyIdentity, TRegistryKeyId>.Create();
 end;
 
 destructor TAssemblyRegistry.Destroy;
@@ -201,11 +206,12 @@ end;
 
 
 function TAssemblyRegistry.AddKey(const AName: string; AParent: TRegistryKeyId = 0): TRegistryKeyId;
-var ANameLo: string;
+var ACacheId: TRegistryKeyIdentity;
 begin
   //Check in the local cache
-  ANameLo := AName.ToLower;
-  if FKeyCache.TryGetValue(ANameLo, Result) then
+  ACacheId.parent := AParent;
+  ACacheId.name := AName.ToLower;
+  if FKeyCache.TryGetValue(ACacheId, Result) then
     exit;
 
   //Touch
@@ -223,7 +229,7 @@ begin
   Result := sqlite3_column_int64(StmFindKey, 0);
   sqlite3_reset(StmFindKey);
 
-  FKeyCache.Add(ANameLo, Result);
+  FKeyCache.Add(ACacheId, Result);
 end;
 
 //Overloaded version which parses Registry path and creates all neccessary key entries. Returns the leaf key id.
