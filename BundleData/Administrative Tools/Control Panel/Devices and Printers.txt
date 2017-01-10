@@ -1,4 +1,4 @@
-# Device Center shell folder,
-# similar to DeviceStage in Windows 10.
+# Device Center shell folder.
+# In Windows 10 is extended by Hardware\Device Stage custom pages and actions.
 
 Microsoft-Windows-DeviceCenter*
