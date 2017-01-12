@@ -12,6 +12,8 @@ type
   TAssemblyDbModule = class;
   TAssemblyDbModuleList = class;
 
+  TRowFunction = reference to procedure;
+
   TAssemblyDbCore = class
   protected
     FDb: PSQLite3;
@@ -31,6 +33,7 @@ type
     procedure AbortTransaction;
     procedure Exec(const ASql: string);
     procedure ExecAndReset(stmt: PSQLite3Stmt);
+    procedure QueryAndReset(stmt: PSQLite3Stmt; rowFunc: TRowFunction);
     function PrepareStatement(const ASql: string): PSQLite3Stmt;
 
   //Modules provide a way to extend the database object with additions to its key functions
@@ -146,6 +149,19 @@ begin
   res := sqlite3_step(stmt);
   if (res <> SQLITE_DONE) and (res <> SQLITE_ROW) then
     RaiseLastSqliteError();
+  sqlite3_reset(stmt);
+end;
+
+procedure TAssemblyDbCore.QueryAndReset(stmt: PSQLite3Stmt; rowFunc: TRowFunction);
+var res: integer;
+begin
+  res := sqlite3_step(stmt);
+  while res = SQLITE_ROW do begin
+    rowFunc();
+    res := sqlite3_step(stmt);
+  end;
+  if res <> SQLITE_DONE then
+    RaiseLastSQLiteError;
   sqlite3_reset(stmt);
 end;
 
