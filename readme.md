@@ -1,6 +1,8 @@
 ManifestEnum: Assembly database inspector for Windows.
 
-**Warning! Alert!** This is a tool for advanced users. Some functions may break your system and void your warranty. Read below before using.
+**Warning!!** This is a tool for advanced users. Some functions may break your system and void your warranty. Read below before using.
+
+**Warning** This tool is still being developed, lots of things don't work, use on your own judgemtn.
 
 Windows versions since XP are componentized in assemblies. Each assembly defines one file or primitive component, with all its registry settings and dependencies.
 
