@@ -1,38 +1,37 @@
-Типичные проблемы:
-1. Компоненты быстро удаляются, но после перезагрузки снова на месте.
-  Включите "Options -> Force uninstall". Для компонент кроме Deployments без этого удаление не выполняется.
+Typical problems:
+1. Assemblies are uninstalled very quickly but are still there after reboot.
+  Enable "Options -> Force uninstall". Otherwise uninstall will work only for deployment assemblies (blue).
 
-2. Компоненты удаляются, но остаются в списке.
-  Сделайте dism /online /cleanup-image /startcomponentcleanup
+2. Assemblies are uninstalled, but remain in the list.
+  Do dism /online /cleanup-image /startcomponentcleanup 
+  then refresh the database (it's not done automatically after the uninstall anyway).
 
 
 C:\Windows\winsxs
-  Содержит подпапку для каждой assembly, в которой лежат все относящиеся к ней файлы.
-
+  Contains a subfolder for each assembly with all assembly files
+  
 C:\Windows\winsxs\Manifests
-  Содержит манифесты для всех assemblies.
-  Windows 7: В открытом виде.
+  Contains manifests for all assemblies.
+  Windows 7: In plain text.
+  Windows 10: In packed form.
 
 HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Component Based Servicing\Packages
-  Перечисляет все пакеты в системе. Для каждого указано название mum-файла в InstallName
+  Lists all installed CBS components. For each, InstallName contains it's .mum file name.
 
 C:\Windows\servicing\Packages
-  Содержит mum и cat-файлы для каждого пакета.
-
-В mum-файле находятся:
-  assembly (с assemblyIdentity), в ней update, в ней один или несколько component, который ссылается на assemblyIdentity компонента.
+  Contains .mum and .cat files for each installed component.
 
 
-Чем отличаются пакеты от assemblies?
-И те, и другие содержат:
+How are component manifests (*.mum) different from assembly ones (*.manifest)?
+Both contain:
   <assembly>
     <assemblyIdentity ... />
     <!-- contents -->
     ...
   </assembly>
-Различается contents.
+Contents part is different.
 
-В пакете лежит:
+Component contains:
   <package>
     <parent><assemblyIdentity /></parent>
     <update>
@@ -40,7 +39,7 @@ C:\Windows\servicing\Packages
     </update>
   </package>
 
-В assembly лежит:
+Assembly contains:
   <dependency><dependentAssembly><assemblyIdentity /></dependentAssembly></dependency>
   <file name="csc.sys">...</file>
   <directories>
