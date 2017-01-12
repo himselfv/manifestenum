@@ -1,6 +1,6 @@
-# ManifestEnum: Assembly database inspector for Windows.
+# Assembly database inspector for Windows.
 
-**Warning!! This is a tool for advanced users. Some functions may break your system and void your warranty. Read below before using.** This project is still in initial development. Many things don't work or are not polished. Use on your own judgement.
+**Warning!! This is a tool for advanced users. Some functions may break your system and void your warranty. Read below before using.**
 
 Windows versions since XP are componentized in assemblies. Each assembly defines one file or primitive component, with all its registry settings and dependencies.
 
@@ -25,13 +25,13 @@ Additionally this tool supports:
 
 The above use of the application is safe. It changes nothing on your PC and only inspects its data.
 
-**NOTE:** 
-
 ### Usage
+
+This project is still in initial development. Many things don't work or are not polished. Use on your own judgement.
 
 You need 64-bit SQLite3.dll in the application folder to run the app. Some functions require administrator permissions, but most read-only functions don't, and you will be safer to run it as a user by default.
 
-Run ManifestEnum and let the application build the database. It will take a long time at first, but subsequent runs will not rebuild it and if anything changes, you can update it from the main menu.
+Run ManifestEnum and let the application build the database. It will take a long time at first, but subsequent runs will not rebuild it and if anything changes you can refresh it from the main menu without rebuilding.
 
 The interface presents you with a list of all assemblies, which you can filter, and a few tabs which provide a view into your computer's resources (files, registry, tasks, services) as defined by the assemblies. You can quickfilter those views too, and you can navigate and click resources to see which assemblies are responsible for those.
 
