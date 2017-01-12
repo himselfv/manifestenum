@@ -1,8 +1,6 @@
-ManifestEnum: Assembly database inspector for Windows.
+# ManifestEnum: Assembly database inspector for Windows.
 
-**Warning!!** This is a tool for advanced users. Some functions may break your system and void your warranty. Read below before using.
-
-**Warning** This tool is still being developed, lots of things don't work, use on your own judgemtn.
+**Warning!! This is a tool for advanced users. Some functions may break your system and void your warranty. Read below before using.** This project is still in initial development. Many things don't work or are not polished. Use on your own judgement.
 
 Windows versions since XP are componentized in assemblies. Each assembly defines one file or primitive component, with all its registry settings and dependencies.
 
@@ -20,28 +18,34 @@ And more.
 
 Have you ever wondered what does some service do, what is it needed for, why is it installed? Now you can figure it out.
 
-Up to here the application is safe. It changes nothing on your PC and only inspects.
-
 Additionally this tool supports:
 
 * Unpacking SxS files (credit to Aunty Mel Package Extractor)
 * Extracting assembly contents
 
-**Warning! Alert!** The following functions are experimental. You *will* break your warranty and *may* break your PC. You **should not** use these on a PC where you have anything important stored.
+The above use of the application is safe. It changes nothing on your PC and only inspects its data.
+
+**NOTE:** 
+
+### Usage
+
+You need 64-bit SQLite3.dll in the application folder to run the app. Some functions require administrator permissions, but most read-only functions don't, and you will be safer to run it as a user by default.
+
+Run ManifestEnum and let the application build the database. It will take a long time at first, but subsequent runs will not rebuild it and if anything changes, you can update it from the main menu.
+
+The interface presents you with a list of all assemblies, which you can filter, and a few tabs which provide a view into your computer's resources (files, registry, tasks, services) as defined by the assemblies. You can quickfilter those views too, and you can navigate and click resources to see which assemblies are responsible for those.
+
+
+### Experimental functions
+
+**Warning! Alert!** The following functions are experimental. You *will* break your warranty and *may* break your PC. You **should not** use these on a PC where you have any important data.
 
 * Uninstalling deployment assemblies (those that can be uninstalled with OS)
 * Uninstalled ANY assemblies (by converting them to deployments)
 * Installing deployment assemblies manually
 
 
-### Usage
-
-Run ManifestEnum and let the application build the database. It will take a long time at first, but subsequent runs will not rebuild it and if anything changes, you can update it from the main menu.
-
-The interface presents you with a list of all assemblies, which you can filter, and a few 
-
-
-### For a programmer
+## For a programmer
 
 This tool contains a number of algorithms and info about SxS internals which are hard to find and you might perhaps find useful:
 
@@ -58,7 +62,7 @@ You can also just use the already built assembly database (SQLite3) for your nee
 Pascal programmers can even just do `TAssemblyDb.Create(filename)` and then call things like `Db.Assemblies.Get()`. The database code is in `AssemblyDb.*.pas`
 
 
-### Componentization effort
+## Componentization effort
 
 This project also contains an effort to properly componentize modern version of Windows (7+) into a set of distinct applications, technologies and features which can be uninstalled without affecting other components, and explain their purpose and relations.
 
@@ -75,13 +79,4 @@ An effort is being made to group existing assemblies into bundles and categorize
 It is not clear yet whether this is a realistic task and whether the results will be useful, so the bundles are not included by default in the release folder.
 
 To enable bundles, copy or junction BundleData from the project root to the release folder, but do not commit it.
-
-
-
-### Requirements
-Requires SQLite3.dll in the application folder.
-
-
-### Project status
-This project is still in initial development. Many things are not polished or not done at all.
 
