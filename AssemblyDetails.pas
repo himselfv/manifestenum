@@ -16,7 +16,6 @@ type
     tsDependents: TTabSheet;
     tsCategories: TTabSheet;
     lbDependents: TListBox;
-    lblName: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pcDetailsChange(Sender: TObject);
@@ -45,6 +44,7 @@ var
   AssemblyDetailsForm: TAssemblyDetailsForm;
 
 implementation
+uses SxsUtils, SxsExpand, ComObj, MSXML;
 
 {$R *.dfm}
 
@@ -115,14 +115,84 @@ begin
       ResourcesTabFirstReloadDone := true;
 end;
 
-procedure TAssemblyDetailsForm.LoadAssemblyData;
+//Returns node text if the node is not null
+function nodeText(const ANode: IXmlDomNode): string;
 begin
-  if Self.FAssemblyId <> 0 then begin
-    FData := Db.Assemblies.GetAssembly(Self.FAssemblyId);
-    lblName.Caption := FData.identity.ToString;
-  end else begin
-    lblName.Caption := '';
+  if ANode <> nil then
+    Result := ANode.text
+  else
+    Result := '';
+end;
+
+function attrText(const ANode: IXmlDomNode; const AAttrName: string): string;
+begin
+  Result := nodeText(ANode.attributes.getNamedItem(AAttrName));
+end;
+
+function newLabel(AParent: TWinControl; ACaption: string): TLabel;
+begin
+  Result := TLabel.Create(AParent);
+  Result.Caption := ACaption;
+  Result.Align := alTop;
+  Result.WordWrap := true;
+  AParent.InsertControl(Result);
+  Result.Top := AParent.Height;
+end;
+
+procedure TAssemblyDetailsForm.LoadAssemblyData;
+var lbl: TLabel;
+  xmlStr: string;
+  AXml: IXMLDOMDocument;
+  node: IXmlDomNode;
+  sXmlDisplayName, sXmlDescription, sXmlCopyright: string;
+  sLocDisplayName, sLocDescription: string;
+  textId: string;
+  i: integer;
+begin
+  tsGeneral.DestroyComponents;
+  if Self.FAssemblyId = 0 then exit;
+
+  FData := Db.Assemblies.GetAssembly(Self.FAssemblyId);
+
+  lbl := newLabel(tsGeneral, FData.identity.ToString);
+  lbl.Font.Style := lbl.Font.Style + [fsBold];
+
+  try
+    xmlStr := LoadManifestFile(SxSManifestDir()+'\'+FData.manifestName+'.manifest');
+  except
+    on E: EFOpenError do
+      exit;
   end;
+
+  AXml := CreateOleObject('Microsoft.XMLDOM') as IXMLDOMDocument;
+  AXml.loadXML(xmlStr);
+
+  node := AXml.selectSingleNode('/assembly');
+  if node = nil then exit; //nothing more to add
+
+  sXmlDisplayName := attrText(node, 'displayName');
+  sXmlDescription := attrText(node, 'description');
+  sXmlCopyright := attrText(node, 'copyright');
+
+  sLocDisplayName := '';
+  sLocDescription := '';
+  node := AXml.selectSingleNode('/assembly/localization/resources/stringTable');
+  if node <> nil then
+    for i := 0 to node.childNodes.length-1 do begin
+      textId := attrText(node.childNodes[i], 'id');
+      if ((textId = 'displayName') or (textId = 'displayName0') or (textId = 'displayName1')) and (sLocDisplayName = '') then
+        sLocDisplayName := attrText(node.childNodes[i], 'value');
+      if ((textId = 'description') or (textId = 'description0') or (textId = 'description1')) and (sLocDescription = '') then
+        sLocDescription := attrText(node.childNodes[i], 'value');
+    end;
+
+  if sXmlDisplayName <> '' then newLabel(tsGeneral, sXmlDisplayName);
+  if sLocDisplayName <> '' then newLabel(tsGeneral, sLocDisplayName);
+
+  if sXmlDescription <> '' then newLabel(tsGeneral, sXmlDescription);
+  if sLocDescription <> '' then newLabel(tsGeneral, sLocDescription);
+
+  if sXmlCopyright <> '' then newLabel(tsGeneral, sXmlCopyright);
 end;
 
 procedure TAssemblyDetailsForm.LoadDependencies;
