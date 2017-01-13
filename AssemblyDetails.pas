@@ -16,15 +16,20 @@ type
     tsDependents: TTabSheet;
     tsCategories: TTabSheet;
     lbDependents: TListBox;
+    cbAssemblyName: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pcDetailsChange(Sender: TObject);
+    procedure cbAssemblyNameChange(Sender: TObject);
   protected
     FDb: TAssemblyDb;
-    FAssemblyId: TAssemblyId;
-    FData: TAssemblyData;
+    FAssemblies: TArray<TAssemblyId>;
+    FAssemblyData: TArray<TAssemblyData>;
+    FActiveAssemblyIndex: integer; //last selected assembly index
     procedure SetDb(ADb: TAssemblyDb);
-    procedure SetAssemblyId(const AValue: TAssemblyId);
+    procedure SetAssemblies(const AValue: TArray<TAssemblyId>);
+    function GetActiveAssemblyId: TAssemblyId;
+    function GetActiveAssemblyData: TAssemblyData;
     procedure LoadAssemblyData;
     procedure LoadDependencies;
     procedure LoadDependents;
@@ -34,10 +39,12 @@ type
     ResourcesTabFirstReloadDone: boolean;
     function AddTab(AForm: TForm): TTabSheet;
   public
-    procedure Clear;
-    procedure Reload;
+    procedure ClearActiveData;
+    procedure ReloadActiveData;
     property Db: TAssemblyDb read FDb write SetDb;
-    property AssemblyId: TAssemblyId read FAssemblyId write SetAssemblyId;
+    property Assemblies: TArray<TAssemblyId> read FAssemblies write SetAssemblies;
+    property ActiveAssemblyIndex: integer read FActiveAssemblyIndex;
+    property ActiveAssemblyId: TAssemblyId read GetActiveAssemblyId;
   end;
 
 var
@@ -76,27 +83,65 @@ begin
   ResourcesForm.Db := ADb;
 end;
 
-procedure TAssemblyDetailsForm.SetAssemblyId(const AValue: TAssemblyId);
+procedure TAssemblyDetailsForm.SetAssemblies(const AValue: TArray<TAssemblyId>);
+var i: integer;
 begin
-  if AValue <> FAssemblyId then begin
-    FAssemblyId := AValue;
-    ResourcesForm.Assemblies.Clear;
-    ResourcesForm.Assemblies.Add(AValue);
-    Reload;
+  FAssemblies := AValue;
+  SetLength(FAssemblyData, Length(FAssemblies));
+
+  cbAssemblyName.Clear;
+  for i := 0 to Length(FAssemblies)-1 do begin
+    FAssemblyData[i] := Db.Assemblies.GetAssembly(Self.FAssemblies[i]);
+    cbAssemblyName.Items.Add(FAssemblyData[i].identity.ToString);
+  end;
+
+  if Length(FAssemblies) > 0 then
+    cbAssemblyName.ItemIndex := 0; //select first
+  FActiveAssemblyIndex := -2; //different from anything, to force reload
+  cbAssemblyNameChange(cbAssemblyName); //anyway, even for -1
+end;
+
+procedure TAssemblyDetailsForm.cbAssemblyNameChange(Sender: TObject);
+begin
+  if cbAssemblyName.ItemIndex = FActiveAssemblyIndex then exit; //no pointless reloads
+  FActiveAssemblyIndex := cbAssemblyName.ItemIndex;
+
+  ClearActiveData;
+  ResourcesForm.Assemblies.Clear;
+
+  if FActiveAssemblyIndex >= 0 then begin
+    ResourcesForm.Assemblies.Add(ActiveAssemblyId);
+    ReloadActiveData;
   end;
 end;
 
-procedure TAssemblyDetailsForm.Clear;
+function TAssemblyDetailsForm.GetActiveAssemblyId: TAssemblyId;
+begin
+  if FActiveAssemblyIndex >= 0 then
+    Result := FAssemblies[FActiveAssemblyIndex]
+  else
+    Result := 0;
+end;
+
+function TAssemblyDetailsForm.GetActiveAssemblyData: TAssemblyData;
+begin
+  if FActiveAssemblyIndex >= 0 then
+    Result := FAssemblyData[FActiveAssemblyIndex]
+  else
+    FillChar(Result, SizeOf(Result), 0);
+end;
+
+procedure TAssemblyDetailsForm.ClearActiveData;
 begin
   lbDependencies.Clear;
   lbDependents.Clear;
   ResourcesForm.Clear;
 end;
 
-procedure TAssemblyDetailsForm.Reload;
+procedure TAssemblyDetailsForm.ReloadActiveData;
 begin
-  Clear;
-  if FAssemblyId <= 0 then exit;
+  ClearActiveData;
+  if FActiveAssemblyIndex < 0 then exit;
 
   LoadAssemblyData;
   LoadDependencies;
@@ -140,7 +185,7 @@ begin
 end;
 
 procedure TAssemblyDetailsForm.LoadAssemblyData;
-var lbl: TLabel;
+var AData: TAssemblyData;
   xmlStr: string;
   AXml: IXMLDOMDocument;
   node: IXmlDomNode;
@@ -150,15 +195,15 @@ var lbl: TLabel;
   i: integer;
 begin
   tsGeneral.DestroyComponents;
-  if Self.FAssemblyId = 0 then exit;
+  if Self.ActiveAssemblyId = 0 then exit;
 
-  FData := Db.Assemblies.GetAssembly(Self.FAssemblyId);
+  AData := Self.GetActiveAssemblyData;
 
-  lbl := newLabel(tsGeneral, FData.identity.ToString);
-  lbl.Font.Style := lbl.Font.Style + [fsBold];
+  with newLabel(tsGeneral, AData.identity.ToString) do
+    Font.Style := Font.Style + [fsBold];
 
   try
-    xmlStr := LoadManifestFile(SxSManifestDir()+'\'+FData.manifestName+'.manifest');
+    xmlStr := LoadManifestFile(SxSManifestDir()+'\'+AData.manifestName+'.manifest');
   except
     on E: EFOpenError do
       exit;
@@ -201,7 +246,7 @@ var list: TAssemblyList;
 begin
   list := TAssemblyList.Create();
   try
-    FDb.GetDependencies(Self.FAssemblyId, list);
+    FDb.GetDependencies(Self.ActiveAssemblyId, list);
     for key in list.Keys do
       lbDependencies.Items.Add(list[key].identity.ToString);
   finally
@@ -215,7 +260,7 @@ var list: TAssemblyList;
 begin
   list := TAssemblyList.Create();
   try
-    FDb.GetDependents(Self.FAssemblyId, list);
+    FDb.GetDependents(Self.ActiveAssemblyId, list);
     for key in list.Keys do
       lbDependents.Items.Add(list[key].identity.ToString);
   finally

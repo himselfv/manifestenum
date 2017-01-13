@@ -307,13 +307,8 @@ begin
 end;
 
 procedure TMainForm.AssemblyBrowserSelectionChanged(Sender: TObject);
-var AIds: TArray<TAssemblyId>;
 begin
-  AIds := FAssemblyBrowser.SelectedAssemblies;
-  if Length(AIds) = 1 then
-    FAssemblyDetails.AssemblyId := AIds[0]
-  else
-    FAssemblyDetails.AssemblyId := 0;
+  FAssemblyDetails.Assemblies := FAssemblyBrowser.SelectedAssemblies;
 end;
 
 procedure TMainForm.AssemblyBrowserGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
@@ -325,10 +320,7 @@ end;
 
 procedure TMainForm.WmSetAssemblySelection(var msg: TWmSetAssemblySelection);
 begin
-  if Length(msg.Assemblies) >= 1 then
-    FAssemblyDetails.AssemblyId := msg.Assemblies[0]  //TODO: The rest of the selection
-  else
-    FAssemblyDetails.AssemblyId := 0;
+  FAssemblyDetails.Assemblies := msg.Assemblies;
 end;
 
 procedure TMainForm.miDISMImageCleanupClick(Sender: TObject);
