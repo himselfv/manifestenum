@@ -1,0 +1,2 @@
+
+Microsoft-Windows-Shell-Accessories		# Deployment for a few apps

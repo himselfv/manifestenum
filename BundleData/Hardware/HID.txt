@@ -1,0 +1,4 @@
+
+# HID user-mode components
+Microsoft-Windows-HID-USER*
+HID-USER.*				# Some resources are filed as this

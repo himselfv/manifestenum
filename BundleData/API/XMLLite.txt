@@ -1,0 +1,4 @@
+# A lightweight XML parser designed for ease of use, performance, and standards compliance.
+# https://msdn.microsoft.com/en-us/library/ms752872(v=vs.85).aspx
+
+Microsoft-Windows-XmlLite*

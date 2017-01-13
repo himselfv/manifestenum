@@ -1,0 +1,6 @@
+# Windows Update Standalone Installer (WUSA) installs windows update offline packages (usually *.msu)
+# https://support.microsoft.com/en-us/kb/934307
+
+Microsoft-Windows-WUSA
+Microsoft-Windows-WUSA.*
+Microsoft-Windows-WUSA-*

@@ -1,0 +1,8 @@
+# Certificate Services Client (CSC)
+
+
+# Credential roaming, formerly called DIMS (Digital ID Management Service)
+# Now part of the CSC.
+Microsoft-Windows-DIMS
+Microsoft-Windows-DIMS.*
+Microsoft-Windows-DIMS-*

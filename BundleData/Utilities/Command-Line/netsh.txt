@@ -14,3 +14,4 @@ Microsoft-Windows-RPC-Netsh*
 Microsoft-Windows-WCN-Netsh-Helper*
 Microsoft-Windows-WLan-Netsh-Helper*
 Microsoft-Windows-Wwan-Netsh-Helper*
+Microsoft-Windows-WhHelper*			# WinHTTP helper

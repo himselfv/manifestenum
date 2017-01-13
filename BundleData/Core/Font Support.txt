@@ -1,0 +1,11 @@
+
+
+# Font management services
+Microsoft-Windows-Font-FMS
+Microsoft-Windows-Font-FMS.*
+
+Microsoft-Windows-Font-RegistrySettings
+Microsoft-Windows-Font-RegistrySettings.*
+
+Microsoft-Windows-Font-StaticCache
+Microsoft-Windows-Font-StaticCache.*

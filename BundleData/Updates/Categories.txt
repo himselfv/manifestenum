@@ -3,3 +3,4 @@
 
 Microsoft-Configuration-Online
 Microsoft-Windows-Foundation-Drivers		# Entirely empty
+Microsoft-Windows-CatalogCategory

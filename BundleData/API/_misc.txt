@@ -1,6 +1,16 @@
+Microsoft-Windows-BaseApiNamespace*
+
+Microsoft-Windows-MinIoApiNamespace*
+Microsoft-Windows-MinKernelApiNamespace*
 Microsoft-Windows-DownlevelApisets-Base*
 Microsoft-Windows-DownlevelApisets-Com*
+Microsoft-Windows-DownlevelApisets-Shell*
 Microsoft-Windows-DownlevelApisets-Windows*
+Win7-Microsoft-Windows-DownlevelApisets-Base*
+Win7-Microsoft-Windows-DownlevelApisets-Com*
+Win7-Microsoft-Windows-DownlevelApisets-Shell*
+Win7-Microsoft-Windows-DownlevelApisets-Windows*
+
 
 
 # Win32 Controls

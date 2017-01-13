@@ -14,5 +14,17 @@ Microsoft-Windows-ftpsvc-*
 Microsoft-Windows-ASPNET
 Microsoft-Windows-ASPNET.*
 Microsoft-Windows-ASPNET-*
-Microsoft.Web.Management.Aspnet-*
-Microsoft.Web.Management.AspnetClient-*
+
+# IIS-ManagedCodeAssemblies
+# IIS-ManagementConsole
+# IIS-ManagementService
+Microsoft.Web.Management
+Microsoft.Web.Management.*
+
+# IIS-FTPExtensibility
+Microsoft.Web.FtpServer
+Microsoft.Web.FtpServer.*
+Microsoft.Web.FtpServer-*
+
+# IIS-PowerShellProvider
+Microsoft.IIS.PowerShell.*

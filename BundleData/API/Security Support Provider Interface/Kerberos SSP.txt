@@ -1,0 +1,9 @@
+# Kerberos Security Package contains implementation of Kerberos protocols.
+# Kerberors defines how clients interact with a network authentication service. Clients obtain tickets from the Kerberos Key Distribution Center (KDC), and they present these tickets to servers when connections are established.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa378747(v=vs.85).aspx
+
+# Plugs into Security Support Provider Interface (SSPI), implemented by LSA.
+
+Microsoft-Windows-Security-Kerberos
+Microsoft-Windows-Security-Kerberos.*
+Microsoft-Windows-Security-Kerberos-*

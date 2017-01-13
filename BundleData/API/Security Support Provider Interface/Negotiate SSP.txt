@@ -1,0 +1,18 @@
+# Microsoft Negotiate (Negotiate, SPNEGO) is a security support provider (SSP) that analyzes the request and picks the best actual SSP to handle it based on customer-configured security policy.
+# Currently, the Negotiate security package selects between Kerberos and NTLM. Negotiate selects Kerberos when it can.
+
+# https://technet.microsoft.com/en-us/library/dn169026(v=ws.10).aspx#BKMK_NegoSSP
+
+# These days Negotiate is located in LSA (lsasrv.dll)
+# But just to be safe:
+Microsoft-Windows-Security-spnego
+Microsoft-Windows-Security-spnego.*
+Microsoft-Windows-Security-spnego-*
+
+# There's an enhancement called NegoEx / NegoExts since W7.
+# It introduces another SPP which can be selected by Negotiate and which in turn selects other SSPs (incl. PKU2U).
+# https://msdn.microsoft.com/en-us/library/ff468736.aspx
+Microsoft-Windows-Security-negoexts
+Microsoft-Windows-Security-negoexts.*
+Microsoft-Windows-Security-negoexts-*
+

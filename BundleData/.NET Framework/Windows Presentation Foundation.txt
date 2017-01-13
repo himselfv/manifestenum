@@ -1,0 +1,29 @@
+# https://en.wikipedia.org/wiki/Windows_Presentation_Foundation
+
+Windows Presentation Foundation*
+Microsoft-Windows-WPFCoreComp*
+
+PresentationBuildTasks*
+PresentationCFFRasterizer*
+PresentationCore*
+PresentationFontCache*
+PresentationFramework*			# Base + Various themes
+PresentationUI*
+ReachFramework*
+
+# UI Automation sub-framework
+# https://msdn.microsoft.com/en-us/library/ms747327(v=vs.110).aspx
+UIAutomationClient*
+UIAutomationClientsideProviders*
+UIAutomationProvider*
+UIAutomationTypes*
+
+WindowsBase*
+WindowsFormsIntegration*
+WPF-*
+
+Sentinel.v3.5Client
+
+# Requires: System.Printing
+# Requires: System.Speech
+# Requires: WindowsBase

@@ -1,0 +1,10 @@
+# Windows Challenge/Response (NTLM) is the authentication protocol used on networks that include systems running the Windows operating system and on stand-alone systems.
+# The Microsoft Kerberos security package adds greater security than NTLM to systems on a network, but NTLM is still supported.
+
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa378749(v=vs.85).aspx
+
+# Plugs into Security Support Provider Interface (SSPI), implemented by LSA.
+
+Microsoft-Windows-Security-NTLM
+Microsoft-Windows-Security-NTLM.*
+Microsoft-Windows-Security-NTLM-*

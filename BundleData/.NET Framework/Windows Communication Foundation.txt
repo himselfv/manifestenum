@@ -1,0 +1,24 @@
+
+# https://en.wikipedia.org/wiki/Windows_Communication_Foundation
+
+
+Windows Communication Foundation*
+Microsoft-Windows-WCFCoreComp*
+ComSvcConfig*
+infocard
+infocard.*
+infocard-*
+Microsoft.Transactions.Bridge*
+ServiceModelReg*
+SMDiagnostics*
+SMSvcHost*
+
+# Not requirements but WCF components according to DLL descriptions.
+# Only System.Runtime.Serialization has some entries outside of it, but dependent on it.
+System.IdentityModel*
+System.IO.Log*
+System.Runtime.Serialization*
+System.ServiceModel*
+
+WCF-*
+WsatConfig*

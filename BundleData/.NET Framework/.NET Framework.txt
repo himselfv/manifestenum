@@ -9,7 +9,6 @@ aspnet_regbrowsers*
 aspnet_regsql*
 c2wtsres*
 caspol*
-ComSvcConfig*
 CustomMarshalers*
 DataSvcUtil*
 dfsvc*
@@ -20,27 +19,18 @@ jsc* # Now this is just fucking great
 MiguiControls*
 MMCEx*
 MMCFxCommon*
-PresentationBuildTasks*
-PresentationCore*
-PresentationFramework*
-PresentationUI*
-ReachFramework*
 RegAsm*
 RegSvcs*
-ServiceModelReg*
-SMDiagnostics*
-SMSvcHost*
+System		# God fucking damn naming
 System.* # There's a shitton of these
 SystemResource-*
-WCF-*
-Windows Communication Foundation*
-WindowsBase*
-WindowsFormsIntegration*
-WPF-*
-WsatConfig
+sysglobl
+sysglobl.*
+
 XsdBuildTask
 
 mscorlib
+mscorlib.*
 
 # Batches
 NetFx-*
@@ -56,9 +46,3 @@ Microsoft-Windows-NetFx*
 Microsoft .NET Framework*
 
 .NET Framework*
-
-
-# Infocard service
-infocard
-infocard.*
-infocard-*

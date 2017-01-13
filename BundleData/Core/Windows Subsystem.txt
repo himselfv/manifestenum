@@ -2,14 +2,18 @@
 
 # Deployment/misc
 Microsoft-Windows-Subsys
+Microsoft-Windows-Win32Subsystem	# Feature package
 
 # Main subsystem process
 Microsoft-Windows-Csrss*
 
 # Libraries used by CSRSS
 Microsoft-Windows-Basesrv
+Microsoft-Windows-Basesrv.*
 Microsoft-Windows-Winsrv
+Microsoft-Windows-Winsrv.*
 Microsoft-Windows-Csrsrv
+Microsoft-Windows-Csrsrv.*
 
 # Kernel-mode subsystem driver
 Microsoft-Windows-Win32k

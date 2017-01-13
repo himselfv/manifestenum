@@ -1,0 +1,9 @@
+# Windows Resource Protection is a feature in Windows Vista that replaces Windows File Protection. It protects registry keys and folders in addition to critical system files.
+
+# Windows Resource Protection works by setting discretionary access control lists (DACLs) and access control lists (ACLs) defined for protected resources. Permission for full access to modify WRP-protected resources is restricted to the processes using the Windows Modules Installer service (TrustedInstaller.exe).
+
+# https://en.wikipedia.org/wiki/Windows_Resource_Protection
+
+# Contains System File Checker utility (sfc.exe)
+
+Microsoft-Windows-WRP-Integrity-*

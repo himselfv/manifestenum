@@ -8,7 +8,6 @@ Microsoft-Windows-LegacyHwUi*
 Microsoft-Windows-appwiz*
 Microsoft-Windows-themecpl*
 Microsoft-Windows-usercpl*
-Microsoft-Windows-accessibilitycpl*
 Microsoft-Windows-desk*
 
 # main.cpl
@@ -28,7 +27,6 @@ Microsoft-Windows-timedate*	# Time and Date
 
 
 # These are not *.cpl apps, but Control panel applets for Windows 7
-Microsoft-Windows-Backup-CPL*
 Microsoft-Windows-DiagCpl*
 Microsoft-Windows-HealthCenterCPL*
 Microsoft-Windows-PerfCenterCPL*

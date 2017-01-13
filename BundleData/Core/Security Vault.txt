@@ -1,0 +1,14 @@
+
+
+Microsoft-Windows-Security-Vault
+Microsoft-Windows-Security-Vault.*
+Microsoft-Windows-Security-Vault-*
+
+Microsoft-Windows-Credential-Manager*
+Microsoft-Windows-Security-Credential-Manager
+Microsoft-Windows-Security-Credential-Manager.*
+Microsoft-Windows-Security-Credential-Manager-*
+
+# Protected Storage service and API served the same purpose,
+# but is deprecated as of Windows 7 and remains as a stub for apps to migrate the data.
+Microsoft-Windows-Security-ProtectedStorage*

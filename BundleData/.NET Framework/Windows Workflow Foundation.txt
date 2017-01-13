@@ -1,0 +1,8 @@
+# Windows Workflow Foundation
+# https://en.wikipedia.org/wiki/Windows_Workflow_Foundation
+
+# All names sic
+Windows Workflow Foundation*
+Microsoft-Windows-WWFCoreComp*
+System.Workflow.*
+WWF-*

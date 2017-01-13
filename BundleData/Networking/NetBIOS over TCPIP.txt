@@ -1,0 +1,7 @@
+# NetBIOS is an old LAN protocol which covered resolving textual computer names into addresses (DNS is used for the same purpose worldwide).
+# Originally NetBIOS worked as a standalone protocol but these days it's usually implemented over TCP/IP:
+# https://en.wikipedia.org/wiki/NetBIOS_over_TCP/IP
+# This service runs NetBIOS over TCP/IP and provides its functions to the system.
+# NetBIOS local name resolution is particularly important. If lmhosts is disabled, accessing LAN computers by their names will be unavailable.
+
+Microsoft-Windows-LMHSVC*

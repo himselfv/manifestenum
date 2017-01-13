@@ -1,1 +1,6 @@
 Microsoft-Windows-Classpnp*
+
+Microsoft-Windows-Disk
+Microsoft-Windows-Disk.*
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.*

@@ -2,8 +2,3 @@
 # A user-mode DLL which provides many kernel functions to subsystem implementations
 # Something like user-mode kernel embassy.
 Microsoft-Windows-Ntdll*
-
-# LSA
-Microsoft-Windows-LSA
-Microsoft-Windows-LSA.*
-Microsoft-Windows-LSA-*

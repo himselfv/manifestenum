@@ -1,0 +1,6 @@
+# A basis for Edge
+
+# There are tons of components under this prefix,
+# many long required not only for IE but as a standalone parts.
+
+Microsoft-Windows-IE-*

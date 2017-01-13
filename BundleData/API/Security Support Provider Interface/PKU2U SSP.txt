@@ -1,0 +1,8 @@
+#  Public Key Cryptography Based User-to-User (PKU2U) security support provider enables peer-to-peer authentication, particularly through the Windows 7 media and file sharing feature called Homegroup, which permits sharing between computers that are not members of a domain.
+# https://technet.microsoft.com/en-us/library/dd560634(v=ws.10).aspx
+
+# Relies on NegoEx to be automatically negotiated
+
+Microsoft-Windows-Security-pku2u
+Microsoft-Windows-Security-pku2u.*
+Microsoft-Windows-Security-pku2u-*

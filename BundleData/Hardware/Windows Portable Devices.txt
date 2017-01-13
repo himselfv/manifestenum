@@ -1,0 +1,5 @@
+# Windows Portable Devices (WPD) enables computers to communicate with attached media and storage devices.
+# WPD provides a flexible, robust way for computers to communicate with music players, storage devices, mobile phones, cameras, and many other types of connected devices.
+# This system supersedes both Windows Media Device Manager and Windows Image Acquisition. 
+
+Microsoft-Windows-WPD-*

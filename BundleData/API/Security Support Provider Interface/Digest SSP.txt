@@ -1,0 +1,7 @@
+# Microsoft Digest is a security support provider (SSP) that implements the Digest Access protocol, a lightweight authentication protocol for parties involved in Hypertext Transfer Protocol (HTTP) or Simple Authentication Security Layer (SASL) based communications.
+
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa378745(v=vs.85).aspx
+
+Microsoft-Windows-Security-Digest
+Microsoft-Windows-Security-Digest.*
+Microsoft-Windows-Security-Digest-*

@@ -1,0 +1,10 @@
+# Rights Management Services (RMS), aka:
+#   Windows RMS
+#   Active Directory RMS
+# is a server software for information rights management shipped with Windows Server, and a client libraries for it.
+
+# https://en.wikipedia.org/wiki/Active_Directory_Rights_Management_Services
+
+Microsoft-Windows-Security-Processor-Native-*
+
+Microsoft-Windows-Rights-Management-Client-v1-API*

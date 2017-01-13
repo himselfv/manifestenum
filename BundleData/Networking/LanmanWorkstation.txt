@@ -1,5 +1,7 @@
 
 # Workstation
+Microsoft-Windows-WorkstationService
+Microsoft-Windows-WorkstationService.*
 Microsoft-Windows-WorkstationService-*
 
 # Computer Browser services

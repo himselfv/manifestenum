@@ -1,7 +1,11 @@
 Microsoft-Windows-Help*
 Server-Help-*
+Microsoft-Windows-Assistance-CollectionFiles-Help*
 
 # This is not precisely help, but related
 
 # A tool to view CHM files
 Microsoft-Windows-HtmlHelp*
+
+# A stup for WinHlp32 to view HLP files
+Microsoft-Windows-Winhstb*

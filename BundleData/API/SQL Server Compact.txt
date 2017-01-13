@@ -1,6 +1,6 @@
 # Windows includes a few DLLs which provide connectivity to
 # SQL Server Compact (== SQL CE == SQL Mobile)
 
-Microsoft-Windows-SQLLiteOLEDB-*
-Microsoft-Windows-SQLLiteQP-*
-Microsoft-Windows-SQLLiteSE-*
+Microsoft-Windows-SQLLiteOLEDB*
+Microsoft-Windows-SQLLiteQP*
+Microsoft-Windows-SQLLiteSE*

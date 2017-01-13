@@ -1,0 +1,4 @@
+# Implements login/password dialog boxes and logon UI
+
+Microsoft-Windows-Authentication-AuthUI*
+Microsoft-Windows-Authentication-LogonUI*

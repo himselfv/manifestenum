@@ -1,0 +1,13 @@
+# Windows Image Acquisition (WIA) is the still image acquisition platform in the Windows family of operating systems starting with Windows Me and Windows XP.
+
+# It enables imaging/graphics applications to interact with imaging hardware and standardizes the interaction between different applications and scanners.
+
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms630368(v=vs.85).aspx
+
+# Superceeded by Windows Portable Devices (WPD), but continues to function.
+
+# Covers TWAIN components in twain.dll
+
+Microsoft-Windows-WindowsImageAcquisition*
+Microsoft-Windows-WIA-*
+Microsoft-Windows-WindowsImageAcqusition-*		# Sic! Typo in W7
