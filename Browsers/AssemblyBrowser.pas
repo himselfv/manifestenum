@@ -232,7 +232,7 @@ var Data: PNodeData;
 begin
   for Node in FBundleFolderNodes do begin
     Data := Tree.GetNodeData(Node);
-    if Data.Name = AFolderName then begin
+    if (Tree.NodeParent[Node]=AParent) and (Data.Name = AFolderName) then begin
       Result := Node;
       exit;
     end;
