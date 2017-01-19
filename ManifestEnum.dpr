@@ -49,6 +49,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.Title := 'ManifestEnum';
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TProgressForm, ProgressForm);
   Application.CreateForm(TResourceModule, ResourceModule);
