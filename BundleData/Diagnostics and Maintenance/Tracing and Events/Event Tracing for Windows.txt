@@ -1,5 +1,6 @@
 # Event Tracing for Windows (ETW)
 # Kernel-mode high speed subscription based binary event/logging facility.
+# Closely tied with Event Log since Vista.
 
 # Many components in the OS provide ETW events.
 # Clients can subscribe to any of the available providers, filter by any of the keywords.

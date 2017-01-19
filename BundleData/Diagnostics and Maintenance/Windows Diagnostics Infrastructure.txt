@@ -1,6 +1,5 @@
 # Windows Diagnostics Infrastructure (WDI)
-# Windows components implement triggers that cause WDI to launch scenario-specific
-# troubleshooting modules to detect the occurence of problem scenario.
+# Windows components implement triggers that cause WDI to launch scenario-specific troubleshooting modules to detect the occurence of problem scenario.
 # Event-based and on-demand diagnosis is available.
 
 # Diagnostic scenarios are stored in System32\diagnostics, where many plugins add their content.

@@ -1,0 +1,11 @@
+# Part of WDI and Reliability Infrastructure
+# Based on:
+#   Windows Diagnostics Infrastructure (WDI)
+# See also:
+#   https://technet.microsoft.com/en-us/library/cc774730(v=ws.10).aspx
+
+# Resource Exhaustion Detector detects when memory resources are approaching critically low levels.
+# Resource Exhaustion Resolver notifies you of the three top resource consumers so that you can shut one or more.
+# Memory Leak Diagnoser provides information about applications that might have memory leaks.
+
+Microsoft-Windows-Resource-Exhaustion*

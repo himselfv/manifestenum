@@ -1,4 +1,0 @@
-# Related to WDI, also seems to be telemetry
-
-Microsoft-Windows-Core-Fundamentals-ClientPerformance-PerfTrack
-Microsoft-Windows-PerformancePerftrack-Adm

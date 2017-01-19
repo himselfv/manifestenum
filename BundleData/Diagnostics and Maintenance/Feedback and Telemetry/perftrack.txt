@@ -1,0 +1,15 @@
+# Windows Performance Tracking / PerfTrack
+# Collects performance and responsiveness data from WDI and Performance Counters
+# and delivers to Microsoft through SQM / Ceip.
+# https://www.windows-security.org/1204713c1ae8ac927bb7a1c5bed69aba/enabledisable-perftrack
+
+# Parts of PerfTrack are hosted in WDI package.
+
+Microsoft-Windows-Core-Fundamentals-ClientPerformance-PerfTrack
+
+# Can be configured through the Group Policy setting
+Microsoft-Windows-PerformancePerftrack-Adm
+
+# Lots of components install plugins to System32\WDI\PerfTrack
+# Some which lack host components are listed here
+Microsoft-Windows-Documents-Performance

@@ -1,6 +1,3 @@
 Microsoft-Windows-Unified-Telemetry*
 
-# DeviceCensus
-Microsoft-Windows-DeviceCensus*
-
 Microsoft-Windows-CoreSystem-Bluetooth-Telemetry*

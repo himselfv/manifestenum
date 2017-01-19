@@ -1,0 +1,10 @@
+# Reliability Analysis Component provides information to Reliability Monitor that is used to calculate the System Stability Index.
+# The System Stability Index is a number from 1 (least stable) to 10 (most stable) and is a weighted measurement derived from the number of specified failures seen over a rolling historical period.
+# Reliability Events in the System Stability Report describe the specific failures.
+# See also:
+#   https://technet.microsoft.com/en-us/library/cc774636(v=ws.10).aspx
+
+Microsoft-Windows-Reliability-*
+Microsoft-Windows-ReliabilityAnalysis*
+
+Microsoft-Windows-ReliabilityMetrics-Wmi-Provider*

@@ -1,0 +1,2 @@
+# Enhances ETW on Windows 10+
+# https://msdn.microsoft.com/en-us/library/dn904636(v=vs.85).aspx

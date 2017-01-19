@@ -1,0 +1,3 @@
+
+# DeviceCensus
+Microsoft-Windows-DeviceCensus*

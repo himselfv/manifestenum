@@ -1,0 +1,8 @@
+# Windows Event Log
+# Closely tied with Event Tracing for Windows since Vista
+
+Microsoft-Windows-EventLog*
+# -Api
+# -ForwardPlugin
+
+Microsoft-Windows-EventLog-CommandLine*		# Wevtutil.exe

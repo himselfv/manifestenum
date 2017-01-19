@@ -1,2 +1,1 @@
-
 Microsoft-Windows-systray*		# systray.exe stub - also in Shell
