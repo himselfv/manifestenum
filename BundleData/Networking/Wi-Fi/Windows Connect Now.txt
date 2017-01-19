@@ -1,0 +1,2 @@
+# https://en.wikipedia.org/wiki/Windows_Rally#Windows_Connect_Now
+Microsoft-Windows-WCN-*

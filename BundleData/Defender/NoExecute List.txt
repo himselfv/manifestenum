@@ -1,0 +1,2 @@
+# List of DLLs to set NX bit
+Microsoft-Windows-NX

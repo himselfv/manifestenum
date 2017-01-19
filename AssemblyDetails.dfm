@@ -24,15 +24,15 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
     Align = alClient
     TabOrder = 1
     OnChange = pcDetailsChange
-    ExplicitTop = 0
-    ExplicitHeight = 166
     object tsGeneral: TTabSheet
       Caption = 'General'
-      ExplicitHeight = 138
     end
     object tsDependencies: TTabSheet
       Caption = 'Depends on'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 138
       object lbDependencies: TListBox
         Left = 0
@@ -42,12 +42,14 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
-        ExplicitHeight = 138
       end
     end
     object tsDependents: TTabSheet
       Caption = 'Required by'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 138
       object lbDependents: TListBox
         Left = 0
@@ -57,12 +59,14 @@ object AssemblyDetailsForm: TAssemblyDetailsForm
         Align = alClient
         ItemHeight = 13
         TabOrder = 0
-        ExplicitHeight = 138
       end
     end
     object tsCategories: TTabSheet
       Caption = 'Categories'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 138
     end
   end

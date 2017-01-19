@@ -6,9 +6,19 @@ Microsoft-Windows-Profiles-Basic*	# W7 builder feature
 Microsoft-Windows-Profiles		# Same
 Microsoft-Windows-Profsvc*		# Service responsible for loading and unloading user profiles.
 
+Microsoft-Windows-Profapi		# User Profiles Base API + some folder initialization
+
 
 # UserManager service
 # Purpose unclear, but seems to provide some functions related to user sessions
 Microsoft-System-User-Service*		# The service itself
 Microsoft-System-User-Ext*		# Client DLL (API)
 Microsoft-System-User-Component*	# Provides WinRT classes around this API. Huh, maybe move this to WinRT then?
+
+# First application Winlogon runs when a user logs on.
+# Runs logon scripts, reestablishes network connections, and then starts Explorer.exe.
+# Can be replaced via registry.
+# https://technet.microsoft.com/en-us/library/cc939862.aspx
+Microsoft-Windows-UserInit
+
+Microsoft-Windows-Userenv

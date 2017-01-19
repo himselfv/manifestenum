@@ -1,2 +1,15 @@
+# Network Access Protection (NAP)
+# Microsoft technology for controlling network access of a computer, based on its health.
+# With NAP, system administrators of an organization can define policies for system health requirements.
+# Examples: has updates installed, has the latest anti-virus, has firewall enabled.
+# https://en.wikipedia.org/wiki/Network_Access_Protection
+
+# https://msdn.microsoft.com/en-us/library/cc770670(v=ws.11).aspx
+
+# Deprecated since Windows Server 2012 R2
+
 Microsoft-Windows-NetworkAccessProtection-*
 Microsoft-Windows-NAP-*
+
+# Network Access Protection enforcement over EAP
+Microsoft-Windows-Eap-Nap-Enforcement-Client		# Also 

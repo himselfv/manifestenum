@@ -1,0 +1,32 @@
+# Performance Counters Infrastructure
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa373083(v=vs.85).aspx
+
+# Performance data is accessible either through Registry or WMI. In the latter case, you need WMI installed.
+
+Microsoft-Windows-PerformanceCounterInfrastructure
+Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable
+Microsoft-Windows-PerformanceCounterInstaller
+Microsoft-Windows-PerformanceBaseCounters
+
+
+# Performance Logs and Alerts (PLA)
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa372635(v=vs.85).aspx
+
+# Provides the ability to capture and log:
+# - Performance counter values
+# - Alerts when a counter crosses a threshold
+# - System configuration changes for some settings
+# - Calls to most functions of Kernel32.dll, Advapi32.dll, Gdi32.dll, and User32.dll
+# - Event Tracing for Windows (ETW) events
+
+# Closely tied with ETW as most of ETW tracing is done through PLA.
+# Inseparable on a package level from base PCI.
+
+Microsoft-Windows-PerformanceCounterInfrastructureConsumer
+Microsoft-Windows-PLA-Events		# ETW events for PLA itself
+
+
+# Tools
+
+Microsoft-Windows-PerformanceToolsCommandLine		# Command line tools, including those for Etw
+Microsoft-Windows-PerformanceToolsGui			# Perfmon

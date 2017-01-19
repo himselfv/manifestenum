@@ -7,6 +7,7 @@ Microsoft-Windows-Core.*
 Microsoft-Windows-MinWin		# MinWin feature, empty
 Microsoft-Windows-MinWin-Security	# Default security for core OS folders
 Microsoft-Windows-ClientRootSecurity	# Default security for boot drive
+Microsoft-Windows-RootSecurity		# Same
 Microsoft-Windows-MinWin-Foundation-Security	# Mostly empty
 
 Microsoft-Windows-CoreOS

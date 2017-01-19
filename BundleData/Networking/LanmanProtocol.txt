@@ -1,0 +1,3 @@
+# SMB over Netbios implementation
+# Required for both LanmanServer and LanmanWorkstation
+Microsoft-Windows-NBSMB

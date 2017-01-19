@@ -1,0 +1,22 @@
+
+# Feature
+Microsoft-Windows-PhotoBasicFeature
+Microsoft-Windows-PhotoPremiumDeployment
+
+# Photo viewer
+Microsoft-Windows-Photo-Common
+Microsoft-Windows-PhotoViewer
+Microsoft-Windows-PhotoBase
+
+# Photo printing wizard
+# Does not depend on Photo Viewer except it registers it in a right-click menu
+Microsoft-Windows-Photo-Printing-Wizard
+
+# Autoplay handlers:
+# - Play view files on arrival
+# - Show pictures on arrival
+Microsoft-Windows-PhotoAcquire		# Also requires Microsoft-Windows-PhotoBase
+
+# Misc, was included in the deployment. Not sure if belongs here
+Microsoft-Windows-ImagingEngine			# Also in Control Panel
+Microsoft-Windows-ImagingDevicesControlPanel

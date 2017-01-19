@@ -6,5 +6,6 @@ Microsoft-Windows-Shell-GroupPolicy*
 
 # Service utilities
 Microsoft-Windows-thumbexthost*		# Hosts thumb extraction COM objects
+Microsoft-Windows-Shell-PreviewHost*	# Preview COM object host
 
 Microsoft-Windows-moricons*		# moricons.dll - contains bonus shell icons

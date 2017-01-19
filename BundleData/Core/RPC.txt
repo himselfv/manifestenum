@@ -1,0 +1,41 @@
+# Remote Procedure Call (RPC)
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa378651(v=vs.85).aspx
+
+# How RPC works (architecture):
+#  https://technet.microsoft.com/en-us/library/cc738291(v=ws.10).aspx
+
+# Glossary
+#  RPD NDR = RPD Network Data Representation, RPC and DCOM marshalling engine
+
+#  Endpoint: Network-specific address of a server process for remote procedure calls. The actual name of the endpoint depends on the protocol sequence being used.
+#  Dynamic endpoint: Network specific–server address that is requested and assigned at run time.
+#  Well-known endpoint: Endpoint that does not change. Well-known endpoint information is stored as part of the binding handle, or within the name service–database server entry.
+#  Endpoint mapper: Part of the RPC subsystem (RPCSS) that allows the run-time library to dynamically assign and resolve endpoints.
+
+#  Name service: Service that maps names to objects and stores the name/object pairs in a database. For example, the RPC name service maps a logical name to a binding handle so client applications can refer to that logical name, rather than a protocol sequence and network address.
+#  Locator: Microsoft Windows name-service provider.
+#  Name Service–Interface Daemon (nsid): Service that provides an interface between Microsoft Locator and the OSF-DCE Cell Directory Service (CDS) name service databases for RPC name-service functions.
+#  Cell Directory Service (CDS): Name-service provider for the Open Software Foundation's Distributed Computing Environment.
+
+
+Microsoft-Windows-RPC-EndpointMapper
+
+Microsoft-Windows-RPC-Kernel		# Kernel-mode part of local RPC
+Microsoft-Windows-RPC-Local		# rpcrt4.dll (API for RPC) + user mode part of local RPC
+
+Microsoft-Windows-RPC-Locator		# Name Service Provider
+Microsoft-Windows-RPC-Ns		# Name Service Client
+
+Microsoft-Windows-RPC-HTTP		# RPC over HTTP
+
+Microsoft-Windows-RPC-Remote		# Remote RPC extensions
+Microsoft-Windows-RPCHelperClass
+
+# RPC Security
+Microsoft-Windows-RPC-Secure-Kerberos
+Microsoft-Windows-RPC-Secure-Negotiate
+Microsoft-Windows-RPC-Secure-NTLM
+Microsoft-Windows-RPC-Secure-SSL
+
+# Tools
+Microsoft-Windows-RPC-Ping

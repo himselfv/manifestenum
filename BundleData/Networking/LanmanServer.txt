@@ -1,3 +1,5 @@
+# Lanman / Samba (SMB) / File and Printer sharing server
+# Requires LanmanProtocol
 
 # Core
 Microsoft-Windows-SMBServer

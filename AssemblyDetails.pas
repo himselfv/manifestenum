@@ -180,6 +180,7 @@ begin
   Result.Caption := ACaption;
   Result.Align := alTop;
   Result.WordWrap := true;
+  Result.Autosize := true;
   AParent.InsertControl(Result);
   Result.Top := AParent.Height;
 end;

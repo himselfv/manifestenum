@@ -1,4 +1,4 @@
-# AppMgmt: установка программ по спискам групповой политики
+# AppMgmt: installing apps via group policy settings
 Microsoft-Windows-GroupPolicy-CSE-SoftwareInstallation*	# Service:AppMgmt
 
 Microsoft-Windows-AppManagement*

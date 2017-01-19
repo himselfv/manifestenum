@@ -1,0 +1,27 @@
+# Extensible Authentication Protocol (EAP) and related packages
+# Authentication framework frequently used in wireless networks and point-to-point connections, defined by RFC.
+# https://en.wikipedia.org/wiki/Extensible_Authentication_Protocol
+
+# IEEE 802.1X defines the encapsulation of the Extensible Authentication Protocol (EAP) over IEEE 802, which is known as "EAP over LAN" or EAPOL.
+# EAPOL was originally designed for IEEE 802.3 Ethernet in 802.1X-2001, but was clarified to suit other IEEE 802 LAN technologies such as IEEE 802.11 wireless and Fiber Distributed Data Interface (ISO 9314-2) in 802.1X-2004
+
+Microsoft-Windows-Extensible-Authentication-Protocol-*
+
+Microsoft-Windows-EapMethods
+
+# Network Access Protection enforcement over EAP
+Microsoft-Windows-Eap-Nap-Enforcement-*		# Also in NAP
+
+# OneX is a library which is required for 802.1X support
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms706424(v=vs.85).aspx
+
+# 802.1X: https://en.wikipedia.org/wiki/IEEE_802.1X
+
+Microsoft-Windows-OneX
+Microsoft-Windows-OneXSchema
+
+# Schemas -- probably related
+# Install files into \L2Schemas, which is probably Layer2 Security Schemas.
+# Layer2 probably refers to OSI.
+Microsoft-Windows-Dot3Schemas
+Microsoft-Windows-WlanSchemas

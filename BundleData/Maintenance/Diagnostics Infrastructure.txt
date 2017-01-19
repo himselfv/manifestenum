@@ -53,8 +53,6 @@ Microsoft-Windows-DeviceDiagnostic*
 Microsoft-Windows-EFS.TriggerProvider*
 Microsoft-Windows-PrinterDiagnostic*
 Microsoft-Windows-MaintenanceDiagnostic*
-Microsoft-Windows-NetworkDiagnostics-*
-Microsoft-Windows-NetworkDiagnosticsFramework*
 Microsoft-Windows-PCWDiagnostic* # Program Compability Wizard
 Microsoft-Windows-PerformanceDiagnostic*
 Microsoft-Windows-PowerDiagnostic*
@@ -71,3 +69,14 @@ Microsoft-Windows-PlugPlay-Troubleshooter*
 # Despite the name, this is cdrom.sys diagnostics trace provider as of W10AU
 Microsoft-Windows-Cdrom
 Microsoft-Windows-Cdrom.*
+
+
+
+# Network Diagnostics Framework
+# Uses WDI but has its own extension system which is even separately documented
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa369892(v=vs.85).aspx
+Microsoft-Windows-NetworkDiagnostics-*
+Microsoft-Windows-NetworkDiagnosticsFramework*
+
+# File and printer sharing diagnostics for Network Diagnostics Framework
+Microsoft-Windows-SMBHelperClasses
