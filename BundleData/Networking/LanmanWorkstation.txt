@@ -25,3 +25,6 @@ Microsoft-Windows-SMB20-MiniRdr
 
 # Plugin for Network Diagnostics Framework
 Microsoft-Windows-SMBHelperClasses
+
+# Group Policy
+Microsoft-Windows-LanmanWorkstation-Adm

@@ -1,0 +1,22 @@
+# Take a Test app / SecureAssesment
+
+# The Take a Test app in Windows 10, Version 1607, creates the right environment for taking a test:
+# * Take a Test shows just the test and nothing else.
+# * Take a Test clears the clipboard.
+# * Students aren’t able to go to other websites.
+# * Students can’t open or access other apps.
+# * Students can't share, print, or record their screens.
+# * Students can’t change settings, extend their display, see notifications, get updates, or use autofill features.
+# * Cortana is turned off.
+
+# https://technet.microsoft.com/en-us/edu/windows/take-a-test-single-pc
+
+# Implemented as a browser app based on Edge
+
+Microsoft-Windows-Management-SecureAssessment-*
+# -Browser = the app itself
+# -Diagnostics = WDI?
+# -Deployment
+# -Capabilities
+# -Config
+

@@ -1,0 +1,6 @@
+# F12 Developer Tools
+# Something like Developer Console for webpages
+# Has a standalone version which can attach to and debug web views in other apps.
+# https://msdn.microsoft.com/en-us/library/hh673541(v=vs.85).aspx
+
+Microsoft-Windows-F12-F12*

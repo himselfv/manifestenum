@@ -9,3 +9,9 @@ Microsoft-Windows-SMBServer-*
 # Shared folders UI
 # Includes MMC snap-in and a folder share wizard
 Microsoft-Windows-SharedFoldersUI*
+
+# Group Policy
+Microsoft-Windows-LanmanServer-Adm
+
+# Deployment. Also deploys Workstation.
+Microsoft-Windows-SMB1-D

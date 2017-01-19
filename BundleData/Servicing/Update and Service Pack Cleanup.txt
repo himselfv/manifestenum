@@ -1,0 +1,5 @@
+# Scavenge: Update / Service Pack Cleanup
+# Removes traces of old installation
+
+Microsoft-Windows-Scavenge
+Microsoft-Windows-Scavenge-*

@@ -7,5 +7,3 @@ Microsoft-Windows-Deployment-Services-Unattend*
 
 Microsoft-Windows-Update-*
 
-# Removes traces of old installation
-Microsoft-Windows-Scavenge-*

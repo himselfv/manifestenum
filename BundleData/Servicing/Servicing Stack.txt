@@ -2,3 +2,9 @@ Microsoft-Windows-ServicingStack*
 ServicingStack-Client*
 
 Microsoft-Windows-Sxs*
+
+# Some settings for SxS runtime
+Microsoft-Windows-Settings-2011
+Microsoft-Windows-Settings-2013
+Microsoft-Windows-Settings-2014
+Microsoft-Windows-Settings-2016

@@ -1,0 +1,5 @@
+# Appx in Windows\Print Dialog
+# Purpose unclear, but probably per its name.
+
+Microsoft-Windows-PrintDialog
+Microsoft-Windows-PrintDialog-*

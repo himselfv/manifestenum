@@ -1,0 +1,11 @@
+# Nobody quite understands WTF this is
+
+Microsoft-Windows-CDP
+Microsoft-Windows-CDP-*
+# -Api contains cdp.dll with an API (undocumented but clean) which references a lot of things like multimedia, messaging, sensors, touch, some activities and tasks.
+
+Microsoft-Onecore-CDP
+Microsoft-Onecore-CDP-*
+# -WinRT contains WinRT API (and described as such)
+
+Microsoft-Windows-CDPSvc*

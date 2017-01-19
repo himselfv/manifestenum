@@ -3,3 +3,6 @@
 # This system supersedes both Windows Media Device Manager and Windows Image Acquisition. 
 
 Microsoft-Windows-WPD-*
+Microsoft-Windows-Portable-Devices-*
+Microsoft-Windows-PortableDevices-*
+# -WinRT = WinRT API

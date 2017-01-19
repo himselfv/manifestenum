@@ -28,7 +28,8 @@ Microsoft-Windows-RPC-Ns		# Name Service Client
 
 Microsoft-Windows-RPC-HTTP		# RPC over HTTP
 
-Microsoft-Windows-RPC-Remote		# Remote RPC extensions
+Microsoft-Windows-RPC-Remote		# Remote RPC extensions (W7)
+Microsoft-Windows-RPC-Remote-Extension	# Same (W10)
 Microsoft-Windows-RPCHelperClass
 
 # RPC Security

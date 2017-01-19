@@ -2,4 +2,5 @@
 
 Microsoft-Windows-Disk-Diagnosis-*
 Microsoft-Windows-Disk-Failure-Diagnostic-*
+Microsoft-Windows-Disk-Failure-Diagnosis*	#sic
 Microsoft-Windows-DiskDiagnosis-*

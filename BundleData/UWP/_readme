@@ -2,10 +2,19 @@ This folder contains APIs and platform components for Universal Windows Platform
 
 The terms Windows Runtime, Universal Apps, Universal Windows Platform and Windows Store Apps are used more or less interchangeably. More precisely:
 
-Universal Apps are a special kind of applications packaged in appx format and using only a special set of APIs, which can run on all Windows Devices and all processor architectures without recompilation.
+Windows Runtime is a set of APIs based on COM, available to native and managed apps alike. It's something akin to .NET only in native code. .NET can access it easily.
+https://en.wikipedia.org/wiki/Windows_Runtime
 
-Windows Runtime is a set of APIs provided to these apps. They cannot use Win32 or raw .NET.
+Universal Windows Platform is an extension for Windows Runtime which adds a set of rules:
+1. Raw Win32 or .NET cannot be used.
+2. Applications are packaged to appx packages.
+3. Applications target one or more device families instead of OS.
+4. Package contains several executables for different architectures.
+UWP apps are NOT compiled to bytecode, they are native applications.
+https://en.wikipedia.org/wiki/Universal_Windows_Platform
 
-Universal Windows Platform is the name for the abstract "target platform" available for these apps on all Windows Devices.
+Universal Windows Apps are such applications.
 
 Windows Store is an internet service and a facility in the OS which downloads and installs these apps from the Microsoft servers, updates them as needed, tracks ownership and some settings.
+
+Windows Store Aps = Universal Windows Apps distributed via Store.

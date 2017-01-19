@@ -22,7 +22,7 @@ Microsoft-Windows-Recover*
 
 # Common user-mode libraries for IFS (installable file systems)
 Microsoft-Windows-FileSystemUtilityLibraries
-Microsoft-Windows-FileSystemUtilityLibraries.*
+Microsoft-Windows-FileSystemUtilityLibrariesExt
 Microsoft-Windows-Fmifs
 Microsoft-Windows-IFSUtilX
 
@@ -58,8 +58,12 @@ Microsoft-Windows-FileSystemUtilityEXFatLibrary
 Microsoft-Windows-EXFatFormat
 
 
-# ReFS
+# ReFS / ReFSV1
+Microsoft-Windows-ReFS
 Microsoft-Windows-ReFS-*
+Microsoft-Windows-FileSystemUtilityReFSLibrary
+Microsoft-Windows-FileSystemUtilityReFSV1Library
+Microsoft-Windows-ReFSFormat
 
 
 # UDFS - Universal Disk Format FS - mostly used for DVDs

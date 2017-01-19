@@ -53,7 +53,8 @@ Microsoft-Windows-InkWatson-Adm*
 Microsoft-Windows-InputPersonalization-Adm*
 Microsoft-Windows-iSCSI-Adm*
 Microsoft-Windows-Kerberos-Adm*
-Microsoft-Windows-LanmanServer-Adm*
+Microsoft-Windows-LanmanServer-Adm
+Microsoft-Windows-LanmanWorkstation-Adm
 Microsoft-Windows-LeakDiagnostic-Adm*
 Microsoft-Windows-LinkLayerTopologyDiscovery-Adm*
 Microsoft-Windows-Logon-Adm*

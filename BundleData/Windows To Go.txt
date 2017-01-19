@@ -1,0 +1,7 @@
+# Windows To Go / Portable Workspaces
+# Allows you to create a bootable image of Windows on a flash drive, which you can then use elsewhere.
+
+# Includes the creator app and a number of supporting components in case the OS itself is run in a portable mode.
+
+Microsoft-Windows-PortableWorkspace*
+# Microsoft-Windows-PortableWorkspaces*  # included in the above

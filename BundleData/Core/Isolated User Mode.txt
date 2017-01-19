@@ -1,0 +1,13 @@
+# Isolated User Mode is a security feature of W10 that runs the OS core in a separate virtual machine, if the processor supports it.
+# Requires Hyper-V.
+
+# Virtual Secure Mode (VSM) is another name for this technology or parts of it.
+# VSM is a Hyper-V container that isolates the lsass.exe process from the running Windows 10 machine.
+
+# AKA LSA Credential Isolation
+# AKA Credential Guard (not to be confused with Credential Management component)
+
+Microsoft-OneCore-IsolatedUserMode
+Microsoft-OneCore-IsolatedUserMode-*
+
+Microsoft-Onecore-Vsm-Idk-Cache		# Also in package

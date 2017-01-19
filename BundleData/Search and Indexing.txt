@@ -19,6 +19,7 @@ Microsoft-Windows-Shell-Search*		# Refers to MW-Shell-Search
 
 # A few deployments in W10
 Microsoft-Windows-Search2-*
+Microsoft-OneCore-Indexer-*
 
 # Indexing service
 Microsoft-Windows-Content-Indexing*

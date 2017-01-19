@@ -1,0 +1,16 @@
+# Windows Runtime XAML Framework
+# Originally called DirectUI.
+
+# XAML is a markup language for UI. Originally from .NET's WPF and WCF.
+# DirectUI ports this style of UI to native C++ code as a WinRT namespace Windows.UI.Xaml.
+
+# https://msdn.microsoft.com/en-us/library/windows.ui.xaml
+
+# This is one of the default ways to write Windows Runtime Apps
+
+Microsoft-Windows-DirectUI
+Microsoft-Windows-DirectUI-*
+
+# Windows.UI.Composition
+Microsoft-Windows-DirectComposition
+Microsoft-Windows-DirectComposition-*

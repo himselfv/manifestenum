@@ -3,8 +3,8 @@
 
 # Performance data is accessible either through Registry or WMI. In the latter case, you need WMI installed.
 
-Microsoft-Windows-PerformanceCounterInfrastructure
-Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable
+Microsoft-Windows-PerformanceCounters-*		# W10 deployment
+Microsoft-Windows-PerformanceCounterInfrastructure*
 Microsoft-Windows-PerformanceCounterInstaller
 Microsoft-Windows-PerformanceBaseCounters
 
