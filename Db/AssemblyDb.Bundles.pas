@@ -5,8 +5,10 @@ Bundles are groupings one level above components and assemblies, introduced manu
 stored as files, imported and linked to assemblies in the database.
 }
 
+{$DEFINE HASHNAMES}
+
 interface
-uses Classes, Generics.Collections, sqlite3, AssemblyDb.Core, AssemblyDb.Assemblies;
+uses SysUtils, Classes, Generics.Collections, sqlite3, AssemblyDb.Core, AssemblyDb.Assemblies;
 
 type
   TBundleId = int64;
@@ -69,19 +71,17 @@ type
   TBundle = class
   protected
     FData: TBundleData;
-    FMasks: TStringList;
+    FMasks: TList<TAssemblyIdentity>;
     function GetName: string; inline;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Load(const ABase, AFilename: string);
     function ContainsAssembly(const Id: TAssemblyIdentity): boolean;
+    function ContainsAssemblyLowercased(const Id: TAssemblyIdentity): boolean;
     property Name: string read GetName;
     property Data: TBundleData read FData write FData;
   end;
-
-//    FAllPatterns: TDictionary<string, TBundle>;
-//    FAllAssemblies: TDictionary<TAssemblyId, TBundle>;
 
   TBundleManager = class(TObjectList<TBundle>)
   public
@@ -91,12 +91,15 @@ type
     function MatchAssembly(const Id: TAssemblyIdentity): TBundle;
   end;
 
+  EBundleException = class(Exception);
+
+
 var
   BundleFiles: TBundleManager;
 
 
 implementation
-uses SysUtils, Windows, WildcardMatching;
+uses Windows, WildcardMatching;
 
 procedure TAssemblyBundles.Initialize;
 begin
@@ -318,6 +321,8 @@ end;
 
 {
 Bundle files
+Line format: name[,param=value[, ...]]
+Any part can have wildcards.
 }
 
 const
@@ -326,7 +331,7 @@ const
 constructor TBundle.Create;
 begin
   inherited;
-  FMasks := TStringList.Create;
+  FMasks := TList<TAssemblyIdentity>.Create;
 end;
 
 destructor TBundle.Destroy;
@@ -340,27 +345,82 @@ begin
   Result := FData.name;
 end;
 
+function EatPartname(var APart: string): string; inline;
+var i_pos: integer;
+begin
+  i_pos := pos('=', APart);
+  if i_pos > 0 then begin
+    Result := Trim(copy(APart, 1, i_pos-1));
+    delete(APart, 1, i_pos);
+    APart := Trim(APart);
+  end else begin
+    Result := '';
+  end;
+end;
+
 procedure TBundle.Load(const ABase, AFilename: string);
 var i, i_pos: integer;
-  ln: string;
+  ln, part, partname: string;
   attrs: WIN32_FILE_ATTRIBUTE_DATA;
+  lines: TStringList;
+  mask: TAssemblyIdentity;
 begin
-  FMasks.LoadFromFile(ABase+'\'+AFilename);
+  Lines := TStringList.Create;
+  try
+    Lines.LoadFromFile(ABase+'\'+AFilename);
 
-  for i := FMasks.Count-1 downto 0 do begin
-    ln := FMasks[i];
-    //Remove comments
-    i_pos := pos('#', ln);
-    if i_pos > 0 then begin
-      SetLength(ln, i_pos-1);
-    end;
-    ln := ln.Trim;
+    for i := Lines.Count-1 downto 0 do begin
+      ln := Lines[i];
+      //Remove comments
+      i_pos := pos('#', ln);
+      if i_pos > 0 then begin
+        SetLength(ln, i_pos-1);
+      end;
+      ln := AnsiLowercase(ln.Trim);
+      if ln = '' then continue;
 
-    if ln = '' then begin
-      FMasks.Delete(i);
-      continue;
+      mask.Clear;
+
+      repeat
+        i_pos := pos(',', ln);
+        if i_pos > 0 then begin
+          part := copy(ln, 1, i_pos-1).Trim;
+          delete(ln, 1, i_pos);
+        end else
+          part := ln;
+
+        partname := EatPartname(part);
+
+        if SameStr(partname, '') then
+          mask.name := part
+        else
+        if SameStr(partname, 'processorarchitecture') then
+          mask.processorArchitecture := part
+        else
+        if SameStr(partname, 'publickeytoken') then
+          mask.publicKeyToken := part
+        else
+        if SameStr(partname, 'version') then
+          mask.version := part
+        else
+        if SameStr(partname, 'language')
+        or SameStr(partname, 'culture') then
+          mask.language := part
+        else
+        if SameStr(partname, 'type') then
+          mask.type_ := part
+        else
+        if SameStr(partname, 'versionscope') then
+          mask.versionscope := part
+        else
+          raise EBundleException.Create('Unsupported filter name: "'+partname+'"');
+
+      until i_pos <= 0;
+
+      FMasks.Add(mask);
     end;
-    FMasks[i] := AnsiLowercase(ln); //without comments
+  finally
+    FreeAndNil(lines);
   end;
 
   FData.name := ChangeFileExt(ExtractFilename(AFilename), '');
@@ -376,14 +436,51 @@ begin
 end;
 
 function TBundle.ContainsAssembly(const Id: TAssemblyIdentity): boolean;
-var i: integer;
 begin
-  for i := 0 to FMasks.Count-1 do
-   //For now we only match by name. Versions and cultures are ignored. Most of the time that's what we want anyway.
-    if WildcardMatchCase(PChar(AnsiLowercase(Id.name)), PChar(FMasks[i])) then begin
-      Result := true;
-      exit;
-    end;
+  Result := ContainsAssemblyLowercased(Id.ToLowercase);
+end;
+
+function TBundle.ContainsAssemblyLowercased(const Id: TAssemblyIdentity): boolean;
+var mask: TAssemblyIdentity;
+begin
+  for mask in FMasks do begin
+    if mask.name <> '' then
+      if pos('*', mask.name) <= 0 then begin
+        if not SameStr(id.name, mask.name)
+        and not SameStr(id.name, mask.name+'.resources')
+        and not SameStr(id.name, mask.name+'-languagepack') then
+          continue;
+      end else
+        if not WildcardMatchCase(PChar(Id.name), PChar(mask.name)) then
+          continue;
+
+    if (mask.version <> '')
+    and not WildcardMatchCase(PChar(Id.version), PChar(mask.version)) then
+      continue;
+
+    if (mask.language <> '')
+    and not WildcardMatchCase(PChar(Id.language), PChar(mask.language)) then
+      continue;
+
+    if (mask.publicKeyToken <> '')
+    and not SameStr(Id.publicKeyToken, mask.publicKeyToken) then
+      continue;
+
+    if (mask.processorArchitecture <> '')
+    and not SameStr(Id.processorArchitecture, mask.processorArchitecture) then
+      continue;
+
+    if (mask.versionScope <> '')
+    and not SameStr(Id.versionScope, mask.versionScope) then
+      continue;
+
+    if (mask.type_ <> '')
+    and not SameStr(Id.type_, mask.type_) then
+      continue;
+
+    Result := true;
+    exit;
+  end;
   Result := false;
 end;
 

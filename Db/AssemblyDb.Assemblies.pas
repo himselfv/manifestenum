@@ -18,6 +18,7 @@ type
     function ToString: string;
     function ToStrongName: string;
     function ToStrongNameNETStyle: string;
+    function ToLowercase: TAssemblyIdentity;
   end;
   TAssemblyState = (
     asMissing = 0,    //Assembly is missing from the SxS store. It's only known as a reference
@@ -132,6 +133,19 @@ begin
     Result := Result + ', ProcessorArchitecture='+Self.processorArchitecture;
   if Self.versionScope <> '' then
     Result := Result + ', versionScope='+Self.versionScope; //sic, starts with lowercase
+end;
+
+//Returns the identity with all the strings in lower case. Useful for searches.
+function TAssemblyIdentity.ToLowercase: TAssemblyIdentity;
+begin
+  Result.name := AnsiLowercase(Self.name);
+  Result.type_ := AnsiLowercase(Self.type_);
+  Result.language := AnsiLowercase(Self.language);
+  Result.buildType := AnsiLowercase(Self.buildType);
+  Result.processorArchitecture := AnsiLowercase(Self.processorArchitecture);
+  Result.version := AnsiLowercase(Self.version);
+  Result.publicKeyToken := AnsiLowercase(Self.publicKeyToken);
+  Result.versionScope := AnsiLowercase(Self.versionScope);
 end;
 
 procedure TAssemblyAssemblies.Initialize;

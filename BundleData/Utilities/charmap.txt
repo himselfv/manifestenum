@@ -1,2 +1,2 @@
-Microsoft-Windows-charmap*
-Microsoft-Windows-getuname*	# Get Unicode symbol name -- so far looks like charmap only library
+Microsoft-Windows-charmap
+Microsoft-Windows-getuname	# Get Unicode symbol name -- so far looks like charmap only library
