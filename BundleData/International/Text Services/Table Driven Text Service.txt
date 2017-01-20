@@ -1,0 +1,6 @@
+# Sits atop of Text Services Framework
+# Allows to to define and customize your own Text Input Processor (TIP). You prepare one text file which defines system, some configuration information, and mapping table of keystroke to text, mapping table of text to phrase.
+# http://archives.miloush.net/michkap/archive/2008/01/21/7178421.html
+
+Microsoft-Windows-TableDrivenTextService
+Microsoft-Windows-TableDrivenTextService-*

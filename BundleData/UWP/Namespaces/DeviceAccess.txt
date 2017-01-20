@@ -1,0 +1,10 @@
+# You can use the Device Access API to write Windows Store device apps for specialized devices that use custom drivers. The API provides methods for sending control codes to communicate with the device's custom driver.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/hh404244(v=vs.85).aspx
+
+DeviceAccess-Universal-*		# Deployment
+Microsoft-Windows-DeviceAccess
+Microsoft-Windows-DeviceAccess-*
+Microsoft-OneCore-DeviceAccess
+Microsoft-OneCore-DeviceAccess-*
+Microsoft-OneCoreUAP-DeviceAccess
+Microsoft-OneCoreUAP-DeviceAccess-*

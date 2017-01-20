@@ -1,0 +1,5 @@
+# Overlay Filter
+# Embedded Write Filter and Registry Filter combined
+# Redirects writes to various locations into a temporary layer in memory or a semi-permanent layer on the hard drive. The latter can be stripped to restore the OS to a clean slate.
+
+Microsoft-Windows-OverlayFilter

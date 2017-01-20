@@ -17,8 +17,8 @@ Microsoft-Windows-Eap-Nap-Enforcement-*		# Also in NAP
 
 # 802.1X: https://en.wikipedia.org/wiki/IEEE_802.1X
 
-Microsoft-Windows-OneX
-Microsoft-Windows-OneXSchema
+Microsoft-Windows-OneX*
+# OneXSchema, OneXUi
 
 # Schemas -- probably related
 # Install files into \L2Schemas, which is probably Layer2 Security Schemas.

@@ -11,4 +11,3 @@ Microsoft-Windows-Hyphenation-*
 # Hope this is from here too
 Microsoft-Windows-ELS-Hyphenation*
 
-Microsoft-Windows-WordbreakerStemmer-*

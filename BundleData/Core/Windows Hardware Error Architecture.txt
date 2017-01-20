@@ -1,0 +1,10 @@
+# Windows Hardware Error Architecture (WHEA)
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff559509(v=vs.85).aspx
+
+# The core is integrated in the Kernel, this is mostly just WHEA troubleshooter
+
+# WHEA Troubleshooter
+Microsoft-Windows-HardwareErrorArchitecture
+Microsoft-Windows-HardwareErrorArchitecture-*
+Microsoft-Windows-WHEA-Troubleshooter
+Microsoft-Windows-WHEA-Troubleshooter-*

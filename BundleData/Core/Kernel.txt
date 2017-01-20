@@ -9,6 +9,7 @@ Microsoft-Windows-HAL.*
 Microsoft-Windows-HAL-*
 
 # Platform-specific hardware error driver. HAL depends on this.
+# Component of Windows Hardware Error Architecture (WHEA)
 Microsoft-Windows-PSHED
 Microsoft-Windows-PSHED.*
 Microsoft-Windows-PSHED-*

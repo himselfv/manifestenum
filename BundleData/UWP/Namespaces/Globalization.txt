@@ -1,0 +1,5 @@
+
+Microsoft-Windows-Globalization
+Microsoft-Windows-Globalization-PhoneNumberFormatting
+
+Microsoft-Windows-FontGroups	# Globalization-FontGroups

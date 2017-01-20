@@ -1,0 +1,3 @@
+# Windows.Storage.ApplicationData namespace and supporting assemblies
+
+Windows-Storage-ApplicationData-*

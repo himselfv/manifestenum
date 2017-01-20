@@ -1,10 +1,21 @@
 
 # Hyper-V
-Microsoft-Hyper-V-*
-Microsoft-HyperV-*
-Microsoft-OneCore-HyperV*
 HyperV-*
+Microsoft-HyperV-*
+Microsoft-Hyper-V-*
+Microsoft-OneCore-HyperV*
+Microsoft-OneCore-Hyper-V*
+Microsoft-Windows-HyperV*
+Microsoft-Windows-Hyper-V*
+
 InspectVhdDialog*
+
+Microsoft.Virtualization.Client			# Hyper-V .NET bindings
+Microsoft.Virtualization.Client.*
+Microsoft.HyperV.*				# Powershell bindings
+
+Microsoft-Windows-Host-Network-*		# VM Host network access
+Microsoft-Windows-HostGuardianService-*
 
 # Windows Containers (since W10)
 # Containers are an isolated, resource controlled, and portable operating environment.

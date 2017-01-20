@@ -11,3 +11,8 @@ Microsoft-OneCore-IsolatedUserMode
 Microsoft-OneCore-IsolatedUserMode-*
 
 Microsoft-Onecore-Vsm-Idk-Cache		# Also in package
+
+# AKA Device Guard (VSM + code signing policies)
+# https://technet.microsoft.com/en-us/itpro/windows/keep-secure/device-guard-deployment-guide
+Microsoft-Windows-DeviceGuard-*
+Microsoft-Windows-DeviceGuard.*

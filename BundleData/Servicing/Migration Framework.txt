@@ -1,0 +1,15 @@
+# Migration Architecture / Migration Wizard / MigWiz / Windows Easy Transfer
+# Contains components to aid in migration from the previous versions of Windows.
+
+# Most components are standardized and consist of three parts:
+# 1. A deployment
+# 2. A -DownlevelManifest with a copy of the manifest to be replaced
+# 3. A -ReplacementManifest with a new version of the manifest.
+
+# Migration components are grouped into deployments similarly to how normal components are grouped in this version of Windows.
+
+Microsoft-Windows-Migration-*
+
+
+# All manifests are installed into the folder of Migration Wizard, AKA Windows Easy Transfer
+Microsoft-Windows-MigrationEngine*

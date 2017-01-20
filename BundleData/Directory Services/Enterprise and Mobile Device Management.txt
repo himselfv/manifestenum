@@ -1,7 +1,15 @@
 # EnterpriseMgmt / Mobile Device Management
+# https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/mdm/index
+
+# There are two parts to the Windows 10 management component:
+# * The enrollment client, which enrolls and configures the device to communicate with the enterprise management server.
+# * The management client, which periodically synchronizes with the management server to check for updates and apply the latest policies set by IT.
+
 Microsoft-Windows-MDMAgent*
 Microsoft-Windows-EnterpriseMgmt-MdmDiagnostics*
 Microsoft-Windows-EnterpriseMgmt-MdmDiagnosticsTool*
 
 # Enterprise Management
 Microsoft-Windows-Enterprise-Management*			# Service:EntAppSvc (Enterprise applications management service)
+
+Microsoft-Windows-DeviceManagement-*			# Windows 10

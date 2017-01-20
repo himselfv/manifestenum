@@ -1,0 +1,10 @@
+# Windows Identity Foundation (WIF)
+# https://en.wikipedia.org/wiki/Windows_Identity_Foundation
+
+Microsoft-Windows-Identity-Foundation-*
+
+Microsoft.IdentityModel
+Microsoft.IdentityModel.*
+
+c2wtshost
+c2wtsres

@@ -1,0 +1,13 @@
+Windows RT apps have their own set of APIs in DLLs named like
+  Windows.Entry.Entry
+Most have their own assembly (as they should), but unlike .NET it's not dots but dashes there:
+  Windows-Entry-Entry
+Most are listed in the docs:
+  https://msdn.microsoft.com/en-us/library/windows/apps/br211377.aspx
+
+
+Rules for inclusion:
+1. All API is by default included.
+2. API is by default grouped by first term after "Windows."
+3. Subsets of APIs clearly grouped together are to be grouped.
+4. WinRT APIs that are not part of the default API set, but are rather only an API to some other component, are to be kept with that component.

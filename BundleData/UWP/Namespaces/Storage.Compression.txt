@@ -1,0 +1,3 @@
+# Windows.Storage.Compression namespace
+
+Windows-Storage-Compression-*

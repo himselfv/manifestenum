@@ -1,0 +1,27 @@
+# Various Windows.Devices.* API sets
+# Most listed here as they're default for the operating system, even if the support for the associated device is missing.
+
+# See here for details:
+#  https://msdn.microsoft.com/en-us/library/windows/apps/br211377.aspx
+
+Microsoft-OneCore-Devices-LowLevel-*
+Microsoft-Windows-Devices-Background
+Microsoft-Windows-Devices-Bluetooth
+Microsoft-Windows-Devices-Custom
+Microsoft-Windows-Devices-Enumeration
+Microsoft-Windows-Devices-HumanInterfaceDevice
+Microsoft-Windows-Devices-Lights-*
+Microsoft-Windows-Devices-LowLevel-*
+Microsoft-Windows-Devices-Midi
+Microsoft-Windows-Devices-Midi-*
+Microsoft-Windows-Devices-Picker
+Microsoft-Windows-Devices-Picker-*
+Microsoft-Windows-Devices-Perception-*
+Microsoft-Windows-Devices-Printers-*
+Microsoft-Windows-Devices-Radios
+Microsoft-Windows-Devices-SerialCommunication-*
+Microsoft-Windows-Devices-SmartCards-*
+Microsoft-Windows-Devices-Usb-*
+Microsoft-Windows-Devices-WiFi
+Microsoft-Windows-Devices-WiFiDirect
+Windows-Devices-Perception

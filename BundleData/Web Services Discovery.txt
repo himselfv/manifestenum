@@ -1,0 +1,8 @@
+# WS-Discovery and related components which have no better place to be
+
+
+# Web Services for Devices API
+# Supports the implementation of client-controlled devices and services, and device hosts conforming to the Devices Profile for Web Services (DPWS). WSDAPI uses WS-Discovery for device discovery.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa826001(v=vs.85).aspx
+WSDApi,publicKeyToken=31bf3856ad364e35
+WSDApi-*,publicKeyToken=31bf3856ad364e35

@@ -1,0 +1,6 @@
+# Whatever this is
+
+Microsoft-Windows-WordbreakerStemmer
+Microsoft-Windows-WordbreakerStemmer-*
+WordbreakerStemmer				# W10
+WordbreakerStemmer-*

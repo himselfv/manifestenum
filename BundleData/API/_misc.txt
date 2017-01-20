@@ -1,7 +1,8 @@
 Microsoft-Windows-BaseApiNamespace*
-
 Microsoft-Windows-MinIoApiNamespace*
 Microsoft-Windows-MinKernelApiNamespace*
+Microsoft-Windows-MincoreApiNamespace*
+Microsoft-Windows-ComApiNamespace*
 Microsoft-Windows-DownlevelApisets-Base*
 Microsoft-Windows-DownlevelApisets-Com*
 Microsoft-Windows-DownlevelApisets-Shell*
