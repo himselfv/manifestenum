@@ -64,7 +64,7 @@ Pascal programmers can even just do `TAssemblyDb.Create(filename)` and then call
 
 ## Componentization effort
 
-This project also contains an effort to properly componentize modern version of Windows (7+) into a set of distinct applications, technologies and features which can be uninstalled without affecting other components, and explain their purpose and relations.
+This project also contains an effort to properly componentize modern versions of Windows (7+) into a set of distinct applications, technologies and features which can be uninstalled without affecting other components, and explain their purpose and relations.
 
 From the looks of it, CBS Components should have been used for this purpose, but Microsoft have instead decided to lump all OS features together into a few huge components where features are not listed separately.
 
@@ -76,7 +76,7 @@ ManifestEnum scans Bundle structure in the BundleData folder next to the applica
 
 An effort is being made to group existing assemblies into bundles and categorize bundles according to their purpose, so that the whole operating system is properly understood.
 
-It is not clear yet whether this is a realistic task and whether the results will be useful, so the bundles are not included by default in the release folder.
+It is not yet clear whether this is a realistic task and whether the results will be useful, so the bundles are not included by default in the release folder.
 
 To enable bundles, copy or junction BundleData from the project root to the release folder, but do not commit it.
 
