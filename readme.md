@@ -13,8 +13,11 @@ This tool scans these assemblies, analyzes their contents and lets you inspect h
 * Services
 * Scheduled Tasks
 * Shell extensions
+* And more.
 
-And more.
+![Main window screenshot](https://bitbucket.org/himselfv/manifestenum/raw/tip/Assets/screenshots/main1.png)
+
+[More screenshots](https://bitbucket.org/himselfv/manifestenum/src/tip/Assets/screenshots/) 
 
 Have you ever wondered what does some service do, what is it needed for, why is it installed? Now you can figure it out.
 
@@ -24,6 +27,8 @@ Additionally this tool supports:
 * Extracting assembly contents
 
 The above use of the application is safe. It changes nothing on your PC and only inspects its data.
+
+See also: [CBSEnum](https://bitbucket.org/himselfv/cbsenum/) for more higher level and OS-supported management of components.
 
 ### Usage
 
@@ -79,4 +84,3 @@ An effort is being made to group existing assemblies into bundles and categorize
 It is not yet clear whether this is a realistic task and whether the results will be useful, so the bundles are not included by default in the release folder.
 
 To enable bundles, copy or junction BundleData from the project root to the release folder, but do not commit it.
-
