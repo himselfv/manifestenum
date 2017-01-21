@@ -26,7 +26,7 @@ Additionally this tool supports:
 * Unpacking SxS files (credit to Aunty Mel Package Extractor)
 * Extracting assembly contents
 
-The above use of the application is safe. It changes nothing on your PC and only inspects its data.
+The above uses of the application is safe. It changes nothing on your PC and only inspects its data.
 
 See also: [CBSEnum](https://bitbucket.org/himselfv/cbsenum/) for more higher level and OS-supported management of components.
 
