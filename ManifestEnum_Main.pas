@@ -197,7 +197,7 @@ end;
 procedure TMainForm.LoadSettings;
 var ini: TRegistryIniFile;
 begin
-  ini := TRegistryIniFile.Create('ManifestEnum');
+  ini := TRegistryIniFile.Create('Software\ManifestEnum');
   try
     AssemblyActions.ForceUninstall := ini.ReadBool('', 'ForceUninstall', false);
     Filters.ShowInstalledOnly := ini.ReadBool('Filter', 'ShowInstalledOnly', true);
@@ -218,7 +218,7 @@ end;
 procedure TMainForm.SaveSettings;
 var ini: TRegistryIniFile;
 begin
-  ini := TRegistryIniFile.Create('ManifestEnum');
+  ini := TRegistryIniFile.Create('Software\ManifestEnum');
   try
     ini.WriteBool('', 'ForceUninstall', AssemblyActions.ForceUninstall);
     ini.WriteBool('Filter', 'ShowInstalledOnly', Filters.ShowInstalledOnly);
