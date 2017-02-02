@@ -8,3 +8,4 @@
 # https://technet.microsoft.com/en-us/itpro/windows/keep-secure/hello-identity-verification
 
 Microsoft-Windows-Security-NGC-*
+Microsoft-OneCore-Security-NGC-*
