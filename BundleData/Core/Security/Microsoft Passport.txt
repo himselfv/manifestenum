@@ -1,0 +1,10 @@
+# Microsoft Passport aka NGC (now part of Microsoft Hello)
+
+# A two-factor authentication method based on PIN or biometrics (fingerprint / face recognition) + Trusted Platform Module (TPM).
+# The user can be authenticated locally, against Active Directory, Azure AD and third-party authentication centers.
+# It is supported as an authentication method on Windows.
+
+# https://msdn.microsoft.com/en-us/windows/uwp/security/microsoft-passport
+# https://technet.microsoft.com/en-us/itpro/windows/keep-secure/hello-identity-verification
+
+Microsoft-Windows-Security-NGC-*
