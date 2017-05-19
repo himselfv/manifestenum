@@ -24,3 +24,5 @@ Microsoft-Windows-UPnP*
 PNPX
 PNPX.*
 PNPXAssoc*
+IPBusEnum*		# PnP-X IP Bus Enumerator DLL
+IPBusEnumProxy*

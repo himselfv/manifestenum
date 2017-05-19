@@ -16,3 +16,14 @@ BTH-CPL*
 Microsoft-Windows-DevicePairingApp*      # DevicePairingWizard
 Microsoft-Windows-DevicePairingFolder*
 Microsoft-Windows-DevicePairing*
+DevicePairingProxy*
+
+# Bluetooth PAN (Personal Area Network) handler for DDO
+Microsoft-Windows-BthpanContextHandler*
+
+# Bluetooth PAN (Personal Area Network) UI
+Microsoft-Windows-Btpanui*
+
+# BlueWire unpairing handler / elevated handler for DDO
+Microsoft-Windows-BWContextHandler*
+Microsoft-Windows-BWUnpairElevated*

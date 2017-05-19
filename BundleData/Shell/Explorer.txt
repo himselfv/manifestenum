@@ -21,3 +21,7 @@ Microsoft-Windows-UI-Search*			# Task bar search box. Also in Search and Indexin
 Microsoft-Windows-ntshrui*			# Sharing extensions
 Microsoft-Windows-Shell-ShareMgmt*		# Package for the above
 Microsoft-Windows-cryptext-dll*			# Crypto extensions - also in Cryptography
+
+# Metadata Handlers
+Microsoft-Windows-MediaMetadataHandler*
+Microsoft-Windows-PhotoMetadataHandler*

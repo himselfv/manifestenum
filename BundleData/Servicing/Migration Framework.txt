@@ -13,3 +13,4 @@ Microsoft-Windows-Migration-*
 
 # All manifests are installed into the folder of Migration Wizard, AKA Windows Easy Transfer
 Microsoft-Windows-MigrationEngine*
+Microsoft-Windows-MigrationWizard*

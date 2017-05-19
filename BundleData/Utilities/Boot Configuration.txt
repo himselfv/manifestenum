@@ -1,0 +1,15 @@
+# Command-line tools which edit boot configuration
+
+# BootCfg
+# Configures, queries, or changes Boot.ini file settings.
+Microsoft-Windows-BootConfig 
+Microsoft-Windows-BootConfig.*
+Microsoft-Windows-BootConfig-*
+
+# BcdEdit
+# Edits BCD boot configuration
+Microsoft-Windows-BootConfigurationData-CmdlineTool*
+
+# BcdBoot
+# Creates or restores BCD boot files
+Microsoft-Windows-BcdBoot-CmdlineTool*

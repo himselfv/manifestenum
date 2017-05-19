@@ -18,5 +18,9 @@ Microsoft-Windows-DDOIProxy*	# I suppose
 #   ddodiag -o output.xml
 Microsoft-Windows-ddodiag*
 
-# Bluetooth PAN (Personal Area Network) context menu handler / "Device Center Connect Handler"
+# Bluetooth PAN (Personal Area Network) handler / "Device Center Connect Handler"
 Microsoft-Windows-BthpanContextHandler*
+
+# BlueWire unpairing handler / elevated handler
+Microsoft-Windows-BWContextHandler*
+Microsoft-Windows-BWUnpairElevated*
