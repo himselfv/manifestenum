@@ -1,0 +1,5 @@
+# Unicode Private Character Editor
+# http://vlaurie.com/computers2/Articles/privchar.htm
+
+Microsoft-Windows-eudcedit*
+Microsoft-Windows-eudc-settings*	# Command-line helper

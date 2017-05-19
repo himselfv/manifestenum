@@ -1,0 +1,5 @@
+# Display Control panel
+Microsoft-Windows-Display
+Microsoft-Windows-Display.*
+Microsoft-Windows-Display-*
+Microsoft-Windows-Display-ChangeDesktopBackground-License*

@@ -1,0 +1,4 @@
+# Display switching utility
+# A simple utility which lets you choose between clone, 2 screens, Display only or Notebook only.
+# Seems to be used for the cases where you connect your notebook to the display.
+Microsoft-Windows-DisplaySwitch*

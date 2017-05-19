@@ -1,2 +1,14 @@
 
 Networking-MPSSVC*
+
+# Windows Filtering Platform
+# https://en.wikipedia.org/wiki/Windows_Filtering_Platform
+# BFE/IPSec related
+Microsoft-Windows-WfpLwf*			# Filtering Driver
+Microsoft-Windows-Network-Security
+Microsoft-Windows-Network-Security.*
+Microsoft-Windows-Network-Security-*
+Microsoft-Windows-WFP
+Microsoft-Windows-WFP.*
+Microsoft-Windows-WFP-*
+Microsoft-Windows-WFPIPSecHelperClasses*	# Helpers for NetDiagFx

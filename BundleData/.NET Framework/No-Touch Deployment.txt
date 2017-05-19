@@ -1,0 +1,14 @@
+# No-Touch Deployment / Zero Deployment / IEExec
+# https://msdn.microsoft.com/en-us/library/aa289511(v=vs.71).aspx
+
+# A runtime host for .NET (version 1, 2 or 3) applications in the scenario where the .NET executable is referred to via an URL provided to IE.
+# For example, you have a .NET GUI application hosted on a web server (not a .NET WUI application, a regular .NET GUI application: an .exe file and possibly a few DLLs) hosted by a web server like IIS, just like any other kind of file can be hosted by a web server.
+# https://windoh.wordpress.com/2011/05/27/how-to-run-32-bit-net-windows-apps-on-64-bit-windows-including-with-ieexec/
+
+IEExec*,processorarchitecture=msil
+
+# A guess: The rest are related
+IEExecRemote*,processorarchitecture=msil
+IEHost*,processorarchitecture=msil
+IEHost.Registry* # x86
+IIEHost*,processorarchitecture=msil

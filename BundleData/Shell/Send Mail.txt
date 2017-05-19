@@ -1,0 +1,3 @@
+# Simple UI for sending mail
+
+Microsoft-Windows-sendmail*

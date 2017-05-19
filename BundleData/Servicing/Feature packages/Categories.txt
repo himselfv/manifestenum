@@ -6,3 +6,5 @@ Microsoft-Windows-Foundation-Drivers		# Entirely empty
 Microsoft-Windows-CatalogCategory
 
 Microsoft-Windows-Pro-Catalogs
+
+Microsoft-Windows-Interface*			# Interface category

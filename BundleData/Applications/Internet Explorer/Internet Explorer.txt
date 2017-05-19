@@ -1,0 +1,25 @@
+# IE11 from Windows 7
+
+# Requires:
+#   Windows Scripting
+
+# Deployments
+Microsoft-Windows-InternetExplorer-Deployment*
+Microsoft-Windows-InternetExplorer-OOB-Deployment*
+Microsoft-Windows-InternetExplorer-Optional-Deployment*
+
+# Most components
+Microsoft-Windows-IE-*
+Microsoft-Windows-Internet-Explorer-*
+
+# ieframe
+Microsoft-Windows-ieframe*
+Microsoft-Windows-ieframe-Optional*
+
+# IE Addin installer
+# "Internet Explorer Installer Broker", "Component used for Limited User Functionality"
+Microsoft-Windows-IEInstal*
+
+Microsoft-Windows-InetRes-Adm*		# Group Policy Definitions
+Microsoft-Windows-JS-DebuggerIDE*
+Microsoft-Windows-MSLS31*
