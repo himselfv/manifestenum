@@ -1,0 +1,9 @@
+# Windows Animation Manager
+# Introduced in Windows 7. Designed to simplify adding animations to the UI.
+# Schedules and executes animations. Supplies a library of useful mathematical functions for specifying the behavior of a UI element over time.
+# Does not perform the rendering; can be used with any graphics platform, including Direct2D, Direct3D, or GDI+.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd371981(v=vs.85).aspx
+
+Microsoft-Windows-UIAnimation
+Microsoft-Windows-UIAnimation.*
+Microsoft-Windows-UIAnimation-*

@@ -1,6 +1,8 @@
 # WS-Management and WS-Discovery
 # SOAP-based DMTF open standard protocols for management.
 
+# Probably requires API\Web Services API
+
 # Web Services for Management / WS-Management
 # https://en.wikipedia.org/wiki/WS-Management
 # DMTF open standard defining a SOAP-based protocol for the management of servers, devices, applications and various Web services.

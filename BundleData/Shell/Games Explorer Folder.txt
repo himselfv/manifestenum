@@ -1,0 +1,11 @@
+# Windows Games Explorer
+# A custom folder for the Windows shell that provides a rich presence for games. It is accessed on the Start by clicking Games.
+# Games can register themselves and provide data files to be presented there in a rich way.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ee417682%28v=vs.85%29.aspx
+
+# Since Vista.
+
+Microsoft-Windows-GameExplorer*
+
+Microsoft-Windows-GameUX*		# Package
+Microsoft-Windows-GameUXMig*		# Migration DLL

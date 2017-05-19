@@ -1,0 +1,7 @@
+# Microsoft Windows HotStart
+# Enables you to turn on your computer and run an application at the press of a button. For example, if you have a laptop with media playback button, then pressing the media playback button will start Windows and then launch the media player.
+# Introduced in Windows Vista.
+
+Microsoft-Windows-HotStart
+Microsoft-Windows-HotStart.*
+Microsoft-Windows-HotStart-*

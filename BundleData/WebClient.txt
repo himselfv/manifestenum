@@ -1,2 +1,16 @@
-# WebDAV
+
+# Web Distributed Authoring and Versioning / WebDAV
+# An extension of the Hypertext Transfer Protocol (HTTP) that allows clients to perform remote Web content authoring operations.
+# Many modern operating systems provide built-in client-side support for WebDAV.
+# https://en.wikipedia.org/wiki/WebDAV
+
 Microsoft-Windows-WebDAVRedir*				# Service:WebClient
+
+
+# WebIO.dll
+# Seems to be related to WebDAV:
+# https://support.microsoft.com/en-us/help/2707157/webio-component-uses-its-own-dns-cache-to-resolve-an-fqdn-in-windows-7-or-in-windows-server-2008-r2
+# Also related to PeerDist (perhaps employs it)
+Microsoft-Windows-WebIO
+Microsoft-Windows-WebIO.*
+Microsoft-Windows-WebIO-*

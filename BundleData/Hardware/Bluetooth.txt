@@ -11,3 +11,8 @@ Microsoft.Windows.Hardware.Devices.ClassInstaller.BLUETOOTH*
 Microsoft-Windows-BTH-CPL*
 # Some resources lack prefix
 BTH-CPL*
+
+# Device pairing
+Microsoft-Windows-DevicePairingApp*      # DevicePairingWizard
+Microsoft-Windows-DevicePairingFolder*
+Microsoft-Windows-DevicePairing*

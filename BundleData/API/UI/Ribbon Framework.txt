@@ -1,0 +1,5 @@
+# Ribbon Framework
+# A ribbon command bar control that exposes the major features of an application through a series of tabs at the top of an application window. 
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd371191(v=vs.85).aspx
+
+Microsoft-Windows-UIRibbon*

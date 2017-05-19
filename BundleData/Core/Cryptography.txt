@@ -5,6 +5,8 @@
 #  Microsoft-Windows-dllname-dll
 
 
+Microsoft-Windows-CryptBase*
+
 # Crypto API - contains a ton of functions
 # See https://msdn.microsoft.com/en-us/library/windows/desktop/aa380252(v=vs.85).aspx
 # A lot of functions are covered by advapi32.dll which hosts tons of other API,

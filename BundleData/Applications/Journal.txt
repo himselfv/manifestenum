@@ -1,0 +1,5 @@
+# Windows Journal
+# Notetaking application included in some Tablet PC Editions of the OS
+# https://en.wikipedia.org/wiki/Windows_Journal
+
+Microsoft-Windows-TabletPC-Journal*

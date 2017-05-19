@@ -1,0 +1,8 @@
+# Web Services API (WWSAPI)
+# Offers C/C++ application programming interface (API) for building SOAP based web services and clients to them.
+# Provides core network communication functionality by supporting a set of the WS-* and .NET-* family of protocols.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd430435(v=vs.85).aspx
+
+Microsoft-Windows-WebServices
+Microsoft-Windows-WebServices.*
+Microsoft-Windows-WebServices-*

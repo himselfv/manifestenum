@@ -1,0 +1,12 @@
+
+
+# IRDA = Infrared Data Association
+# https://en.wikipedia.org/wiki/Infrared_Data_Association
+
+Microsoft-Windows-IrdaFull*
+Microsoft-Windows-Irda-Sys*		# Driver
+Microsoft-Windows-IrdaCoreProtocol*	# Protocol
+Microsoft-Windows-IrdaFileTransfer*	# UI resources (sounds)
+Microsoft-Windows-IrdaIrCOMM*		# IrENUM service
+Microsoft-Windows-IRFTP*
+Microsoft-Windows-IRMON*

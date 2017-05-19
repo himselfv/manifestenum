@@ -1,0 +1,17 @@
+# Internet Authentication Service (IAS)
+# Microsoft implementation of a Remote Authentication Dial-in User Service (RADIUS) server and proxy. Provides centralized user authentication, authorization and accounting.
+# https://en.wikipedia.org/wiki/Internet_Authentication_Service
+
+# Internet Authentication Service (IAS) was later renamed to Network Policy Server (NPS).
+
+# Network Policy Server (NPS) / Network Policy and Access Services (NPAS)
+# NPAS is a role service in Windows Server 2008 which can function as:
+# - RADIUS server
+# - RADIUS proxy
+# - Network Access Protection policy server (see Network Access Protection)
+# https://en.wikipedia.org/wiki/Network_Policy_Server
+
+Microsoft-Windows-Networking-Internet_Authentication_Service*
+
+# IAS/NPS supports two API sets: Network Policy Server Extensions API and Server Data Objects API.
+# https://msdn.microsoft.com/en-us/library/bb892033(v=vs.85).aspx

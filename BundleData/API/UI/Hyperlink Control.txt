@@ -1,0 +1,2 @@
+# Hyperlink Control originally from Office 2000
+Microsoft-Windows-HLink*

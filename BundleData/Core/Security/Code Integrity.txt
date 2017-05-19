@@ -1,0 +1,4 @@
+# Code Integrity is a feature that validates the integrity of a driver or system file each time it is loaded into memory.
+# https://msdn.microsoft.com/en-us/library/cc733982%28v=ws.10%29.aspx
+
+Microsoft-Windows-CodeIntegrity*

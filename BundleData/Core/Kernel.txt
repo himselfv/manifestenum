@@ -28,3 +28,5 @@ Microsoft-Windows-bootvid-*
 Microsoft-Windows-CommonLog*
 #Microsoft-Windows-CommonLogServicesApi* # covered by above
 
+# Windows NT Base API (no subsystem)
+Microsoft-Windows-KernelBase*
