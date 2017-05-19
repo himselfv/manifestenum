@@ -7,3 +7,6 @@ Microsoft-Windows-Deployment-Services-Unattend*
 
 Microsoft-Windows-Update-*
 
+# Panther setup engine
+# https://channel9.msdn.com/Events/TechEd/NorthAmerica/2011/WCL401
+Microsoft-Windows-PantherEngine*

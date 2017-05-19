@@ -1,0 +1,43 @@
+# Function Discovery API
+# Acts as an abstraction layer which allows applications to discover devices by their functions rather than by bus type or connection. Provides a uniform programmatic interface for enumerating system resources, such as hardware devices, whether local or network connected.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa814070(v=vs.85).aspx
+
+# Function Discovery is a LOCAL API, but it can be published over the network via FDResPub (below).
+
+# Core
+FunDisc
+FunDisc.*
+FunDisc-*
+fdProxy*  # COM Proxy
+fdPHost*  # COM Server Host Service
+
+# FD ties together available devices and functions from several major sources:
+
+# Plug and Play
+Microsoft-Windows-fdPnp*
+
+# UPnP / SSDP
+fdSSDP*
+
+# DeviceDisplayObject (DDOs)
+# Programmatic interfaces which provide device functions for the Devices and Printers folder (see there for more).
+Microsoft-Windows-fdDDO*
+
+# Web Services on Devices API (WSDAPI)
+fdWSD*
+
+# Bluetooth devices
+Microsoft-Windows-FDBTH*
+FDBTH.*
+
+# Printers
+Microsoft-Windows-Printing-FDPrint*
+
+# Windows Networking
+fdWNet*
+
+
+# Function Discovery Resource Publication (FDResPub)
+# Publishes available local Function Discovery resources over the network.
+FDResPub*
+

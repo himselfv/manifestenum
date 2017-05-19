@@ -2,3 +2,21 @@
 # In Windows 10 is extended by Hardware\Device Stage custom pages and actions.
 
 Microsoft-Windows-DeviceCenter*
+
+# DeviceDisplayObjects are programmatic interfaces installed for some devices which provide functions for the Devices and Printers folder.
+# They are queried by other components too (notably by Function Discovery)
+# DDOs have their own key in the registry (HKCR\DeviceDisplayObject).
+
+# DeviceDisplayObject supporting files
+Microsoft-Windows-DeviceDisplayStatusManager*
+Microsoft-Windows-DDORes*
+DDORes.*
+Microsoft-Windows-DDOIProxy*	# I suppose
+
+# DDO Diagnostic Utility
+# Logs all properties of all available DDOs into a file:
+#   ddodiag -o output.xml
+Microsoft-Windows-ddodiag*
+
+# Bluetooth PAN (Personal Area Network) context menu handler / "Device Center Connect Handler"
+Microsoft-Windows-BthpanContextHandler*

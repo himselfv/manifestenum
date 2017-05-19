@@ -1,0 +1,26 @@
+# Universal Plug and Play / SSDP
+# A set of networking protocols that permits networked devices, such as personal computers, printers, access points and mobile devices to seamlessly discover each other's presence and supported functions.
+# https://en.wikipedia.org/wiki/Universal_Plug_and_Play
+
+# There are two APIs for working with UPnP-certified devices:
+# - The Control Point API, which consists of a set of COM interfaces used to find and control devices.
+# - The Device Host API, which consists of a set of COM interfaces used to implement devices that are hosted by a computer.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa382303(v=vs.85).aspx
+
+# Function Discovery uses UPnP as one of its sources of information.
+
+Microsoft-Windows-UPnP*
+
+
+# Simple Service Discovery Protocol (SSDP)
+# A network protocol for advertisement and discovery of network services and presence information.
+# It was incorporated into the UPnP protocol stack, and a description of the final implementation is included in UPnP standards documents.
+# https://en.wikipedia.org/wiki/Simple_Service_Discovery_Protocol
+
+
+# Plug and Play Extensions (PnP-X) enable a computer system to discover networked devices and to install them on the local system using Plug and Play (PnP).
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa814083(v=vs.85).aspx
+# Works on top of UPnP, apparently.
+PNPX
+PNPX.*
+PNPXAssoc*
