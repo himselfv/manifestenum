@@ -1,0 +1,2 @@
+# Recovery control panel namespace in Windows 10
+Microsoft-Windows-RecoveryCenter-*

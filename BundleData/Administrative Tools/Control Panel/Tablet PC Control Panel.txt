@@ -1,0 +1,6 @@
+# Tablet PC Settings control panel
+# Pen and Touch control panel
+
+tabletpc-controlpanel
+tabletpc-controlpanel.*
+tabletpc-controlpanel-*

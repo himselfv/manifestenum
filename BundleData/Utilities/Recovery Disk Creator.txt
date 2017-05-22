@@ -1,3 +1,0 @@
-
-# UI app to create a Recovery Disk
-Microsoft-Windows-RecoveryDrive*

@@ -2,3 +2,8 @@
 Microsoft-Windows-ComputerDefaults
 Microsoft-Windows-ComputerDefaults.*
 Microsoft-Windows-ComputerDefaults-*
+
+# Set-User-Defaults control panel (Windows 10)
+Microsoft-Windows-sud
+Microsoft-Windows-sud.*
+Microsoft-Windows-sud-*

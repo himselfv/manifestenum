@@ -1,16 +1,11 @@
 
-# International
-Microsoft-Windows-intl*
+Microsoft-Windows-LegacyHwUi*		# Legacy as of Windows 7
 
-# Legacy as of Windows 7
-Microsoft-Windows-LegacyHwUi*
 
-Microsoft-Windows-appwiz*
-Microsoft-Windows-themecpl*
-Microsoft-Windows-usercpl*
+
 Microsoft-Windows-desk*
 
-# main.cpl
+# main.cpl				# Mouse, Keyboard
 Microsoft-Windows-main
 Microsoft-Windows-main-*
 Microsoft-Windows-main.*
@@ -21,19 +16,19 @@ Microsoft-Windows-BTH-CPL*
 BTH-CPL*
 
 Microsoft-Windows-IRPROPS*	# Infrared
-Microsoft-Windows-mmsys*	# Multimedia Devices
-Microsoft-Windows-powercfg*
-Microsoft-Windows-timedate*	# Time and Date
+Microsoft-Windows-mmsys*	# Multimedia Devices (W7) / Sound (W10)
+Microsoft-Windows-timedate*	# Time and Date (W7) / Date and Time (W10)
 
 
 # These are not *.cpl apps, but Control panel applets for Windows 7
-Microsoft-Windows-DiagCpl*
-Microsoft-Windows-HealthCenterCPL*
+Microsoft-Windows-DiagCpl*			# Troubleshooting CPL
+Microsoft-Windows-HealthCenterCPL*		# Security and Maintenance CPL
 Microsoft-Windows-PerfCenterCPL*
 Microsoft-Windows-powercpl*
-Microsoft-Windows-systemcpl*
+Microsoft-Windows-systemcpl*			# System CPL
 Microsoft-Windows-sysdm*
 Microsoft-Windows-TaskbarCPL*
+Microsoft-Windows-themecpl*			# Theme
 
 
 # Service Tools
@@ -67,3 +62,8 @@ Microsoft-Windows-Netplwiz-*		# Opens User passwords configuration window (what 
 
 # Computer name UI
 Microsoft-Windows-Computer-Name-UI*
+
+
+Microsoft-Windows-VAN		# View available networks control panel
+Microsoft-Windows-VAN.*
+Microsoft-Windows-VAN-*

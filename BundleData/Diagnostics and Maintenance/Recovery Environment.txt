@@ -1,0 +1,9 @@
+# Recovery Environment / WinRE / ReAgent
+# Lets you boot into a safe tiny Windows copy stored in a read-only disk image, from where you can use certain subset of tools to try and recover your main installation.
+
+Microsoft-Windows-WinRE-*
+Microsoft-Windows-RecoveryServices*
+
+# Recovery Environment maintenance task for the main OS
+Microsoft-Windows-ReAgent-Client-Tasks*
+Microsoft-Windows-ReAgent-*			# This in general

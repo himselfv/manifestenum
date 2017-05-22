@@ -1,1 +1,4 @@
 Microsoft-OneCore-Maps-*
+Microsoft-Windows-MapControl
+Microsoft-Windows-MapControl.*
+Microsoft-Windows-MapControl-*

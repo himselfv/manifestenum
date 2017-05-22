@@ -1,0 +1,4 @@
+# Region and Language / International Control Panel
+Microsoft-Windows-intl
+Microsoft-Windows-intl.*
+Microsoft-Windows-intl-*

@@ -1,0 +1,2 @@
+# Power Options Control Panel
+Microsoft-Windows-powercfg*

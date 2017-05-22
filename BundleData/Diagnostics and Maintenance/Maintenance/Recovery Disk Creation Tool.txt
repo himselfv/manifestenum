@@ -6,3 +6,6 @@ Microsoft-Windows-RecDisc-*
 # Requires:
 # Microsoft-Windows-BootEnvironment-DVD
 # Microsoft-Windows-SPP
+
+# See also: Recovery Media Creator
+# Yes, these two apps with the same purpose often coexist.

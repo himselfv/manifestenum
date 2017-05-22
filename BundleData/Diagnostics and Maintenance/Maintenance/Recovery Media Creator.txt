@@ -1,0 +1,7 @@
+# Recovery Media Creator / RecoveryDrive
+# UI app to create a Recovery Disk
+
+# See also: Recovery Disk Creation Tool.
+# Yes, these two apps with the same purpose often coexist.
+
+Microsoft-Windows-RecoveryDrive*

@@ -3,6 +3,7 @@
 Microsoft-Windows-Security-Vault
 Microsoft-Windows-Security-Vault.*
 Microsoft-Windows-Security-Vault-*
+Microsoft-Windows-Security-VaultCmd*	# Command line utility
 
 Microsoft-Windows-Credential-Manager*
 Microsoft-Windows-Security-Credential-Manager

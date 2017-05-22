@@ -89,7 +89,8 @@ Microsoft-Windows-diskpart*
 Microsoft-Windows-Convert		# Converts file systems
 Microsoft-Windows-Convert-*
 Microsoft-Windows-Convert.*
-Microsoft-Windows-Recover*		# Recover.exe - recovers lost data on a damaged disk
+Microsoft-Windows-Recover		# Recover.exe - recovers lost data on a damaged disk
+Microsoft-Windows-Recover.*
 Microsoft-Windows-diskraid*
 
 
