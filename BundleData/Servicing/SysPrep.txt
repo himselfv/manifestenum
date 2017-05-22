@@ -5,3 +5,7 @@ Microsoft-Windows-Sysprep-*
 
 # Probably related?
 Microsoft-Windows-PnpSysprep*		# Windows 7
+
+# "SysPrep module for resetting Data Drive ACL"
+# "Resets ACL of Data Drive to default ACL"
+Microsoft-Windows-Restore-ACL-CmdLine*

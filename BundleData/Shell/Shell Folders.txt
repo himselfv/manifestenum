@@ -5,6 +5,8 @@ Microsoft-Windows-Shell-DesktopIni-*
 
 Microsoft-Windows-shell32-KF-*		# Windows 10
 
+Microsoft-Windows-SearchFolder*		# Search folder, W7
+
 # Known Folder redirection
 Microsoft-Windows-fde			# Shell extension
 Microsoft-Windows-fde.*

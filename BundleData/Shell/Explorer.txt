@@ -25,3 +25,6 @@ Microsoft-Windows-cryptext-dll*			# Crypto extensions - also in Cryptography
 # Metadata Handlers
 Microsoft-Windows-MediaMetadataHandler*
 Microsoft-Windows-PhotoMetadataHandler*
+
+# Property Page Handlers
+Microsoft-Windows-docprop*			# OLE DocFile property page

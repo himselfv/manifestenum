@@ -1,0 +1,5 @@
+# Reliable Multicast / Pragmatic General Multicast (PGM)
+# Implements the PGM protocol (RFC 3208). This protocol defines a method of transmitting a single stream of data to members of a multicast IP group with best-effort reliability.
+# https://en.wikipedia.org/wiki/Pragmatic_General_Multicast
+
+Microsoft-Windows-RMCast*

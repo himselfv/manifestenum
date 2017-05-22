@@ -11,7 +11,7 @@ Microsoft-Windows-CryptBase*
 # See https://msdn.microsoft.com/en-us/library/windows/desktop/aa380252(v=vs.85).aspx
 # A lot of functions are covered by advapi32.dll which hosts tons of other API,
 # newer functions are hosted in their respective DLLs
-Microsoft-Windows-crypt32-dll*		# Newer CryptoAPI functions
+Microsoft-Windows-crypt32-dll*		# Newer CryptoAPI functions, incl.: DPAPI
 Microsoft-Windows-cryptui-dll*		# UI helpers
 Microsoft-Windows-cryptnet-dll*		# Networking helpers
 Microsoft-Windows-mssip32-dll*		# Forwards some CryptSIP* functions to crypt32.dll (backward compability)
