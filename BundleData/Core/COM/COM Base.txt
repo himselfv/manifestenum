@@ -10,10 +10,10 @@ Microsoft-Windows-COM-Surrogate*	# dllhost.exe, hosts out of process COM objects
 
 
 # OLE and ActiveX
-# The terms are used interchangeably for a set of extensions to COM
-# which were released together:
+# The terms are used interchangeably for a set of extensions to COM which were released together:
 # 1. Interfaces and support proxies which let an object expose its functions to scripting languages.
 # 2. A set of interfaces and contracts to embed one application into another to edit sub-document in-place.
+# https://en.wikipedia.org/wiki/Object_Linking_and_Embedding
 
 Microsoft-Windows-COM-LegacyOLE*
 Microsoft-Windows-COM-OleUI*
@@ -22,3 +22,9 @@ Microsoft-Windows-ActiveXProxy*
 
 # Probably more related to IE
 Microsoft-Windows-ActiveXCompat*
+
+
+# OLE Packager
+# Allows a non-OLE object to be "packaged" so it can be embedded into an OLE client.
+Microsoft-Windows-packager
+Microsoft-Windows-packager.*
