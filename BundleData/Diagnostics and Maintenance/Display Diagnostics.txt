@@ -1,0 +1,5 @@
+# Seems to be a component of something (WDI?)
+
+Microsoft-Windows-DispDiag
+Microsoft-Windows-DispDiag.*
+Microsoft-Windows-DispDiag-*

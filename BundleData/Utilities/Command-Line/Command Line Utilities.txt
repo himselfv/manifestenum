@@ -94,8 +94,6 @@ Microsoft-Windows-Recover.*
 Microsoft-Windows-diskraid*
 
 
-Microsoft-Windows-FloppyDiskCopyCompareUtilities*	# diskcomp, diskcopy
-
 # Networking configuration
 Microsoft-Windows-PING-Utilities*	# Ping, Pathping and Tracert
 Microsoft-Windows-IPCONFIG*		# ipconfig.exe utility

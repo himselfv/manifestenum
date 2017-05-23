@@ -28,3 +28,8 @@ Microsoft.Web.FtpServer-*
 
 # IIS-PowerShellProvider
 Microsoft.IIS.PowerShell.*
+
+# Web Administration
+Microsoft-Windows-WAS
+Microsoft-Windows-WAS.*
+Microsoft-Windows-WAS-*

@@ -90,6 +90,7 @@ Microsoft-Windows-ScriptedDiagnosticsClient-Scheduled-Adm*
 Microsoft-Windows-ScriptedDiagnosticsEngine-Adm*
 Microsoft-Windows-Search-Adm*
 Microsoft-Windows-Securitycenter-Adm*
+Microsoft-Windows-Security-Settings-Adm*
 Microsoft-Windows-Sensors-Adm*
 Microsoft-Windows-Setup-Adm*
 Microsoft-Windows-SharedFolders-Adm*

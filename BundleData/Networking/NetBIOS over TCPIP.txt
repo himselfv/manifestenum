@@ -1,7 +1,17 @@
-# NetBIOS is an old LAN protocol which covered resolving textual computer names into addresses (DNS is used for the same purpose worldwide).
+# NetBIOS is an old LAN protocol which among other things supported resolving textual computer names into addresses (DNS is used for the same purpose worldwide).
 # Originally NetBIOS worked as a standalone protocol but these days it's usually implemented over TCP/IP:
 # https://en.wikipedia.org/wiki/NetBIOS_over_TCP/IP
 # This service runs NetBIOS over TCP/IP and provides its functions to the system.
 # NetBIOS local name resolution is particularly important. If lmhosts is disabled, accessing LAN computers by their names will be unavailable.
 
+# NetBT = NetBIOS over TCP/IP.
+# In Windows, there's seemingly a distinction between NetBIOS (user-mode API) and NetBT (low-level transport driver).
+
 Microsoft-Windows-LMHSVC*
+
+Microsoft-Windows-NetBT*		# NetBT
+
+Microsoft-Windows-NETBIOS		# Win32 API driver (over TDI)
+Microsoft-Windows-NETBIOS.*
+Microsoft-Windows-NETBIOS-*
+# -NetAPI				# Win32 NetBIOS API

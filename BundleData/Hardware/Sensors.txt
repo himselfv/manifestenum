@@ -1,0 +1,21 @@
+# Sensors subsystem and API
+# Sensors are devices that can measure physical phenomena such as temperature or location.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd318953(v=vs.85).aspx
+
+# Grouped together for now, but might be split later.
+# Related: Biometrics
+
+# W7+
+Microsoft-Windows-MobilePC-Client-Sensors-*	# Deployment and main assembly
+Microsoft-Windows-MobilePC-Sensors
+Microsoft-Windows-MobilePC-Sensors.*
+Microsoft-Windows-MobilePC-Sensors-*
+# -API
+# -CPL
+# -Service
+# -DriverClassExtensions
+
+Microsoft-Windows-Sensors-*
+# -GroupPolicy
+# -Adm
+# -License

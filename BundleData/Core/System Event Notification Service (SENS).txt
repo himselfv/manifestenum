@@ -1,0 +1,12 @@
+# System Event Notification Service (SENS)
+# Monitors and dispatches a number of system events to subscribers.
+# Required lately, as many system components depend on it, including supposedly service triggers and some user logon procedures (otherwise only administrators can login).
+
+# Events monitored by SENS include:
+# - TCP/IP network events, such as the status of a TCP/IP network connection or the quality of the connection.
+# - User logon events.
+# - Battery and AC power events.
+
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa376606(v=vs.85).aspx
+
+Microsoft-Windows-Sens-*

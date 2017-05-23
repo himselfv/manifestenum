@@ -1,0 +1,4 @@
+# Network Places explorer folder
+Microsoft-Windows-NetworkExplorer
+Microsoft-Windows-NetworkExplorer.*
+Microsoft-Windows-NetworkExplorer-*

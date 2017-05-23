@@ -1,0 +1,6 @@
+# Diskcomp and diskcopy utilities.
+# Unrelated, but shipped together.
+
+Microsoft-Windows-FloppyDiskCopyCompareUtilities*	# diskcomp, diskcopy
+Microsoft-Windows-diskcopy				# diskcopy resources (incl. boot sector) + functions DLL
+Microsoft-Windows-diskcopy.*

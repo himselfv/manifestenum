@@ -9,3 +9,5 @@ Microsoft-Windows-Time				# Windows 7, contains description for Time-Service
 
 # Time zone updater
 Microsoft-Windows-Auto-Time-Zone-Updater*
+
+Microsoft-Windows-Time-Tool*			# Command-line tool

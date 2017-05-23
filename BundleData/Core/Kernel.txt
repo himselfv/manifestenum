@@ -30,3 +30,8 @@ Microsoft-Windows-CommonLog*
 
 # Windows NT Base API (no subsystem)
 Microsoft-Windows-KernelBase*
+
+# Boot resource DLL
+Microsoft-Windows-BootRes
+Microsoft-Windows-BootRes.*
+Microsoft-Windows-BootRes-*

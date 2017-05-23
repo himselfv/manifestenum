@@ -1,5 +1,20 @@
+# Windows Biometric Framework
+# An API for retrieving samples of biometric information that can be used to uniquely identify the user, from any devices that support providing such an information.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd560897(v=vs.85).aspx
+# W7+
+
+# Can be used to login into the operating system via Windows Hello.
+
+# Covers things such as:
+# - Fingerprints
+# - Iris patterns
+# - Gait
+# - Typing rythm
+
 Microsoft-Windows-Biometrics*
 
 Microsoft-Windows-WBioSensorAdapter*
 Microsoft-Windows-WBioStorageAdapter*
 Microsoft-Windows-WBioSrvc*
+
+Microsoft-Windows-Security-Biometrics-*

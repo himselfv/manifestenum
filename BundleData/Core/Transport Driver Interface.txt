@@ -1,0 +1,8 @@
+# Transport Driver Interface (TDI)
+# A common set of IOCTLs and routines to be exposed by kernel-level network transports and to be expected by user-mode clients, as well as a set of system glue.
+# Underlies all user-mode network APIs such as Windows Sockets or NetBIOS. Overlies transport providers such as TCP/IP or NetBT.
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff565685(v=vs.85).aspx
+
+Microsoft-Windows-TDI-*
+
+# Deprecated in favor of Winsock Kernel and Windows Filtering Platform, but still widely rooted.

@@ -1,0 +1,6 @@
+Stores Control Panel applets and namespace DLLs which are sufficiently independent of any optional component and sufficiently concerned with the core OS.
+
+Rules:
+1. An optional component which can be disabled entirely should probably list its CPL with itself.
+2. Only CPLs in their own separate assemblies should be listed.
+

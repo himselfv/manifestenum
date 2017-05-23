@@ -1,0 +1,8 @@
+# Windows System Assessment Tool (WinSAT)
+# Rates your computer's components performance and capabilities on a ranging scale from 1 to 7.9 and produces a so called “Windows Experience Index”.
+# Includes an API to query that value.
+# Includes a scheduled task to run the scan periodically.
+# W7+
+
+Microsoft-Windows-WindowsSystemAssessmentTool*
+# API

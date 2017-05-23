@@ -1,0 +1,14 @@
+# Branding manifests and resource libraries
+# Many of these are empty, and deployment assemblies sometimes pull wallpapers and other such resources
+
+# Also include:
+#   Windows\Branding\basebrd.dll
+#   Windows\Branding\shellbrd.dll
+#   Windows\system32\winbrand.dll
+
+Microsoft-Windows-Branding-*
+
+# Installation type
+# Writes installation type (Client/Server) of this build of Windows to the appropriate registry keys
+Microsoft-Windows-InstallationType-*
+# -Client

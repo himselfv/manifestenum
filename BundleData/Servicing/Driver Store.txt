@@ -1,0 +1,8 @@
+# Driver Store
+# Starting with Windows Vista, the driver store is a trusted collection of inbox and third-party driver packages. The operating system maintains this collection in a secure location on the local hard disk. Only the driver packages in the driver store can be installed for a device.
+# When a driver package is copied to the driver store, all of its files are copied. This includes the INF file and all files that are referenced by the INF file.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/install/driver-store
+
+Microsoft-Windows-DrvStore		# API
+Microsoft-Windows-DrvStore.*
+Microsoft-Windows-DrvStore-*

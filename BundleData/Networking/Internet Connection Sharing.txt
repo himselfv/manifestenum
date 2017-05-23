@@ -1,4 +1,13 @@
-# Internet Connection Sharing (ICS) allows to bridge the internet
-# coming from one network connection to another.
+# Internet Connection Sharing (ICS) allows to bridge the internet coming from one network connection to another.
+# Requires: Application Level Gateway Service (ALG)
+# W7
 
 Microsoft-Windows-SharedAccess*
+
+# Application Level Gateway Service (ALG)
+# Provides support for third-party plugins that allow network protocols to pass through the Windows Firewall and work behind it and Internet Connection Sharing.
+# https://en.wikipedia.org/wiki/Application-level_gateway
+# W7
+Microsoft-Windows-ALG
+Microsoft-Windows-ALG.*
+Microsoft-Windows-ALG-*

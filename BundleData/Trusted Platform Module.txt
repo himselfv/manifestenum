@@ -1,2 +1,21 @@
-Microsoft-Windows-TPM-Adm*
-Microsoft-Windows-TPM-AdminSnapin*
+# Trusted Platform Module (TPM)
+# TPM is a dedicated secure cryptoprocessor which stores and generates cryptographic keys and limits access to them.
+# Each TPM chip has a unique and secret RSA key burned in as it is produced.
+
+# It also includes capabilities such as:
+#   Remote attestation – creates a hash key summary of the hardware and software configuration. This allows a third party to verify that the software has not been changed.
+#   Binding – encrypts data using TPM bind key, a unique RSA key descended from a storage key.
+#   Sealing – encrypts data and in addition specifies a state in which TPM must be, in order for the data to be decrypted.
+# https://en.wikipedia.org/wiki/Trusted_Platform_Module
+
+# TPM Base Services (TBS)
+# Centralizes TPM access across applications. Provides an API exposed through remote procedure calls (RPC) to cooperatively schedule TPM access. Runs as a system service.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa446796(v=vs.85).aspx
+# Vista+
+# See also: Key Storage APIs (higher level interface)
+
+Microsoft-Windows-TPM-*
+# -Adm
+# -AdminSnapin
+# -Driver
+# -TBS

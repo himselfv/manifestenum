@@ -1,0 +1,16 @@
+# Network Driver Interface Specification (NDIS)
+# An API for network interface cards. Functions as a wrapper that hides the underlying complexity of the NIC hardware and serves as a standard interface for level 3 network protocol drivers.
+# Called the Logical Link Control (LLC) sublayer.
+# https://en.wikipedia.org/wiki/Network_Driver_Interface_Specification
+
+# Very ubiquitous, has seen several versions during the years.
+
+Microsoft-Windows-NDIS
+Microsoft-Windows-NDIS.*
+Microsoft-Windows-NDIS-*
+# -PackageCapture			# Packet Capture user-mode helper
+# -TDI-BindingEngine
+
+Microsoft-Windows-ndiscap		# NDIS Packet Capture Filter Driver
+Microsoft-Windows-ndiscap.*
+Microsoft-Windows-NDISUIO*		# User mode I/O interface driver for NDIS

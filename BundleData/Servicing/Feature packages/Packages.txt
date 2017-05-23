@@ -1,0 +1,7 @@
+# Feature packages and grand deployments
+# Components and manifests which pull a bunch of thematically related assemblies or other components into configuraion.
+# Not required by themselves, but often remain in a final image. Some of feature packages seem to be stripped of their contents and remain only as empty manifests.
+
+# W7: "APIs and tools for disk, volume and hardware RAID management"
+# Mostly just pulls Virtual Disk Service (VDS)
+Microsoft-Windows-VolumeManagement*

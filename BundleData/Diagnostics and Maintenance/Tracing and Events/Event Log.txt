@@ -6,3 +6,9 @@ Microsoft-Windows-EventLog*
 # -ForwardPlugin
 
 Microsoft-Windows-EventLog-CommandLine*		# Wevtutil.exe
+
+# Event providers have to list DLLs which provide text for their messages.
+# Windows provides one by default, iologmsg.dll provides text messages for all NTSTATUS error codes.
+# https://www-user.tu-chemnitz.de/~heha/oney_wdm/ch09c.htm
+# Note: only localized versions have the text, the culture neutral one is empty.
+Microsoft-Windows-IoLoggingDll*

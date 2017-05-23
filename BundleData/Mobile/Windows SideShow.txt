@@ -1,0 +1,14 @@
+# Windows SideShow / AuxiliaryDisplay API
+# An framework and API to provide information such as the number of unread e-mail messages or RSS feeds on a secondary display of a Windows-based device.
+# https://en.wikipedia.org/wiki/Windows_SideShow
+
+# Since Vista, until 8.1
+# Used by Gadgets
+
+Microsoft-Windows-MobilePC-AuxiliaryDisplay
+Microsoft-Windows-MobilePC-AuxiliaryDisplay.*
+Microsoft-Windows-MobilePC-AuxiliaryDisplay-*
+# -API
+# -CPL
+# -DriverLibrary
+# -SystemDataProviders

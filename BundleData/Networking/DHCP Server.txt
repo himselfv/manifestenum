@@ -1,0 +1,4 @@
+# DHCP Server
+
+# On the OSes which lack DHCP server, this is just a stub
+Microsoft-Windows-DHCPServerAPI*

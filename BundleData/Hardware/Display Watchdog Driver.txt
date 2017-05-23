@@ -1,0 +1,6 @@
+# Display Watchdog Driver
+# Monitors the time threads spend in display driver for signs of hangs and tries to auto-recover by switching to basic VGA or bluescreening. Configurable from registry.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/display/disabling-timeout-recovery-for-display-drivers
+# XP SP1+
+
+Microsoft-Windows-Watchdog*

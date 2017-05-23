@@ -1,0 +1,11 @@
+# Virtual Disk Service
+# Provides a common API for managing a wide range of storage configurations, from single-disk desktops to external storage arrays.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/bb986750(v=vs.85).aspx
+
+# Related to: Dynamic Disks (managed via VDS)
+# Deprecated in favor of Storage Management API
+
+# Used by: Defrag.exe, Volume Shadow Services, Windows Backup Engine
+
+Microsoft-Windows-VirtualDiskService*
+Microsoft-Windows-VirtualDiskApiLibrary*

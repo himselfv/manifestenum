@@ -1,0 +1,7 @@
+# Default Location Control Panel
+# Allows you to provide a default country, zip code, city and address (and latitude and longtitude) to be used by the geolocation-aware programs to customize the results when the GPS information is unavailable.
+# http://www.thewindowsclub.com/the-default-location-control-panel-applet-in-windows-7
+# Related to: Sensors.
+
+Microsoft-Windows-MobilePC-DefaultLocation*
+Microsoft-Windows-MobilePC-DefaultLocationPremium*

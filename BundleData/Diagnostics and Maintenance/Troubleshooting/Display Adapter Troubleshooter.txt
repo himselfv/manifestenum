@@ -1,0 +1,5 @@
+# AdapterTroubleshooter.exe
+# Unsure what it is, but it says "Display Adapter Troubleshooter".
+# W7
+
+Microsoft-Windows-AdapterTroubleshooter*

@@ -1,2 +1,4 @@
 Microsoft-Windows-Deployment-Image-Servicing-Management*
 Microsoft-Windows-PackageManager*
+
+Microsoft-Windows-Edition-Transmogrifier*	# Windows Edition Changer provider for DISM
