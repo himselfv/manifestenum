@@ -1,0 +1,4 @@
+# Audio Resampler DSP
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ff819070(v=vs.85).aspx
+
+Microsoft-Windows-RESAMPLEDMO*		# Media Resampler

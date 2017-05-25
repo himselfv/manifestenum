@@ -1,0 +1,8 @@
+# Video DSP Components
+# Contains:
+# Color Control Transform DSP:
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/ff819078(v=vs.85).aspx
+# Frame Rate Converter DSP:
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/ff819100(v=vs.85).aspx
+
+Microsoft-Windows-MFVDSP*		# Video DSP Components

@@ -1,0 +1,8 @@
+# Media Color Conversion & Video Resizer DSP
+# Contains:
+# Color Converter DSP
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/ff819079(v=vs.85).aspx
+# Video Resizer DSP
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/ff819491(v=vs.85).aspx
+
+Microsoft-Windows-WMVIDDSP*		# Media Color Conversion & Video Resizer

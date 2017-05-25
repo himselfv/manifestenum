@@ -1,0 +1,9 @@
+# DV Video Decoder
+# DV is a format for storing digital video. It was launched in 1995 with joint efforts of leading producers of video camera recorders.
+# https://en.wikipedia.org/wiki/DV
+
+# The Media Foundation DV video decoder is a Media Foundation Transform that decodes DV video.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd940322(v=vs.85).aspx
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd388644(v=vs.85).aspx
+
+Microsoft-Windows-MFDVDec*		# Media Foundation DV Decoder

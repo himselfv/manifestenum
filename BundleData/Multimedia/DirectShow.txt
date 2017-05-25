@@ -1,6 +1,7 @@
 # DirectShow
 # A COM-based multimedia processing framework and API. Consists of inputs, outputs and filters which are connected together to stream data through a number of conversions.
 https://en.wikipedia.org/wiki/DirectShow
+# AKA: Quartz
 
 # Was at one time ubiquitous, currently being replaced by Media Foundation.
 

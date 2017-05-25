@@ -14,7 +14,9 @@ See descriptions of the corresponding technologies for the details on each of au
 See here for a reference of MF codec objects:
   https://msdn.microsoft.com/en-us/library/windows/desktop/ff819077(v=vs.85).aspx
 
+DSPs:
+  https://msdn.microsoft.com/en-us/library/windows/desktop/ff819501(v=vs.85).aspx
+
 Reference:
-  DSP = Digital Signal processor
+  DSP = Digital Signal Processor
   DMO = DirectX Media Object
-  ACM is the ancient Windows "Audio Codec Manager", and most applications that can save audio files to WAV do so through ACM.

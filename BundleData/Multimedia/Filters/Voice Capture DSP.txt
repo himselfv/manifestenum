@@ -1,0 +1,12 @@
+# Voice Capture DSP
+# Encapsulates several DSPs related to voice capture.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ff819492(v=vs.85).aspx
+
+# Unlike other DSPs, this one is DMO only (no Media Foundation native access). Includes the following DSP components:
+#  - Acoustic echo cancellation (AEC)
+#  - Microphone array processing
+#  - Noise suppression
+#  - Automatic gain control
+#  - Voice activity detection
+
+Microsoft-Windows-MFWMAAEC*

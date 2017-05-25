@@ -15,6 +15,10 @@ Microsoft-Windows-Audio-MCI-*
 # Provides waveIn, waveOut, midiIn, midiOut, mixer, and aux.
 Microsoft-Windows-Audio-MMECore*
 
+# ACM is the ancient Windows "Audio Codec Manager"
+# Employs DLL files with .acm extension to encode/decode audio. Most applications that can save audio files to WAV do so through ACM.
+Microsoft-Windows-Audio-ACMCoreCodecs*	# PCM codecs
+
 
 ## Uncertain
 Microsoft-Windows-3DAudio*
