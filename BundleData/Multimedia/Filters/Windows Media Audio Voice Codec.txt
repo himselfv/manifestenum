@@ -1,0 +1,4 @@
+# Windows Media Audio Voice
+# W7
+Microsoft-Windows-WMSPDMOD*		# Windows Media Audio Voice decoder
+Microsoft-Windows-WMSPDMOE*		# Windows Media Audio Voice encoder

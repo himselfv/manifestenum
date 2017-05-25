@@ -1,0 +1,4 @@
+# Windows Media Audio
+# W7
+Microsoft-Windows-WMADMOD*		# Windows Media Audio Decoder
+Microsoft-Windows-WMADMOE*		# Windows Media Audio 10 Encoder/Transcoder

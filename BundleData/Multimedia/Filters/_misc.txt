@@ -1,0 +1,33 @@
+# Deployments
+Microsoft-Windows-CodecPack-Basic*
+Microsoft-Windows-CodecPack-Basic-Encoder*
+
+Multimedia-RestrictedCodecsCore-*
+Multimedia-RestrictedCodecsExt-*
+Microsoft-Windows-Multimedia-RestrictedCodecs-*
+
+# Deployment?
+Microsoft-Windows-WindowsMedia-Codecs*
+
+
+# Encoders/Decoders
+Microsoft-Windows-Audio-ACMCoreCodecs*
+
+# Decoders
+Microsoft-Windows-MFDVDec*		# Media Foundation DV Decoder
+
+# Filters
+Microsoft-Windows-MFWMAAEC*		# WMA AEC (Acoustic Echo Cancelling?)
+Microsoft-Windows-MFVDSP*		# Video DSP Components
+Microsoft-Windows-WMVDSPA*		# Windows Media Video DSP Components
+Microsoft-Windows-RESAMPLEDMO*		# Media Resampler
+Microsoft-Windows-WMVIDDSP*		# Media Color Conversion & Video Resizer
+
+Microsoft-Windows-MultimediaDShowFilters.ksTvtuner*
+
+Microsoft-Windows-WMCODECDSPPS*		# Windows Media CodecDSP Proxy Stub
+
+# W10
+Microsoft-Windows-MSVP9DEC*
+Microsoft-Windows-MSVPXENC*
+Multimedia-AMRCodecs*

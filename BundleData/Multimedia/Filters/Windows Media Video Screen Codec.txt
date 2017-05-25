@@ -1,0 +1,6 @@
+# Windows Media Video 9 Screen Codec
+# Optimized for compressing application video, which consists of consecutive screen shots for a computer display.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ff819485(v=vs.85).aspx
+# W7
+Microsoft-Windows-WMVSDECD*		# Windows Media Screen Decoder
+Microsoft-Windows-WMVSENCD*		# Windows Media Screen Encoder

@@ -1,0 +1,7 @@
+# ALAC / Apple Lossless
+# Royalty-free audio encoding format.
+# https://en.wikipedia.org/wiki/Apple_Lossless
+
+# W10+
+Microsoft-Windows-ALACDecoder*
+Microsoft-Windows-ALACEncoder*

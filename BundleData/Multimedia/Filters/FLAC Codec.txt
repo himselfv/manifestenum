@@ -1,0 +1,8 @@
+# FLAC / Free Lossless Audio Codec
+# Open and royalty free audio codec.
+# https://en.wikipedia.org/wiki/FLAC
+
+
+# W10+
+Microsoft-Windows-FLACDecoder*
+Microsoft-Windows-FLACEncoder*

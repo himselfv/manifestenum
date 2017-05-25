@@ -47,6 +47,7 @@ Microsoft.Windows.Diagnosis*		# A set of .NET classes for scripted diagnostics t
 
 # Third-party plugins
 # Most are related to some other area, but are usually not a part of any particular package
+Microsoft-Windows-AudioDiagnostic*
 Microsoft-Windows-DeviceCenterDiagnostic*
 Microsoft-Windows-DeviceDiagnostic*
 Microsoft-Windows-EFS.TriggerProvider*

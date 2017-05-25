@@ -1,0 +1,14 @@
+# DirectShow
+# A COM-based multimedia processing framework and API. Consists of inputs, outputs and filters which are connected together to stream data through a number of conversions.
+https://en.wikipedia.org/wiki/DirectShow
+
+# Was at one time ubiquitous, currently being replaced by Media Foundation.
+
+# DirectShow consists of:
+# Inputs: files or video/audio inputs
+# Outputs: video/audio renderers, outputs or files
+# Filters: modules which process data and perform some conversions (resize, rescale, stream split, encode/decode)
+
+# Many DirectShow filters have *.ax extension.
+
+Microsoft-Windows-DirectShow*

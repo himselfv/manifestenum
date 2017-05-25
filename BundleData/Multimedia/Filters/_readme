@@ -1,0 +1,20 @@
+Contains encoders, decoders and processing filters used in audio/video pipelines.
+
+Windows has several frameworks for audio/video pipelining:
+- DirectShow
+- DirectX Media Objects
+- Media Foundation
+As well as older ones such as ACM.
+
+But most modern codecs can be used in all of them (either directly because they support several interfaces, or via native wrappers).
+Hence filters are listed independently of the applicable framework, based only on their type.
+
+See descriptions of the corresponding technologies for the details on each of audio/video pipeline frameworks.
+
+See here for a reference of MF codec objects:
+  https://msdn.microsoft.com/en-us/library/windows/desktop/ff819077(v=vs.85).aspx
+
+Reference:
+  DSP = Digital Signal processor
+  DMO = DirectX Media Object
+  ACM is the ancient Windows "Audio Codec Manager", and most applications that can save audio files to WAV do so through ACM.

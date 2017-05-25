@@ -1,0 +1,12 @@
+# H.26x: a set of video codecs also known as "MPEG-4 Part *"
+
+# H263: https://en.wikipedia.org/wiki/H.263
+# H264/AVC: https://en.wikipedia.org/wiki/H.264/MPEG-4_AVC
+# H265/HEVC: https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding
+
+Microsoft-Windows-MFH264Enc*
+
+# W10+
+Microsoft-Windows-MFH263Enc*
+Multimedia-HEVCDECODER*			# H265/HEVC Decoder
+Microsoft-Windows-MFH265Enc*		# H265/HEVC Encoder

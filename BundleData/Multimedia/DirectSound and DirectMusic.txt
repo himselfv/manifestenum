@@ -1,0 +1,15 @@
+# DirectSound
+# A deprecated software component of the DirectX. Provides a low-latency interface to sound card drivers and can handle the mixing and recording of multiple audio streams.
+# https://en.wikipedia.org/wiki/DirectSound
+
+# DirectSound is a mature API, and while designed to be used by games, today it is used to play audio in a large number of audio applications.
+
+Microsoft-Windows-Audio-DSound*		# DirectSound
+
+
+# DirectMusic
+# A deprecated component of the DirectX. Allows music and sound effects to be composed and played. Architecturally, DirectMusic is a high-level set of objects, built on top of DirectSound, that allow you to play sound and music without needing to get as low-level as DirectSound.
+# DirectSound allows for the capture and playback of digital sound samples, whereas DirectMusic works with message-based musical data. Music can be synthesized either in hardware, in the Microsoft GS Wavetable SW Synth, or in a custom synthesizer.
+# https://en.wikipedia.org/wiki/DirectMusic
+
+Microsoft-Windows-Audio-DMusic*		# DirectMusic

@@ -1,0 +1,5 @@
+# Video for Windows (VfW)
+# Legacy ancient multimedia framework that allows Windows to play and encode digital video.
+# Superseded by DirectShow.
+
+Microsoft-Windows-Video-For-Windows*

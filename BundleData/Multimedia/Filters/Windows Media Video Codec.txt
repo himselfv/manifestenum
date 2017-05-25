@@ -1,0 +1,5 @@
+# Windows Media Video
+# W7
+Microsoft-Windows-WMVDECOD*		# Windows Media Video Decoder
+Microsoft-Windows-WMVENCOD*		# Windows Media Video 9 Encoder
+Microsoft-Windows-WMVXENCD*		# Windows Media Video Encoder

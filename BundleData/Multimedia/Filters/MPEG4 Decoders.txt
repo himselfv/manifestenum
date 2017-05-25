@@ -1,0 +1,6 @@
+
+# The following two seem to be the same thing, both originally called "MPEG4DMOD.dll"
+Microsoft-Windows-MP43DECD*	# MPEG4 Video Decoder
+Microsoft-Windows-MPG4DECD*	# MPEG4 Video Decoder
+
+Microsoft-Windows-MP4SDECD*	# MPEG4-S Video Decoder

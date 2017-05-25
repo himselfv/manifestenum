@@ -1,0 +1,9 @@
+
+# MPEG-2 decoder libraries contain a number of other decoders which handle AAC and Dolby Audio (on some versions).
+
+# Vista+
+Microsoft-Windows-MSMPEG2ADEC*	# DTV-DVD Audio Decoder
+Microsoft-Windows-MSMPEG2VDEC*	# DTV-DVD Video Decoder
+
+# W10+
+Microsoft-Windows-MSAudDecMFT*

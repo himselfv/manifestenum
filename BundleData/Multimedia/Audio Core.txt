@@ -1,0 +1,20 @@
+# Windows Audio Core and legacy technologies
+
+Microsoft-Windows-Audio-AudioCore*	# Core
+Microsoft-Windows-AudioFeature*		# Feature package, empty
+
+# Media Control Interface, an ancient API for controlling multimedia peripherals
+# https://en.wikipedia.org/wiki/Media_Control_Interface
+Microsoft-Windows-Audio-MCI
+Microsoft-Windows-Audio-MCI.*
+Microsoft-Windows-Audio-MCI-*
+
+# Multimedia extensions (MME) / Windows Multimedia API (WinMM)
+# First universal and standardized Windows audio API. Wave sound events played in Windows (up to Windows XP) and MIDI I/O use MME.
+# https://en.wikipedia.org/wiki/Windows_legacy_audio_components#Multimedia_Extensions_.28MME.29
+# Provides waveIn, waveOut, midiIn, midiOut, mixer, and aux.
+Microsoft-Windows-Audio-MMECore*
+
+
+## Uncertain
+Microsoft-Windows-3DAudio*

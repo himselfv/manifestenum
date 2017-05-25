@@ -1,0 +1,8 @@
+# Advanced Audio Codec / AAC
+# https://en.wikipedia.org/wiki/Advanced_Audio_Coding
+
+Microsoft-Windows-MFAACEnc*	# Encoder
+
+# Decoder is included in:
+#   MSMPEG2ADEC  on W7
+#   MSAudDecMFT  on W8+

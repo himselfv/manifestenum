@@ -2,3 +2,4 @@
 
 Microsoft-Windows-Video-Capture-Filters-*
 Microsoft-Windows-Video-Capture-Filter-*
+Microsoft-Windows-Video-Capture-Driver-*

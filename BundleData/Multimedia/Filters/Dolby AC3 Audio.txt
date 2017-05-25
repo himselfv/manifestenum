@@ -1,0 +1,9 @@
+# Dolby Digital Audio (AC3)
+# https://en.wikipedia.org/wiki/Dolby_Digital
+# https://msdn.microsoft.com/en-us/library/windows/desktop/hh447682(v=vs.85).aspx
+
+# W7+
+Microsoft-Windows-MSAC3ENC*
+
+# W10+
+Microsoft-Windows-DolbyDecMFT*

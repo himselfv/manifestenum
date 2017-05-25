@@ -1,0 +1,5 @@
+# Windows Media Photo
+# A bunch of image formats developed as a part of Windows Media Formats set.
+# https://en.wikipedia.org/wiki/Windows_Media
+
+Microsoft-Windows-Photo-Image-Codec*		# *.wdp and *.jxr

@@ -1,0 +1,5 @@
+# DirectX Media Objects
+# A COM-based data-streaming components. Similar to Microsoft DirectShow filters, but the API is simpler. DMOs can be used from DirectShow via DMO wrapper filter, from DirectSound via DirectSound APIs and from Media Foundation.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd375474(v=vs.85).aspx
+
+# Only the framework itself and the core filters are listed here. Filters for end-user formats are listed as a separate components, or grouped by format.

@@ -1,0 +1,6 @@
+# Indeo Video Codecs
+# A video codec developed by Intel in 1992. Several versions exists.
+# https://en.wikipedia.org/wiki/Indeo
+
+Microsoft-Windows-Indeo4-Codecs*	# DirectShow (ax), W7
+Microsoft-Windows-Indeo5-Codecs*	# DirectShow (ax), W7

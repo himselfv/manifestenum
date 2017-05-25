@@ -1,0 +1,39 @@
+# Windows Media Foundation / Microsoft Media Foundation
+# A COM-based multimedia framework pipeline, an intended replacement for Microsoft DirectShow, Windows Media SDK, DirectX Media Objects (DMOs) and other APIs: Audio Compression Manager (ACM) and Video for Windows (VfW).
+# https://en.wikipedia.org/wiki/Media_Foundation
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms694197(v=vs.85).aspx
+# Vista+
+
+Microsoft-Media-Foundation-Deployment*
+Microsoft-Windows-MF				# Deployment too
+Microsoft-Windows-MF.*
+Microsoft-Windows-MediaFoundation
+Microsoft-Windows-MediaFoundation.*
+Microsoft-Windows-MediaFoundation-*
+# -MediaTypeInfo
+
+# API
+Microsoft-Windows-MFPlay*
+Microsoft-Windows-MediaFoundation-PlayAPI*
+Microsoft-Windows-MFReadWrite
+Microsoft-Windows-MediaFoundation-MFReadWrite*
+
+# MF is divided into the Control layer, Core Layer and the Platform layer.
+# The core layer encapsulates most of the functionality and consists of Media Source, Media Sink and Media Foundation Transforms (MFT).
+# Media Sources are files, video and audio inputs; Media Sinks are video and audio outpus and possibly files. Transforms are conversions and encoders/decoders.
+
+Microsoft-Windows-MFDS			# DirectShow wrapper DLL
+Microsoft-Windows-MFDS.*
+Microsoft-Windows-MFGRL			# ?
+Microsoft-Windows-MFGRL.*
+
+Microsoft-Windows-MFPlat
+Microsoft-Windows-MFPlat.*
+
+# Enhanced Video Renderer
+# A standard rendering Sink in Media Foundation.
+Microsoft-Windows-EnhancedVideoRenderer*
+
+
+# MF transforms seem to be compatible with DirectShow; most register as DirectShow transforms too.
+# We therefore list them simply in codecs.

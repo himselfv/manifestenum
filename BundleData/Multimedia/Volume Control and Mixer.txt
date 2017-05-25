@@ -1,0 +1,2 @@
+# Explorer Volume Control SSO and Volume Mixer App
+Microsoft-Windows-Audio-VolumeControl*

@@ -1,0 +1,6 @@
+# Opus Audio Codec
+# A lossy audio coding format sometimes used in ogg and webm containers.
+# https://en.wikipedia.org/wiki/Opus_(audio_format)
+
+# W10+
+Microsoft-Windows-OPUSDecoder*

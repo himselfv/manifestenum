@@ -1,0 +1,17 @@
+
+
+Audio/Video processing
+========================
+Windows includes a number of technologies which all implement pipelines and filters for audio/video processing:
+- DirectShow (originally ActiveMovie)
+- DirectX Media Objects
+- Media Foundation
+
+Filters for all of these are inter-usable through various native "wrapper" filters. Many explicitly support multiple frameworks natively and register as such.
+
+There's also:
+- Audio Compression Framework with its own codecs (compressors/decompressors) in .acm format.
+- Multimedia Extensions (MME), the first universal and standardized Windows audio API.
+- Video for Windows, which is an old set of APIs for playing video.
+
+Since most of the codecs are universal, here we group them by codec, not by technology. When in doubt, do not group at all: create several components for several versions of the codec.

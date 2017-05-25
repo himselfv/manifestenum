@@ -1,0 +1,5 @@
+# M-JPEG / Motion JPEG
+# A video compression format in which each video frame or interlaced field of a digital video sequence is compressed separately as a JPEG image.
+# https://en.wikipedia.org/wiki/Motion_JPEG
+
+Microsoft-Windows-MFMJPEGDec*	# W7+

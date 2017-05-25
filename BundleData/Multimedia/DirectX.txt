@@ -1,4 +1,3 @@
-Microsoft-Windows-DirectShow*
 Microsoft-Windows-DirectX*
 Microsoft-Windows-D2D
 Microsoft-Windows-D2D-*

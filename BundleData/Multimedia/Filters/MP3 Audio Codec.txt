@@ -1,0 +1,5 @@
+# MP3 Audio Codec
+
+Microsoft-Windows-MP3DMOD*		# MP3 Decoder DMO
+Microsoft-Windows-Media-MP3ACM*		# l3codeca.acm / l3codecp.acm
+Microsoft-Windows-Media-MFTWrapper-MP3ACM*	# W10 wrapper

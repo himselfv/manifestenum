@@ -6,3 +6,5 @@
 
 Microsoft-Windows-WindowsSystemAssessmentTool*
 # API
+
+Microsoft-Windows-WinSATMediaSamples*
