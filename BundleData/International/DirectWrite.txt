@@ -1,0 +1,3 @@
+# DirectWrite is a text layout and glyph rendering API by Microsoft.
+
+Microsoft-Windows-DirectWrite*
