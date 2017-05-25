@@ -1,0 +1,11 @@
+# Network Location Awareness (NLA)
+# Remembers logical networks to which this computer has had connected and matches them to physical interfaces, even when several interfaces lead to the same network.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms739931(v=vs.85).aspx
+
+# Provides an API as a Windows Sockets 2 Name Service Provider
+# Runs a service in the background
+# Required for the network connections icon in the system tray on some generations of Windows.
+
+Microsoft-Windows-NlaSvc
+Microsoft-Windows-NlaSvc.*
+Microsoft-Windows-NlaSvc-*

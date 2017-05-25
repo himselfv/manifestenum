@@ -10,6 +10,10 @@ Microsoft-Windows-Multimedia-RestrictedCodecs-*
 Microsoft-Windows-WindowsMedia-Codecs*
 
 
+# Compability?
+Microsoft-Windows-VCM-Core-Codecs*
+Microsoft-Windows-VCMCodecsFeature*
+
 # Filters
 Microsoft-Windows-WMVDSPA*		# Windows Media Video DSP Components
 

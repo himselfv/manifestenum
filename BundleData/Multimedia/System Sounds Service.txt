@@ -1,3 +1,5 @@
 # Produces appropriate system sounds on user interface events
 
+Microsoft-Windows-PlaySoundService
+Microsoft-Windows-PlaySoundService.*
 Microsoft-Windows-PlaySoundService-*

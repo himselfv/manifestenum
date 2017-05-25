@@ -1,0 +1,15 @@
+# Uniscribe Unicode Script Processor (USP)
+# A set of services for rendering Unicode-encoded text, especially complex text layout.
+# https://en.wikipedia.org/wiki/Uniscribe
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd374091(v=vs.85).aspx
+# W2000+
+# Deprecated by DirectWrite in W7+
+
+# The main purpose of Uniscribe is:
+#  - arranging input text from the input sequence to visual sequence.
+#  - substituting glyphs according to context (e.g. different forms of Arabic characters)
+#  - ordering displayed text based on text flow direction (e.g. LTR vs RTL, Horizontal vs Vertical)
+
+Microsoft-Windows-USP
+Microsoft-Windows-USP.*
+Microsoft-Windows-USP-*

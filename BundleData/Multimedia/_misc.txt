@@ -1,5 +1,0 @@
-
-# Video-TV-Core # W7
-Microsoft-Windows-TVEncDec*
-Microsoft-Windows-CPFilters*			# Capture filters for TV streams
-Microsoft-Windows-Video-TVVideoControl*		# ActiveX streaming control

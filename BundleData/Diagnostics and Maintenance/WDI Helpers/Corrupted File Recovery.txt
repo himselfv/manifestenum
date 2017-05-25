@@ -1,0 +1,2 @@
+# Seems to be a WDI auto-solution tool
+Microsoft-Windows-CorruptedFileRecovery*

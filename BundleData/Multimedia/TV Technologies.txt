@@ -1,0 +1,15 @@
+# Microsoft TV Technologies / Video-TV Core
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd695084(v=vs.85).aspx
+# XP+
+
+# TODO: This is incomplete.
+
+Microsoft-Windows-Video-TVVideoControl*		# ActiveX streaming control
+
+Microsoft-Windows-TVEncDec*
+Microsoft-Windows-CPFilters*			# Capture filters for TV streams
+
+# Stream Buffer Engine (SBE)
+# A DirectShow filter. Enables an application to seek, pause, and record a live video stream without interrupting the stream.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ee663613(v=vs.85).aspx
+Microsoft-Windows-StreamBufferEngine*

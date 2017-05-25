@@ -13,3 +13,13 @@ Microsoft-Windows-PerformancePerftrack-Adm
 # Lots of components install plugins to System32\WDI\PerfTrack
 # Some which lack host components are listed here
 Microsoft-Windows-Documents-Performance
+
+# Events definitions for some counters
+Microsoft-Windows-PDH-Events*
+Microsoft-Windows-PerfCtrs-Events*
+Microsoft-Windows-PerfDisk-Events*
+Microsoft-Windows-PerfHost-Events*
+Microsoft-Windows-Perflib-Events*
+Microsoft-Windows-PerfNet-Events*
+Microsoft-Windows-PerfOS-Events*
+Microsoft-Windows-PerfProc-Events*
