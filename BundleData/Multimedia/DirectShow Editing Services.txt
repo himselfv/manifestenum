@@ -1,0 +1,9 @@
+# DirectShow Editing Services AKA QEdit, Dexter
+# An old API on top of DirectShow which provides simple tools for writing video editing apps.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd375458(v=vs.85).aspx
+
+Microsoft-Windows-MovieMaker-Dexter*	# Package
+Microsoft-Windows-Qedit
+Microsoft-Windows-Qedit.*
+Microsoft-Windows-Qedit-*
+Microsoft-Windows-QEdwipes*

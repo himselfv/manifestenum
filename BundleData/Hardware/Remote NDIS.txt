@@ -4,3 +4,4 @@
 # https://docs.microsoft.com/en-us/windows-hardware/drivers/network/overview-of-remote-ndis--rndis-
 
 Microsoft-Windows-RNDIS-*
+Microsoft-Windows-RemoteNdis*

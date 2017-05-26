@@ -1,20 +1,11 @@
-# WS-Management and WS-Discovery
-# SOAP-based DMTF open standard protocols for management.
-
-# Probably requires API\Web Services API
-
-# Web Services for Management / WS-Management
-# https://en.wikipedia.org/wiki/WS-Management
-# DMTF open standard defining a SOAP-based protocol for the management of servers, devices, applications and various Web services.
-Microsoft-Windows-Web-Services-for-Management
-Microsoft-Windows-Web-Services-for-Management-*
-
-
 # Web Services for Devices API / WS-Discovery
 # Supports the implementation of client-controlled devices and services, and device hosts conforming to the Devices Profile for Web Services (DPWS). WSDAPI uses WS-Discovery protocol for device discovery.
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa826001(v=vs.85).aspx
 
 # Function Discovery uses WSDAPI as one of its sources of information.
+
+# Probably requires API\Web Services API
+# See also Web Services for Management / WS-Management / WinRM
 
 WSDApi,publicKeyToken=31bf3856ad364e35
 WSDApi-*,publicKeyToken=31bf3856ad364e35

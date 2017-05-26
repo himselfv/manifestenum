@@ -1,0 +1,20 @@
+# Web Services for Management / WS-Management / WinRM
+# DMTF open standard defining a SOAP-based protocol for the management of servers, devices, applications and various Web services.
+# https://en.wikipedia.org/wiki/WS-Management
+# https://msdn.microsoft.com/en-us/library/aa384426(v=vs.85).aspx
+
+# Probably requires API\Web Services API
+# See also Web Services for Devices / WS-Devices
+
+Microsoft-Windows-Web-Services-for-Management
+Microsoft-Windows-Web-Services-for-Management-*
+
+# Windows Remote Shell / API
+# https://msdn.microsoft.com/en-us/library/dd891109(v=vs.85).aspx
+
+# Literally adds support for remote shell over WinRM.
+
+Microsoft-Windows-Winrs
+Microsoft-Windows-Winrs.*
+Microsoft-Windows-Winrs-*
+Microsoft-Windows-WinrsPlugins*
