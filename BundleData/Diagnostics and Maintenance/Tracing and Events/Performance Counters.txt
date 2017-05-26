@@ -8,6 +8,10 @@ Microsoft-Windows-PerformanceCounterInfrastructure*
 Microsoft-Windows-PerformanceCounterInstaller
 Microsoft-Windows-PerformanceBaseCounters
 
+Microsoft-Windows-PCW			# Performance Counters for Windows Driver and Native DLL
+Microsoft-Windows-PCW.*
+Microsoft-Windows-PCW-*
+
 
 # Performance Logs and Alerts (PLA)
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa372635(v=vs.85).aspx

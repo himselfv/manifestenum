@@ -1,0 +1,6 @@
+# Associate Online IDs control panel
+# A control panel section present where you can associate online IDs with a Windows user acount.
+# To use it, you must have online ID providers installed (similar to how it's done on Android), and by default there are none, so it's rarely noticed.
+# W7.
+
+Microsoft-Windows-OnLineIDCPL*

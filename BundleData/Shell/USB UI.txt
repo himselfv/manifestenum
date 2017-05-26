@@ -1,0 +1,5 @@
+# USB UI
+# A set of dialogs and icons used in USB user interface. "This device can perform faster", USB device details and so on.
+Microsoft-Windows-usbui
+Microsoft-Windows-usbui.*
+Microsoft-Windows-usbui-*

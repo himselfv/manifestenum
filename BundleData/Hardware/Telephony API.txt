@@ -1,0 +1,36 @@
+# Telephony API (TAPI)
+# Provides computer telephony integration and enables PCs running Microsoft Windows to use telephone services.
+# https://en.wikipedia.org/wiki/Telephony_Application_Programming_Interface
+
+# TAPI is used primarily to control either modems or, more recently, to control business telephone system (PBX) handsets.
+
+# Several versions have been made available
+#   1.0 is for Win3.x
+#   2.x is a pure C API
+#   3.x is a COM API
+# 2.x and 3.x have a slightly different sets of functions and coexist (some even prefer 2.x).
+
+
+Microsoft-Windows-TAPICore*		# Core, control panel applet, dialer
+Microsoft-Windows-TapiService*		# Service required for TAPI
+Microsoft-Windows-TapiClient*		# Registration for TapiService (separate for whatever reason)
+
+Microsoft-Windows-TapiSetup*		# Migration plugin, Sysprep module and Unattended exe
+
+Microsoft-Windows-Tapi2xClient*		# 2.x API
+Microsoft-Windows-TAPI3*		# 3.x API
+
+Microsoft-Windows-TerminalManager*	# A part of TAPI3, "used for managing Telephony Terminals which define the source or sink of a media stream associated with a call"
+
+# Telephony Service Providers (TSPs)
+# TAPI drivers for physical telephony devices (such as a modems) that provide standardized access API.
+# DLLs, usually with a .tsp extension.
+# https://en.wikipedia.org/wiki/Telephony_service_provider
+# https://msdn.microsoft.com/en-us/library/ms725516(v=vs.85).aspx
+# https://technet.microsoft.com/en-us/library/cc772296(v=ws.11).aspx	-  a list of some TSPs
+
+Microsoft-Windows-Unimodem-Core-TSP*	# Unimodem TSP: All dial-up with analog modems.
+Microsoft-Windows-OptionalTSPs*		# HID Phone TSP: Control USB phones. In some Windows releases, Remote TSP.
+Microsoft-Windows-RemoteSp*		# Remote TSP: Use telephony devices located on a remote Telephony server.
+
+# See also: Networking/RAS - contains some more TSPs and components related to TAPI

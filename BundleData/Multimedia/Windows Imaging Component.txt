@@ -1,0 +1,22 @@
+# Windows Imaging Component (WIC)
+# Low-level COM based API for digital image reading/writing. Supports the standard web image formats, high dynamic range images, and raw camera data.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ee719902(v=vs.85).aspx
+
+# WIC features include:
+#  - Built-in support for standard metadata formats
+#  - Extensible framework for image codecs, pixel formats, and metadata formats.
+#  - Wide range of pixel format support.
+#  - High-color support; including 30-bit extended range, 30-bit high precision, and 48-bit high precision and wide gamut pixel formats.
+#  - Progressive image decoding.
+
+# Used by various apps since Windows 7, including:
+#  - Sticky Notes
+#  - Photo Viewer
+#  - TabletPC Control Panel
+#  - Windows Connect Now Wizard
+#  - Windows Update Client
+#  - Desktop window manager itself
+# Most only use it for little things though.
+
+Microsoft-Windows-WindowsCodec*
+Microsoft-Windows-WindowsCodecExt*
