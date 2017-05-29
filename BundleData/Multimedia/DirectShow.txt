@@ -13,3 +13,8 @@ https://en.wikipedia.org/wiki/DirectShow
 # Many DirectShow filters have *.ax extension.
 
 Microsoft-Windows-DirectShow*
+
+
+# DirectShow EncoderAPI
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd375602(v=vs.85).aspx
+Microsoft-Windows-EncoderAPI*

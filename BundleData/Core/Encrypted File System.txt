@@ -13,5 +13,10 @@ Microsoft-Windows-EFS.*
 # Likely related
 Microsoft-Windows-efsadu*
 
+# "EFS Client interface"
+Microsoft-Windows-feclient
+Microsoft-Windows-feclient.*
+Microsoft-Windows-feclient-*
+
 # EFS Backup/Restore keys wizard app
 Microsoft-Windows-efs-rekeywiz*

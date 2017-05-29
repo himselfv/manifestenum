@@ -1,0 +1,14 @@
+
+# Xps Printing
+Microsoft-Windows-Printing-XpsPrint*
+Microsoft-Windows-Printing-XpsDocumentWriter*
+Microsoft-Windows-Component-XpsGdiConverter*
+
+# Xps Services
+# Required for XPS printing, unsure if anyone uses it standalone
+Microsoft-Windows-Printing-Reach*
+Microsoft-Windows-Component-OpcOM		# A lib required for XpsOM
+Microsoft-Windows-Component-OpcOM.*
+Microsoft-Windows-Component-OpcOM-*
+Microsoft-Windows-Component-XpsOMAndStreaming*	# Required for XpsPrint
+Microsoft-Windows-Component-XpsRasterService*

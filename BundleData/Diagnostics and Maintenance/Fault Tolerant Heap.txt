@@ -1,0 +1,11 @@
+# Fault Tolerant Heap
+# A subsystem of Windows 7 responsible for monitoring application crashes and autonomously applying mitigations to prevent future crashes on a per application basis. Functions automatically.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd744764(v=vs.85).aspx
+
+# Builds on top of WDI.
+
+Microsoft-Windows-Fault-Tolerant-Heap
+Microsoft-Windows-Fault-Tolerant-Heap.*
+Microsoft-Windows-Fault-Tolerant-Heap-*
+# -Core: WDI event handler
+# -Events: EventLog instrumentation

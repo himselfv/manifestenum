@@ -1,0 +1,11 @@
+
+# Print spooler
+Microsoft-Windows-Printing-Spooler*
+Microsoft-Windows-Printing-Server-Isolation*
+
+Microsoft-Windows-Printing-OLEPRN*
+
+
+# Misc
+Microsoft-Windows-Printing-SeparatorPages*
+

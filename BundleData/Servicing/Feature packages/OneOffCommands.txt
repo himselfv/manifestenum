@@ -1,0 +1,17 @@
+# One-off commands / Generic Commands
+# Updates and releases sometimes contain one-off commands, also called Generic Commands (GC), which execute some task once at installation and then never influence the OS again.
+
+# When possible, these should be classified with the component that required them, but by default we put them here.
+
+
+Microsoft-Windows-CleanupWindowsDefenderTasks*	# Seems to be a one-off job package
+
+# The whole Microsoft-Windows-GC-* family of components are Generic Commands (GC), probably packages generated with some internal tool to produce such one-off tasks.
+# But we include them on a case by case basis to watch out for possible changes to this rule.
+
+Microsoft-Windows-GC-CountryCodeCacheClean-*
+Microsoft-Windows-GC-UserCurrencyCacheClean-*
+Microsoft-Windows-GC-InvalidateFntcache-*	# Related to: Font Cache
+Microsoft-Windows-GC-ReBuild-Search-Index*
+Microsoft-Windows-GC-UpdateWowRegisteredOwner*
+Microsoft-Windows-GC-UsbForceReboot*

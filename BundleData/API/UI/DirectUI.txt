@@ -1,0 +1,10 @@
+# DirectUI
+# A C++ user interface library created by Microsoft to be a WPF like API for native applications.
+# Not released to the public but is being used very widely throughout Windows (tens of Vista/W7 applications), Office, and Live Messenger.
+# https://github.com/jameskeane/directui
+
+# Exports a lot of name mangled functions (C++ classes).
+
+Microsoft-Windows-DUI70*
+
+# Compare: DirectUser UI: a different thing with similar purpose, originated from IE.

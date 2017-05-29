@@ -1,0 +1,18 @@
+# DirectUser framework / DUser
+# Seems to be a windowless controls framework originated from Explorer and borrowed by a few other places in the OS.
+
+# Exports a lot of pretty-named API functions. From the examples in its resources, supports a HTML/CSS-like interface definition language.
+# DUser windowless controls are called Gadgets.
+
+# Used in a variety of apps across the system, although often superficially (usually just one or two functions)
+# Major users:
+# - Windows Update client in Windows 7
+# - Explorer Frame DLL
+# - And Internet Explorer where it seems to have originated.
+
+# IE uses DUser heavily and includes its own copy of it, called IEUI.dll (with the same set of API functions).
+# The reason is probably antitrust lawsuits: it is forbidden for in-house apps to use undisclosed OS APIs. DUser was specifically mentioned in some lawsuits. So they copied the OS-wide API into their own DLL which they ship with IE.
+
+Microsoft-Windows-DUser*
+
+# Compare: DirectUI: a different, more widely used framework with similar purpose.
