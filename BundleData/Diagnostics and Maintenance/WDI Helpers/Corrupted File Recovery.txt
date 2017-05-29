@@ -1,2 +1,4 @@
 # Seems to be a WDI auto-solution tool
 Microsoft-Windows-CorruptedFileRecovery*
+
+Microsoft-Windows-Msi-CorruptedFileRepair*	# MSI corrupted file repair. Maybe move to separate?

@@ -1,0 +1,7 @@
+# Multimedia Device API (MMDevice API)
+# Enables audio clients to discover audio endpoint devices, determine their capabilities, and create driver instances for those devices.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd316556(v=vs.85).aspx
+
+Microsoft-Windows-MMDeviceAPI*
+Microsoft-Windows-mmres			# Resources (icons, strings) for MMDevice API
+Microsoft-Windows-mmres.*

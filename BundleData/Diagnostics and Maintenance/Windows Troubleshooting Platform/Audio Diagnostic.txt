@@ -1,0 +1,3 @@
+# AudioDiagnostics Helper for Troubleshooting
+
+Microsoft-Windows-AudioDiagnostic*

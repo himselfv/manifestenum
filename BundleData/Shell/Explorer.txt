@@ -29,3 +29,4 @@ Microsoft-Windows-PhotoMetadataHandler*
 # Property Page Handlers
 Microsoft-Windows-docprop*			# OLE DocFile property page
 Microsoft-Windows-NcdProp*			# Network Connection Device Properties
+Microsoft-Windows-ntlanui2*			# Network Object Shell UI

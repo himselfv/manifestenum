@@ -1,0 +1,11 @@
+# Multimedia Class Scheduler Service (MMCSS)
+# Allows multimedia applications to get prioritized access to CPU for time-sensitive processing (such as multimedia applications) as well as prioritized disc access to ensure that the process is not starved of data.
+# https://en.wikipedia.org/wiki/Multimedia_Class_Scheduler_Service
+# Vista+
+
+# A thread must invoke MMCSS API explicitly to use its services. The service itself monitors the CPU load and dynamically adjusts prioritie.
+# When the service is disabled, processes don't get the priority boost but otherwise work as usual.
+
+Microsoft-Windows-MMCSS
+Microsoft-Windows-MMCSS.*
+Microsoft-Windows-MMCSS-*

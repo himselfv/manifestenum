@@ -1,0 +1,3 @@
+
+# Program Compability Wizard troubleshooter
+Microsoft-Windows-PCWDiagnostic*

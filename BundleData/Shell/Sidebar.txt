@@ -11,3 +11,6 @@ Microsoft-Windows-Gadgets.*
 Microsoft-Windows-Gadgets-*
 Microsoft-Windows-Gadget-*
 # Microsoft-Windows-Gadget-Platform	# covered by the above
+
+
+Microsoft-Windows-Live-Services*	# Called "Live services" but installed into Windows Sidebar folder

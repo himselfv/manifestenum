@@ -1,8 +1,6 @@
 # Windows Diagnostics Infrastructure (WDI)
-# Windows components implement triggers that cause WDI to launch scenario-specific troubleshooting modules to detect the occurence of problem scenario.
+# Windows components implement triggers that cause WDI to launch scenario-specific troubleshooting modules to detect the occurence of problems.
 # Event-based and on-demand diagnosis is available.
-
-# Diagnostic scenarios are stored in System32\diagnostics, where many plugins add their content.
 
 # Needed for:
 #   Disk Diagnostics / SMART (passes SMART warnings to WDI)
@@ -14,8 +12,10 @@
 #   Windows Performance Diagnostics
 #   Program Compatibility Assistant (run on WDI triggers for known failures)
 
-# Requires:
-#   Many scenarios require PowerShell as the handlers are scripts.
+# Related to Windows Troubleshooting Platform which is a collection of Powershell troubleshooters at System32\Diagnostics.
+# WTP troubleshooters can be invoked automatically on detection of a trouble case by WDI.
+
+# WDI also has its own native plugins which register as diagnostics modules, event sources and native troubleshooters.
 
 # Services: DPS, WdiServiceHost, WdiSystemHost
 
@@ -36,32 +36,18 @@ Microsoft-Windows-DiagnosticInfrastructure*
 Microsoft-Windows-DiagnosticHub*	#?
 Microsoft-Windows-DiagnosticsHub*
 
-Microsoft-Windows-WDI*
+Microsoft-Windows-WDI
+Microsoft-Windows-WDI.*
+Microsoft-Windows-WDI-*
+# -Adm						# Group policy definitions
 
 # DiagTrack?
 
-
-Microsoft-Windows-ScriptedDiagnostics*	# The framework for using PowerShell scripts as handlers for WDI events/scenarios.
-Microsoft.Windows.Diagnosis*		# A set of .NET classes for scripted diagnostics to use
-
-
 # Third-party plugins
 # Most are related to some other area, but are usually not a part of any particular package
-Microsoft-Windows-AudioDiagnostic*
-Microsoft-Windows-DeviceCenterDiagnostic*
-Microsoft-Windows-DeviceDiagnostic*
+
 Microsoft-Windows-EFS.TriggerProvider*
-Microsoft-Windows-PrinterDiagnostic*
-Microsoft-Windows-MaintenanceDiagnostic*
-Microsoft-Windows-PCWDiagnostic* # Program Compability Wizard
-Microsoft-Windows-PerformanceDiagnostic*
-Microsoft-Windows-PowerDiagnostic*
 Microsoft-Windows-Resource-Leak-Diagnostic*
-Microsoft-Windows-SearchDiagnostic*
-Microsoft-Windows-WindowsMediaPlayerConfigurationDiagnostic*
-Microsoft-Windows-WindowsMediaPlayerMediaLibraryDiagnostic*
-Microsoft-Windows-WindowsMediaPlayerPlayDVDDiagnostic*
-Microsoft-Windows-WindowsUpdateDiagnostic*
 
 Microsoft-Windows-Troubleshooting-Events*
 Microsoft-Windows-PlugPlay-Troubleshooter*
@@ -70,35 +56,3 @@ Microsoft-Windows-PlugPlay-Troubleshooter*
 Microsoft-Windows-Cdrom
 Microsoft-Windows-Cdrom.*
 
-
-
-# Network Diagnostics Framework / NetDiagFx
-# Uses WDI but has its own extension system which is even separately documented
-# https://msdn.microsoft.com/en-us/library/windows/desktop/aa369892(v=vs.85).aspx
-Microsoft-Windows-NetworkDiagnostics-*
-Microsoft-Windows-NetworkDiagnosticsFramework*
-
-# Has it's own registry subkey HKLM\System\CurrentControlSet\NetDiagFx
-
-# Core helpers for NetDiagFx:
-Microsoft-Windows-NetCoreHelperClasses*
-
-# Helper classes
-# Also listed in their parent components.
-# Some helper classes are integrated with their main component assembly. In that case we leave them there.
-Microsoft-Windows-DnsHelperClass*
-Microsoft-Windows-Dot3HelperClass*
-Microsoft-Windows-GroupingHelperClass*		# Peer to peer grouping
-Microsoft-Windows-IGDHelperClass*		# Internet Gateway device
-Microsoft-Windows-Layer2SecurityHelperClass*
-Microsoft-Windows-NdisHelperClass*
-Microsoft-Windows-NlaHelperClass*
-Microsoft-Windows-PnrpHelperClass*		# Peer to Peer name resolution protocol
-Microsoft-Windows-RPCHelperClass*		# RPC
-Microsoft-Windows-SMBHelperClasses*		# File and printer sharing
-Microsoft-Windows-UCMHelperClass*
-Microsoft-Windows-WCN-Netsh-Helper*
-Microsoft-Windows-WFPIPSecHelperClasses*	# Windows Filtering Platform (BFE, Firewall) / IPSec
-Microsoft-Windows-WinInetHelperClass*
-Microsoft-Windows-WirelessLANHelperClass*
-Microsoft-Windows-WWanHC*

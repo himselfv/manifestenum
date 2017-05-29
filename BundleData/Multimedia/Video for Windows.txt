@@ -3,3 +3,4 @@
 # Superseded by DirectShow.
 
 Microsoft-Windows-Video-For-Windows*
+Microsoft-Windows-VideoForWindowsFeature*		# Present in some builds

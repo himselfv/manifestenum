@@ -3,3 +3,9 @@
 
 Microsoft-Windows-ezap
 Microsoft-Windows-ezap.*	# W7
+
+Microsoft-Windows-PsuedoTool-HashIDSpy-*	# W7 deployment empty
+Microsoft-Windows-Links-Deployment-*		# W7 deployment empty
+
+Microsoft-Windows-ML-All			# W7 empty
+Microsoft-Windows-ML-All.*

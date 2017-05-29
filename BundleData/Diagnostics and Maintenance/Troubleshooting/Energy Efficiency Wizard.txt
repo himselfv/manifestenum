@@ -1,0 +1,4 @@
+# Energy Efficieny Diagnostics Wizard
+# W7
+
+Microsoft-Windows-EnergyEfficiencyWizard*

@@ -1,5 +1,7 @@
 Microsoft-Windows-Shell-Themes*
-Microsoft-Windows-aero*
+Microsoft-Windows-aero			# Careful not to match AeroDiagnostic
+Microsoft-Windows-aero.*
+Microsoft-Windows-aero-*
 Microsoft-Windows-aerolite*
 Microsoft-Windows-aero_ss*
 Microsoft-Windows-classic*

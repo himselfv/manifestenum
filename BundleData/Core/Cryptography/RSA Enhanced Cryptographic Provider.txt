@@ -1,0 +1,5 @@
+# Microsoft Enhanced Cryptographic Provider
+# Supports the same capabilities as the Microsoft Base Cryptographic Provider, called the Base Provider. The Enhanced Provider supports stronger security through longer keys and additional algorithms. It can be used with all versions of CryptoAPI.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa386986(v=vs.85).aspx
+
+Microsoft-Windows-rsaenh-*

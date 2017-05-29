@@ -1,0 +1,5 @@
+# Shared Library for Backup and Defrag
+# As the name states, a shared DLL for Defragmenation, Backup and Restore, and System Restore components. Useless by itself.
+
+Microsoft-Windows-Sx-Shared
+Microsoft-Windows-Sx-Shared.*

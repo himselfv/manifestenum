@@ -1,0 +1,8 @@
+This folder contains both the platform itself and a number of troubleshooters shipped with Windows.
+
+Not to be confused with Windows Diagnostics Infrastructure which has similar goals and its own extension system and own native troubleshooters, but:
+- works automatically in the background
+- reacts to the events from event logs
+
+WDI can invoke troubleshooters from WTP when they are registered as solutions to some of its problems, but most troubleshooters do not register for anything and so will be invoken only manually.
+

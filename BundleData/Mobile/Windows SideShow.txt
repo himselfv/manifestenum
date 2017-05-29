@@ -5,6 +5,8 @@
 # Since Vista, until 8.1
 # Used by Gadgets
 
+Microsoft-Windows-MobilePC-Client-SideShow-*		# Deployment
+
 Microsoft-Windows-MobilePC-AuxiliaryDisplay
 Microsoft-Windows-MobilePC-AuxiliaryDisplay.*
 Microsoft-Windows-MobilePC-AuxiliaryDisplay-*
@@ -12,3 +14,7 @@ Microsoft-Windows-MobilePC-AuxiliaryDisplay-*
 # -CPL
 # -DriverLibrary
 # -SystemDataProviders
+
+Microsoft-Windows-SideShow-*
+# -GroupPolicy
+# -License

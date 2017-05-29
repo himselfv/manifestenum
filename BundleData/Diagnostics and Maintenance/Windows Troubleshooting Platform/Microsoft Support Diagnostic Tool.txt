@@ -1,0 +1,8 @@
+# Microsoft Support Diagnostic Tool
+# A GUI application which collects diagnostic data to send to Microsoft Support.
+# As a secondary use, can invoke Windows Troubleshooting Platform scenarios manually via command line keys. Registers itself to handle DIAGCAB and DIAGPKG file types (standalone troubleshooting packages).
+# https://technet.microsoft.com/en-us/library/ee424379(v=ws.11).aspx
+
+Microsoft-Windows-MSDT
+Microsoft-Windows-MSDT.*
+Microsoft-Windows-MSDT-*

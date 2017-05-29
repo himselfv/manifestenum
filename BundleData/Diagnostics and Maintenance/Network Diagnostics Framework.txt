@@ -1,0 +1,32 @@
+# Network Diagnostics Framework / NetDiagFx
+# Uses WDI but has its own extension system which is even separately documented
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa369892(v=vs.85).aspx
+Microsoft-Windows-NetworkDiagnostics-*
+Microsoft-Windows-NetworkDiagnosticsFramework*
+
+# Integrates into WTP.
+
+# Has it's own registry subkey HKLM\System\CurrentControlSet\NetDiagFx
+
+# Core helpers for NetDiagFx:
+Microsoft-Windows-NetCoreHelperClasses*
+
+# Helper classes
+# Also listed in their parent components.
+# Some helper classes are integrated with their main component assembly. In that case we leave them there.
+Microsoft-Windows-DnsHelperClass*
+Microsoft-Windows-Dot3HelperClass*
+Microsoft-Windows-GroupingHelperClass*		# Peer to peer grouping
+Microsoft-Windows-IGDHelperClass*		# Internet Gateway device
+Microsoft-Windows-Layer2SecurityHelperClass*
+Microsoft-Windows-NdisHelperClass*
+Microsoft-Windows-NlaHelperClass*
+Microsoft-Windows-PnrpHelperClass*		# Peer to Peer name resolution protocol
+Microsoft-Windows-RPCHelperClass*		# RPC
+Microsoft-Windows-SMBHelperClasses*		# File and printer sharing
+Microsoft-Windows-UCMHelperClass*
+Microsoft-Windows-WCN-Netsh-Helper*
+Microsoft-Windows-WFPIPSecHelperClasses*	# Windows Filtering Platform (BFE, Firewall) / IPSec
+Microsoft-Windows-WinInetHelperClass*
+Microsoft-Windows-WirelessLANHelperClass*
+Microsoft-Windows-WWanHC*

@@ -1,0 +1,3 @@
+
+# Also in Home Group main package. Maybe we should remove it from here.
+Microsoft-Windows-HomeGroupDiagnostic*

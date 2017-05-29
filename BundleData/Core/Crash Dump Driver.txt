@@ -1,0 +1,4 @@
+Microsoft-Windows-Crashdump
+Microsoft-Windows-Crashdump.*
+Microsoft-Windows-CrashDumpSettings*
+Microsoft-Windows-BaseCrashDumpSettings*

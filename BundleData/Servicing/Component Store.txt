@@ -19,4 +19,6 @@ Microsoft-Windows-CMIPluginInstallers*
 Microsoft-Windows-CmiSetup-*
 Microsoft-Windows-CmiTrustInfoInstallers*
 
+Microsoft-Windows-CryptPluginInstaller*		# "Installers for cryptographic elements of CMI objects". I _suppose_ part of this CMI.
+
 Microsoft-Windows-HotpatchInstaller*

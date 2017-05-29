@@ -1,0 +1,3 @@
+
+Microsoft-Windows-IEBrowseWebDiagnostic*
+Microsoft-Windows-IESecurityDiagnostic*

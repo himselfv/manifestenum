@@ -1,0 +1,2 @@
+Microsoft-Windows-Pnp			# "Pnp Feature"
+Microsoft-Windows-Pnp.*

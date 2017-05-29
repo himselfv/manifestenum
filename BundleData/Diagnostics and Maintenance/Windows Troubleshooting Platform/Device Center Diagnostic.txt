@@ -1,0 +1,3 @@
+
+# Contains the troubleshooter and the shell context menu extension for device objects in Device Center.
+Microsoft-Windows-DeviceCenterDiagnostic*

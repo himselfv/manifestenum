@@ -4,6 +4,8 @@
 
 # TODO: This is incomplete.
 
+Microsoft-Windows-Video-TV-Core*		# Deployment/Package
+
 Microsoft-Windows-Video-TVVideoControl*		# ActiveX streaming control
 
 Microsoft-Windows-TVEncDec*

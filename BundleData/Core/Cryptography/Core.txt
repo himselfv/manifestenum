@@ -48,8 +48,7 @@ Microsoft-Windows-certadm-*		# TODO: Verify the assembly name is right
 Microsoft-Windows-cryptsvc-dll*
 Microsoft-Windows-SF-CAPI2*		# Registers the service, and not much more
 
-# Crypto Shell Extension
-Microsoft-Windows-cryptext-dll*		# Also in Explorer
+
 
 
 # CNG API (Cryptography API: Next Generation)
@@ -63,8 +62,7 @@ Microsoft-Windows-tokenbinding-dll*		# Token Binding API (W10) # TODO: Verify th
 Microsoft-Windows-cngaudit-dll*			# Audits crypto operations, apparently
 
 
-# Utilities
-Microsoft-Windows-Sigverif*		# Signature verification
+
 
 
 # Certificate services
@@ -78,3 +76,13 @@ Microsoft-Windows-CertUtil*
 # Misc
 Microsoft-Windows-Cryptography*
 Microsoft-Windows-Crypto-keys*
+Microsoft-Windows-Crypto-RNG-instrumentation*
+
+Microsoft-Windows-Security-CNG-KeyIsolation*
+Microsoft-Windows-KeyIso.Resources
+
+# "GUI Application for adding, deleting and viewing credentials stored by credential manager"
+# Yet is a DLL.
+Microsoft-Windows-Keymgr
+Microsoft-Windows-Keymgr.*
+Microsoft-Windows-Keymgr-*

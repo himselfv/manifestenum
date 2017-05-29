@@ -1,0 +1,8 @@
+# Kernel Streaming / Direct Kernel streaming (Direct KS)
+# Kernel-mode processing of streamed data. Allows a device driver to create DirectShow-like filters and pins in kernel mode, providing access to hardware, lower latency communication and still be used within a DirectShow filter graph.
+# https://en.wikipedia.org/wiki/Windows_legacy_audio_components#Kernel_Streaming
+
+# W98+.
+# Deprecated.
+Microsoft-Windows-KernelStreaming*
+Microsoft-Windows-KernelStreamingSupport*

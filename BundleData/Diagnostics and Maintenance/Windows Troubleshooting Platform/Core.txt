@@ -1,0 +1,12 @@
+# Windows Troubleshooting Platform / Scripted Diagnostics
+# A framework with troubleshooters in System32\Diagnostics, which can run each at the request from the user and collect the results.
+# Third parties can add their own troubleshooters written in PowerShell.
+# https://msdn.microsoft.com/en-us/library/dd323778(VS.85).aspx
+
+# Troubleshooters from here can be run either manually (via Support Diagnostic Tool / MSDT) or registered as solutions to some problems via WDI, but most don't bother.
+
+# Troubleshooters can be installed to System32\Diagnostics or shipped as standalone packages with filetypes DIAGCAB and DIAGPKG.
+# Microsoft Support Diagnostic Tool (msdt.exe) is used to install/invoke such packages and to invoke any installed troubleshooters.
+
+Microsoft-Windows-ScriptedDiagnostics*	# The framework for using PowerShell scripts as handlers for WDI events/scenarios.
+Microsoft.Windows.Diagnosis*		# A set of .NET classes for scripted diagnostics to use

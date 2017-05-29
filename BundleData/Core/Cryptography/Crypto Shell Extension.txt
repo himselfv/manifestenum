@@ -1,0 +1,3 @@
+# Crypto Shell Extension
+
+Microsoft-Windows-cryptext-dll*		# Also in Explorer

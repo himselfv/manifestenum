@@ -1,0 +1,7 @@
+# Get Windows 10 app for older Windows versions
+# Has been added and removed a bunch of times, so packages might be installed but empty.
+
+Microsoft-Windows-GWX
+Microsoft-Windows-GWX.*
+Microsoft-Windows-GWX-*
+# -Task

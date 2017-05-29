@@ -9,6 +9,7 @@ Microsoft-Windows-NetTrace-Netsh-Helper*
 Microsoft-Windows-NetworkAccessProtection-Netsh*
 Microsoft-Windows-NetworkBridgeNetsh*
 Microsoft-Windows-Network-Security-Domain-Clients-Netsh*
+Microsoft-Windows-NSHHTTP*			# HTTP service Netsh helper
 Microsoft-Windows-PeerToPeerAdmin*
 Microsoft-Windows-RPC-Netsh*
 Microsoft-Windows-WCN-Netsh-Helper*

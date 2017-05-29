@@ -34,3 +34,4 @@ Microsoft-Windows-PLA-Events		# ETW events for PLA itself
 
 Microsoft-Windows-PerformanceToolsCommandLine		# Command line tools, including those for Etw
 Microsoft-Windows-PerformanceToolsGui			# Perfmon
+Microsoft-Windows-WDC-Events*				# Performance Tools GUI events description
