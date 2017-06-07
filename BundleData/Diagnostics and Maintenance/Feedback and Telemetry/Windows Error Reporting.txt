@@ -1,4 +1,6 @@
 # WER / Windows Error Reporting
+# Cannot be removed entirely because lots of system apps hardlink to wer.dll.
+
 Microsoft-Windows-ErrorReporting*
 Microsoft-Windows-Feedback-Service*
 Microsoft-OneCore-Wer-*

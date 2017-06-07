@@ -17,4 +17,5 @@ Microsoft-Windows-MigrationWizard*
 
 Microsoft-Windows-UnBCL*
 
-Microsoft-Windows-Type1-Fonts*		# Purely migration
+Microsoft-Windows-Type1-Fonts*			# Purely migration
+Microsoft-Windows-DisplayConfigSettings*	# Purely migration, as of W7

@@ -1,0 +1,13 @@
+# Authorization Manager / AzMan
+# A MMC snap-in for defining your custom user role/permission model and a framework for checking and assigning user permissions based on that in your application.
+# https://technet.microsoft.com/en-us/library/cc726036(v=ws.11).aspx
+# https://msdn.microsoft.com/en-us/library/aa480244.aspx
+# W7+
+
+# The API
+Microsoft-Windows-AzMan
+Microsoft-Windows-AzMan.*
+Microsoft-Windows-AzMan-*
+
+# The MMC snap-in for editing the roles
+Microsoft-Windows-AuthorizationManagerUI*

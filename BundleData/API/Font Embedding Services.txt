@@ -1,0 +1,5 @@
+# Font Embedding Services Library / T2Embed / TTEmbed
+# Provides a public API to bundle TrueType and Microsoft OpenType fonts into a document or file.
+# https://msdn.microsoft.com/en-us/library/dd144830(v=vs.85).aspx
+
+Microsoft-Windows-Font-Embedding*

@@ -1,0 +1,8 @@
+# Display Color Calibration Wizard / dccw
+# A standalone app which is available from the Control Panel which helps calibrate darkness and contrast for the chosen display.
+# See also: Color Profiles Control Panel
+# W7
+
+Microsoft-Windows-ICM-DCCW
+Microsoft-Windows-ICM-DCCW.*
+Microsoft-Windows-ICM-DCCW-*

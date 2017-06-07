@@ -3,6 +3,7 @@
 Microsoft-Windows-explorer
 Microsoft-Windows-explorer.*
 
+Microsoft-Windows-ExplorerFrame*		# Seems to contain Explorer's interface elements (frame?). Depends on DirectUI.
 
 Microsoft-Windows-propsys*			# Property page system
 

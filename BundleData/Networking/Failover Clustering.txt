@@ -1,0 +1,9 @@
+# Failover Clustering
+# A framework in Windows Server systems which shares storage over all participating nodes and allows to automatically start the registered services elsewhere should their present node fail.
+# https://technet.microsoft.com/en-us/library/cc730692(v=ws.11).aspx
+
+# API (available on the client systems too).
+# https://msdn.microsoft.com/en-us/library/cc296100(v=vs.85).aspx
+Microsoft-Windows-FailoverCluster-Client*
+Microsoft-Windows-FailoverCluster-ClientCore*
+Microsoft-Windows-FailoverCluster-ClientEvents*

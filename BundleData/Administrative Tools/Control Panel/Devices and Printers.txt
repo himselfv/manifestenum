@@ -24,3 +24,9 @@ Microsoft-Windows-BthpanContextHandler*
 # BlueWire unpairing handler / elevated handler
 Microsoft-Windows-BWContextHandler*
 Microsoft-Windows-BWUnpairElevated*
+
+# Seems to be a Device Center eventlog instrumentation and WDI registration
+Microsoft-Windows-DeviceUxRes
+Microsoft-Windows-DeviceUxRes.*
+Microsoft-Windows-DeviceUx
+Microsoft-Windows-DeviceUx.*

@@ -1,0 +1,8 @@
+# Color Control Panel
+# A standalone app which controls available and chosen color profiles for each of the available display devices, scanners and printers.
+# Registers in Control Panel.
+# W7
+
+Microsoft-Windows-ICM-UI
+Microsoft-Windows-ICM-UI.*
+Microsoft-Windows-ICM-UI-*

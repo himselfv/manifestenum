@@ -1,3 +1,0 @@
-# ClearType Text Tuner
-Microsoft-Windows-cttune*
-#Microsoft-Windows-cttunesvr*

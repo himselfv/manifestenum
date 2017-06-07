@@ -1,0 +1,6 @@
+# ClearType Text Tuner
+# A standalone app for enabling/configuring ClearType which is available from the Control Panel
+# W7
+
+Microsoft-Windows-cttune*
+#Microsoft-Windows-cttunesvr*

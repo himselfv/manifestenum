@@ -1,0 +1,5 @@
+# Directory Services Query
+# Adds Directory Services to shell locations. Adds support for saved directory search (.qds) file format.
+Microsoft-Windows-DsQuery
+Microsoft-Windows-DsQuery.*
+Microsoft-Windows-DsQuery-*

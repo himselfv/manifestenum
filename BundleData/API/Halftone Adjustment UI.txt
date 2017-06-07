@@ -1,0 +1,8 @@
+# Halftone Adjustment UI / HTUI
+# A tiny public API of 2 functions which allows graphics device drivers to display a dialog box that lets a user adjust a device's halftoning properties.
+# Poorly documented.
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff567308(v=vs.85).aspx
+
+Microsoft-Windows-Halftone-UI
+Microsoft-Windows-Halftone-UI.*
+Microsoft-Windows-Halftone-UI-*

@@ -4,6 +4,7 @@ Microsoft-Windows-Setup*			# Builder settings for setup (empty in runtime)
 
 Microsoft-Windows-Setup-Component*		# Setup app itself + Setup OOBE
 Microsoft-Windows-Setup-Unattend*		# Unattended installation support
+Microsoft-Windows-ActionQueue-*			# ActionQueue is a DLL, part of Windows-Setup. This is its WMI instrumentation.
 
 Microsoft-Windows-Setup-Events*			# ETW
 Microsoft-Windows-Setup-Instrumentation*	# Event details
