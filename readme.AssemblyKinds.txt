@@ -11,6 +11,9 @@ Policy.1.0.Something.something
 MMC Snap-ins
   Snap-ins for the Microsoft Management Console. Put into MMC subfolder (for common general-purpose snap-ins) or with the owner component.
 
+Group Policy Editor Snap-ins
+  GPE MMC snap-in has its own snap-ins which are very similar to normal MMC snap-ins. Put into Group Policy editor component or with the owner component.
+
 
 ==== A list of system facilities into which many components integrate:
 
