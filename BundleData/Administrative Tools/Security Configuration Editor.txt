@@ -1,0 +1,18 @@
+# Security Configuration Editor
+# MMC Snap-ins and a command-line utility
+
+# Security Configuration Engine
+# A clean but not documented API used both by the command-line tool, and by the MMC Snap-ins.
+Microsoft-Windows-Security-Security Configuration Engine*
+#Microsoft-Windows-Security-Security Configuration Engine Client*	# Covered
+
+# MMC Snap-ins:
+#   Security Templates
+#   Security Configuration and Analysis
+#   Security Configuration
+Microsoft-Windows-SecurityConfigurationManagement-*
+# -UI
+# -PolicyTools
+
+# Command-line utility based on the same API, with the same functionality
+Microsoft-Windows-Security-Secedit*

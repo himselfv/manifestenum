@@ -1,4 +1,0 @@
-# Command-line Security Configuration Editor
-# Requires Security Configuration Engine.
-
-Microsoft-Windows-Security-Secedit*

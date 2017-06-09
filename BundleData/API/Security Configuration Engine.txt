@@ -1,5 +1,0 @@
-# Security Configuration Engine
-# An API used by both Security Configuration Editor command-line tool, and by Security Configuration Editor MMC Snap-in.
-
-Microsoft-Windows-Security-Security Configuration Engine*
-#Microsoft-Windows-Security-Security Configuration Engine Client*	# Covered
