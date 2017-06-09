@@ -1,0 +1,4 @@
+# Task Scheduler MMC Snap-in
+
+TaskScheduler*,processorArchitecture=msil		# MSIL Core
+TaskSchedulerSettings*					# Registration and .mmc file

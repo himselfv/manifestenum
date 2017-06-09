@@ -6,3 +6,6 @@ Microsoft-Windows-AppID*				# Service:AppIDSvc, Tasks:AppID\*
 Microsoft-Windows-AppID-Event*
 Microsoft-Windows-AppIDCore*				# Driver:AppID,applockerfltr, Task:AppID\EDPPolicyManager
 Microsoft.Security.ApplicationId.PolicyManagement*	# PowerShell plugin
+Microsoft.ApplicationId.Framework*
+Microsoft.ApplicationId.RuleWizard*
+Microsoft.Security.ApplicationId.Wizards.*

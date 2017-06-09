@@ -20,6 +20,7 @@ Microsoft-Windows-ASPNET-*
 # IIS-ManagementService
 Microsoft.Web.Management
 Microsoft.Web.Management.*
+Microsoft.Web.Management-*
 
 # IIS-FTPExtensibility
 Microsoft.Web.FtpServer
@@ -33,3 +34,4 @@ Microsoft.IIS.PowerShell.*
 Microsoft-Windows-WAS
 Microsoft-Windows-WAS.*
 Microsoft-Windows-WAS-*
+Microsoft.Web.Administration*

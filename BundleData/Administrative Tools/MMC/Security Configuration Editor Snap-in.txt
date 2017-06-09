@@ -1,0 +1,6 @@
+# Security Configuration Editor MMC Snap-in
+# Requires Security Configuration Engine.
+
+Microsoft-Windows-SecurityConfigurationManagement-*
+# -UI
+# -PolicyTools

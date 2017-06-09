@@ -1,0 +1,7 @@
+# Microsoft.JScript / JScript.NET
+# A .NET programming language based on Javascript (JScript). Never seen much adoption, missing from latest Visual Studios.
+# https://en.wikipedia.org/wiki/JScript_.NET
+
+Microsoft.JScript
+Microsoft.JScript.*
+Microsoft.JScript-*

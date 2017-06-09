@@ -8,3 +8,4 @@ Microsoft-Windows-CatalogCategory
 Microsoft-Windows-Pro-Catalogs
 
 Microsoft-Windows-Interface*			# Interface category
+Microsoft.Windows.Multilingual_Components_All*	# Multilingual components category

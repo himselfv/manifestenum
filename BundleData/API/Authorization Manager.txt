@@ -11,3 +11,8 @@ Microsoft-Windows-AzMan-*
 
 # The MMC snap-in for editing the roles
 Microsoft-Windows-AuthorizationManagerUI*
+
+# .NET interop assemblies
+Microsoft.Interop.Security.AzRoles*
+Policy.1.0.Microsoft.Interop.Security.AzRoles		# Version redirections
+Policy.1.2.Microsoft.Interop.Security.AzRoles

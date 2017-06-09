@@ -10,3 +10,5 @@ Microsoft-Windows-Setup-Events*			# ETW
 Microsoft-Windows-Setup-Instrumentation*	# Event details
 
 Microsoft-Windows-Setup-Navigation-Wizard-Framework*	# Setup/Migration Wizard framework, should not be reused anywhere
+
+Microsoft.Windows.Configuration.Online.Setup*	# Some trashy .cmd script which runs secinit.exe and oobe/setup.exe

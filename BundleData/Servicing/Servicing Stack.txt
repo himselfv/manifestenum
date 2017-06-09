@@ -1,7 +1,10 @@
 Microsoft-Windows-ServicingStack*
+Microsoft.Windows.ServicingStack*
 ServicingStack-Client*
 
 Microsoft-Windows-Sxs*
+
+Microsoft.Windows.IsolationAutomation*		# "SxS OLE Automation". Provides a single pointless interface.
 
 # Some settings for SxS runtime
 Microsoft-Windows-Settings-2011

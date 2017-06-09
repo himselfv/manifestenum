@@ -2,3 +2,11 @@
 # Contains a boatload of things, but all indeed seem related (at least as of Windows 7)
 
 Microsoft-Windows-TabletPC-*
+
+# In W7, part of MW-TabletPC-*
+Microsoft.Ink
+Microsoft.Ink.*
+Microsoft.Ink-*
+Policy.1.0.Microsoft.Ink	# Version redirections
+Policy.1.7.Microsoft.Ink
+Policy.6.0.Microsoft.Ink

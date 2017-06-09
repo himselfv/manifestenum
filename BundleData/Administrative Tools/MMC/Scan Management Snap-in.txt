@@ -1,0 +1,5 @@
+# Scan Management MMC Snap-in / Scan Management Console (Smc)
+
+Microsoft.Windows.Smc
+Microsoft.Windows.Smc.*
+Microsoft.Windows.Smc-*

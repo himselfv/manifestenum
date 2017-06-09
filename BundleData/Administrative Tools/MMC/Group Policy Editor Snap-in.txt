@@ -1,0 +1,35 @@
+# Group Policy Editor MMC Snap-in (GPE) / GPMC
+# Supports its own snap-ins which enhance its list of policies it can edit.
+
+# Core
+Microsoft-Windows-GroupPolicy-Admin-Gpedit-Snapin*
+Microsoft-Windows-GroupPolicy-GPMC
+Microsoft-Windows-GroupPolicy-GPMC.*
+Microsoft-Windows-GroupPolicy-GPMC-*
+
+# API
+#Microsoft-Windows-GroupPolicy-GPMC-Api*
+
+
+# Migration table editor for GPE MMC
+# https://technet.microsoft.com/en-us/library/cc754682(v=ws.11).aspx
+Microsoft.GroupPolicy.MTEdit*			# "Migration Table Editor used by GPMC"
+Microsoft.GroupPolicy.GpmgmtLib*		# "Provides managed gpmgmt.tlb. Used by GPMC Migration Table Editor"
+Microsoft.GroupPolicy.Private.GpmgmtpLib*
+
+# Reporting
+Microsoft.GroupPolicy.Reporting*	# "GPMC API components for Reporting"
+Microsoft.GroupPolicy.Interop*		# "GPMC API components for Reporting Interop"
+
+# Wtf
+Microsoft.GroupPolicy.GPOAdminGrid*	# "Provides Grid used by GPMC"
+Microsoft.GroupPolicy.AdmTmplEditor*	# "Provides editing for Group Policy Preference targeting items Interop"
+
+
+# Everyone and their brother installs additional GPE snap-ins, and for now we'll list them here.
+Microsoft-Windows-AuditPolicy-SnapIn-Native
+Microsoft-Windows-GroupPolicy-Admin-Scrptadm*			# Script administration
+Microsoft-Windows-NetworkListManagerGroupPolicySnapin*
+SecurityAuditPoliciesSnapIn*	# Security Audit Policies
+SrpUxNativeSnapIn*		# Application Control Policies
+SrpUxSnapIn*

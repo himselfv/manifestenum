@@ -1,0 +1,5 @@
+# Computer Management MMC Snap-in
+# Accessible from My Computer's right-click menu. Loads a collection of other independently deployed snap-ins.
+
+Microsoft-Windows-ComputerManagementSnapin*
+Microsoft-Windows-ComputerManagerLauncher*	# Exe to launch the snap-in

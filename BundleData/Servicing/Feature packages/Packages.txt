@@ -5,3 +5,7 @@
 # W7: "APIs and tools for disk, volume and hardware RAID management"
 # Mostly just pulls Virtual Disk Service (VDS)
 Microsoft-Windows-VolumeManagement*
+
+Win7-Microsoft-Windows-Multimedia-Deployment*
+Win7-Microsoft-Windows-Graphics-Deployment*
+Win7-Microsoft-Windows-Printing-Deployment*		# IRL contains just XpsPrinting, but the name puts it here

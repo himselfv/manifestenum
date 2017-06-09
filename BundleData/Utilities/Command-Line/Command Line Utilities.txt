@@ -1,6 +1,5 @@
 
 
-
 Microsoft-Windows-cipher*
 
 Microsoft-Windows-SetX*		# setx.exe - Configures environment variables at any PC and for any user, remotely
@@ -12,7 +11,7 @@ Microsoft-Windows-OpenFiles		# Shows open file and folders on this PC
 Microsoft-Windows-OpenFiles.*
 Microsoft-Windows-OpenFiles-*
 
-Microsoft-Windows-Security-Secedit
+
 
 Microsoft-Windows-PowerManagement-Configuration-Cmdline*	# powercfg.exe
 

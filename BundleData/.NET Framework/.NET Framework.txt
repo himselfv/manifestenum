@@ -46,3 +46,10 @@ Microsoft-Windows-NetFx*
 Microsoft .NET Framework*
 
 .NET Framework*
+
+# C# compiler
+cscomp*,processorArchitecture=msil
+cscompmgd*,processorArchitecture=msil
+NetFx-cscomp*,processorArchitecture=msil
+NetFx-cscompmgd*,processorArchitecture=msil
+NetFx-CSharp_Compiler_cscomp*

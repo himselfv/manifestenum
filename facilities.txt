@@ -1,9 +1,0 @@
-
-A list of system facilities into which many components integrate:
-
-- Control Panel, either as *.cpl, a namespace DLL or a  DLL
-- Group Policy definitions (Adm)
-- Netsh plugin
-- Windows Diagnostics Infrastructure plugin
-  - PerfTrack plugin
-- SQM plugin

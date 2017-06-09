@@ -1,0 +1,28 @@
+# Visual Studio for Applications (VSA)
+# Provides interfaces for integrating .NET Framework script engines and customization techniques into applications, similarly to how Office has Visual Basic for Applications.
+# https://en.wikipedia.org/wiki/Visual_Studio_Tools_for_Applications
+# https://msdn.microsoft.com/en-us/library/ee853281(v=vs.120).aspx
+
+# Seems to be currently obsolete.
+
+# .NET assembly naming standards are horrible.
+
+NetFx-Microsoft.Vsa*
+NetFx-Microsoft_VSA_tlb*
+
+NetFx-SBS_MS_VSA_VB_CODEDOMPROC*
+NetFx-SBS_VSAVB7RT_DLL*
+NetFx-VSA_CodeDOM_TLB*
+NetFx-VSA_REG*
+NetFx-_VsaVb7rt*
+NetFx-_VsaVb7rtUI*
+
+Microsoft.Vsa
+Microsoft.Vsa.*
+Microsoft.Vsa-*
+Microsoft.VsaVb
+Microsoft.VsaVb.*
+Microsoft.VsaVb-*
+Microsoft_VsaVb*
+
+Microsoft.VisualBasic.Vsa*
