@@ -1,0 +1,17 @@
+# Microsoft iSCSI Initiator
+
+# iSCSI is a protocol which transmits SCSI commands over IP networks to provide access to remotely installed storage devices as if they were attached to a local computer.
+# https://en.wikipedia.org/wiki/ISCSI
+
+# iSCSI Initiator is a client-side implementation of the protocol.
+# https://technet.microsoft.com/en-us/library/ee338476(v=ws.10).aspx
+
+# See also: Fibre Channel - another implementation of the same idea, but with its own lower level protocols instead of IP.
+
+iscsi.inf*					# The driver
+Microsoft-Windows-iSCSI_Initiator_Service*	# Service and supporting applications
+Microsoft-Windows-iSCSI_Initiator_UI*		# Control Panel application
+Server-Help-CHM.iscsi_init*			# Help files
+Microsoft-Windows-iSCSI-Adm*			# Group Policies
+Networking-MPSSVC-Rules-MSISCSI*		# Firewall rules
+Microsoft-Windows-iSCSI_Initiator_Service_Mof*	# WMI definitions

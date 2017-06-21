@@ -1,0 +1,6 @@
+# Volume Manager for Dynamic Disks
+# Enumerates logical volumes on dynamic disks. Provides support for spanned, mirrored, striped and raid-5 volumes to Volume Manager for Basic Disks.
+
+# Maybe this needs to be merged into "Dynamic Disk Support"?
+
+Microsoft-Windows-DynamicVolumeManager*

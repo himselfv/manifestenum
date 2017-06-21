@@ -1,3 +1,6 @@
+# IIS
+# Requires: HTTP Server Core.
+
 Microsoft-Windows-IIS
 Microsoft-Windows-IIS-*
 

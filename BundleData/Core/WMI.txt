@@ -4,6 +4,8 @@
 #   CIM = Common Information Model
 #   CIMOM = CIM Object Manager
 #   MOF = Managed Object Format
+#     Provides WMI definitions for the DLLs which will handle the requests
+#     https://technet.microsoft.com/en-us/library/cc180827.aspx
 
 # It is not recommended to remove, as even local components often depend on it these days.
 

@@ -1,0 +1,10 @@
+# Driver Install Framework / DIFx
+# A tiny API to help driver installation writers. Provides functions to install or uninstall driver packages.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/install/difx-guidelines
+
+# Reference:
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff543637(v=vs.85).aspx
+
+# Available in W7, deprecated since W10.1607
+
+Microsoft-Windows-difxapi*

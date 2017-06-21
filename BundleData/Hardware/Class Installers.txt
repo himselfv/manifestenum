@@ -4,3 +4,5 @@ Microsoft-Windows-Disk
 Microsoft-Windows-Disk.*
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.*
+
+Microsoft-Windows-msports*		# "Ports Class Installer"

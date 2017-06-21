@@ -1,6 +1,11 @@
 Microsoft-Windows-Help*
 Server-Help-*
-Microsoft-Windows-Assistance-CollectionFiles-Help*
+
+# These are verified to be help indexes:
+#Microsoft-Windows-Assistance-CollectionFiles-Help*
+#Microsoft-Windows-Assistance-CollectionFiles-WindowsUltimateEd*
+# I will tentatively add the whole prefix because it seems to be always help:
+Microsoft-Windows-Assistance-CollectionFiles-*
 
 # This is not precisely help, but related
 

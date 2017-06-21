@@ -1,0 +1,5 @@
+# Explorer FTP folder browsing
+# Implements shell folder extension which allows browsing FTP sources similar to if you were working with local files.
+# Despite the name, this is NOT used in modern day Internet Explorer releases, only Explorer application.
+
+Microsoft-Windows-msieftp*

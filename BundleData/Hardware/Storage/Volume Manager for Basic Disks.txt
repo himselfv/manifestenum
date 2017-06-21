@@ -1,0 +1,6 @@
+# Volume Manager [for Basic Disks]
+# Enumerates logical volumes on basic disks. For each volume, creates a device object in the form \Device\HarddiskVolumeX.
+# See also: Volume Manager for Dynamic Disks.
+
+# W7:
+# Even though it's a separate driver, it's shipped as a part of machine.inf package.

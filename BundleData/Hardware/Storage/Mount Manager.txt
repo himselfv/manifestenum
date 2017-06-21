@@ -1,0 +1,38 @@
+# Mount Manager / Mountpoint Manager
+# Assigns drive letters and kernel names for disk volumes and maintains the database of mount points that are defined for each volume.
+
+# Each logical volume under Windows is originally made available by the Volume Manager under a path in a form:
+#   \Device\HarddiskVolume[1,2,3,...]
+# This assignment is non-permanent. Volumes might get assigned different numbers on the next boot (although they usually don't).
+
+# Mount manager identifies volumes uniquely by their contents and stores permanent associations of volumes to:
+#  * unique kernel namespace links
+#  * drive letters
+#  * directories on other volumes (mount points):
+# It:
+# - Makes known volumes accessible on boot.
+# - Watches for the arrival of new volumes and assigns them unused drive letters.
+# - Acceps commands from other applications to configure drive letter and mount point assignments.
+
+#
+# Unique links
+
+# Each volume gets assigned an unique additional kernel name in the form:
+#   \Global??\Volume{GUID}
+
+#
+# Drive letters
+
+# MM keeps a list of associated drive letters under HKLM\System\MountedDevices and creates a symlink for each of them in the form:
+#   \Global??\C:
+
+#
+# Mount points
+
+# NTFS volumes support reparse points which are blocks of data associated with a directory. File system filters can intercept requests which hit a reparse point and adjust them accordingly.
+
+# Mount points are reparse points that store a volume name as the reparse data.
+
+# Additionally, Mount Manager stores a database of all mount points defined for each volume in its System Volume Information folder. This is used to preserve mount point consistency when moving the disk.
+
+Microsoft-Windows-MountPointManager*

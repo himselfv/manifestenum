@@ -1,0 +1,17 @@
+# HTTP Server Core
+# A common kernel driver which receives HTTP requests and routes them to applications registered as HTTP servers, as well as an API to register as one.
+# Routing is differentiated via HTTP address. Any number of applications can service HTTP requests independently if they all use this API.
+
+# Standard OS component since W2013.
+# IIS depends on this.
+
+# Reference:
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa364510(v=vs.85).aspx
+
+# Explanations:
+# https://www.codeproject.com/Articles/437733/Demystify-http-sys-with-HttpSysManager
+
+Microsoft-Windows-HTTP
+Microsoft-Windows-HTTP.*
+Microsoft-Windows-HTTP-Feature*
+Microsoft-Windows-HTTP-API*

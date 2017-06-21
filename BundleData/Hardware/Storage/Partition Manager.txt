@@ -1,0 +1,6 @@
+# Partition Manager
+# A kernel driver responsible for discovering, creating, deleting, and managing partitions on disk drives.
+# For every disk drive, reads the partition table in any supported format and creates device object that represent them. Supports MBR and GPT partition tables.
+# See more: Russinovich, Windows Internals > Partition Manager.
+
+Microsoft-Windows-PartitionManager*

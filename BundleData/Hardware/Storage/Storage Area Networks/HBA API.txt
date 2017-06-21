@@ -1,0 +1,10 @@
+# HBA API (sometimes FC-HBA API or SNIA Common HBA API) is a management API for Host Bus Adapters connecting computers to hard disks.
+# Originally developed for Fibre Channel networks, it's apparently now used for any SNAs.
+# https://en.wikipedia.org/wiki/FC-HBA_API
+
+# Under Windows, Fibre Channel and SCSI adapter drivers must implement WMI interfaces for HBA in order to be certified as compatible.
+# https://msdn.microsoft.com/en-us/library/windows/hardware/dn941807(v=vs.85).aspx
+
+# This is apparently support libraries for that.
+
+Microsoft-Windows-HbaApi*
