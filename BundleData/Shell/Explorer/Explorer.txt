@@ -18,10 +18,8 @@ Microsoft-Windows-ShellHost*
 Microsoft-Windows-explorer-shortcuts*		# A few shell shortcuts: Quick Launch, Start Button Right-click menu
 Microsoft-Windows-UI-Search*			# Task bar search box. Also in Search and Indexing
 
-# Extensions
-Microsoft-Windows-ntshrui*			# Sharing extensions
-Microsoft-Windows-Shell-ShareMgmt*		# Package for the above
-Microsoft-Windows-cryptext-dll*			# Crypto extensions - also in Cryptography
+# Contains Network Places folder and Web Printing support
+Microsoft-Windows-shwebsvc*
 
 # Metadata Handlers
 Microsoft-Windows-MediaMetadataHandler*

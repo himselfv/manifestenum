@@ -1,0 +1,4 @@
+# Shell Hardware Detection
+# A service which detects insertion of autoplay devices and notifies Explorer.
+
+Microsoft-Windows-shsvcs*

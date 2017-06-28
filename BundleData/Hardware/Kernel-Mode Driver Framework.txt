@@ -1,0 +1,6 @@
+# Kernel-Mode Driver Framework
+# https://en.wikipedia.org/wiki/Kernel-Mode_Driver_Framework
+
+# Related to User-Mode Driver Framework, but a separate thing.
+
+Microsoft-Windows-WDF-Kernel*

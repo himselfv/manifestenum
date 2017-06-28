@@ -1,0 +1,18 @@
+# Service Reporting API
+# Not much is known about these components. Seems to be some kind of servicing API. Contains functions such us:
+# - OpenOsBaseline
+# - EnumOsBaselineComponents
+# - GetOsBaselineComponentInfo
+# - GetOsInstalledComponentInfo
+
+# The DLL is used by the Applications and Features control panel applet, and the configuration ones write OS version information to the registry.
+
+# I suppose this might be relevant to getting the version of the OS and the service packs and the installed updates. Who knows.
+# Related to Windows Setup.
+# Observed on W7.
+
+# API itself
+Microsoft-Windows-ServiceReportingApi*
+
+# Deployment and configuration settings
+Microsoft-Windows-ServicingBaseline-*

@@ -1,0 +1,4 @@
+# Shell Image Viewer
+# W7 dllhosted app which shows and prints images. Associated with images by default.
+
+Microsoft-Windows-shimgvw*

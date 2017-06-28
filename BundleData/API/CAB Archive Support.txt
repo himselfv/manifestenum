@@ -1,0 +1,17 @@
+# CAB files support
+# Required for Windows Update, driver installation and more
+
+# CAB support core library. This is the one that's required for everything
+Microsoft-Windows-cabinet
+Microsoft-Windows-cabinet.*
+Microsoft-Windows-cabinet-*
+
+# Command-line CAB creation tool
+Microsoft-Windows-makecab*
+Microsoft-Windows-diantz*		# Exactly the same as makecab, just renamed
+
+# Command-line CAB extraction tool
+Microsoft-Windows-extrac32*
+
+# W7: Contains the above components
+Microsoft-Windows-Shell-Compression*

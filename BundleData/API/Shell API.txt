@@ -1,5 +1,6 @@
 # Common shell libraries that allow applications to use Explorer dialogs and services
 
 Microsoft-Windows-shell32*
+Microsoft-Windows-shlwapi*
 Microsoft-Windows-shfolder*
 Microsoft-Windows-shdocvw*

@@ -1,1 +1,7 @@
 Microsoft-Windows-Advapi32*
+
+# Implements a subset of advapi32 functions:
+#   Service manager: OpenSCManager, OpenService, ...
+#   LsaLookup*, LookupAccountNameLocal, LookupAccountSidLocal, ...
+#   SDDL (Security Descriptor Definition Language): ConvertSecurityDescriptorTo*, ConvertStringToSid, etc
+Microsoft-Windows-Sechost*

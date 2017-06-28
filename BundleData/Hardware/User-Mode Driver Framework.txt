@@ -1,0 +1,7 @@
+# User-Mode Driver Framework
+# https://en.wikipedia.org/wiki/User-Mode_Driver_Framework
+
+# Related to Kernel-Mode Driver Framework, but a separate thing.
+
+
+Microsoft-Windows-DriverFrameworks-UserMode*

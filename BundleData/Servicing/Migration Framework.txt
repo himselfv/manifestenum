@@ -19,3 +19,7 @@ Microsoft-Windows-UnBCL*
 
 Microsoft-Windows-Type1-Fonts*			# Purely migration
 Microsoft-Windows-DisplayConfigSettings*	# Purely migration, as of W7
+
+Microsoft-Windows-shmig				# Seems to be Shell Migration support
+Microsoft-Windows-shmig.*
+Microsoft-Windows-shmig-*

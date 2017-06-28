@@ -1,0 +1,19 @@
+# Graphics Device Interface
+# A kernel-level facility which provides graphics primitives such as pens, palettes and fonts and handles drawing commands to draw lines, curves, flood-fill or print text via the graphics device driver.
+# Used by upper levels of graphics stack to paint higher-level UI (windows and controls).
+# https://en.wikipedia.org/wiki/Graphics_Device_Interface
+
+# Desktop Window Manager, when enabled, underlies GDI these days transforming it into a higher-level layer. In that case GDI renders each window onto a picture which is then composited via DWM.
+
+# Direct2D is the intended successor, but most of the applications still use GDI.
+
+# GDI core
+Microsoft-Windows-Gdi32*
+
+# GDI additional libraries
+Microsoft-Windows-GDI
+Microsoft-Windows-GDI.*
+Microsoft-Windows-GDI-*
+
+# GDI+ is a class-based API extension for GDI providing more modern tools such as anti-aliasing, shading and affine transformations for rendering.
+Microsoft.Windows.GdiPlus*

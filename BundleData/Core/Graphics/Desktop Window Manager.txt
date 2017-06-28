@@ -1,3 +1,7 @@
+# Desktop Window Manager
+# A composition layer which sits atop DirectX and when enabled, underlies GDI and other similar stacks to compose the final desktop picture.
+# https://en.wikipedia.org/wiki/Desktop_Window_Manager
+
 Microsoft-Windows-DesktopWindowManager*
 Microsoft-Windows-DWM-Adm*
 

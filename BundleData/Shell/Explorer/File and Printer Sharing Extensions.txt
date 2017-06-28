@@ -1,0 +1,5 @@
+# File and Printer Sharing Shell Extensions
+# Provide property pages and icon overlay support for file and printer sharing
+
+Microsoft-Windows-ntshrui*			# Sharing extensions
+Microsoft-Windows-Shell-ShareMgmt*		# Package for the above

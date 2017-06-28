@@ -1,14 +1,33 @@
 # Components that are used during Windows Installation / Migration
 
-Microsoft-Windows-Setup*			# Builder settings for setup (empty in runtime)
+# Must NOT include SetupAPI, which is a public API library
+
+Microsoft-Windows-Setup				# Builder settings for setup (empty in runtime)
+Microsoft-Windows-Setup.*
 
 Microsoft-Windows-Setup-Component*		# Setup app itself + Setup OOBE
 Microsoft-Windows-Setup-Unattend*		# Unattended installation support
-Microsoft-Windows-ActionQueue-*			# ActionQueue is a DLL, part of Windows-Setup. This is its WMI instrumentation.
 
 Microsoft-Windows-Setup-Events*			# ETW
 Microsoft-Windows-Setup-Instrumentation*	# Event details
 
 Microsoft-Windows-Setup-Navigation-Wizard-Framework*	# Setup/Migration Wizard framework, should not be reused anywhere
 
+Microsoft-Windows-Setup-*			# Include the rest of this namespace by default
+
+
+Microsoft-Windows-ActionQueue-*			# ActionQueue is a DLL, part of Windows-Setup. This is its WMI instrumentation.
+
 Microsoft.Windows.Configuration.Online.Setup*	# Some trashy .cmd script which runs secinit.exe and oobe/setup.exe
+
+Microsoft-Windows-SetupCl			# "System cloning tool"
+Microsoft-Windows-SetupCl.*
+Microsoft-Windows-SetupCl-*
+
+Microsoft-Windows-Secinit			# Resets security IDs for this PC
+Microsoft-Windows-Secinit.*
+Microsoft-Windows-Secinit-*
+
+
+Microsoft-Windows-SetupPhase*			# Category definition: "SetupPhase category"
+Microsoft-Windows-SetupUGC-*			# Huh?
