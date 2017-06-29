@@ -1,6 +1,12 @@
-# DeviceStage is a facility for manufacturers to provide custom devices for Devices and Printers folder.
-# This allows them to present their device with all its custom functions.
+# DeviceStage is a facility for manufacturers to provide custom device pages and icons for Devices and Printers folder.
+# This allows them to present their device in a corporate branding.
 # https://msdn.microsoft.com/en-us/windows/hardware/drivers/print/what-is-device-stage-
+
+# DeviceStage allows the developer to provide a "Device Metadata Package" which is a set of XML and graphics which defines how the device will look in Devices and Printers folder.
+# These are uploaded to Microsoft, verified, signed and automatically distributed to all PCs with compatible devices.
+# Double-clicking on the device in the Devices and Printers folder will open it's updated DeviceStage page.
+
+# To provide additional functions to the UI and to Function Discovery the developers still need to provide a Devices and Printers' DDO object.
 
 # Installs "DeviceStage shell extensions" (dxp.dll) which annoyingly reactivate itself
 # But if you want Devices and Printers to function then I guess you need it.
@@ -14,3 +20,5 @@ Microsoft-Windows-DXPTasks-*
 
 Microsoft-Windows-Desktop-PlayToMenu*
 Microsoft-Windows-PlayToStatusProvider*
+
+Microsoft-Windows-DeviceMetadataParsers*

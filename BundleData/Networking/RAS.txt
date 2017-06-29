@@ -35,6 +35,7 @@ Microsoft-Windows-RasServer*
 Microsoft-Windows-RasTapi*
 Microsoft-Windows-RasTls*
 
+Microsoft-Windows-RASMM*		# RAS Media Manager, a plugin for VAN (View Available Networks) panel
 
 VPN-Client-WMIv2Provider*		# Also in deployment
 

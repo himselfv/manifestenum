@@ -1,6 +1,7 @@
-# View Available Networks Control Panel
+# View Available Networks Panel
+# A popup panel in the system tray which shows the current network connection and a list of available WLAN, WWAN or RAS connections (or other connections which can be established).
 
-# Each type of media link layer may register its own DLL plugin for this, under
+# Each type of media link layer may register its own DLL plugin for VAN under
 #   HKLM\System\CurrentControlSet\Control\VAN
 # Plugins include:
 #   WlanMM

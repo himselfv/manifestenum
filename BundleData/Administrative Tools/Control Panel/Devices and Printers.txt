@@ -1,5 +1,7 @@
-# Device Center shell folder.
-# In Windows 10 is extended by Hardware\Device Stage custom pages and actions.
+# Devices and Printers / Device Center shell folder
+# A framework which allows manufacturers to present available functions and provide custom actions for their devices.
+
+# Enhanced by Hardware\Device Stage custom branded pages (XML + graphics) which are auto downloaded from Microsoft and provide customized branding for device pages.
 
 Microsoft-Windows-DeviceCenter*
 

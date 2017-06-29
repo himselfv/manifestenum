@@ -2,15 +2,13 @@
 # Examples are LTE, WiMAX, UMTS, CDMA2000
 # https://en.wikipedia.org/wiki/WWAN
 
-Microsoft-Windows-WwanUI*		# Mentions XWizards
-
+Microsoft-Windows-WwanUI*		# Uses XWizards
 
 Microsoft-Windows-WwanSvc*		# "Wireless WAN Autoconfig"
 Microsoft-Windows-WwanSvc-ServerCfg*	# Registers the service
 
-# WWAN API / Mbnapi (Mobile Broadband Network API)
+# WWAN API / MBN (Mobile Broadband Network) API
 # https://msdn.microsoft.com/en-us/library/windows/desktop/dn313188(v=vs.85).aspx
 Microsoft-Windows-WWanAPI*
-
 
 Microsoft-Windows-Wwan-Coinstaller*	# Probably "Net Class Co-Installer for WWAN devices", but no description
