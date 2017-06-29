@@ -20,5 +20,7 @@ Microsoft-Windows-CmiSetup-*
 Microsoft-Windows-CmiTrustInfoInstallers*
 
 Microsoft-Windows-CryptPluginInstaller*		# "Installers for cryptographic elements of CMI objects". I _suppose_ part of this CMI.
+Microsoft-Windows-FirewallConfig-Installer*	# "Windows Firewall rule configuration plugin", same as above.
+Microsoft-Windows-PnpPluginInstaller*		# "Pnp Plugin Installer for CMI", same as above.
 
 Microsoft-Windows-HotpatchInstaller*

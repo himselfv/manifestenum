@@ -1,1 +1,2 @@
 Microsoft-Windows-osk*
+Microsoft-Windows-msswch*		# Seems to be only imported by osk.

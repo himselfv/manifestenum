@@ -23,3 +23,10 @@ Microsoft-Windows-DisplayConfigSettings*	# Purely migration, as of W7
 Microsoft-Windows-shmig				# Seems to be Shell Migration support
 Microsoft-Windows-shmig.*
 Microsoft-Windows-shmig-*
+
+# Migration plugins
+# Many components contain their migration plugins inside them and that's alright.
+
+Microsoft-Windows-Power-Policy-Definitions*	# "Power Migration Plugin" (Power Policy Setting Definitions)
+Microsoft-Windows-StorageMigration*		# "Microsoft Storage Migration Plugin"
+Microsoft-Windows-UsbMigPlugin*			# "Offline Files [sic!] Migration Plugin"

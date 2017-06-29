@@ -1,0 +1,7 @@
+# API and functions which simplify debugging executable images in PE format.
+# Includes:
+#   dbgeng.dll - Symbol engine
+#   dbghelp.dll - Debug Help library
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms679309(v=vs.85).aspx
+
+Microsoft-Windows-ImageAnalysis*

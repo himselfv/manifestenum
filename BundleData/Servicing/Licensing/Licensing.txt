@@ -1,2 +1,4 @@
 Microsoft-Windows-Client End-User License Terms*
 Microsoft-Windows-License*
+
+Microsoft-Windows-Licensing-Client-Pro*
