@@ -63,7 +63,3 @@ Microsoft-Windows-Netplwiz-*		# Opens User passwords configuration window (what 
 # Computer name UI
 Microsoft-Windows-Computer-Name-UI*
 
-
-Microsoft-Windows-VAN		# View available networks control panel
-Microsoft-Windows-VAN.*
-Microsoft-Windows-VAN-*

@@ -1,0 +1,14 @@
+# View Available Networks Control Panel
+
+# Each type of media link layer may register its own DLL plugin for this, under
+#   HKLM\System\CurrentControlSet\Control\VAN
+# Plugins include:
+#   WlanMM
+#   RasMM
+#   WWanMM (in WWanUI)
+
+# Requires XWizards for some tasks.
+
+Microsoft-Windows-VAN
+Microsoft-Windows-VAN.*
+Microsoft-Windows-VAN-*

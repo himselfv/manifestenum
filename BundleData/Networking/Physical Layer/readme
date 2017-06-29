@@ -1,0 +1,11 @@
+Components that manage physical network layers:
+  802.3 (Ethernet)
+  802.11 (Wi-Fi / WLAN)
+  Mobile Broadband / WWAN
+
+Physical (#1) layer technologies lie above drivers and strictly below Network layer (#3). Data link layer (#2) is subdivided into lower Media Access Control layer which is included, and upper Logical Link Control, which is not.
+
+The components here cover everything from the drivers to the UI.
+
+See also:
+  https://docs.microsoft.com/en-us/windows-hardware/drivers/network/windows-network-architecture-and-the-osi-model

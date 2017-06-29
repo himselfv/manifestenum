@@ -4,6 +4,8 @@
 
 # Present since Windows XP
 
+# Requires XWizards for some tasks.
+
 Microsoft-Windows-Netshell
 Microsoft-Windows-Netshell.*
 Microsoft-Windows-Netshell-*

@@ -1,0 +1,26 @@
+# Native 802.11
+# A kernel framework for writing WLAN controller drivers. Every WLAN device driver must tie into it.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/network/native-802-11-wireless-lan4
+# Vista+
+# W10: Replaced by WLAN Universal Windows Driver Model
+
+Microsoft-Windows-Native-80211*
+
+# Driver developers have to provide a Native 802.11 miniport driver and an extensions DLL. Optionally they can also provide an UI extensions DLL.
+
+#
+# Native 802.11 miniport driver:
+# Manages an 802.11 NIC that operates over the WLAN media. Interfaces with Native 802.11 framework upstream to receive properly formatted packets in IEEE media access control frame format, and to report a variety of media-specific statuses.
+# NDIS 6.0+ compatible.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/network/introduction-to-native-802-11
+
+#
+# Independent Hardware Vendor (IHV) Extensions DLL:
+# Loaded in userspace by a host process, performs a number of functions:
+# - Adds support for proprietary or non-standard security protocols or replaces support provided by the OS.
+# - Processes and validates the 802.11 configuration within a network profile.
+# - Request user input or notification through the UI extensions DLL.
+
+# "Wireless LAN Extensibility Framework"
+# "Provides an interface to Windows wireless security and connectivity features for the drivers of wireless network adapters."
+Microsoft-Windows-Wlan-Extension*		# Contains a single application.

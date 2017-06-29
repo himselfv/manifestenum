@@ -11,3 +11,4 @@ Microsoft-Windows-ML-All			# W7 empty
 Microsoft-Windows-ML-All.*
 
 Microsoft.Windows.Fusion_Components_All*
+Microsoft-Windows-ManagementUI-MIG*

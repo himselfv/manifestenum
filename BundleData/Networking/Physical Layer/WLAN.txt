@@ -1,0 +1,28 @@
+
+# W7
+
+# All seem to be wizards and UI for WLAN configuration.
+Microsoft-Windows-Wireless-Network-Setup-Wizard*	# Registers as explorer autoplay handler
+Microsoft-Windows-Wlan-Dialog*				# Mentions XWizards
+Microsoft-Windows-WLANConnectionFlow*			# Mentions XWizards
+Microsoft-Windows-WLANPref*				# Mentions XWizards
+
+
+Microsoft-Windows-WLanUI*				# "Wireless Profile UI"
+
+Microsoft-Windows-WlanCoInstaller*		# "Net Class Co-Installer for WLAN Devices"
+
+# Group policy something
+Microsoft-Windows-WLanGPClient*			# Registers as Winlogon\GPExtensions
+Microsoft-Windows-wlangpui*			# Registers for MMC, probably a Group Policy Editor snap-in
+
+Microsoft-Windows-Wlanutil*			# "Wireless LAN utility DLL"
+
+# WLanMM (View Available Networks plugin)
+Microsoft-Windows-WLANMediaManager*		# Registers in CCS\Control\VAN, along with other media link layers
+
+# WlanSvc
+Microsoft-Windows-Wlansvc*
+Microsoft-Windows-Wlansvc-Extra*
+Microsoft-Windows-Wlansvc-ClientCfg*		# This registers the service
+

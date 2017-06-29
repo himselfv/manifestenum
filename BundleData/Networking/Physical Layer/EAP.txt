@@ -2,12 +2,14 @@
 # Authentication framework frequently used in wireless networks and point-to-point connections, defined by RFC.
 # https://en.wikipedia.org/wiki/Extensible_Authentication_Protocol
 
-# IEEE 802.1X defines the encapsulation of the Extensible Authentication Protocol (EAP) over IEEE 802, which is known as "EAP over LAN" or EAPOL.
+# IEEE 802.1X
+# Defines the encapsulation of the Extensible Authentication Protocol (EAP) over IEEE 802, which is known as "EAP over LAN" or EAPOL.
 # EAPOL was originally designed for IEEE 802.3 Ethernet in 802.1X-2001, but was clarified to suit other IEEE 802 LAN technologies such as IEEE 802.11 wireless and Fiber Distributed Data Interface (ISO 9314-2) in 802.1X-2004
+# https://en.wikipedia.org/wiki/IEEE_802.1X
 
 Microsoft-Windows-Extensible-Authentication-Protocol-*
 
-Microsoft-Windows-EapMethods
+Microsoft-Windows-EapMethods*
 
 # Network Access Protection enforcement over EAP
 Microsoft-Windows-Eap-Nap-Enforcement-*		# Also in NAP

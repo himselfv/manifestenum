@@ -1,0 +1,31 @@
+# XWizard
+# Some kind of a generic "setup/solution wizard" engine.
+
+# Clients have to register their wizard pages and interface in the registry under
+#   HKLM\Software\Microsoft\Windows\CurrentVersion\XWizards
+
+# It seems that XWizards can be launched inside of any application that asks for it.
+
+# Widely used in networking configuration UI, but also outside of it. The following components use XWizards:
+# - WLAN config and UI
+# - WWAN config and UI
+# - Network Connections folder
+# - Home Group Control Panel
+# - View Available Networks Control Panel
+# - Windows Portable Devices (WPD) Network Config Wizard
+# - GetConnected Wizards (basic and RAS)
+# Additionally:
+# - Some Terminal Services configuration
+# - Some WCN configuration
+
+# The engine itself
+Microsoft-Windows-XWizard
+Microsoft-Windows-XWizard.*
+Microsoft-Windows-XWizard-*
+# -Host-Process
+Microsoft-Windows-XWizards
+Microsoft-Windows-XWizards.*
+Microsoft-Windows-XWizards-*
+# -Registration
+# -DUIPluigin 				# DUI here means DirectUI, see API\UI\DirectUI
+# -Win32Plugin

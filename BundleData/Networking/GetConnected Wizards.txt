@@ -1,0 +1,8 @@
+# GetConnected Wizards
+# XWizard-based wizards which guide the user to achieve network or internet connection, as well as a simple API which allows the applications to start these wizards.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ff956215(v=vs.85).aspx
+# Vista+
+# Requires: XWizards.
+
+Microsoft-Windows-GetConnectedWizards*
+Microsoft-Windows-RasGetConnectedWizard*		# Also in RAS

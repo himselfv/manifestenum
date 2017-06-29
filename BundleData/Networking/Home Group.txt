@@ -1,2 +1,4 @@
 Microsoft-Windows-HomeGroup*
 Microsoft-Windows-Shell-HomeGroup*
+
+# Home Group Control Panel requires XWizards for some tasks.
