@@ -1,0 +1,5 @@
+# browseui.dll used by older versions of Internet Explorer and Explorer.
+# Kept for compability reasons.
+# W7: Contains only DllGetVersion, the rest of the exports point to "not implemented".
+
+Microsoft-Windows-browseui*

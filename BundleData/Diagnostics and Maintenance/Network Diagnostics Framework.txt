@@ -30,3 +30,11 @@ Microsoft-Windows-WFPIPSecHelperClasses*	# Windows Filtering Platform (BFE, Fire
 Microsoft-Windows-WinInetHelperClass*
 Microsoft-Windows-WirelessLANHelperClass*
 Microsoft-Windows-WWanHC*
+
+
+# Detection and Sharing Status API
+# "A COM API that evaluates the status of computer detection (aka discovery) and file and print sharing and allows for turning all the settings on or off".
+# Contains a DLL with a type libary providing IDetectionAndSharing.GetStatus, TurnOn/Off for: Discovery, FileSharing, MediaSharing.
+# Mentions "Network Diagnostics Framework", so assumed to be a helper library for one of its plugins.
+Microsoft-Windows-DetectionAndSharingAPI*
+Microsoft-Windows-DetectionAndSharingSettings*	# Registers the library

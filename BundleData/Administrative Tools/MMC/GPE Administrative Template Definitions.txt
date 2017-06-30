@@ -1,8 +1,21 @@
-# Contains .admx file packages
-# Many should also be included to their respective components
+# Group Policy Editor standard Administrative Template definitions
 
-#
-# This one references most of them
+# Group Policy Editor MMC snap-in supports its own snap-ins which provide settings for specific areas. One GPE plugin in particular, "Administrative templates", supports further customization via ADMX files.
+
+# These are XMLs listing available registry settings with descriptions. Both Microsoft and third party vendors may provide such files.
+
+# ADMX files available with the OS are stored in
+#   %systemroot%\policyDefinitions
+
+# Domain administrators may provide domain-wide set of ADMX files at
+#   %domainroot%\sysvol\domain\policies\PolicyDefinitions
+# If present, it will be used on all domain PCs and local definitions will be ignored.
+
+# GPE's "Administrative Templates" plugin loads all these files and provides a unified tree of available settings.
+
+# Standard ADMX files shall be listed here, but for optional components it's preferrable to list ADMX files with their host applications.
+
+# References most of them
 Microsoft-Windows-GroupPolicy-ClientTools-AdmFiles-Deployment*
 
 #

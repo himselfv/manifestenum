@@ -79,5 +79,11 @@ Microsoft-Windows-UdfsRecover
 Microsoft-Windows-CDFS
 
 
+# "Common to all FSD drivers".
+# Mostly contains WMI Autologgers
+Microsoft-Windows-FSD
+Microsoft-Windows-FSD.*
+
+
 # Pointless empty package which probably defined the category
 Microsoft-Windows-Base Technologies-File Systems (Core)

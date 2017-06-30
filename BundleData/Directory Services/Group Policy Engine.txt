@@ -1,0 +1,47 @@
+# Group Policy Engine
+# Applies policy settings to computers and users in an Active Directory domain to enable IT administrators to automate their management.
+
+Microsoft-Windows-GroupPolicy-Base*
+
+# Group Policies are collections of setting values enforced by domain administrators.
+# Each Policy may be configured to apply to all or to some computers or domain users, and may modify any chosen set out of all supported parameters.
+# All appropriate Policies are applied, as determined both by the computer and the currently logged in user.
+
+# Policies are stored on the SYSVOL share of the domain controller, each in its folder by GUID.
+
+# Group Policy application is handled by the Group Policy Engine which integrates into Winlogon and also runs a separate service.
+# Policies are applied at startup, at user logon and at the Group Policy refresh interval.
+# The engine takes the policies from the SYSVOL share. Once the policies are brought down to the client, the individual client-side extensions (CSE) apply the policies to the appropriate areas.
+
+# Client-side extensions are DLLs which apply the policies to the appropriate areas of the local PC.
+# They are registered with Winlogon in the registry key:
+#   HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsNT\CurrentVersion\Winlogon\GPExtensions
+
+# https://blogs.technet.microsoft.com/askperf/2007/06/05/the-basics-of-group-policies/
+
+# Standard CSEs will be listed as separate sibling components, while application specific CSEs shall be listed with the application.
+
+
+# Policies are configured by domain administrator, usually with the help of Group Policy Editor MMC Snap-In.
+
+# GPE in turn supports its own plugins which provide settings for specific areas. So for every setting that some CSE knows how to apply to the PC, there must be a GPE plugin which knows how to configure it.
+
+# One GPE plugin in particular, "Administrative templates", supports further customization via ADMX files.
+# These are XMLs listing available registry settings with descriptions. Both Microsoft and third party vendors may provide such files.
+
+# Neither ADMX files nor GPE plugins have anything to do with applying the Group Policies, only editing.
+# https://sdmsoftware.com/group-policy-blog/tips-tricks/understanding-the-role-of-admx-and-adm-files-in-group-policy/
+
+# For more on GPE and its snap-ins see the appropriate package.
+
+# GPE, it's children snap-ins and ADMX files all shall be listed in Administrative Tools or with their host applications (preferrable).
+
+
+
+# For now we'll list CSEs here:
+#Microsoft-Windows-GroupPolicy-CSE-SoftwareInstallation*	# Covered with AppMgmt
+Microsoft-Windows-GroupPolicy-Gptext*		# Wireless and QoS Packet Scheduler CSE
+Microsoft-Windows-GroupPolicy-PolicyMaker*	# PolicyMaker CSE
+Microsoft-Windows-GroupPolicy-Script*		# Script CSE
+
+Microsoft-Windows-GroupPolicy-ClientExtensions-Deployment*	# Deployment

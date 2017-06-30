@@ -1,5 +1,5 @@
 # Group Policy Editor MMC Snap-in (GPE) / GPMC
-# Supports its own snap-ins which enhance its list of policies it can edit.
+# Supports its own snap-ins which enhance the list of policies it can edit.
 
 # Core
 Microsoft-Windows-GroupPolicy-Admin-Gpedit-Snapin*
@@ -28,8 +28,15 @@ Microsoft.GroupPolicy.AdmTmplEditor*	# "Provides editing for Group Policy Prefer
 
 # Everyone and their brother installs additional GPE snap-ins, and for now we'll list them here.
 Microsoft-Windows-AuditPolicy-SnapIn-Native
+Microsoft-Windows-GroupPolicy-Admin-AdmTmpl*			# Administrative Templates extension. This one supports its OWN extensibility via ADMX files -- see the appropriate component.
+Microsoft-Windows-GroupPolicy-Admin-Appmgr*			# Application Management extensions
 Microsoft-Windows-GroupPolicy-Admin-Scrptadm*			# Script administration
+Microsoft-Windows-GroupPolicy-Admin.Scrptadm*
 Microsoft-Windows-NetworkListManagerGroupPolicySnapin*
 SecurityAuditPoliciesSnapIn*	# Security Audit Policies
 SrpUxNativeSnapIn*		# Application Control Policies
 SrpUxSnapIn*
+
+# "Provides Group Policy administration tools binaries necessary for Group Policy Object Editor and Resultant Set of Policies snapins"
+# Does not register as an MMC extension per se.
+Microsoft-Windows-GroupPolicy-Admin-Gpedit*

@@ -1,0 +1,3 @@
+# Group Policy Command-Line Tools
+# Provides gpresult (resulting set of policies) and gpupdate (update group policy)
+Microsoft-Windows-GroupPolicy-CmdLineTools*

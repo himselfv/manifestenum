@@ -2,6 +2,10 @@
 # Components and manifests which pull a bunch of thematically related assemblies or other components into configuraion.
 # Not required by themselves, but often remain in a final image. Some of feature packages seem to be stripped of their contents and remain only as empty manifests.
 
+Microsoft-Windows-Foundation			# THE mothership package of W7.
+Microsoft-Windows-Foundation.*			# Do not include Foundation-* as some of the packages are meaningful.
+Microsoft-Windows-Foundation-StaticBinds*	# Empty
+
 # W7: "APIs and tools for disk, volume and hardware RAID management"
 # Mostly just pulls Virtual Disk Service (VDS)
 Microsoft-Windows-VolumeManagement*
@@ -9,3 +13,5 @@ Microsoft-Windows-VolumeManagement*
 Win7-Microsoft-Windows-Multimedia-Deployment*
 Win7-Microsoft-Windows-Graphics-Deployment*
 Win7-Microsoft-Windows-Printing-Deployment*		# IRL contains just XpsPrinting, but the name puts it here
+
+Microsoft-Windows-Client-Features-Deployment*
