@@ -1,0 +1,4 @@
+
+# "Basic AGP Settings required to use AGP drivers"
+# AGP == Advanced Graphics Port
+Microsoft-Windows-AGPSettings*

@@ -1,0 +1,5 @@
+Microsoft-Windows-CompositeBus*		# ROOT\CompositeBus\0000
+
+
+
+Microsoft-Windows-ATAPort*		# Instrumentation and strings

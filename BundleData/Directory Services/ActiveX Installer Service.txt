@@ -1,0 +1,11 @@
+# ActiveX Installer Service
+# Installs trusted ActiveX controls for non-administrator users.
+# https://technet.microsoft.com/en-us/library/dd631688(v=ws.10).aspx
+
+# ActiveX controls have to be installed with administrator rights. Therefore normal users cannot install them.
+# This service runs in the background and watches ActiveX installation attemps for normal users. If the source domain is in the list of allowed domains, the service installs the control using its administrative permissions.
+
+# Mostly used in corporate environments.
+# Not needed if you don't use ActiveX controls or are okay with only installing them with administrative rights.
+
+Microsoft-Windows-AxInstallService*

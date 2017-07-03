@@ -1,3 +1,6 @@
+# Getting Started / OOBE ("Out Of the Box Experience")
+# Note that most of the system32/oobe folder is actually Windows Setup. Getting Started only covers a few binaries.
+
 Desktop_Shell-GettingStarted*		# Windows 10
 Microsoft-Windows-GettingStarted*	# Windows 7
 Microsoft-Windows-OOBE*			# Windows 7

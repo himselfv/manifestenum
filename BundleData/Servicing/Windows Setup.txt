@@ -15,6 +15,8 @@ Microsoft-Windows-Setup-Navigation-Wizard-Framework*	# Setup/Migration Wizard fr
 
 Microsoft-Windows-Setup-*			# Include the rest of this namespace by default
 
+Microsoft-Windows-Audit-Instrumentation*	# Sic! Instrumentation for Setup's oobe/audit.exe component. (W7)
+
 
 Microsoft-Windows-ActionQueue-*			# ActionQueue is a DLL, part of Windows-Setup. This is its WMI instrumentation.
 

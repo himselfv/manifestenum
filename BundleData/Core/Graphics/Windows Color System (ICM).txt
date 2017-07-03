@@ -1,0 +1,9 @@
+# Image Color Management (ICM) / Windows Color System (WCS)
+# A set of APIs and system-wide support for color profiles and color conversions.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd372446(v=vs.85).aspx
+
+# Windows Color System (since Vista) is the new name for ICM (since Windows 95). Otherwise it's the same thing.
+
+Microsoft-Windows-ICM
+Microsoft-Windows-ICM.*
+Microsoft-Windows-ICM-*

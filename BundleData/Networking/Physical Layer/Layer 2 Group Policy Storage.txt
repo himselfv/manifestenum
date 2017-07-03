@@ -1,0 +1,6 @@
+# Layer2 Group Policy Storage Helper DLL
+# Seems to be used by 802.3/WLAN Group Policy CSEs (via simple DLL import) to store/retrieve group policy settings.
+
+# I *suspect* that it's only related to 802.1x over these (see EAP), due to name similarities and the subset of L2 mediums covered.
+
+Microsoft-Windows-L2GPStore*

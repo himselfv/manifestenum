@@ -1,0 +1,6 @@
+# Advanced INF Package Installer / ADVPACK.dll
+# A clean but poorly documented API for processing and installing INF and CAB installation files.
+# IE has its own copy under the name of IEAdvPack.dll which is somewhat documented:
+# https://msdn.microsoft.com/en-us/library/aa752070(v=vs.85).aspx
+
+Microsoft-Windows-Advpack*

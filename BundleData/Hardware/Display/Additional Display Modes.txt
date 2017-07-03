@@ -1,0 +1,5 @@
+# Additional Display Modes
+# A set of registry entries defining additional monitor resolution and refresh rate modes.
+# W7
+
+Microsoft-Windows-AdditionalMonitorModes*

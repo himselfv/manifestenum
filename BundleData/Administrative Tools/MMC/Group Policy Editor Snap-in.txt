@@ -27,7 +27,6 @@ Microsoft.GroupPolicy.AdmTmplEditor*	# "Provides editing for Group Policy Prefer
 
 
 # Everyone and their brother installs additional GPE snap-ins, and for now we'll list them here.
-Microsoft-Windows-AuditPolicy-SnapIn-Native
 Microsoft-Windows-GroupPolicy-Admin-AdmTmpl*			# Administrative Templates extension. This one supports its OWN extensibility via ADMX files -- see the appropriate component.
 Microsoft-Windows-GroupPolicy-Admin-Appmgr*			# Application Management extensions
 Microsoft-Windows-GroupPolicy-Admin-Scrptadm*			# Script administration
@@ -36,6 +35,12 @@ Microsoft-Windows-NetworkListManagerGroupPolicySnapin*
 SecurityAuditPoliciesSnapIn*	# Security Audit Policies
 SrpUxNativeSnapIn*		# Application Control Policies
 SrpUxSnapIn*
+
+# Audit Policy Editor
+# Audit policy definitions are listed at HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Audit
+# These seem to apply only to the editor, not to the implementation.
+Microsoft-Windows-AuditPolicy-SnapIn-Native*		# The DLL itself
+Microsoft-Windows-AuditPolicy-General*			# Its registration + the audit policy definitions
 
 # "Provides Group Policy administration tools binaries necessary for Group Policy Object Editor and Resultant Set of Policies snapins"
 # Does not register as an MMC extension per se.

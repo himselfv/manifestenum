@@ -21,4 +21,7 @@ Microsoft-Windows-DXPTasks-*
 Microsoft-Windows-Desktop-PlayToMenu*
 Microsoft-Windows-PlayToStatusProvider*
 
+Microsoft-Windows-mrc	# dmrc.dll: Device Metadata Resource Cache -- retrieves device metadata on demand (from local cache or from the internet).
+Microsoft-Windows-mrc.*
+
 Microsoft-Windows-DeviceMetadataParsers*

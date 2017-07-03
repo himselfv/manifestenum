@@ -17,8 +17,6 @@ Microsoft-Windows-Eap-Nap-Enforcement-*		# Also in NAP
 # OneX is a library which is required for 802.1X support
 # https://msdn.microsoft.com/en-us/library/windows/desktop/ms706424(v=vs.85).aspx
 
-# 802.1X: https://en.wikipedia.org/wiki/IEEE_802.1X
-
 Microsoft-Windows-OneX*
 # OneXSchema, OneXUi
 
