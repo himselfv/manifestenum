@@ -13,3 +13,5 @@ Microsoft-Windows-WMPNSS*
 
 Microsoft-Windows-WmpDui*
 Microsoft-Windows-WMPDMC*
+
+Microsoft-Windows-WindowsMedia-DRM*

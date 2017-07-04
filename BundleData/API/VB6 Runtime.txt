@@ -1,0 +1,3 @@
+# Visual Basic Runtime version 6
+
+Microsoft-Windows-MSVBVM60*

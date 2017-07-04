@@ -1,0 +1,5 @@
+
+# For assemblies which contain a bunch of unrelated stuff and we don't yet know what to do.
+
+Microsoft-Windows-Basic-Misc-Tools*	# expand.exe, netmsg.dll
+Microsoft-Windows-Core_Tools*		# osuninst.dll, msvcrt40.dll

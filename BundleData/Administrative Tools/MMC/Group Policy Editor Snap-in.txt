@@ -41,6 +41,7 @@ SrpUxSnapIn*
 # These seem to apply only to the editor, not to the implementation.
 Microsoft-Windows-AuditPolicy-SnapIn-Native*		# The DLL itself
 Microsoft-Windows-AuditPolicy-General*			# Its registration + the audit policy definitions
+AuditPolicyGPManagedStubs.Interop*			# Managed interop
 
 # "Provides Group Policy administration tools binaries necessary for Group Policy Object Editor and Resultant Set of Policies snapins"
 # Does not register as an MMC extension per se.

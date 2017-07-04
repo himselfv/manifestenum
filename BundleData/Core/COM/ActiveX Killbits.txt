@@ -1,0 +1,6 @@
+# ActiveX Killbit registry
+# Killbit is a security feature in web browsers based on Microsoft's Trident engine (such as Internet Explorer) and other ActiveX containers that respect the killbit (such as Microsoft Office). A killbit instructs an ActiveX control container never to use a specific piece of ActiveX software, whether third-party or Microsoft, as identified by its class identifier (CLSID).
+# https://en.wikipedia.org/wiki/Killbit
+
+Microsoft-Windows-Killbits-Deployment*		# Deployment for ActiveXCompat
+Microsoft-Windows-ActiveXCompat*

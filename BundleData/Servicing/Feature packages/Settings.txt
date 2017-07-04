@@ -1,4 +1,0 @@
-
-Microsoft-Windows-Client-Features-Default-Security*
-
-Microsoft-Windows-Default-TimeZone-Settings*

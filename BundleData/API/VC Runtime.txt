@@ -11,3 +11,7 @@ Microsoft.VC90.*
 # Assembly redirect policies for various exact versions
 policy.8.0.Microsoft.VC80.*
 policy.9.0.Microsoft.VC90.*
+
+Microsoft-Windows-CRTDLL*	# "Microsoft C Runtime Library"
+Microsoft-Windows-UCRT*		# "Microsoft C Runtime Library"
+Microsoft-Windows-UniversalCRT-APIfwd-Win7*	# A bunch of api-ms-win-core-..-.., also in _misc

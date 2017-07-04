@@ -1,0 +1,4 @@
+# Legacy Setup Support
+# Contains registry entries which some applications (Media Player is noted) expect to find to function properly. Seems to be a pinpoint compability fix.
+
+Microsoft-Windows-LegacySetupSupport*

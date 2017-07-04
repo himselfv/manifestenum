@@ -53,3 +53,5 @@ cscompmgd*,processorArchitecture=msil
 NetFx-cscomp*,processorArchitecture=msil
 NetFx-cscompmgd*,processorArchitecture=msil
 NetFx-CSharp_Compiler_cscomp*
+
+Microsoft.Data.Entity.Build.Tasks*

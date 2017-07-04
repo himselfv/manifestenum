@@ -19,11 +19,6 @@ Microsoft-Windows-COM-LegacyOLE*
 Microsoft-Windows-COM-OleUI*
 Microsoft-Windows-ActiveXProxy*
 
-
-# Probably more related to IE
-Microsoft-Windows-ActiveXCompat*
-
-
 # OLE Packager
 # Allows a non-OLE object to be "packaged" so it can be embedded into an OLE client.
 Microsoft-Windows-packager

@@ -1,0 +1,13 @@
+
+Microsoft-Windows-Foundation-Default-Security*
+Microsoft-Windows-Client-Features-Default-Security*
+
+Microsoft-Windows-Default-TimeZone-Settings*
+
+Microsoft-Windows-Network-basic*		# Defines the contents of netsvcs, NetworkService and LocalService service groups
+
+Microsoft-Windows-Rollup-Version*
+
+Microsoft-Windows-SafeMode*			# Contains a list of drivers to load in safe mode
+
+Microsoft-Windows-Shell-Client*			# A single registry setting for Explorer

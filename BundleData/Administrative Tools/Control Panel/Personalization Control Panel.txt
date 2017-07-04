@@ -1,0 +1,6 @@
+# Personalization Control Panel
+# The code itself is in shdocvw.dll shipped with Explorer, this component only registers the shell extension.
+# W7
+
+Microsoft-Windows-Personalization
+Microsoft-Windows-Personalization.*

@@ -1,0 +1,14 @@
+# Microsoft UI Automation
+# An API that allows one to access, identify, and manipulate the user interface (UI) elements of another application.
+# https://en.wikipedia.org/wiki/Microsoft_UI_Automation
+
+# UIA is targeted at providing UI accessibility and it is a successor to Microsoft Active Accessibility. It also facilitates GUI test automation, and it is the engine upon which Microsoft Coded UI Test is based. UIA's property providers support both Win32 and .NET programs.
+
+Microsoft-Windows-UIAutomationCore*
+
+
+# Microsoft Active Accessibility / MSAA
+# A COM-based API for user interface accessibility, a predescessor to UI Automation with similar functions.
+Microsoft-Windows-oleacc*		# Core + Hooks
+Microsoft-Windows-oleaccrc*		# Resource DLL
+Microsoft-Windows-MSAAText*		# "MSAA Text Support"

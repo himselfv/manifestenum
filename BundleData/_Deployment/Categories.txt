@@ -9,3 +9,5 @@ Microsoft-Windows-Pro-Catalogs
 
 Microsoft-Windows-Interface*			# Interface category
 Microsoft.Windows.Multilingual_Components_All*	# Multilingual components category
+
+Microsoft-Windows-Base Technologies-BCD		# Category definition: Base Technologies-BCD (note: no * !)

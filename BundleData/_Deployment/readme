@@ -1,0 +1,14 @@
+Contains components which do not correspond to anything useful but instead are left over from the build process or group existing entries in various ways.
+
+This includes:
+- Update packages
+- MUI packages
+- Feature packages
+- Assemblies which provided configuarion abilities at design time (now useless)
+
+It's also okay to temporarily store here other kinds of packages related not to any particular feature, but to the state of the image as a whole:
+- Branding assemblies
+- Assemblies containing particular settings values for the image (if not related to any particular component such as core)
+- Poorly structured assemblies (containing a bunch of unrelated modules)
+
+These kinds of assemblies should eventually receive their own place to live, but for now it's better to store them here than in a truly inappropriate place.

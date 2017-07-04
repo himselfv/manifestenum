@@ -5,6 +5,8 @@
 Microsoft-Windows-Foundation			# THE mothership package of W7.
 Microsoft-Windows-Foundation.*			# Do not include Foundation-* as some of the packages are meaningful.
 Microsoft-Windows-Foundation-StaticBinds*	# Empty
+Microsoft-Windows-Foundation-LanguagePack-*
+Windows Foundation*
 
 # W7: "APIs and tools for disk, volume and hardware RAID management"
 # Mostly just pulls Virtual Disk Service (VDS)
@@ -16,4 +18,22 @@ Win7-Microsoft-Windows-Printing-Deployment*		# IRL contains just XpsPrinting, bu
 
 Microsoft-Windows-Client-Features-Deployment*
 
+Microsoft-Windows-GroupPolicy-ClientTools-Binaries-Deployment*
+
 Microsoft-Windows-Storage-Drivers*
+
+Microsoft-Windows-ImageBasedSetup-IE-Base-Downlevel-Deployment*
+
+Microsoft-Windows-LegacySupport*
+
+Microsoft-Windows-MobilePC-Client-Basic-Deployment*
+Microsoft-Windows-MobilePC-Client-Premium-Deployment*
+
+Microsoft-Windows-Personalization-Deployment*
+
+Microsoft-Windows-Shell-All-Pro*
+Microsoft-Windows-Shell-DirectoryServiceExtensions*	# DS-UI-Ext, DsQuery
+Microsoft-Windows-Shell-InternetExplorer*		# msieftp
+Microsoft-Windows-Shell-OptionalComponents*
+Microsoft-Windows-Shell-Registration*
+
