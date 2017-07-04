@@ -1,0 +1,3 @@
+# [Longhorn] Display Driver Model Core
+
+Microsoft-Windows-LDDMCore*

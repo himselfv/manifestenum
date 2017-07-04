@@ -1,0 +1,4 @@
+# HID class installer
+# Requires hid.dll from "HID support"
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.HIDCLASS-DriverClass*

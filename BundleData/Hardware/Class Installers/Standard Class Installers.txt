@@ -1,0 +1,42 @@
+# Standard Class Coinstallers / sysclass.dll
+# Provides installers for a set of commonly supported classes:
+#   Computer, Hdc, Keyboard, Mouse, Scsi, Storage, Tape, Volume, as well as CriticalDeviceCoInstaller
+# Property pages for:
+#   Disk, LegacyDriver, PS2Mouse, Tape
+
+# Required for many more classes as it provides CriticalDeviceCoInstaller.
+
+Microsoft-Windows-SysClass
+Microsoft-Windows-SysClass.*
+
+# Class declarations
+# Many of these lack any installers/coinstallers and just use the resources from sysclass.dll for icons:
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.1394-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.61883-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.AVC-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.BIOMETRICDEVICE-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.COMPUTER-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.DOT4-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.DOT4PRINT-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.FDC-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.FLOPPYDISK-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.HDC-DriverClass*		# Sic! Even though Storprop handles this too
+Microsoft.Windows.Hardware.Devices.ClassInstaller.KEYBOARD-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.LEGACYDRIVER-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MEMORY-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MOUSE-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MTD-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MULTIFUNCTION-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MULTIPORTSERIAL-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.PCMCIA-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SBP2-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SCSIADAPTER-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SDHOST-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SECURITYDEVICES-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SYSTEM-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.UNKNOWN-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.USB-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.VOLUME-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.VOLUMESNAPSHOT-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.WCEUSBS-DriverClass*

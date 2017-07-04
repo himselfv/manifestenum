@@ -1,0 +1,5 @@
+# ksetup.exe
+# Performs tasks related to setting up and maintaining Kerberos protocol and the Key Distribution Center.
+# https://technet.microsoft.com/en-us/library/hh240190(v=ws.11).aspx
+
+Microsoft-Windows-Security-Tools-Ksetup*

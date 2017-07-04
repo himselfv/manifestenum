@@ -1,0 +1,12 @@
+# Policy based QoS
+
+Microsoft-Windows-QoS
+Microsoft-Windows-QoS.*
+Microsoft-Windows-netpacerinf*		# INF for pacer.sys from the above
+
+Server-Help-CHM.qos*
+
+# MMC Snap-in and its instrumentation (also in MMC)
+Microsoft-Windows-Networking-EQoSSnapin*
+Microsoft-Windows-Networking-EQoS
+Microsoft-Windows-Networking-EQoS.*

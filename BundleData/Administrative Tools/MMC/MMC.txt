@@ -12,6 +12,8 @@ MMCFxCommon
 Microsoft-Windows-COM-ComPlus-MSC*
 Microsoft-Windows-DNS-ClientSnapin*
 Microsoft-Windows-Networking-EQOSSnapin*
+Microsoft-Windows-Networking-EQoS			# Instrumentation for EQOSSnapin
+Microsoft-Windows-Networking-EQoS.*
 Microsoft-Windows-Networking-NapClientConfigUI*
 Microsoft-Windows-TPM-AdminSnapin*
 Microsoft-Windows-SecurityConfigurationManagement-PolicyTools-Ex*

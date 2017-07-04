@@ -1,0 +1,4 @@
+# USB Hub and Composite Device Drivers
+
+usb.inf*				# The driver
+Microsoft-Windows-USB-USBHUB-Events*	# Instrumentation

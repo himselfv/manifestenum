@@ -1,0 +1,8 @@
+# ATA port interface and standard ATA controller drivers
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/storage/ata-port-driver
+
+# Windows provides several interfaces through which the storage bus drivers may tie into the system. Storport is the most performant one, SCSI and ATA ports are also available.
+# This package contains ATA port and a bunch of IDE (== Parallel ATA) controller drivers based on it.
+
+mshdc.inf*				# Contains a bunch of drivers, including atapi.sys, ataport.sys, various *ide.sys
+Microsoft-Windows-ATAPort*		# Instrumentation for ataport.sys

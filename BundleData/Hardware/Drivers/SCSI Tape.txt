@@ -1,0 +1,4 @@
+# SCSI Tape Class Driver
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.TAPEDRIVE-DriverClass*
+tape.inf*

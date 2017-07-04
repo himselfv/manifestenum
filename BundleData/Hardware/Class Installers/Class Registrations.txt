@@ -1,0 +1,4 @@
+# This covers all Microsoft.Windows.Hardware.Devices.ClassInstaller.* components.
+# Many are covered in their own packages, but we don't want to miss any.
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.*

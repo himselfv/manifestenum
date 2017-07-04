@@ -1,0 +1,4 @@
+
+# Self-contained
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.WPD-DriverClass*

@@ -1,0 +1,5 @@
+# Medium Changer Class Driver
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MEDIUMCHANGER-DriverClass*
+# Sic! Even though it's titled "Class Installer", it contains the driver itself too.
+# Requires storprop class installer DLL.

@@ -1,0 +1,6 @@
+# Smart Card Devices Class Installers
+# Requires: Smart Card Subsystem
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDFILTER-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDREADER-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDS-DriverClass*

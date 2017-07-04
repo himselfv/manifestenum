@@ -1,0 +1,5 @@
+# SCSI Port Driver
+
+# Windows provides several interfaces through which the storage bus drivers may tie into the system. Storport is the most performant one, SCSI and ATA ports are also available.
+
+Microsoft.Windows.Software.System.System_Services.Base.SCSI_Port_Driver*

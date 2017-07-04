@@ -1,0 +1,5 @@
+# Media Center Extender
+# MCEs are devices that are configured to connect over a computer network to a computer running certain editions of XP, 7 or 8 to stream the computer's media center functions to the Extender device.
+# https://en.wikipedia.org/wiki/Windows_Media_Center_Extender
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MediaCenterExtender-DriverClass*

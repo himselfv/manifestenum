@@ -1,0 +1,12 @@
+# SetupAPI
+# A powerful, old and widely used API for installing and enumerating installed devices.
+
+Microsoft-Windows-SetupAPI*
+
+# See also: Hardware\Class installers - for the components which handle actual installation/uninstallation and property pages for the devices, as well as for device class declarations.
+
+# Inf Default Installer
+# A simple wrapper which runs the default section install for a given INF file.
+# Traditionally this was done by calling into setupapi.dll,InstallHinfSection, but on Vista+ we have this tool.
+Microsoft-Windows-InfDefaultInstall*
+# Grouped with SetupAPI because SetupAPI registers it as a handler for inf files at the moment anyway.

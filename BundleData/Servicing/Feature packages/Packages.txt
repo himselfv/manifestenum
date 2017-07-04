@@ -15,3 +15,5 @@ Win7-Microsoft-Windows-Graphics-Deployment*
 Win7-Microsoft-Windows-Printing-Deployment*		# IRL contains just XpsPrinting, but the name puts it here
 
 Microsoft-Windows-Client-Features-Deployment*
+
+Microsoft-Windows-Storage-Drivers*

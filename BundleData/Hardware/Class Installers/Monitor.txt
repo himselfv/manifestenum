@@ -1,0 +1,4 @@
+# Monitor Class Installer
+# Self-contained
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MONITOR-DriverClass*

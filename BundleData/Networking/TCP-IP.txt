@@ -3,4 +3,7 @@ Microsoft-Windows-TCPIP
 Microsoft-Windows-TCPIP.*
 Microsoft-Windows-TCPIP-*
 
-Microsoft-Windows-TCPIP6Helper
+Microsoft-Windows-TCPIP6Helper*
+
+# Seems to provide support for legacy TCP/IP registry settings
+Microsoft-Windows-Legacy-Registry-Support-TCPIP*

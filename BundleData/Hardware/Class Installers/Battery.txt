@@ -1,0 +1,4 @@
+# Battery Class Installer and Co-installer
+# Self-contained
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.BATTERY-DriverClass*

@@ -14,3 +14,5 @@ Microsoft-Windows-RemoteDesktop*
 # RemoteFX is a Terminal Services protocol enhancements
 Microsoft-Windows-RemoteFS*
 Microsoft-Windows-RemoteFX*
+
+microsoft-windows-RDSH-Events*		# Instrumentation for RDPWD.sys from this bundle

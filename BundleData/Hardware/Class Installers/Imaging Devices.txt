@@ -1,0 +1,4 @@
+# Imaging Device Class Installer
+# Requires sti_ci.dll from Windows Image Acquisition
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.IMAGE-DriverClass*

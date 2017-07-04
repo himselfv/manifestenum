@@ -1,0 +1,7 @@
+# Storport driver
+# A storage port driver
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/storage/storport-driver
+
+# Windows provides several interfaces through which the storage bus drivers may tie into the system. Storport is the most performant one (SCSI and ATA ports are also available).
+
+Microsoft-Windows-StorPort*

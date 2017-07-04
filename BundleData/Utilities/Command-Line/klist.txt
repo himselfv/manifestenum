@@ -1,0 +1,5 @@
+# klist.exe
+# Displays a list of currently cached Kerberos tickets.
+# https://technet.microsoft.com/en-us/library/hh134826(v=ws.11).aspx
+
+Microsoft-Windows-Security-Tools-Klist*

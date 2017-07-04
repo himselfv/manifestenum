@@ -1,0 +1,4 @@
+# Modem Class Installer
+# Requires mdminst.dll (Modems)
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MODEM-DriverClass*

@@ -1,0 +1,16 @@
+Contains class installers/co-installers and property page providers.
+
+* Class installers and co-installers are functions which run on the installation of a device of a particular reported class.
+* Property pages are available via API for each device according to its type, and can be seen for example in Device Manager's device Properties.
+
+Class installers and property pages are usually provided together.
+
+Classes have to be registered in the OS. This is done in the registry, but the assemblies declare this with <deviceClass> XML element. Often the declaration lies in a separate assembly.
+
+Not to be confused with class drivers, which are general purpose drivers which can handle a broad variety of similar devices.
+
+Requirements:
+Many standard installers rely on resources from SetupAPI, sometimes from imageres.dll. Some non-standard installers rely on the presence of their particular component, which may provide the installer code.
+
+
+The contents is a bit unstructured at the moment.

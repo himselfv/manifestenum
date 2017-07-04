@@ -1,0 +1,5 @@
+# setspn.exe / Set ServicePrincipalName
+# Reads, modifies, and deletes the Service Principal Names (SPN) directory property for an Active Directory service account.
+# https://technet.microsoft.com/en-us/library/cc731241(v=ws.11).aspx
+
+Microsoft-Windows-Security-Tools-Setspn*

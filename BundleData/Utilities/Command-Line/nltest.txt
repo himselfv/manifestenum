@@ -1,0 +1,5 @@
+# nltest.exe (probably "Netlogon test")
+# Performs a number of network administrative functions related to Netlogon.
+# https://technet.microsoft.com/en-us/library/cc731935(v=ws.11).aspx
+
+Microsoft-Windows-Security-Tools-Nltest*

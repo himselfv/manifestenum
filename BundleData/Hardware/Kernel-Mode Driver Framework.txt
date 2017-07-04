@@ -4,3 +4,6 @@
 # Related to User-Mode Driver Framework, but a separate thing.
 
 Microsoft-Windows-WDF-Kernel*
+
+# "Pass-through HID to KMDF driver filter". Probably required for KMDF interoperability.
+Microsoft-Windows-MsHidKmdf*

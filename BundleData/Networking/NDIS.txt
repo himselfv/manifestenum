@@ -13,4 +13,5 @@ Microsoft-Windows-NDIS-*
 
 Microsoft-Windows-ndiscap		# NDIS Packet Capture Filter Driver
 Microsoft-Windows-ndiscap.*
+Microsoft-Windows-ndiscapinf*		# INF file for the above
 Microsoft-Windows-NDISUIO*		# User mode I/O interface driver for NDIS

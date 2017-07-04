@@ -1,0 +1,7 @@
+# Port Class Installer and Property Page Provider
+# Provides installers:
+#   PortsClassInstaller
+# Property pages:
+#   ParallelPort, SerialPort, SerialDisplayAdvancedSettings
+
+Microsoft-Windows-msports*

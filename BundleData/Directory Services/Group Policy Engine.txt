@@ -44,4 +44,6 @@ Microsoft-Windows-GroupPolicy-Gptext*		# Wireless and QoS Packet Scheduler CSE
 Microsoft-Windows-GroupPolicy-PolicyMaker*	# PolicyMaker CSE
 Microsoft-Windows-GroupPolicy-Script*		# Script CSE
 
+Microsoft-Windows-Security-Audit-Configuration-Client*	# Security Audit CSE
+
 Microsoft-Windows-GroupPolicy-ClientExtensions-Deployment*	# Deployment

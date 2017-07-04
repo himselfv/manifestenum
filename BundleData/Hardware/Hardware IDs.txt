@@ -1,5 +1,3 @@
 Microsoft-Windows-CompositeBus*		# ROOT\CompositeBus\0000
-
-
-
-Microsoft-Windows-ATAPort*		# Instrumentation and strings
+Microsoft-Windows-PnpSwenum*		# ROOT\swenum\0000
+Microsoft-Windows-ROOTENUM-TEMP*	# ROOT\RDP_KBD\0000, ROOT\RDP_MOU\0000

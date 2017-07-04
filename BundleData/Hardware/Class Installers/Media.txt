@@ -1,0 +1,3 @@
+# Media Class Installer
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.MEDIA-DriverClass*	# Requires mmci.dll (Audio Core)

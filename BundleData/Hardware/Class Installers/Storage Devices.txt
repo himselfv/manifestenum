@@ -1,0 +1,10 @@
+# Storage Class Installers / Storage Property Page Provider
+# Provides installers and additional property pages for CDs, DVDs and Disk Devices and Volumes. Some of these are also available in Standard Class Installers, for what it's worth.
+
+Microsoft-Windows-Storprop
+Microsoft-Windows-Storprop.*
+Microsoft-Windows-Storprop-*
+
+# Class declarations
+Microsoft.Windows.Hardware.Devices.ClassInstaller.CDROM-DriverClass*		# Requires sysclass.dll, imageres.dll
+Microsoft.Windows.Hardware.Devices.ClassInstaller.DISKDRIVE-DriverClass*	# Requires sysclass.dll, imageres.dll

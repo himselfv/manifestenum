@@ -1,0 +1,4 @@
+Microsoft-Windows-DXG		# DirectX Graphics
+Microsoft-Windows-DXG.*
+Microsoft-Windows-UserOS	# "DirectX API Driver"
+Microsoft-Windows-UserOS.*

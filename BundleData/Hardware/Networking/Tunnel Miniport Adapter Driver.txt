@@ -1,0 +1,8 @@
+# Tunnel Miniport Adapter Driver / Microsoft TUN Adapter
+# Provides tunneling or bridging between network devices. May be required for IPv6 over IPv4.
+
+# Miniport adapter drivers manage the network interface cards (NIC) and provide a standard interface to NDIS and other higher-level frameworks.
+
+Microsoft-Windows-Tunnel
+Microsoft-Windows-Tunnel.*
+Microsoft-Windows-Tunnel-*

@@ -1,0 +1,4 @@
+# Bluetooth class installer
+# Self-contained
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.BLUETOOTH-DriverClass*

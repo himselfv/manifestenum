@@ -22,6 +22,8 @@ Microsoft-Windows-ActionQueue-*			# ActionQueue is a DLL, part of Windows-Setup.
 
 Microsoft.Windows.Configuration.Online.Setup*	# Some trashy .cmd script which runs secinit.exe and oobe/setup.exe
 
+Microsoft-Windows-Windeploy-Instrumentation*
+
 Microsoft-Windows-SetupCl			# "System cloning tool"
 Microsoft-Windows-SetupCl.*
 Microsoft-Windows-SetupCl-*
@@ -33,3 +35,7 @@ Microsoft-Windows-Secinit-*
 
 Microsoft-Windows-SetupPhase*			# Category definition: "SetupPhase category"
 Microsoft-Windows-SetupUGC-*			# Huh?
+
+Microsoft-Windows-PnpIbs*			# "Plug and Play module for Image Based Setup"
+
+Setup-UXWizard-ClientImages*

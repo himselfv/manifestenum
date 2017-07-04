@@ -1,0 +1,4 @@
+# Printer Class Installer
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.PRINTER-DriverClass*		# Requires the assembly below
+Microsoft-Windows-Printing-ClassInstallerAndPrintUI-Ntprint*

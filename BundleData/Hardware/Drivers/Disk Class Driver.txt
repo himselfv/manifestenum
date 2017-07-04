@@ -1,0 +1,5 @@
+# Disk Class Driver
+
+disk.inf*			# The driver itself
+Microsoft-Windows-Disk		# Instrumentation
+Microsoft-Windows-Disk.*

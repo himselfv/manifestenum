@@ -1,0 +1,4 @@
+
+
+Microsoft-Windows-Cdrom			# Instrumentation
+Microsoft-Windows-Cdrom.*

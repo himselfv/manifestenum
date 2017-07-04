@@ -1,0 +1,10 @@
+# Syskey
+# Encrypts the hashed password information in a SAM database. Once encrypted, the database cannot be decrypted.
+# https://en.wikipedia.org/wiki/Syskey
+
+# The Security Account Manager (SAM) is a database file in Windows XP, Vista, and 7 that stores users' passwords. The passwords are stored in a hashed format.
+# https://en.wikipedia.org/wiki/Security_Accounts_Manager
+
+# Syskey allows the administrator to encrypt the SAM database to make rainbow scans harder. Optionally the system can be configured to ask for boot time SAM password or key on removable storage (otherwise the key is stored in the registry and is accessible).
+
+Microsoft-Windows-Security-Syskey*

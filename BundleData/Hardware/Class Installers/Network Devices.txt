@@ -1,0 +1,8 @@
+# Network Devices Class Installers
+# Requires netcfgx.dll (NDIS component) which containes the actual installer
+
+Microsoft.Windows.Hardware.Devices.ClassInstaller.INFRARED-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.NET-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.NETCLIENT-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.NETSERVICE-DriverClass*
+Microsoft.Windows.Hardware.Devices.ClassInstaller.NETTRANS-DriverClass*
