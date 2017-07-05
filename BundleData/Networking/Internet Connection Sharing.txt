@@ -11,3 +11,12 @@ Microsoft-Windows-SharedAccess*
 Microsoft-Windows-ALG
 Microsoft-Windows-ALG.*
 Microsoft-Windows-ALG-*
+
+
+# Internet Connection Sharing Configuration / hnetcfg.dll
+# Provides a few property pages and service functions to configure Internet Connection Sharing, firewall settings and bridging.
+# Ties into network connections folder.
+# Even though this mentions Home Network, this is unrelated to Home Group feature.
+Microsoft-Windows-InternetConnectionSharingConfig*
+# Some pages that are certainly served by this module are "Sharing settings" page in network connections properties and it's "Settings" sub-dialog.
+

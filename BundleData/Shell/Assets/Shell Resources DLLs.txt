@@ -1,0 +1,9 @@
+# Shell Resources DLLs
+# Contain libraries of icons, images and other resources used throughout the shell (and often in unrelated apps).
+# Do not export any functions.
+
+Microsoft-Windows-imageres		# "Shell Image Resources DLL"
+Microsoft-Windows-imageres.*
+
+Microsoft-Windows-imagesp1		# "SP1 Image Resources DLL"
+Microsoft-Windows-imagesp1.*

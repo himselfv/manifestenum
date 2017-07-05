@@ -3,3 +3,11 @@ Microsoft-Windows-Globalization
 Microsoft-Windows-Globalization-PhoneNumberFormatting
 
 Microsoft-Windows-FontGroups	# Globalization-FontGroups
+
+
+# Windows.Globalization.dll is sometimes shipped as jsIntl.dll on W7, separately from UWP libs.
+# It definitely covers the same set of APIs as it registers interfaces with similar set of names, and its internal name is set to "Windows.Globalization.dll"
+# Perhaps some components which got backported into W7 rely on it.
+# For one, Chakra (Edge's Javascript engine) explicitly tries to load it instead of Windows.Globalization when on W7, so maybe this is why it's called *js*Intl. But Edge's not even in W7 by default.
+Microsoft-jsIntl
+Microsoft-jsIntl.*

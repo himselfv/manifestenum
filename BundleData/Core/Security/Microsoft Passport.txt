@@ -9,3 +9,10 @@
 
 Microsoft-Windows-Security-NGC-*
 Microsoft-OneCore-Security-NGC-*
+
+
+# "Microsoft Identities Client Runtime Library"
+# "Exports functions for using and managing Passport authentication in a Windows desktop application"
+# Interacts with http://clientconfig.passport.net/ppcrlconfig.srf
+# Spotted on W7, where no other Passport assemblies was present. Tentatively placed here.
+Microsoft-Windows-IdentityCRL*

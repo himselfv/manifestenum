@@ -1,0 +1,18 @@
+# Device Properties
+# Shows device properties window (the one that can be accessed from Device Manager).
+
+# Undocumented utility app. Accepts 2 or 3 parameters in this order:
+#   DeviceProperties.exe [HWND] <DeviceId>
+# Where:
+#   HWND is the window handle for the parent window (can be omitted)
+#   DeviceId is the full ID of the device to show properties for (in the properties itself this is called "Device Instance Path", not "Device ID").
+#   Example:
+#     IDE\CDROMTSSTCORP_CDDVDW_SH-S223C________________SB05____\5&2CC8A95A&0&2.0.0
+
+# Calls devmgr.dll's DevicePropertiesW(hWnd, NULL, DeviceID, 0) to show the property window.
+
+Microsoft-Windows-DeviceProperties
+Microsoft-Windows-DeviceProperties.*
+Microsoft-Windows-DeviceProperties-*
+
+# Does not output anything if called wrongly.

@@ -13,3 +13,5 @@ Microsoft-Windows-ELS-Hyphenation*
 
 
 Microsoft-Windows-IMM32*		# IMM = Input Method Manager. These days probably a compability lib.
+
+Microsoft-Windows-LCPhrase*		# lcphrase.tbl and lcptr.tbl - seems to be related to CJK word prediction

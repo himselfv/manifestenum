@@ -37,3 +37,4 @@ Microsoft-Windows-Shell-InternetExplorer*		# msieftp
 Microsoft-Windows-Shell-OptionalComponents*
 Microsoft-Windows-Shell-Registration*
 
+Microsoft-Windows-ImageBasedSetup-IE-Base-Deployment*
