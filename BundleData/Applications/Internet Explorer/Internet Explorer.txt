@@ -23,3 +23,5 @@ Microsoft-Windows-IEInstal*
 Microsoft-Windows-InetRes-Adm*		# Group Policy Definitions
 Microsoft-Windows-JS-DebuggerIDE*
 Microsoft-Windows-MSLS31*
+
+WinINet.ETW*			# ETW info for WinInet.dll

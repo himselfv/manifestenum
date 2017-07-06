@@ -38,3 +38,4 @@ Microsoft-Windows-Shell-OptionalComponents*
 Microsoft-Windows-Shell-Registration*
 
 Microsoft-Windows-ImageBasedSetup-IE-Base-Deployment*
+Microsoft-Windows-KernelMode-Minimal*

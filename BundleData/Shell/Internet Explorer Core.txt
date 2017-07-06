@@ -4,3 +4,4 @@
 # many long required not only for IE but as a standalone parts.
 
 Microsoft-Windows-IE-*
+WinINet.ETW*			# ETW info for WinInet.dll
