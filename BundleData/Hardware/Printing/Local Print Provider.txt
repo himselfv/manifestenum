@@ -1,0 +1,5 @@
+# Local Print Provider
+# A Print Provider which handles printers attached via locally available access ports
+# Supported ports are provided via Port Monitor DLLs and include local printing ports, USB ports as well as TCP/IP ports and others.
+
+Microsoft-Windows-Printing-Spooler-Core-Localspl*

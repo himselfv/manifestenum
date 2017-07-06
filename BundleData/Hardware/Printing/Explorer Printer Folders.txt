@@ -1,0 +1,7 @@
+# Explorer Printer Folder Extensions
+# Includes:
+#   Printers and Faxes
+#   Printers folder on shared Network PCs
+#   Printer Shortcuts profile folder
+
+Microsoft-Windows-Printing-ClassInstallerAndPrintUI-PRNFLDR*

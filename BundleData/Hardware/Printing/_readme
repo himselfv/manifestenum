@@ -1,0 +1,31 @@
+Printing glossary:
+
+== Print Providers
+Provide printer objects with job control and management capabilities. Hide away all the details of printer functionality.
+https://docs.microsoft.com/en-us/windows-hardware/drivers/print/introduction-to-print-providers
+
+Print providers are registered in
+  HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print\Providers\
+
+Third-party print providers were supported but are deprecated and discouraged since W10.
+
+One default print provider is Local Print Provider which also handles TCP/IP and other connections.
+
+The important point with Print Providers is that a Print Provider manages the printing queue. TCP/IP printer available from Local Print Provider will have local print queue, while with LanMan Print Provider the same printer can be managed by the server it's connected to.
+
+
+
+== Monitors
+Local Print Provider can connect to printers via a number of ports, provided by Port Monitors.
+https://docs.microsoft.com/en-us/windows-hardware/drivers/print/writing-a-print-monitor
+
+Typical examples:
+  Local printing port
+  USB port
+  TCP/IP port
+
+Port monitors are registered in:
+  HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print\Monitors\
+
+Third-party port monitors are supported. Print providers other than Local Print Provider do not use Port Monitors.
+

@@ -1,0 +1,5 @@
+# Internet Printing Protocol (IPP) Provider
+# A Print Provider which handles printers accessible via the Internet Printing Protocol.
+# https://en.wikipedia.org/wiki/Internet_Printing_Protocol
+
+Microsoft-Windows-Printing-InternetPrinting*

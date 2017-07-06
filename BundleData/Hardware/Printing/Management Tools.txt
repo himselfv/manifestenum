@@ -1,0 +1,11 @@
+# Printer Management Tools
+# Includes an MMC snap-in and a command-line scripting utility.
+
+# PushPrinterConnections: command-line utility which deploys/removes printer connections according to Group Policy.
+# Intended for use in logon scripts.
+# https://technet.microsoft.com/en-us/library/hh875629(v=ws.11).aspx
+
+Microsoft-Windows-Printing-ClassInstallerAndPrintUI-PMCPPC
+Microsoft-Windows-Printing-ClassInstallerAndPrintUI-PMCPPC.*
+Microsoft-Windows-Printing-ClassInstallerAndPrintUI-PMCPPC-*
+Microsoft-Windows-Printing-Spooler-Pmc-Licensing*

@@ -12,3 +12,9 @@ Microsoft-Windows-Component-OpcOM.*
 Microsoft-Windows-Component-OpcOM-*
 Microsoft-Windows-Component-XpsOMAndStreaming*	# Required for XpsPrint
 Microsoft-Windows-Component-XpsRasterService*
+
+# Print Ticket API
+# A print ticket is an XPS document component that contains the preferred printer settings for a page in a document, or for an entire document, or for a print job that contains one or more documents.
+# Print tickets only make sense with XPS Print API.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ff686808(v=vs.85).aspx
+Microsoft-Windows-Printing-PrintTicket-*

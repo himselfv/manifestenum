@@ -1,7 +1,17 @@
 
+Microsoft-Windows-Printing-Core		# W7: Deployment
+Microsoft-Windows-Printing-Core.*
+
 # Print spooler
 Microsoft-Windows-Printing-Spooler*
+
+#- Microsoft-Windows-Printing-Spooler-Core-Localspl*
+#- Microsoft-Windows-Printing-Spooler-Networkclient*
+#- Microsoft-Windows-Printing-Spooler-Pmc-Licensing*
+
+
 Microsoft-Windows-Printing-Server-Isolation*
+Microsoft-Windows-Printing-BidiCommunicationSupport*		# "Supplies Bidi COM interfaces for the Print Spooler"
 
 Microsoft-Windows-Printing-OLEPRN*
 
@@ -9,3 +19,4 @@ Microsoft-Windows-Printing-OLEPRN*
 # Misc
 Microsoft-Windows-Printing-SeparatorPages*
 
+Microsoft-Windows-Printing-GroupPolicies*		# Group Policies for Printing

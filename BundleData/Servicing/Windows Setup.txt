@@ -39,3 +39,5 @@ Microsoft-Windows-SetupUGC-*			# Huh?
 Microsoft-Windows-PnpIbs*			# "Plug and Play module for Image Based Setup"
 
 Setup-UXWizard-ClientImages*
+
+Microsoft-Windows-NetCfg*			# "WinPE network installer". Probably runs on windows setup.

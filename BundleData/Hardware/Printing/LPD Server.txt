@@ -1,0 +1,5 @@
+# LPD Server
+# Accepts print requests from network clients via the Line Printer Daemon protocol (used on Unix/Linux PCs).
+# https://en.wikipedia.org/wiki/Line_Printer_Daemon_protocol
+
+Microsoft-Windows-Printing-LPDPrintService*

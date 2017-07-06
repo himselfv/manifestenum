@@ -1,0 +1,7 @@
+# LPR Printing
+# Prints to most Unix exposed printers on the network via the Line Printer Daemon protocol.
+# https://en.wikipedia.org/wiki/Line_Printer_Daemon_protocol
+
+# Requires Local Print Provider
+
+Microsoft-Windows-Printing-LPRPortMonitor*

@@ -1,0 +1,7 @@
+# Web Services for Devices Based Printing
+# Print Monitor which prints to devices that supports the Web Service for Devices printing protocol. See Web Services for Devices.
+
+# Requires Local Print Provider
+
+Microsoft-Windows-Printing-WSDPortMonitor*
+Microsoft-Windows-Printing-WSDPrintProxy*

@@ -1,0 +1,8 @@
+# Local Printing
+# Print Monitor which prints to devices attached to local print ports and to USB ports.
+
+# Requires Local Print Provider
+
+Microsoft-Windows-Printing-LocalPrinting
+Microsoft-Windows-Printing-LocalPrinting.*
+Microsoft-Windows-Printing-LocalPrinting-*
