@@ -1,9 +1,11 @@
-# COM+ is a distributed extension for COM which let you instantiate
-# objects on any computer with which mutual trust can be established.
+# DCOM:
+# An extension for COM which lets you instantiate objects on any computer with which trust can be established.
 
-# Clumsy and dubiously engineered, it never hit off in popularity,
-# but it's sometimes used as a remoting solution,
-# and by this time some technologies rely on it.
+# COM+
+# An extension for DCOM which adds some enterprise grade features (transaction management, instance management, role-based security).
+# Was originally called "Microsoft Transaction Manager"
+# https://en.wikipedia.org/wiki/Microsoft_Transaction_Server
+# Clumsy and dubiously engineered, it never grew that popular outside of enterprise.
 
 Microsoft-Windows-COM-ComPlus
 Microsoft-Windows-COM-ComPlus.*

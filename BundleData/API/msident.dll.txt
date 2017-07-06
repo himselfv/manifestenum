@@ -1,0 +1,18 @@
+# msident.dll
+# A deprecated API which long ago provided enumeration of user accounts (here called identities), subscription to logon/logoff/user change events and the ability to query user to login / create new account.
+# Deprecated since XP, replaced by modern-day APIs, probably not functioning but still shipped for compability.
+# W7
+
+# Contains such interfaces as: IEnumUserIdentity, IIdentityChangeNotify, handles messages such as WM_IDENTITY_CHANGED.
+# See for example: 
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/bb761932(v=vs.85).aspx
+
+# Seems to have been historically related to Outlook Express, but the particulars are unknown.
+
+Microsoft-Windows-msident
+Microsoft-Windows-msident.*
+
+# Even more trimmed down version of the same library under a different name.
+No code, only a few resources remain.
+Microsoft-Windows-msidntld
+Microsoft-Windows-msidntld.*

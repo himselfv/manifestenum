@@ -1,0 +1,10 @@
+COM, OLE and all their enhancement technologies.
+
+COM and OLE were developed simultaneously (COM grew out of OLE 1.0) and there exists a lot of confusion as to what name refers to what functionality.
+Rule of thumb:
+- COM is the standards for interfaces, reference counting and marshalling
+- DCOM is marshalling between computers
+- COM+ is an extension over DCOM with some enterprise services
+- OLE is object, control and application embedding
+- OLE Automation is IDispatch, variant and scripting support
+- ActiveX is control embedding in web pages

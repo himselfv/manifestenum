@@ -1,0 +1,6 @@
+
+# W7
+# Contains idstore.dll which is loaded when you open "Associate internet service IDs with Windows accounts" in the Control Panel.
+# This framework allows you to install internet service ID providers (similar to how it's done on Android) and this DLL probably provides an API to manage your identities.
+
+Microsoft-Windows-Security-IdentityStore*

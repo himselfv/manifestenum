@@ -1,6 +1,9 @@
 
 # Unknown empty packages
 
+Microsoft-Windows-COMBox			# empty, meaning unclear
+Microsoft-Windows-COMBox.*
+
 Microsoft-Windows-ezap
 Microsoft-Windows-ezap.*	# W7
 
@@ -17,6 +20,7 @@ Microsoft-Windows-LocalizedDrivers-*		# Contains a single cab with a single empt
 
 Microsoft-Windows-ServicePackResources*		# "Temporary resources from XP SP2", empty. W7.
 
-Microsoft-Windows-Settings*			# Defines some kind of settings schema
+Microsoft-Windows-Settings			# Defines some kind of settings schema
+Microsoft-Windows-Settings.*
 
 Microsoft.Windows.SystemCompatible*

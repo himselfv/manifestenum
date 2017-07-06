@@ -1,0 +1,4 @@
+# ActiveX proxy DLLs
+# Marshaller code for ActiveX standard interface. Required for ActiveX to function (the ActiveX support itself has to be in the browser).
+
+Microsoft-Windows-ActiveXProxy*

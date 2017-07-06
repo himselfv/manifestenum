@@ -1,0 +1,22 @@
+# OLE / Object Linking and Embedding
+# A old and well known COM-based framework to embed or link to sub-documents in any compatible format and to display and edit them inline, integrating the editor application into your own interface.
+# https://en.wikipedia.org/wiki/Object_Linking_and_Embedding
+
+# For example, Microsoft Word document may contain Graph objects (foreign documents) created by and handled by Microsoft Graph library. When you double-click the graph, Microsoft Graph editing interface is integrated into Word interface.
+
+# A set of interfaces and contracts describes how to pass around and store foreign sub-documents (objects), render them, load their handler application and embed its UI elements into your own UI.
+
+# OLE also defines OCX (OLE Control Extension), a way to develop and use cross-language custom user interface elements. ActiveX technology is based on OLE.
+
+# OLE also introduces OLE Automation, a COM-based setup to marshal data and call interfaces without knowing their exact function definitions. Compatible objects implement IDispatch and provide methods to call functions by their textual name and pass parameters in the limited set of supported formats.
+# https://en.wikipedia.org/wiki/OLE_Automation
+
+Microsoft-Windows-OLE-Automation*			# Core (oleaut32.dll)
+Microsoft-Windows-OLE-Automation-AsyncFilters*		# "Picture filters used by the IPicture from oleaut32"
+Microsoft-Windows-OLE-Automation-Legacy*		# Legacy olepro32.dll library, mostly forwarding to oleaut32.
+Microsoft-Windows-OLE-Automation-Legacy-Stdole32*	# Stdole32.tlb type library
+Microsoft-Windows-OLE-Automation-StdOle2*		# Stdole2.tlb
+Microsoft-Windows-COM-OleUI*				# Standard OLE dialogs
+Microsoft-Windows-COM-LegacyOLE*			# OLE 2.1 16/32 interoperability
+
+# Some OLE functions are widely used while others have not gained much popularity outside of a few well done examples (Office applications are the main ones).

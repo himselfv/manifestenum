@@ -1,0 +1,7 @@
+# Directory Services Object Picker / DS Object Picker
+# A well-known and widely used dialog which allows the user to enter or select a user, group, computer or other entity from those available in the Active Directory or locally.
+# Applications can use it programmatically via COM.
+# https://msdn.microsoft.com/en-us/library/ms676973.aspx
+
+# An example of this dialog can be seen when you configure permissions for files and folders and have to specify a user or group.
+Microsoft-Windows-Object-Picker*

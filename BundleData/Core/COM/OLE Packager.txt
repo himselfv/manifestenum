@@ -1,0 +1,4 @@
+# OLE Packager
+# Allows a non-OLE object to be "packaged" so it can be embedded into an OLE client.
+Microsoft-Windows-packager
+Microsoft-Windows-packager.*
