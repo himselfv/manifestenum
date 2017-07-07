@@ -24,3 +24,7 @@ Microsoft-Windows-Settings			# Defines some kind of settings schema
 Microsoft-Windows-Settings.*
 
 Microsoft.Windows.SystemCompatible*
+
+Microsoft-Win32kCapabilities-Capabilities*	# W10 empty
+Microsoft-Windows-BuildFlighting*		# W10 empty deployment, normal and localization assemblies
+

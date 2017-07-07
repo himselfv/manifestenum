@@ -56,6 +56,8 @@ Microsoft-Windows-SF-CAPI2*		# Registers the service, and not much more
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa376210(v=vs.85).aspx
 Microsoft-Windows-bcrypt-dll*			# Cryptographic configuration and primitives
 Microsoft-Windows-bcrypt-primitives-dll*
+Microsoft-Windows-BCRYPT-Events*		# W10
+Microsoft-Windows-BCrypt.*			# W10, Languages
 Microsoft-Windows-ncrypt-dll*			# Data Protection, Key Storage, SSL API, Helper functions
 Microsoft-Windows-ncryptui-dll*			# User prompt helper (non-public)
 Microsoft-Windows-tokenbinding-dll*		# Token Binding API (W10) # TODO: Verify that it matches
