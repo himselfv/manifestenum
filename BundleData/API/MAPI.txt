@@ -3,8 +3,12 @@
 # Initially meant for Outlook, but other vendors have plugged into this.
 # https://en.wikipedia.org/wiki/MAPI
 
-# Exists in Simple version (covers Outlook Express, ships with OS)
-# and Extended version (covers Outlook)
+# Exists in Simple version (covers Outlook Express, ships with OS) and Extended version (covers Outlook)
 Microsoft-Windows-Mapi
 Microsoft-Windows-Mapi.*
 Microsoft-Windows-Mapi-*
+
+# "Provides scripting support for SMTP and NNTP event sinks"
+# Provides COM interfaces for processing scripts of some kind. Seems to also be known as Exchange Scripting Support (older name?).
+Microsoft-Windows-Scripto
+Microsoft-Windows-Scripto.*

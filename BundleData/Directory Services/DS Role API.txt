@@ -1,0 +1,7 @@
+# DS Role API
+# Provides DsRole* family of API functions.
+# E.g. https://msdn.microsoft.com/en-us/library/ms676042(v=vs.85).aspx
+
+# Provides: API
+
+Microsoft-Windows-DSRole*

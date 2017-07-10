@@ -2,3 +2,6 @@
 
 # On the OSes which lack DHCP server, this is just a stub
 Microsoft-Windows-DHCPServerAPI*
+
+# Contains Dhcp*Ds and Store* families of APIs, neither of which is documented. The only explicitly importing DLL is DHCP server API. So I *suppose* this belongs here.
+Microsoft-Windows-dhcpds*
