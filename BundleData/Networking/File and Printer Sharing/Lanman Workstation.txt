@@ -1,0 +1,22 @@
+# Lanman / Samba (SMB)  / File and Printer sharing client
+# Requires LanmanProtocol
+
+# Workstation
+Microsoft-Windows-WorkstationService
+Microsoft-Windows-WorkstationService.*
+Microsoft-Windows-WorkstationService-*
+
+# SMB protocol redirectors (to allow SMB-style filenames) / network filesystem drivers
+Microsoft-Windows-SMBMiniRdr
+Microsoft-Windows-SMB10-MiniRdr
+Microsoft-Windows-SMB20-MiniRdr
+
+# Plugin for Network Diagnostics Framework
+Microsoft-Windows-SMBHelperClasses
+
+# Group Policy
+Microsoft-Windows-LanmanWorkstation-Adm
+
+# INF file which installs "Client for Microsoft Networks" (LanmanWorkstation and Lanman PrintServices)
+# Not needed initially because these assemblies install themselves, but adds this component to "Install network components" list which allows removing and reinstalling it.
+Microsoft-Windows-MSCLIENT-netmscli*

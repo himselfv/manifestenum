@@ -3,3 +3,4 @@
 
 Microsoft-Windows-Basic-Misc-Tools*	# expand.exe, netmsg.dll
 Microsoft-Windows-Core_Tools*		# osuninst.dll, msvcrt40.dll
+Microsoft-Windows-PhotoMinFeature*	# licenses for "Advanced Slideshow", "Make DVD"

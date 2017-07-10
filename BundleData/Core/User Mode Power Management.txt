@@ -1,0 +1,5 @@
+# User Mode Power Management Components
+# The power management itself is implemented in kernel.
+
+Microsoft-Windows-UserModePowerService*			# Manage power policy, power policy notifications delivery
+Microsoft-Windows-UserPowerManagement*			# Provides storage for system power settings, enables user-mode components to modify and apply these settings

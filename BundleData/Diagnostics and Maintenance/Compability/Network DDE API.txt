@@ -1,0 +1,6 @@
+# Network DDE (Dynamic Data Exchange) API
+# Enables processes to establish communication with processes running on different computers in a network.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa365778(v=vs.85).aspx
+# Vista+: Deprecated and no longer supported. All functions return NDDE_NOT_IMPLEMENTED.
+
+Microsoft-Windows-Nddeapi*

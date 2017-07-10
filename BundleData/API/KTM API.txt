@@ -1,0 +1,4 @@
+# Kernel Transaction Manager API
+# The manager itself is implemented in kernel core and needs no additional component.
+
+Microsoft-Windows-TransactionManagerApi*

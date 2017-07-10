@@ -2,6 +2,9 @@
 # Contain libraries of icons, images and other resources used throughout the shell (and often in unrelated apps).
 # Do not export any functions.
 
+Microsoft-Windows-pifmgr		# "Windows NT PIF Manager Icon Resources Library". Icons present since Windows 3.1!
+Microsoft-Windows-pifmgr.*
+
 Microsoft-Windows-imageres		# "Shell Image Resources DLL"
 Microsoft-Windows-imageres.*
 

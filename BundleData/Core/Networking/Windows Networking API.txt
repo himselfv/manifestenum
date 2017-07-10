@@ -1,11 +1,15 @@
-# Windows Networking API / WNet / MPR
+# Windows Networking API / WNet / MPR (Multiple Provider Router)
 # Presents an integrated list of available network connections, networks and resources in them.
 # Unifies data from multiple network provider DLLs, each for its own network type.
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa385406(v=vs.85).aspx
 
 # Implements the WNet* family of functions which manipulate network connections and enumerate their resources.
-
 # Also known by a name of its main component/DLL: Multiple Provider Router.
+
+# Hosts: MPR-NetworkProvider
+
+# A network provider is a DLL that implements the Network Provider API (at least NPGetCaps*) and registers with MPR to enable support for a specific network protocol.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa375500(v=vs.85).aspx
 
 Microsoft-Windows-MPR
 Microsoft-Windows-MPR.*

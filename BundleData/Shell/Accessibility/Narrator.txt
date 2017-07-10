@@ -1,0 +1,11 @@
+# Microsoft Narrator
+# Reads dialog boxes and window controls in a number of the more basic applications for Windows.
+# https://en.wikipedia.org/wiki/Microsoft_Narrator
+
+Microsoft-Windows-Narrator*
+Narrator			# Windows 7
+Narrator.*
+Narrator-*
+
+Microsoft-Windows-NativeHooks*		# "Narrator Native Hooks Handler"
+Microsoft-Windows-trapi*		# "Microsoft Narrator Text Renderer". No real API, index-only exports.

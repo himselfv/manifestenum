@@ -1,0 +1,8 @@
+# LDAP Client API
+# Client side C API that provides LDAP access.
+# https://en.wikipedia.org/wiki/LDAP
+
+# Widely used, e.g. by Certificate Services, AD Object Picker, kerberos diagnostic utils and others.
+
+# Contains wldap32.dll
+Microsoft-Windows-LDAP-Client*

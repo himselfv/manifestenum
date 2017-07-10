@@ -1,3 +1,7 @@
 # Windows Sockets (Winsock)
 
 Microsoft-Windows-Winsock*
+
+# Contains NapiNSP.dll ("Email Naming Shim Provider"), a WinSock service provider (recognizable by a NSPStartup export)
+# What it does is unclear.
+Microsoft-Windows-Naming-Provider-Infrastructure*

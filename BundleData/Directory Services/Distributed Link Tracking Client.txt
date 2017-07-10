@@ -1,0 +1,8 @@
+# Distributed Link Tracking Client
+# Transparently locates shortcut and OLE link targets after the files were moved within the computer or domain.
+# https://support.microsoft.com/en-us/help/312403/distributed-link-tracking-on-windows-based-domain-controllers
+
+# Works in conjunction with Distributed Link Tracking Server on a domain controller. Assigns each tracked object an unique ID in NTFS metadata, then notifies the server every time the tracked object is moved. Queries the server to locate the tracked object on another PC.
+# Not required. Without it, other empirical ways of locating the files may be employed.
+
+Microsoft-Windows-TrkWks*

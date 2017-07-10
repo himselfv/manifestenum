@@ -1,0 +1,17 @@
+# Advanced User Accounts Panel / "Map Network Drivers/Network Places Wizard"
+# Opens User accounts and passwords configuration window (what you get by control userpasswords2)
+
+# Contains:
+#   netplwiz.exe		== control userpasswords2
+#   netplwiz.dll
+#   control panel registration for the above
+
+# WARNING:
+#   netplwiz.DLL contains BOTH "Advanced User Accounts" AND "Map Network Drivers/Network Places Wizard".
+#   netplwiz assembly also ships lusrmgr.msc which is a thin wrapper for Local Users and Groups MMC snap-in (installed elsewhere).
+#   This is a mess.
+
+Microsoft-Windows-netplwiz
+Microsoft-Windows-netplwiz.*
+Microsoft-Windows-netplwiz-*
+

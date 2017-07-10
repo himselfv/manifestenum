@@ -17,6 +17,8 @@ Microsoft-Windows-WMI-*
 
 Microsoft-Windows-WmiPerf*
 
+# https://en.wikipedia.org/wiki/System_Management_BIOS
+Microsoft-Windows-MSSMBIOS*				# W7: Only contains a security definition
 
 # Third-party WMI entries
 # Many more are included in a single assembly and are not listed

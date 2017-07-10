@@ -1,0 +1,7 @@
+# Lanman Network Provider
+# A Windows Networking/MPR network provider for Lanman.
+# See MPR, https://msdn.microsoft.com/en-us/library/windows/desktop/aa375500(v=vs.85).aspx
+
+# Provides: MPR-NetworkProvider
+
+Microsoft-Windows-NTLanMan*

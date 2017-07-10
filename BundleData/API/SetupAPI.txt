@@ -2,6 +2,7 @@
 # A powerful, old and widely used API for installing and enumerating installed devices.
 
 Microsoft-Windows-SetupAPI*
+Microsoft-Windows-SPInf*		# Implements INF file processing for SetupAPI. Delay-loaded by it. Provides a long list of neat undocumented SpInf* family functions.
 
 # See also: Hardware\Class installers - for the components which handle actual installation/uninstallation and property pages for the devices, as well as for device class declarations.
 

@@ -1,0 +1,14 @@
+# Computer Browser Service
+# Maintains a list of computers on the network and provides it to other computers on request.
+
+# It's enough to run this only on one computer in the network. It's also not required if you just access the computers by IPs.
+# If several computers are running this, only one will be keeping the list at any given moment, the rest will be backups.
+
+Microsoft-Windows-Browser-D		# Deployment
+Microsoft-Windows-Browser-D.*		# Not all in MW-Browser-* is related
+Microsoft-Windows-Browser-D-*
+Microsoft-Windows-BrowserService*
+
+# Bowser.sys (sic)
+# Implements the kernel datagram receiver for the computer browser browser service.
+Microsoft-Windows-Bowser*
