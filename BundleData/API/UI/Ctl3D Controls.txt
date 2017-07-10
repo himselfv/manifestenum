@@ -1,0 +1,7 @@
+# Ctl3D Controls Library
+# A DLL that provides several standard controls (button, static text, combobox, checkbox, edit, list) to subclass.
+
+# Deprecated. Provided only in x86 form for compability.
+# These days similar controls are provided by Comctl32.dll (Common Controls).
+
+Microsoft-Windows-Ctl3D32*

@@ -1,0 +1,9 @@
+# File Risk Level API
+# Deprecated API which provides a single unnamed function. That function is documented as EstimateFileRiskLevel:
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/bb776413(v=vs.85).aspx
+
+# I think this was used in IE at some point and these days is probably kept for compability.
+
+# The DLL also contains MRTComponent_Generalize which is registered as one of SysPrep's generalization routines (removes all personal IDs and assigments from the OS before imaging). MRT is probably Malware Removal Tool which is older name for Microsoft Essentials. So maybe this was used there, too. I have no idea whether it does anything useful these days.
+
+Security-Malware-Windows-FileHasCode*

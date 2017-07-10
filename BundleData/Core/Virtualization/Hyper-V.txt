@@ -1,4 +1,3 @@
-
 # Hyper-V
 HyperV-*
 Microsoft-HyperV-*
@@ -16,9 +15,3 @@ Microsoft.HyperV.*				# Powershell bindings
 
 Microsoft-Windows-Host-Network-*		# VM Host network access
 Microsoft-Windows-HostGuardianService-*
-
-# Windows Containers (since W10)
-# Containers are an isolated, resource controlled, and portable operating environment.
-# https://docs.microsoft.com/en-us/virtualization/windowscontainers/about/
-Microsoft-OneCore-Containers-*			# Several deployments
-Microsoft-Windows-Containers-*			# and assemblies

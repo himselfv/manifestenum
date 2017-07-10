@@ -1,0 +1,5 @@
+# Common Windows Dialogs
+# Provides COM classes for dialogs such as Open File, Save File, etc.
+# Some additional common dialogs are provided by shell (Explorer) libraries.
+
+Microsoft-Windows-comdlg32*

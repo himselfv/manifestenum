@@ -1,2 +1,0 @@
-Microsoft.Windows.Common-Controls*
-Microsoft-Windows-Shell-Comctl32*

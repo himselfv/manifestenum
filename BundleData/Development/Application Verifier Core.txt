@@ -1,0 +1,9 @@
+# Application Verifier Core
+# Core DLL for the Application Verifier support. The AppVerifier itself is not shipped with Windows, but the DLL will be loaded into each processing depending on debugging settings in GFlags:
+# https://blogs.msdn.microsoft.com/reiley/2012/08/17/a-debugging-approach-to-application-verifier/
+
+# Application Verifier:
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/application-verifier
+
+Microsoft-Windows-Verifier
+Microsoft-Windows-Verifier.*

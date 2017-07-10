@@ -1,0 +1,6 @@
+# Windows Common Controls
+# https://msdn.microsoft.com/en-us/library/windows/desktop/bb773173(v=vs.85).aspx
+
+Microsoft.Windows.Common-Controls*
+Microsoft-Windows-Shell-Comctl32*
+Microsoft-Windows-Comctl32*

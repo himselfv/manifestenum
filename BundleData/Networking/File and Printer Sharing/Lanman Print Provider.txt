@@ -1,6 +1,6 @@
 # LanMan Print Provider
 # Handles access to printers available on remote Windows PCs via File and Printer sharing.
 
-# Provides: PrintProvider
+@Provides: PrintProvider
 
 Microsoft-Windows-Printing-Spooler-Networkclient*

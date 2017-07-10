@@ -3,3 +3,7 @@
 
 Microsoft-Windows-UserModePowerService*			# Manage power policy, power policy notifications delivery
 Microsoft-Windows-UserPowerManagement*			# Provides storage for system power settings, enables user-mode components to modify and apply these settings
+
+Microsoft-Windows-PowerManagement-Troubleshooter*	# WDI Troubleshooter
+
+Microsoft-Windows-PowerManagement-*			# Package

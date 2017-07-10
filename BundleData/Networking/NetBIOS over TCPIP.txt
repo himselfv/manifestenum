@@ -15,3 +15,16 @@ Microsoft-Windows-NETBIOS		# Win32 API driver (over TDI)
 Microsoft-Windows-NETBIOS.*
 Microsoft-Windows-NETBIOS-*
 # -NetAPI				# Win32 NetBIOS API
+
+
+# WINS (Windows Internet Naming Service)
+# Provides name resolution for NetBT by implementing a NetBIOS name server.
+# https://en.wikipedia.org/wiki/Windows_Internet_Name_Service
+# https://technet.microsoft.com/library/bb727015.aspx
+
+# Functions similarly to DNS. There can be one WINS server and any number of WINS clients. Clients register with the server and query it to resolve names to IPs.
+# Independent from Lanman's Computer Browser. CB can resolve names in the local subnet, WINS can bring together results from CBs cross subnets. Most client PCs these days don't use WINS.
+
+# WINS client is implemented in NetBT, this is an undocumented API library.
+Microsoft-Windows-Internet-Naming-Service-RpcClient*
+

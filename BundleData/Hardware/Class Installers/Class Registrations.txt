@@ -1,4 +1,66 @@
 # This covers all Microsoft.Windows.Hardware.Devices.ClassInstaller.* components.
-# Many are covered in their own packages, but we don't want to miss any.
+# Most of these covered in their own packages, but we don't want to miss any new, so we exclude the ones covered.
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.*
+
+# These are covered in their respective bundles:
+
+# Standard Class Installers
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.1394-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.61883-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.AVC-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.BIOMETRICDEVICE-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.COMPUTER-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.DOT4-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.DOT4PRINT-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.FDC-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.FLOPPYDISK-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.HDC-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.KEYBOARD-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.LEGACYDRIVER-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MEMORY-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MOUSE-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MTD-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MULTIFUNCTION-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MULTIPORTSERIAL-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.PCMCIA-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SBP2-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SCSIADAPTER-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SDHOST-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SECURITYDEVICES-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SYSTEM-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.UNKNOWN-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.USB-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.VOLUME-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.VOLUMESNAPSHOT-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.WCEUSBS-DriverClass*
+
+# Network Devices
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.INFRARED-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.NET-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.NETCLIENT-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.NETSERVICE-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.NETTRANS-DriverClass*
+
+# Storage Devices
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.CDROM-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.DISKDRIVE-DriverClass*
+
+# Namesake bundles
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.BATTERY-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.BLUETOOTH-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.DISPLAY-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.HIDCLASS-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.IMAGE-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MediaCenterExtender-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MEDIA-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MODEM-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.MONITOR-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.PRINTER-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.PROCESSOR-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.Sensor-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SIDESHOW-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDFILTER-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDREADER-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDS-DriverClass*
+-Microsoft.Windows.Hardware.Devices.ClassInstaller.WPD-DriverClass*

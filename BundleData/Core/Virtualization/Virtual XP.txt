@@ -1,0 +1,8 @@
+# Virtual PC and Virtual XP
+# W7
+
+# Virtual PC (mostly licensing)
+Microsoft-Windows-VirtualPC-*
+
+# Virtual XP (ability to run apps in a borderless XP virtual machine for compability)
+Microsoft-Windows-VirtualXP-*			# Only Licensing is present on some PCs

@@ -6,6 +6,7 @@ Microsoft-Windows-Foundation			# THE mothership package of W7.
 Microsoft-Windows-Foundation.*			# Do not include Foundation-* as some of the packages are meaningful.
 Microsoft-Windows-Foundation-StaticBinds*	# Empty
 Microsoft-Windows-Foundation-LanguagePack-*
+Microsoft-Windows-WindowsFoundation-*
 Windows Foundation*
 
 # W7: "APIs and tools for disk, volume and hardware RAID management"
