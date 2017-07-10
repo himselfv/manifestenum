@@ -40,6 +40,8 @@ type
     StmFind: PSQLite3Stmt;
     StmUpdate: PSQLite3Stmt;
     StmAddAssembly: PSQLite3Stmt;
+    StmAddHostedFacility: PSQLite3Stmt;
+    StmAddProvidedFacility: PSQLite3Stmt;
     procedure Initialize; override;
     procedure CreateTables; override;
     procedure InitStatements; override;
@@ -61,6 +63,12 @@ type
     procedure GetAllAssemblyAssociations(AList: TBundleAssociationList); overload;
     procedure GetAllAssemblyAssociations(AList: TBundleAssociationDict); overload;
 
+    procedure ResetHostedFacilities(Bundle: TBundleId);
+    procedure AddHostedFacility(Bundle: TBundleId; const AFacility: string);
+
+    procedure ResetProvidedFacilities(Bundle: TBundleId);
+    procedure AddProvidedFacility(Bundle: TBundleId; const AFacility: string);
+
   end;
 
 
@@ -68,19 +76,29 @@ type
  Next are the classes that manage the underlying files.
 }
 type
+  TMaskList = class(TList<TAssemblyIdentity>)
+  public
+    function MatchesAnyLowercased(const id: TAssemblyIdentity): boolean;
+  end;
+
   TBundle = class
   protected
     FData: TBundleData;
-    FMasks: TList<TAssemblyIdentity>;
+    FMasks: TMaskList;
+    FExclusionMasks: TMaskList;
+    FHostedFacilities: TStringList;
+    FProvidedFacilities: TStringList;
     function GetName: string; inline;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Load(const ABase, AFilename: string);
     function ContainsAssembly(const Id: TAssemblyIdentity): boolean;
-    function ContainsAssemblyLowercased(const Id: TAssemblyIdentity): boolean;
+    function ContainsAssemblyLowercased(const Id: TAssemblyIdentity): boolean; inline;
     property Name: string read GetName;
     property Data: TBundleData read FData write FData;
+    property HostedFacilities: TStringList read FHostedFacilities;
+    property ProvidedFacilities: TStringList read FProvidedFacilities;
   end;
 
   TBundleManager = class(TObjectList<TBundle>)
@@ -123,6 +141,18 @@ begin
     +'assemblyId INTEGER NOT NULL,'
     +'CONSTRAINT identity UNIQUE(bundleId,assemblyId)'
     +')');
+
+  Db.Exec('CREATE TABLE IF NOT EXISTS bundleHostedFacilities ('
+    +'bundleId INTEGER NOT NULL,'
+    +'facility TEXT NOT NULL COLLATE NOCASE,'
+    +'CONSTRAINT identity UNIQUE(bundleId,facility)'
+    +')');
+
+  Db.Exec('CREATE TABLE IF NOT EXISTS bundleProvidedFacilities ('
+    +'bundleId INTEGER NOT NULL,'
+    +'facility TEXT NOT NULL COLLATE NOCASE,'
+    +'CONSTRAINT identity UNIQUE(bundleId,facility)'
+    +')');
 end;
 
 procedure TAssemblyBundles.InitStatements;
@@ -135,6 +165,10 @@ begin
     +'WHERE id=?');
   StmAddAssembly := Db.PrepareStatement('INSERT OR IGNORE INTO bundleAssemblies '
     +'(bundleId,assemblyId) VALUES (?,?)');
+  StmAddHostedFacility := Db.PrepareStatement('INSERT OR IGNORE INTO bundleHostedFacilities '
+    +'(bundleId,facility) VALUES (?,?)');
+  StmAddProvidedFacility := Db.PrepareStatement('INSERT OR IGNORE INTO bundleProvidedFacilities '
+    +'(bundleId,facility) VALUES (?,?)');
 end;
 
 function TAssemblyBundles.Add(const AName, APath: string; AHash: TBundleHash): TBundleId;
@@ -295,6 +329,39 @@ begin
   sqlite3_reset(stmt);
 end;
 
+procedure TAssemblyBundles.ResetHostedFacilities(Bundle: TBundleId);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('DELETE FROM bundleHostedFacilities WHERE bundleId=?');
+  sqlite3_bind_int64(stmt, 1, Bundle);
+  Db.ExecAndReset(stmt);
+end;
+
+procedure TAssemblyBundles.AddHostedFacility(Bundle: TBundleId; const AFacility: string);
+begin
+  sqlite3_bind_int64(StmAddHostedFacility, 1, Bundle);
+  sqlite3_bind_str(StmAddHostedFacility, 2, AFacility);
+  if sqlite3_step(StmAddHostedFacility) <> SQLITE_DONE then
+    Db.RaiseLastSQLiteError();
+  sqlite3_reset(StmAddHostedFacility);
+end;
+
+procedure TAssemblyBundles.ResetProvidedFacilities(Bundle: TBundleId);
+var stmt: PSQLite3Stmt;
+begin
+  stmt := Db.PrepareStatement('DELETE FROM bundleProvidedFacilities WHERE bundleId=?');
+  sqlite3_bind_int64(stmt, 1, Bundle);
+  Db.ExecAndReset(stmt);
+end;
+
+procedure TAssemblyBundles.AddProvidedFacility(Bundle: TBundleId; const AFacility: string);
+begin
+  sqlite3_bind_int64(StmAddProvidedFacility, 1, Bundle);
+  sqlite3_bind_str(StmAddProvidedFacility, 2, AFacility);
+  if sqlite3_step(StmAddProvidedFacility) <> SQLITE_DONE then
+    Db.RaiseLastSQLiteError();
+  sqlite3_reset(StmAddProvidedFacility);
+end;
 
 function TBundleList.Find(const AId: TBundleId): integer;
 var i: integer;
@@ -331,11 +398,17 @@ const
 constructor TBundle.Create;
 begin
   inherited;
-  FMasks := TList<TAssemblyIdentity>.Create;
+  FMasks := TMaskList.Create;
+  FExclusionMasks := TMaskList.Create;
+  FHostedFacilities := TStringList.Create;
+  FProvidedFacilities := TStringList.Create;
 end;
 
 destructor TBundle.Destroy;
 begin
+  FreeAndNil(FProvidedFacilities);
+  FreeAndNil(FHostedFacilities);
+  FreeAndNil(FExclusionMasks);
   FreeAndNil(FMasks);
   inherited;
 end;
@@ -358,12 +431,38 @@ begin
   end;
 end;
 
+//Eats one command in the form "@command" or "@command:" and leaves the rest of the line intact.
+//Does not verify that @ is indeed @.
+//Also eats any spaces after the command.
+function EatCmd(var ALine: string): string;
+var i_pos, i_r: integer;
+begin
+  i_pos := pos(':', ALine);
+  if i_pos > 0 then begin
+    //Skip any spaces before ':'
+    i_r := i_pos;
+    while (i_r > 1) and (ALine[i_r] = ' ') do
+      Dec(i_r);
+    //Copy the command (omitting the @)
+    Result := copy(ALine, 2, i_pos-2);
+    //Skip any spaces after ':'
+    while (i_pos < Length(ALine)) and (ALine[i_pos+1] = ' ') do
+      Inc(i_pos);
+    delete(ALine, 1, i_pos);
+  end else begin
+    Result := ALine;
+    ALine := '';
+    delete(Result, 1, 1); //"@"
+  end;
+end;
+
 procedure TBundle.Load(const ABase, AFilename: string);
 var i, i_pos: integer;
   ln, part, partname: string;
   attrs: WIN32_FILE_ATTRIBUTE_DATA;
   lines: TStringList;
   mask: TAssemblyIdentity;
+  exclude: boolean;
 begin
   Lines := TStringList.Create;
   try
@@ -379,8 +478,31 @@ begin
       ln := AnsiLowercase(ln.Trim);
       if ln = '' then continue;
 
-      mask.Clear;
+      //Process instructions
+      if ln[1] = '@' then begin
+        part := EatCmd(ln);
+        if SameStr(part, 'hosts') then begin
+          if ln <> '' then
+            Self.FHostedFacilities.Add(ln)
+        end else
+        if SameStr(part, 'provides') then begin
+          if ln <> '' then
+            Self.FProvidedFacilities.Add(ln);
+        end;
+        //Other commands are unsupported
+        continue;
+      end;
 
+      //Handle exclude commands
+      if ln[1]='-' then begin
+        delete(ln, 1, 1);
+        if ln = '' then continue; //empty
+        exclude := true;
+      end else
+        exclude := false;
+
+      //Parse the identity mask
+      mask.Clear;
       repeat
         i_pos := pos(',', ln);
         if i_pos > 0 then begin
@@ -417,7 +539,10 @@ begin
 
       until i_pos <= 0;
 
-      FMasks.Add(mask);
+      if not exclude then
+        FMasks.Add(mask)
+      else
+        FExclusionMasks.Add(mask);
     end;
   finally
     FreeAndNil(lines);
@@ -441,9 +566,14 @@ begin
 end;
 
 function TBundle.ContainsAssemblyLowercased(const Id: TAssemblyIdentity): boolean;
+begin
+  Result := FMasks.MatchesAnyLowercased(Id) and not FExclusionMasks.MatchesAnyLowercased(Id);
+end;
+
+function TMaskList.MatchesAnyLowercased(const id: TAssemblyIdentity): boolean;
 var mask: TAssemblyIdentity;
 begin
-  for mask in FMasks do begin
+  for mask in Self do begin
     if mask.name <> '' then
       if pos('*', mask.name) <= 0 then begin
         if not SameStr(id.name, mask.name)
@@ -483,7 +613,6 @@ begin
   end;
   Result := false;
 end;
-
 
 
 

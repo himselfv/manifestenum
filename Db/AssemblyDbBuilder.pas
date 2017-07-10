@@ -259,13 +259,23 @@ end;
 
 procedure TDatabaseMaintenance.UpdateBundleContents(Id: TBundleId; const BundleFile: TBundle; SkipClear: boolean);
 var ad: TAssemblyData;
+  facilityName: string;
 begin
-  if not SkipClear then
+  if not SkipClear then begin
     Db.Bundles.ResetAssemblies(Id);
+    Db.Bundles.ResetHostedFacilities(Id);
+    Db.Bundles.ResetProvidedFacilities(Id);
+  end;
 
   for ad in DbAssemblies.Values do
     if BundleFile.ContainsAssembly(ad.identity) then
       Db.Bundles.AddAssembly(Id, ad.id);
+
+  for facilityName in BundleFile.HostedFacilities do
+    Db.Bundles.AddHostedFacility(Id, facilityName);
+
+  for facilityName in BundleFile.ProvidedFacilities do
+    Db.Bundles.AddProvidedFacility(Id, facilityName);
 end;
 
 procedure TDatabaseMaintenance.DeleteBundle(Id: TBundleId);
