@@ -67,6 +67,8 @@ type
     function FindBundleNode(ABundle: TBundleId): PVirtualNode;
 
     function GetFocusedAssembly: TAssemblyId;
+    function GetSelectedFolders: TArray<string>;
+    function GetSelectedBundles: TArray<TBundleId>;
     function GetSelectedAssemblies: TArray<TAssemblyId>;
     procedure SetGroupingType(const Value: TGroupingType);
 
@@ -81,6 +83,8 @@ type
     procedure Clear; override;
     property GroupingType: TGroupingType read FGroupingType write SetGroupingType;
     property FocusedAssembly: TAssemblyId read GetFocusedAssembly;
+    property SelectedFolders: TArray<string> read GetSelectedFolders;
+    property SelectedBundles: TArray<TBundleId> read GetSelectedBundles;
     property SelectedAssemblies: TArray<TAssemblyId> read GetSelectedAssemblies;
     property OnSelectionChanged: TNotifyEvent read FOnSelectionChanged write FOnSelectionChanged;
   end;
@@ -273,6 +277,43 @@ begin
   end;
 end;
 
+function TAssemblyBrowserForm.GetSelectedFolders: TArray<string>;
+var ANode, ALvl: PVirtualNode;
+  Data: PNodeData;
+  folderPath: string;
+begin
+  SetLength(Result, 0);
+  for ANode in Tree.SelectedNodes() do begin
+    Data := Tree.GetNodeData(ANode);
+    if Data.Type_ <> ntBundleFolder then continue;
+    folderPath := Data.Name;
+
+    ALvl := ANode;
+    while ALvl.Parent <> nil do begin
+      ALvl := ALvl.Parent;
+      Data := Tree.GetNodeData(ALvl);
+      if (Data = nil) or (Data.Type_ <> ntBundleFolder) then break;
+      folderPath := Data.Name + '\' + folderPath;
+    end;
+
+    SetLength(Result, Length(Result)+1);
+    Result[Length(Result)-1] := folderPath;
+  end;
+end;
+
+function TAssemblyBrowserForm.GetSelectedBundles: TArray<TBundleId>;
+var ANode: PVirtualNode;
+  Data: PNodeData;
+begin
+  SetLength(Result, 0);
+  for ANode in Tree.SelectedNodes() do begin
+    Data := Tree.GetNodeData(ANode);
+    if Data.Type_ <> ntBundle then continue;
+    SetLength(Result, Length(Result)+1);
+    Result[Length(Result)-1] := Data.Bundle;
+  end;
+end;
+
 function TAssemblyBrowserForm.GetSelectedAssemblies: TArray<TAssemblyId>;
 var ANode: PVirtualNode;
   Data: PNodeData;
@@ -280,11 +321,12 @@ begin
   SetLength(Result, 0);
   for ANode in Tree.SelectedNodes() do begin
     Data := Tree.GetNodeData(ANode);
-    if Data.Type_ <> ntAssembly then continue; //At this moment we don't count other nodes
+    if Data.Type_ <> ntAssembly then continue;
     SetLength(Result, Length(Result)+1);
     Result[Length(Result)-1] := Data.Assembly.id;
   end;
 end;
+
 
 procedure TAssemblyBrowserForm.SetGroupingType(const Value: TGroupingType);
 begin

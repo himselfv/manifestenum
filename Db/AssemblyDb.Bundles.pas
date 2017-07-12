@@ -74,6 +74,10 @@ type
 
 {
  Next are the classes that manage the underlying files.
+ Files are loaded but not normally linked to database bundle records. Database
+ records are superior and are the ones we use for most operations.
+ Files might differ from database records until we run a database refresh,
+ so we only refer to it when we cannot do something otherwise.
 }
 type
   TMaskList = class(TList<TAssemblyIdentity>)
@@ -106,6 +110,7 @@ type
     procedure Load(const ABase: string); overload;
     procedure LoadFolder(const ABase, ADir: string);
     function LoadBundle(const ABase, AFilename: string): TBundle;
+    function Find(const AId: TBundleId): TBundle;
     function MatchAssembly(const Id: TAssemblyIdentity): TBundle;
   end;
 
@@ -115,9 +120,17 @@ type
 var
   BundleFiles: TBundleManager;
 
+function BundleDir(): string;
+
 
 implementation
-uses Windows, WildcardMatching;
+uses Windows, FilenameUtils, WildcardMatching;
+
+//Returns the default directory for storing bundle definitions
+function BundleDir(): string;
+begin
+  Result := AppFolder() + 'BundleData';
+end;
 
 procedure TAssemblyBundles.Initialize;
 begin
@@ -277,7 +290,7 @@ end;
 procedure TAssemblyBundles.GetAssemblies(Bundle: TBundleId; AList: TAssemblyList);
 var stmt: PSQLite3Stmt;
 begin
-  stmt := Db.PrepareStatement('SELECT * FROM assemblies WHERE assemblyId IN (SELECT assemblyId FROM bundles WHERE bundleId=?)');
+  stmt := Db.PrepareStatement('SELECT * FROM assemblies WHERE id IN (SELECT assemblyId FROM bundleAssemblies WHERE bundleId=?)');
   sqlite3_bind_int64(stmt, 1, Bundle);
   Assemblies.QueryAssemblies(stmt, AList);
 end;
@@ -651,6 +664,17 @@ begin
   Result := TBundle.Create;
   Self.Add(Result);
   Result.Load(ABase, AFilename);
+end;
+
+function TBundleManager.Find(const AId: TBundleId): TBundle;
+var Bundle: TBundle;
+begin
+  Result := nil;
+  for Bundle in Self do
+    if Bundle.FData.id = AId then begin
+      Result := Bundle;
+      break;
+    end;
 end;
 
 function TBundleManager.MatchAssembly(const Id: TAssemblyIdentity): TBundle;

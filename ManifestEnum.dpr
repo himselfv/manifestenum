@@ -27,6 +27,7 @@ uses
   ManifestEnum.AssemblyActions in 'Actions\ManifestEnum.AssemblyActions.pas' {AssemblyActions: TDataModule},
   ManifestEnum.RegistryActions in 'Actions\ManifestEnum.RegistryActions.pas' {RegistryActions: TDataModule},
   ManifestEnum.FileActions in 'Actions\ManifestEnum.FileActions.pas' {FileActions: TDataModule},
+  ManifestEnum.BundleActions in 'Actions\ManifestEnum.BundleActions.pas' {BundleActions: TDataModule},
   CommonMessages in 'Views\CommonMessages.pas',
   DelayLoadTree in 'Views\DelayLoadTree.pas' {DelayLoadTree},
   AssemblyDetails in 'AssemblyDetails.pas' {AssemblyDetailsForm},
@@ -57,6 +58,7 @@ begin
   Application.CreateForm(TAssemblyActions, AssemblyActions);
   Application.CreateForm(TRegistryActions, RegistryActions);
   Application.CreateForm(TFileActions, FileActions);
+  Application.CreateForm(TBundleActions, BundleActions);
   Application.CreateForm(TFiltersForm, FiltersForm);
   Application.Run;
 end.

@@ -101,8 +101,8 @@ var
 implementation
 uses UITypes, Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonFilters,
-  ManifestEnum.Log, ManifestEnum.AssemblyActions, ManifestEnum.RegistryActions, ManifestEnum.FileActions,
-  AssemblyDb.Bundles;
+  AssemblyDb.Bundles, ManifestEnum.Log, ManifestEnum.AssemblyActions,
+  ManifestEnum.RegistryActions, ManifestEnum.FileActions, ManifestEnum.BundleActions;
 
 {$R *.dfm}
 {$WARN SYMBOL_PLATFORM OFF}
@@ -155,6 +155,7 @@ begin
   AssemblyActions.Db := FDb;
   RegistryActions.Db := FDb;
   FileActions.Db := FDb;
+  BundleActions.Db := FDb;
 
   LoadSettings;
 end;
@@ -313,9 +314,38 @@ end;
 
 procedure TMainForm.AssemblyBrowserGetPopupMenu(Sender: TBaseVirtualTree; Node: PVirtualNode;
   Column: TColumnIndex; const P: TPoint; var AskParent: Boolean; var PopupMenu: TPopupMenu);
+var AFolders: TArray<string>;
+  ABundles: TArray<TBundleId>;
+  AAssemblies: TArray<TAssemblyId>;
 begin
-  AssemblyActions.SetSelectedAssemblies(FAssemblyBrowser.SelectedAssemblies);
-  PopupMenu := AssemblyActions.PopupMenu;
+  AAssemblies := FAssemblyBrowser.SelectedAssemblies;
+  if Length(AAssemblies) > 0 then begin
+    BundleActions.SetSelectedFolders(nil);
+    BundleActions.SetSelectedBundles(nil);
+    AssemblyActions.SetSelectedAssemblies(FAssemblyBrowser.SelectedAssemblies);
+    PopupMenu := AssemblyActions.PopupMenu;
+    exit;
+  end;
+
+  ABundles := FAssemblyBrowser.SelectedBundles;
+  if Length(ABundles) > 0 then begin
+    AssemblyActions.SetSelectedAssemblies(nil);
+    BundleActions.SetSelectedFolders(nil);
+    BundleActions.SetSelectedBundles(ABundles);
+    PopupMenu := BundleActions.PopupMenu;
+    exit;
+  end;
+
+  AFolders := FAssemblyBrowser.SelectedFolders;
+  if Length(AFolders) > 0 then begin
+    AssemblyActions.SetSelectedAssemblies(nil);
+    BundleActions.SetSelectedBundles(nil);
+    BundleActions.SetSelectedFolders(AFolders);
+    PopupMenu := BundleActions.PopupMenu;
+    exit;
+  end;
+
+  PopupMenu := nil;
 end;
 
 procedure TMainForm.WmSetAssemblySelection(var msg: TWmSetAssemblySelection);

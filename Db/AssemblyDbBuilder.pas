@@ -214,7 +214,7 @@ begin
   //Load actual bundle files from disk
   progress.Start('Reloading bundles', 0);
   BundleFiles.Clear;
-  BundleFiles.Load(AppFolder() + '\BundleData');
+  BundleFiles.Load(BundleDir());
 
   //Load existing bundles from the db
   bundles := TBundleList.Create;
