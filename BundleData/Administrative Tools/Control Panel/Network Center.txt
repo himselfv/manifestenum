@@ -1,11 +1,16 @@
 # Network Center
-# A location in Control Panel which shows a summary of your network connections,
-# internet availability and location.
+# A location in Control Panel which shows a summary of your network connections, internet availability and location.
 
 # Present since: Windows 7
-# Replaced Network Connections Folder as the go-to place to configure network,
-# though lets you through to Network Connections Folder for some tasks.
+# Replaced Network Connections Folder as the go-to place to configure network, though lets you through to Network Connections Folder for some tasks.
 
 Microsoft-Windows-NetworkCenter
 Microsoft-Windows-NetworkCenter.*
 Microsoft-Windows-NetworkCenter-*
+
+
+# "Network Profiles UI" / netprof.dll
+# Contains a single "Merge or Delete Network Locations" dialog. It can be reach by going to Network Center, clicking a network type icon (home or work) and choosing "Merge or Delete Network Locations" link in the wizard.
+# Also contains some icon resources, but it's not clear whether these are used by anyone or are simply duplicates.
+Microsoft-Windows-NETPROFUI
+Microsoft-Windows-NETPROFUI.*

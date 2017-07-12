@@ -1,0 +1,10 @@
+# Network Connections Service
+# "Manajes objects in the Network and Dial-Up Connections folder".
+
+# Functions unclear. Sources say:
+# "Required for managing network connectivity. Internet Connection Sharing (ICS) also requires this service to be enabled."
+# "This service in conjunction with Network List Service and Network Location Awareness enables status of network connections in the system tray."
+
+Microsoft-Windows-Netman
+Microsoft-Windows-Netman.*
+Microsoft-Windows-Netman-*

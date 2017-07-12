@@ -1,0 +1,17 @@
+# Network List Service / netprofm
+# "Identifies the networks to which the computer has connected, collects and stores properties for these networks, and notifies applications when these properties change."
+
+# *Maybe* stores the list of logical networks (as opposed to network adapters) this computer can or has connected to.
+# Or maybe just an interface for enumerating them.
+
+# Exports a large and well commented type library with interfaces to:
+# - enumerate networks and network connections, read their names, descriptions, domain type, state (and whether connected to the internet) as well as the aggregated connectivity state of the machine
+# - subscribe to network additions, deletions, connectivity changes and property changes.
+# From the looks of it, the functionality is similar to what the networks panel in the system tray provides.
+
+# Sources say:
+# "This service in conjunction with Network Location Awareness and Network Connections enables status of network connections in the system tray."
+
+Microsoft-Windows-NetworkProfile
+Microsoft-Windows-NetworkProfile.*
+Microsoft-Windows-NetworkProfile-*

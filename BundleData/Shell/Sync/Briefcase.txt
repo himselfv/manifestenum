@@ -3,3 +3,9 @@ Microsoft-Windows-syncui*
 Microsoft-Windows-synceng*		# Briefcase engine
 
 # Requires Sync Center for management UI
+
+# linkinfo.dll ("Windows Volume Tracking")
+# Contains a few neat but undocumented functions: CreateLinkInfo, ResolveLinkInfo, CompareLinkInfoVolumes, IsValidLinkInfo
+# Statically linked only by synceng.dll, so I suspect is a briefcase support library.
+Microsoft-Windows-linkinfo
+Microsoft-Windows-linkinfo.*
