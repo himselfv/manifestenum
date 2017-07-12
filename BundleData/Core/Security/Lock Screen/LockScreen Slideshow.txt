@@ -1,0 +1,5 @@
+# LockScreen Slideshow
+# A component which handles photo slideshow mode for lock screen background.
+# W8.1+
+
+Microsoft-Windows-Authentication-LockScreenContent*

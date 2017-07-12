@@ -6,19 +6,23 @@
 
 # Not to be confused with various other syncs around:
 #  Sync Center (Shell-Sync) - provides common interface for synchronization
-#  ActiveSync
+#  ActiveSync / MCCS
 #  Briefcase (synceng/syncui)
 
 Microsoft-Windows-DeviceSyncFeature*
+Microsoft-Windows-DeviceSync-Feature*		# W10
 
 Microsoft-Windows-SyncHost*
 Microsoft-Windows-SyncInfrastructure*
 Microsoft-Windows-SyncProviders*
 
+
 # Microsoft Sync Framework (MSF) - Since Windows Vista
 # Older common synchronization infrastructure. Still supported by Windows Sync transparently and even recommended.
 # https://msdn.microsoft.com/en-us/library/mt763482.aspx
-Microsoft-Windows-MSF*
+Microsoft-Windows-MSF
+Microsoft-Windows-MSF.*
+Microsoft-Windows-MSF-*
 
 # DeviceStage task to Sync with device, I guess.
 # Also in Hardware-DeviceStage

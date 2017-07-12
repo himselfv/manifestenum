@@ -1,0 +1,13 @@
+# Mail, Contacts, Calendar Sync / MCCS
+# W10
+
+# Seems to be an upgrade to ActiveSync, supporting much the same functionality.
+# https://en.wikipedia.org/wiki/ActiveSync
+
+Microsoft-Windows-MCCS
+Microsoft-Windows-MCCS.*
+Microsoft-Windows-MCCS-*
+
+Microsoft-Windows-APHostService*			# Related; also in deployment
+
+Microsoft-OneCore-ApplicationModel-Sync-*		# Deployments

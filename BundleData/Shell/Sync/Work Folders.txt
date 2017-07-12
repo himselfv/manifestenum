@@ -1,0 +1,5 @@
+# Work Folders
+# https://support.microsoft.com/en-us/help/27903/windows-10-work-folders-faq
+# W10
+
+Microsoft-Windows-EnterpriseClientSync*

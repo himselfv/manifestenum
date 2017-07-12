@@ -1,0 +1,23 @@
+# Setting Sync
+# A platform introduced in Windows 10 which synchronizes chosen settings with the Microsoft servers. Not well studied.
+
+# Custom providers are needed to sync each area of settings.
+# Has at least 2 storage providers, Azure and OneDrive.
+
+# Stores settings in HKLM\Software\Microsoft\Windows\CurrentVersion\SettingSync
+
+Microsoft-Windows-SettingSync*
+Microsoft-Windows-Shell-SettingSync*
+
+# These are included in the deployment
+Microsoft-Windows-CloudNotifications*
+Microsoft-Windows-CloudStorageWizard*
+Microsoft-Windows-SettingMonitor*
+
+Microsoft-Windows-SyncSettings*
+Microsoft-Windows-Backup-CloudProvider*
+
+# Setting providers
+# These register under \SettingHandlerFactories
+Microsoft-Windows-BrowserSettingSync*
+Microsoft-Windows-PackageStateRoaming*			# Setting provider

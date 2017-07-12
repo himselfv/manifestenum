@@ -1,3 +1,5 @@
-
 # OfflineFiles
+
 Microsoft-Windows-OfflineFiles-*
+
+# Requires Sync Center for UI.
