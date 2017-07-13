@@ -9,3 +9,9 @@
 
 WSDApi,publicKeyToken=31bf3856ad364e35
 WSDApi-*,publicKeyToken=31bf3856ad364e35
+Microsoft-Windows-WSD
+Microsoft-Windows-WSD.*
+Microsoft-Windows-WSD-*
+Microsoft-Windows-WSDScanProxy*		# WSDAPI COM proxy for communicating with WSD scanners
+
+# There's also a WSD Printer Port Monitor and WSD Print Proxy, but they are currently hosted under Printing. Maybe this is wrong and they should be here.
