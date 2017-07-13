@@ -25,7 +25,6 @@ Microsoft-Windows-RasIfmon*
 Microsoft-Windows-RasIpFilter*
 Microsoft-Windows-Rasman*
 Microsoft-Windows-RasmanService*
-# Microsoft-Windows-RASMM*		# RAS Media Manager, probably unrelated
 Microsoft-Windows-Rasmontr*
 Microsoft-Windows-RasMprDdm*
 Microsoft-Windows-RasPlap*

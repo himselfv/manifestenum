@@ -1,0 +1,20 @@
+# Link-Layer Topology Discovery (LLTD)
+# A proprietary link layer protocol for network topology discovery and quality of service diagnostics.
+# https://en.wikipedia.org/wiki/Link_Layer_Topology_Discovery
+# Vista+
+
+# See also: https://msdn.microsoft.com/en-us/library/windows/desktop/dn594471(v=vs.85).aspx
+
+# Operates both over wired and wireless networks. Enables device discovery via the data-link layer (Layer 2) and determines the topology of a network. Provides QoS Extensions that enable stream prioritization
+
+# Requires a responder on each PC which can be discovered. (E.g. XP devices won't be visible)
+
+# Devices can report their name or function, icon, link to their web UI from their responders. Windows uses this in the Network Map. Windows itself has a kernel LLTD responder built-in since Vista.
+
+# Required for the Network Map feature to display a map of LAN or WLAN.
+# Required for QWave QoS for advanced functions.
+
+Microsoft-Windows-NetworkTopology		# API, service and resource DLLs. The service implements API proxy to kernel, not the responder I think.
+Microsoft-Windows-NetworkTopology.*
+Microsoft-Windows-NetworkTopology-Inf		# Kernel part (protocol + responder)
+Microsoft-Windows-NetworkTopology-Inf.*

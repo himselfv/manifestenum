@@ -1,0 +1,6 @@
+# Location API and supporting apps
+# This is the older Location API, not the new UWP Geolocation API.
+# See also: Control Panel\Location Control Panel
+
+Microsoft-Windows-MobilePC-Location-API*		# The API
+Microsoft-Windows-MobilePC-LocationNotifications*	# Systray icon which appears when apps ask for location

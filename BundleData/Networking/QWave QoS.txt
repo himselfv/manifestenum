@@ -1,0 +1,10 @@
+# Quality Windows Audio/Video Experience / QWave
+# A QoS API to measure network throughput and its changes in real-time and prioritize important data streams. Meant for multimedia applications.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa373381(v=vs.85).aspx
+# Vista+
+
+# Requires Link Layer Topology Discovery (LLTD) Responder on the counter party PC for advanced features to function.
+
+Microsoft-Windows-QWAVE
+Microsoft-Windows-QWAVE.*
+Microsoft-Windows-QWAVE-*

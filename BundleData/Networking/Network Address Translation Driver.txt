@@ -1,0 +1,10 @@
+# Network Address Translation Driver / IPNAT
+
+# Required for Routing and Remote Access.
+
+# Before Vista was implemented in a way that conflicted with Windows Firewall (probably the firewall was implemented via IPNAT somehow).
+# Vista+: Currently seems to be implemented on top of Winsock Kernel / Windows Filtering Platform. Which is fine.
+
+Microsoft-Windows-IPNAT
+Microsoft-Windows-IPNAT.*
+Microsoft-Windows-IPNAT-*

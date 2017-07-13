@@ -9,3 +9,12 @@
 Microsoft-Windows-NlaSvc
 Microsoft-Windows-NlaSvc.*
 Microsoft-Windows-NlaSvc-*
+
+# Contains:
+#  ncsi.dll		Network Connections State Indicator
+#  nlaapi.dll
+#  nlasvc.dll
+
+Microsoft-Windows-NCSI		# Instrumentation for ncsi.dll
+Microsoft-Windows-NCSI.*
+Microsoft-Windows-NCSI-*
