@@ -16,6 +16,8 @@ Microsoft-Windows-CMI
 Microsoft-Windows-CMI.*
 Microsoft-Windows-CmiAdapter*
 Microsoft-Windows-CMIPluginInstallers*
+Microsoft-Windows-CmiSetup
+Microsoft-Windows-CmiSetup.*
 Microsoft-Windows-CmiSetup-*
 Microsoft-Windows-CmiTrustInfoInstallers*
 

@@ -2,12 +2,21 @@
 # Components and manifests which pull a bunch of thematically related assemblies or other components into configuraion.
 # Not required by themselves, but often remain in a final image. Some of feature packages seem to be stripped of their contents and remain only as empty manifests.
 
-Microsoft-Windows-Foundation			# THE mothership package of W7.
+
+# THE mothership package of W7.
+Microsoft-Windows-Foundation
 Microsoft-Windows-Foundation.*			# Do not include Foundation-* as some of the packages are meaningful.
 Microsoft-Windows-Foundation-StaticBinds*	# Empty
 Microsoft-Windows-Foundation-LanguagePack-*
 Microsoft-Windows-WindowsFoundation-*
 Windows Foundation*
+
+
+# W10 mothership packages.
+# W10 has no single "Foundation" package, but there's still a ton of "AutoMerged-xxxx" packages which aren't grouped by any single component.
+Microsoft-Windows-Client-Features-Package-AutoMerged-*
+Microsoft-Windows-Client-Features-WOW64-Package-AutoMerged-*
+
 
 # W7: "APIs and tools for disk, volume and hardware RAID management"
 # Mostly just pulls Virtual Disk Service (VDS)

@@ -1,0 +1,6 @@
+# Chart View Control
+# An undocumented but neatly exported ChartView Win32 Control
+# Used by new Windows 10 Task Manager (maybe not exclusively)
+# W10+
+
+Microsoft-Windows-ChartView-Control*

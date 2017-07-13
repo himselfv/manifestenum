@@ -8,3 +8,4 @@ Microsoft-Windows-TaskManager-Events*
 
 # In Windows 10 replaced with Advanced Task Manager
 Microsoft-Windows-AdvancedTaskManager*
+Microsoft-Windows-Diagnosis-AdvancedTaskManager-Events*		# Instrumentation

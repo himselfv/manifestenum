@@ -4,3 +4,6 @@
 Microsoft-Windows-SQLLiteOLEDB*
 Microsoft-Windows-SQLLiteQP*
 Microsoft-Windows-SQLLiteSE*
+
+# W10 additions
+Microsoft-Windows-SQLLiteCompactDLL*

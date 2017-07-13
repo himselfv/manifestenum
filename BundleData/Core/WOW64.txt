@@ -8,3 +8,5 @@
 Microsoft-Windows-WOW64*
 # -amd64: The engine itself.
 # -wow64: Support files which form the 32 bit "System32" directory.
+
+Microsoft-Windows-WOWSupport*		# W10 deployments

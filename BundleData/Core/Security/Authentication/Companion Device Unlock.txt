@@ -1,0 +1,14 @@
+# Companion Device Framework / Companion Device Unlock / SecondaryAuthFactor
+# Allows to auhtenticate user with third-party devices.
+# https://docs.microsoft.com/en-us/windows/uwp/security/companion-device-unlock
+# https://docs.microsoft.com/en-us/windows-hardware/design/device-experiences/windows-hello-companion-device-framework
+# W10+
+
+# Requires Windows Hello (previously NGC or Microsoft Passport), TPM
+
+# This is a closed-documentation framework, vendors have to explicitly ask to be allowed to use it.
+
+# Vendors provide an UWP app which runs in the background and waits for their device to arrive (in whatever sense suits them). They connect to their device via their own internal protocol and use the security keys stored there beforehand to produce unlock tokens. They then pass unlock tokens to Companion Auth Service which unlocks TPM.
+
+Microsoft-OneCore-Security-SecondaryAuthFactor*
+Microsoft-Windows-Security-SecondaryAuthFactor*
