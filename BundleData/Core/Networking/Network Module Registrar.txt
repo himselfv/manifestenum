@@ -1,5 +1,0 @@
-# Network Module Registrar / Network Programming Interface
-# https://docs.microsoft.com/en-us/windows-hardware/drivers/network/introduction-to-the-network-module-registrar
-
-# Supposedly belongs here but I don't guarantee...
-Microsoft-Windows-netio-infrastructure*

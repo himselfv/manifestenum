@@ -1,0 +1,27 @@
+# Windows Filtering Platform
+# Allows applications to tie into the packet processing and filtering pipeline of the TCP/IP network stack.
+# https://en.wikipedia.org/wiki/Windows_Filtering_Platform
+
+# Required for and partially implements both Windows Firewall and IPSec (only user-mode and supporting components are implemented outside of it).
+
+# Consists of:
+# * shims, which expose packets structure for protocols at different layers
+# * kernel filtering engine (drivers can plug into this to inspect and filter packets)
+# * user-mode base filtering engine (BFE) which filters packets based on rules (== core for Windows Firewall)
+# 
+
+# Public kernel API is partially exported by netio.sys.
+
+# User-mode support component:
+# * Base Filtering Engine service
+# * IKE (Internet Key Exchange, part of IPSec) Extensions service
+# * Windows Filtering Platform user-mode API
+# * Windows Filtering Platform NetSh helper
+Microsoft-Windows-Network-Security*
+
+
+Microsoft-Windows-WFP				# Not much here, mostly just -UnifiedTracing (event definitions)
+Microsoft-Windows-WFP.*
+Microsoft-Windows-WFP-*
+Microsoft-Windows-WfpLwf*			# WFP NDIS lightweight filter driver for MAC-level inspection
+Microsoft-Windows-WFPIPSecHelperClasses*	# Helpers for NetDiagFx

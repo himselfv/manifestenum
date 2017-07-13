@@ -1,0 +1,15 @@
+# Schedule UI
+# Not an API per se. Provides several variations of a dialog with a 24x7 time/day grid with different additional options.
+# The user can check each cell to configure the state of something at that time.
+
+# Exports:
+#   ConnectionScheduleDialog
+#   DialinHoursDialog
+#   DirSyncScheduleDialog
+#   LogonScheduleDialog  (Restrict user logon hours - hence the DLL name)
+#   ReplicationScheduleDialog
+
+# Probably required for all UI places where these are used. (Some of these can be googled)
+
+Microsoft-Windows-ScheduleUI
+Microsoft-Windows-ScheduleUI.*

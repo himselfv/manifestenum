@@ -1,0 +1,43 @@
+# Network I/O subsystem
+# "The component provides dynamic binding support and configurable information management for networking components"
+
+# Exports a ton of kernel APIs related to networking. This includes the ones below as well as a lot of non-prefixed functions.
+
+Microsoft-Windows-netio-infrastructure*
+
+
+# Network Store Interface:
+#   Nsi*		Reexported to user-mode by NsiSvc.
+# Stores and retrieves persistent configuration and run-time information from providers such as TCP/IP.
+
+
+# Network Module Registrar
+#   Nmr*
+# Attaches pairs of registered network modules that support compatible Network Programming Interfaces (NPIs). After they are attached, the network modules can interact with each other independent of the NMR.
+# NPIs have to be registered and consist of of an ID, a set of provider functions and a set of client callback functions. (One example is Winsock Kernel)
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/network/introduction-to-the-network-module-registrar
+
+
+# Winsock Kernel:
+#   Wsk*		Winsock Kernel Registration Functions (see below)
+# Only the registration functions are exported. The rest of the API is received from these functions as dispatch tables (and some from received functions in turn).
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff571179(v=vs.85).aspx
+
+
+# Windows Filtering Platform:
+#   Fe*
+#   IoctlKfd*, Kfd*	Kernel Filtering Driver?
+#   Wfp*		Windows Filtering Platform
+# Allows applications to tie into the packet processing and filtering pipeline of the TCP/IP network stack.
+# See Windows Filtering Platform component.
+
+
+# Other function families:
+#   Fsb*
+#   Fwpp*
+#   Hf*		Handle Factory?
+#   Mdp*
+#   NetIo*
+#   Pt*
+#   Some Rtl*
+#   Tl*

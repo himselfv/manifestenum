@@ -2,3 +2,10 @@
 
 Microsoft-Windows-Authentication-AuthUI*
 Microsoft-Windows-Authentication-LogonUI*
+
+# XP Logon Compability
+# shgina.dll was responsible for XP "Welcome" screen and logon functions. It got gutted in Vista and now only exports a single COM object with undocumented a few service functions (somewhat commented in the type library).
+# In earlier versions it exported more interfaces and DllInstall function but not anymore.
+# Despite the name, shgina was never a GINA DLL implementation. It served as an alternative logon mode in Winlogon. Normal logon with GINA implementation was still available if you pressed Ctrl-Alt-Del while in "Welcome screen".
+Microsoft-Windows-shgina
+Microsoft-Windows-shgina.*

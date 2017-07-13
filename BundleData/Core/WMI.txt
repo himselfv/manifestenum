@@ -52,3 +52,7 @@ Microsoft-Windows-TPM-Driver-WMI*
 Microsoft-Windows-UserModePowerService-Mof*
 Microsoft-Windows-Wininit-MOF*
 Microsoft-Windows-Winlogon-MOF*
+
+
+# WMI provider for Signed Drivers (Win32_PnPSignedDriver)
+Microsoft-Windows-SignedDriverProvider*

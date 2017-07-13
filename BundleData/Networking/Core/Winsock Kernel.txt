@@ -1,0 +1,8 @@
+# Winsock Kernel (WSK) is a kernel-mode Network Programming Interface (NPI) which replaces TDI.
+# It sits atop of tcp-ip and provides winsock-like interface for kernel networking protocol implementations.
+# https://blogs.msdn.microsoft.com/wndp/2006/02/24/introduction-to-winsock-kernel-wsk/
+
+# Public API is exported by netio.sys. Only client registration functions are available, the rest of the functions are given during the registration and socket creation in the form of dispatch tables.
+
+# Implementation is probably in afd.sys (accessible via IRPs) which also provides the kernel support for user-level Winsock.
+# ATM it's in Networking\Windows Sockets though it probably should go here.

@@ -1,0 +1,4 @@
+# Rich Edit Win32 Control
+
+Microsoft-Windows-RICHED32*		# Rich Edit 3.1
+Microsoft-Windows-MSFTEDIT*		# Rich Edit 4.1

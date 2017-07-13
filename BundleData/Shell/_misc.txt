@@ -8,4 +8,14 @@ Microsoft-Windows-Shell-GroupPolicy*
 Microsoft-Windows-thumbexthost*		# Hosts thumb extraction COM objects
 Microsoft-Windows-Shell-PreviewHost*	# Preview COM object host
 
-Microsoft-Windows-moricons*		# moricons.dll - contains bonus shell icons
+# "Windows Shell LUA/PA Elevation Factory" (LUA = )
+# Registers "Multi Object Elevation Factory" and "Elevated Object Factory Server Manager" CLSIDs.
+# Not needed for a LUA implementation per se, perhaps provides 
+Microsoft-Windows-shpafact
+Microsoft-Windows-shpafact.*
+
+# "Shell Account Classes"
+# Registers as a profile notification handler, exports a bunch of CLSIDs named "Shell Computer Accounts", "Shell Computer Groups", "Shell Logged On Accounts", "Shell Profile Accounts", "Shell User Accounts"
+# Probably some sort of helper DLL for Explorer Shell
+Microsoft-Windows-shacct
+Microsoft-Windows-shacct.*

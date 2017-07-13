@@ -10,3 +10,6 @@ Microsoft-Windows-imageres.*
 
 Microsoft-Windows-imagesp1		# "SP1 Image Resources DLL"
 Microsoft-Windows-imagesp1.*
+
+Microsoft-Windows-moricons		# moricons.dll - contains bonus shell icons. Very old.
+Microsoft-Windows-moricons.*

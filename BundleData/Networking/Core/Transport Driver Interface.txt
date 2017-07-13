@@ -5,4 +5,4 @@
 
 Microsoft-Windows-TDI-*
 
-# Deprecated in favor of Winsock Kernel and Windows Filtering Platform, but still widely rooted.
+# Deprecated in favor of Winsock Kernel and Windows Filtering Platform, but still widely used.

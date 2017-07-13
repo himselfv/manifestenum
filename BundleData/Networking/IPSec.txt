@@ -1,0 +1,10 @@
+# IPSec
+# Vista+: Based on and requires Windows Filtering Platform. The core is implemented there, this only hosts user-mode components and support tools.
+
+# IKE = Internet Key Exchange = the protocol used to set up a security association (SA) in the IPsec protocol suite
+# https://en.wikipedia.org/wiki/Internet_Key_Exchange
+
+Microsoft-Windows-Network-Security-Domain-Clients-Netsh*	# NetSh helper
+Microsoft-Windows-Network-Security-Domain-Clients-Svc*		# Group Policy Client DLL
+Microsoft-Windows-Network-Security-Domain-Clients		# MMC Snap-in
+Microsoft-Windows-Network-Security-Domain-Clients.*

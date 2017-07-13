@@ -1,0 +1,16 @@
+# Network Store Interface / User mode NSI service
+# "Provides user mode APIs to access persistable configuration and run-time information from providers such as TCP/IP"
+
+# NSI functions are originally implemented in netio.sys, part of Network I/O Subsystem.
+# Examples of functions exported:
+#   NsiGetParameter / NsiGetAllParameters
+#   NsiSetParameter / NsiSetAllParameters
+#   NsiRegisterChangeNotificationEx
+#   NsiEnumerateObjectsAllParameters
+
+# nsiproxy.sys: Exports selected netio.sys Nsi* functions as kernel calls.
+# nsisvc.dll: A service which provides RPC interface for nsiproxy.sys kernel calls.
+# winnsi.dll: Exports a short NsiRpc* family of functions which directly translate into RPC calls.
+# nsi.dll: Exports a larger Nsi* set of wrappers around winnsi.dll
+
+Microsoft-Windows-UserModeNSI*
