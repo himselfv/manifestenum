@@ -1,17 +1,14 @@
 # Cryptography and Certificate Services APIs and Tools
 
-# Useful note:
-# All Crypto API team low-level packages seem to be in the form:
-#  Microsoft-Windows-dllname-dll
-
-
 Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
 
 # Crypto API - contains a ton of functions
 # See https://msdn.microsoft.com/en-us/library/windows/desktop/aa380252(v=vs.85).aspx
-# A lot of functions are covered by advapi32.dll which hosts tons of other API,
-# newer functions are hosted in their respective DLLs
+# A lot of functions are covered by advapi32.dll which hosts tons of other API, newer functions are hosted in their respective DLLs
+
 Microsoft-Windows-crypt32-dll*			# Newer CryptoAPI functions, incl.: DPAPI
+Microsoft-Windows-mssip32-dll*			# Forwards some CryptSIP* functions to crypt32.dll (backward compability)
+Microsoft-Windows-mscat32-dll*			# Forwards some CryptCAT* functions to crypt32.dll (backward compability)
 Microsoft-Windows-CAPI2-instrumentation*	# crypt32 events
 
 Microsoft-Windows-cryptui-dll*		# UI helpers
@@ -19,10 +16,8 @@ Microsoft-Windows-cryptui-dll*		# UI helpers
 Microsoft-Windows-cryptnet-dll*		# Networking helpers
 Microsoft-Windows-CAPI2-cryptnet-reg*	# Registration for cryptnet.dll
 
-Microsoft-Windows-mssip32-dll*		# Forwards some CryptSIP* functions to crypt32.dll (backward compability)
-Microsoft-Windows-mscat32-dll*		# Forwards some CryptCAT* functions to crypt32.dll (backward compability)
-
 # Note: Advapi32 only hosts entry points, redirects implementations to cryptsp and bcrypt.
+
 # Support DLLs
 Microsoft-Windows-cryptdlg-dll*		# Common dialogs for certificate management
 Microsoft-Windows-cryptsp-dll*		# Implements some functions for advapi32
@@ -69,39 +64,12 @@ Microsoft-Windows-cryptsvc-dll*
 Microsoft-Windows-SF-CAPI2*		# Registers the service, and not much more
 
 
-
-# CNG API (Cryptography API: Next Generation)
-# Aims to replace CryptoAPI
-# https://msdn.microsoft.com/en-us/library/windows/desktop/aa376210(v=vs.85).aspx
-Microsoft-Windows-bcrypt-dll*			# Cryptographic configuration and primitives
-Microsoft-Windows-bcrypt-primitives-dll*
-Microsoft-Windows-BCRYPT-Events*		# W10
-Microsoft-Windows-BCrypt.*			# W10, Languages
-Microsoft-Windows-ncrypt-dll*			# Data Protection, Key Storage, SSL API, Helper functions
-Microsoft-Windows-ncryptui-dll*			# User prompt helper (non-public)
-Microsoft-Windows-tokenbinding-dll*		# Token Binding API (W10) # TODO: Verify that it matches
-Microsoft-Windows-cngaudit-dll*			# Audits crypto operations, apparently
-
-
-
 Microsoft-Windows-msasn1*			# "Abstract Syntax Notation One implementation". Implements ASN.1. Produced by and used mostly by crypto APIs, so stored here for now.
-
-
-# Certificate services
-Microsoft-Windows-CertCredProvider*
-Microsoft-Windows-CertificateRequestTool*
-Microsoft-Windows-CertificationAuthorityClient*
-Microsoft-Windows-CertUtil*
-
 
 
 # Misc
 Microsoft-Windows-Cryptography*
 Microsoft-Windows-Crypto-keys*
-Microsoft-Windows-Crypto-RNG-instrumentation*		# Instrumentation for cng.sys shipped with LSASS
-
-Microsoft-Windows-Security-CNG-KeyIsolation*
-Microsoft-Windows-KeyIso.Resources
 
 # "GUI Application for adding, deleting and viewing credentials stored by credential manager"
 # Yet is a DLL.

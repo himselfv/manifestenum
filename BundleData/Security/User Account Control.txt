@@ -1,6 +1,5 @@
 # Limited User Access (LUA) / User Account Control (UAC)
-# A technology which has Administrator stripped of its rights,
-# and allows for elevation prompts when needed.
+# A technology which has Administrator stripped of its rights, and allows for elevation prompts when needed.
 
 Microsoft-Windows-LUA*
 

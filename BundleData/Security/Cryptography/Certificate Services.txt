@@ -1,0 +1,6 @@
+
+# Certificate services
+Microsoft-Windows-CertCredProvider*
+Microsoft-Windows-CertificateRequestTool*
+Microsoft-Windows-CertificationAuthorityClient*
+Microsoft-Windows-CertUtil*

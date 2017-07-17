@@ -1,9 +1,0 @@
-# SSPI core is implemented in LSA
-
-# Feature package
-Microsoft-Windows-Security-SSPI
-Microsoft-Windows-Security-SSPI.*
-
-# Stub security.dll for compability with older applications
-Microsoft-Windows-Security-Service-Provider-Interface-Stub
-Microsoft-Windows-Security-Service-Provider-Interface-Stub.*

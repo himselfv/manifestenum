@@ -1,0 +1,11 @@
+# SSPI Core / API. Implemented in LSA (sspicli.dll, secur32.dll).
+# API Documentation:
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/aa374731(v=vs.85).aspx ("SSPI Functions")
+
+# Feature package
+Microsoft-Windows-Security-SSPI
+Microsoft-Windows-Security-SSPI.*
+
+# Stub security.dll for compability with older applications
+Microsoft-Windows-Security-Service-Provider-Interface-Stub
+Microsoft-Windows-Security-Service-Provider-Interface-Stub.*

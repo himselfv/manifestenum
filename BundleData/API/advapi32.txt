@@ -5,3 +5,5 @@ Microsoft-Windows-Advapi32*
 #   LsaLookup*, LookupAccountNameLocal, LookupAccountSidLocal, ...
 #   SDDL (Security Descriptor Definition Language): ConvertSecurityDescriptorTo*, ConvertStringToSid, etc
 Microsoft-Windows-Sechost*
+
+# Redirects many functions to respective implementation DLLs (for instance, cryptographic functions to various CryptoAPI libraries).

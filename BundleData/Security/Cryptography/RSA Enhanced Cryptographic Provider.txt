@@ -3,3 +3,10 @@
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa386986(v=vs.85).aspx
 
 Microsoft-Windows-rsaenh-*
+
+# Provides:
+#   Microsoft Base Cryptographic Provider v1.0
+#   Microsoft Enhanced Cryptographic Provider v1.0
+#   Microsoft Enhanced RSA and AES Cryptographic Provider
+#   Microsoft RSA SChannel Cryptographic Provider
+#   Microsoft Strong Cryptographic Provider

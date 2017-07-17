@@ -41,7 +41,6 @@ Microsoft-Windows-Security-Configuration-Engine-Mof*
 Microsoft-Windows-Security-Digest-MOF*
 Microsoft-Windows-Security-Kerberos-MOF*
 Microsoft-Windows-Security-NTLM-MOF*
-Microsoft-Windows-Security-Schannel-MOF*
 Microsoft-Windows-Security-SPP-WMI*
 Microsoft-Windows-ShadowCopyWMIProvider*
 Microsoft-Windows-StorageVolumeWMIProvider*

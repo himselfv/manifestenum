@@ -1,0 +1,29 @@
+# CNG API (Cryptography API: Next Generation)
+# Aims to replace CryptoAPI
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa376210(v=vs.85).aspx
+
+# Implements the following function families:
+#   BCrypt*
+#   NCrypt*
+#   Ssl*
+#   TokenBinding*
+
+# Depends on cng.sys (kernel CNG part, incl. random number generator) which is shipped with LSASS.
+# Requires: LSASS.
+
+Microsoft-Windows-bcrypt-dll*			# Cryptographic configuration and primitives
+Microsoft-Windows-bcrypt-primitives-dll*
+Microsoft-Windows-BCRYPT-Events*		# W10
+Microsoft-Windows-BCrypt.*			# W10, Languages
+
+Microsoft-Windows-ncrypt-dll*			# Data Protection, Key Storage, SSL API, Helper functions
+Microsoft-Windows-ncryptui-dll*			# User prompt helper (non-public)
+
+Microsoft-Windows-tokenbinding-dll*		# Token Binding API (W10) # TODO: Verify that it matches
+
+Microsoft-Windows-cngaudit-dll*			# Audits crypto operations, apparently
+
+Microsoft-Windows-Crypto-RNG-instrumentation*		# Instrumentation for cng.sys events (shipped with LSASS)
+
+Microsoft-Windows-Security-CNG-KeyIsolation*
+Microsoft-Windows-KeyIso.Resources

@@ -1,0 +1,7 @@
+
+# Provides Pst* family of functions, e.g.
+#   https://msdn.microsoft.com/en-us/library/windows/desktop/ee351607(v=vs.85).aspx
+
+# Doesn't seem to provide anything else, despite the big name. But I'm not sure.
+
+Microsoft-Windows-Security-Certificate-Policy-Engine*

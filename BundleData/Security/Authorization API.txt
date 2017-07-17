@@ -1,0 +1,13 @@
+# Authorization APIs
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa375742(v=vs.85).aspx
+
+# Contains authz.dll (with Authz* family of functions) and ntmarta.dll.
+
+# A lot of authorization APIs are implemented in advapi32.dll, but require these libraries to function.
+
+# Windows NT MARTA Provider (NT Multiple Access Routing Authority)
+# The backbone for managing the permissions of various objects, such as files, keys and services, setting or retrieving access control lists. Provides the core support for security inheritance (which is notably done in user-mode).
+# https://msdn.microsoft.com/en-us/library/aa939264(v=winembedded.5).aspx
+
+Microsoft-Windows-Security-Authentication-Usermode*
+# Even though this is called "Authentication", it's entirely about "Authorization" as defined by MSDN, and the assembly description also says "Authorization".

@@ -1,4 +1,4 @@
-# Network File System (NFS) is a distribute file system protocol.
+# Network File System (NFS) is a distributed file system protocol.
 # It's not a full-blown file system in the driver sense.
 # https://en.wikipedia.org/wiki/Network_File_System
 

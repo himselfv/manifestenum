@@ -4,7 +4,7 @@
 Microsoft-Windows-SmartCardSubsystem*
 Microsoft-Windows-SmartCardSubsystemClient*
 Microsoft-Windows-SmartCardPlugins*
-Microsoft-Windows-SmartCardKsp*			# Key storage provider
+Microsoft-Windows-SmartCardKsp*			# CryptoAPI key storage provider (KSP/CSP)
 
 Microsoft-Windows-SCPNP-*
 # -instrumentation				# Certificate Propagation events descriptions

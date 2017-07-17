@@ -1,3 +1,4 @@
 # Active Directory Certificate Services Enrollment Client / X.509 Certificate Enrollment
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa374863(v=vs.85).aspx
 
 Microsoft-Windows-X509CertificateEnrollment*

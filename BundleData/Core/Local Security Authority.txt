@@ -1,4 +1,4 @@
-# A protected subsystem that authenticates and logs users onto the local system. LSA also maintains information about all aspects of local security on a system, collectively known as the Local Security Policy of the system.
+# A protected subsystem that authenticates and logs users into the local system. LSA also maintains information about all aspects of local security on a system, collectively known as the Local Security Policy of the system.
 
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa378326(v=vs.85).aspx
 

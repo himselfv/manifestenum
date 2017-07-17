@@ -1,4 +1,23 @@
-# Implements login/password dialog boxes and logon UI
+# Authentication UI
+# Implements login/password dialog boxes and logon UI.
+
+# Supports numerous credential providers which have to be registered under:
+#   HLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\*
+
+@Hosts: CredentialProvider
+@Hosts: CredentialProviderFilter
+@Hosts: PlapProvider			# Pre-login authentication provider
+
+# Default ones that are registered with this assembly include:
+#  - GenericProvider
+#  - NPProvider
+#  - PasswordProvider (with password reset feature)
+#
+# Other components that register their own credential providers include:
+#  - Smart Card CP
+#  - Security Vault CP
+#  - Biometrics CP
+#  - Certificate Services CP
 
 Microsoft-Windows-Authentication-AuthUI*
 Microsoft-Windows-Authentication-LogonUI*

@@ -1,0 +1,21 @@
+Cryptography in Windows
+  https://msdn.microsoft.com/en-us/library/windows/desktop/aa380255(v=vs.85).aspx
+
+There's roughly two cryptography stacks in modern Windows:
+* CAPI/CAPI2 (CryptoAPI): The oldest and most widely used one.
+* CNG (Cryptography: Next generation): The newer one intended as a replacement.
+
+Both are well documented, stable and reliable.
+
+Common abbreviations:
+CSP = Cryptographic Service Provider
+
+There's a broad range of CSPs:
+  https://msdn.microsoft.com/en-us/library/windows/desktop/aa386983(v=vs.85).aspx
+They are registered in the registry:
+  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography\Defaults\Provider
+Most are implemented in one of the two libraries: rsaenh.dll or dssenh.dll. Other components can also provide their own ones (notably SmartCard Subsystem installs a key storage provider).
+
+CryptoAPI team packages are often in the form:
+  Microsoft-Windows-dllname-dll
+There's often a separate assembly with registry data in a different namespace (e.g. Microsoft-Windows-CAPI2-dllname-registration).
