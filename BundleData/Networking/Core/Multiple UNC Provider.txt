@@ -4,5 +4,10 @@
 
 # See also: WNet / MPR (multiple provider router) - servers a similar function routing WNet* calls.
 
+# Known providers:
+#   SMB redirector (Samba/Lanman)
+#   WebDAV redirector
+#   Terminal Services redirector
+
 Microsoft-Windows-Mup
 Microsoft-Windows-Mup.*

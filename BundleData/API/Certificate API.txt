@@ -1,2 +1,0 @@
-Microsoft-Windows-CAPI2*
-Microsoft-Windows-capisp*

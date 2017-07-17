@@ -1,29 +1,49 @@
 # Cryptography and Certificate Services APIs and Tools
 
 # Useful note:
-# All Crypto API team packages seem to be in the form:
+# All Crypto API team low-level packages seem to be in the form:
 #  Microsoft-Windows-dllname-dll
 
 
-Microsoft-Windows-CryptBase*
+Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
 
 # Crypto API - contains a ton of functions
 # See https://msdn.microsoft.com/en-us/library/windows/desktop/aa380252(v=vs.85).aspx
 # A lot of functions are covered by advapi32.dll which hosts tons of other API,
 # newer functions are hosted in their respective DLLs
-Microsoft-Windows-crypt32-dll*		# Newer CryptoAPI functions, incl.: DPAPI
+Microsoft-Windows-crypt32-dll*			# Newer CryptoAPI functions, incl.: DPAPI
+Microsoft-Windows-CAPI2-instrumentation*	# crypt32 events
+
 Microsoft-Windows-cryptui-dll*		# UI helpers
+
 Microsoft-Windows-cryptnet-dll*		# Networking helpers
+Microsoft-Windows-CAPI2-cryptnet-reg*	# Registration for cryptnet.dll
+
 Microsoft-Windows-mssip32-dll*		# Forwards some CryptSIP* functions to crypt32.dll (backward compability)
 Microsoft-Windows-mscat32-dll*		# Forwards some CryptCAT* functions to crypt32.dll (backward compability)
+
 # Note: Advapi32 only hosts entry points, redirects implementations to cryptsp and bcrypt.
 # Support DLLs
 Microsoft-Windows-cryptdlg-dll*		# Common dialogs for certificate management
 Microsoft-Windows-cryptsp-dll*		# Implements some functions for advapi32
+
 Microsoft-Windows-cryptdll-dll*		# Network security component required for SSL/TLS functions
+Microsoft-Windows-CAPI2-cryptdlg-reg*	# cryptdll.dll registration
+
+
 
 # Microsoft Trust Verification API
 Microsoft-Windows-wintrust-dll*		# Displays the Certificates dialog box.
+Microsoft-Windows-softpub-dll*		# Compatibility proxy. Forwards a few functions (which were probably originally declared here) to wintrust.dll, notably Softpub*.
+Microsoft-Windows-CAPI2-wintrust-reg*	# wintrust.dll registration
+Microsoft-Windows-CAPI2-setreg*		# more wintrust.dll registration
+
+Microsoft-Windows-CAPI2-certs*		# Certificates, roots and CRLs (revokation lists) installed during setup (empty in live images)
+Microsoft-Windows-CAPI2-WeakCrypto*	# Default registry settings to disable weak crypto, such as MD5
+Microsoft-Windows-capisp*		# SysPrep cleanup DLL for CAPI
+
+Microsoft-Windows-CAPI2			# Package (empty in live images)
+Microsoft-Windows-CAPI2.*
 
 # CryptXML
 # Provides an API for creating and representing digital signatures by using XML formatted data
@@ -47,7 +67,6 @@ Microsoft-Windows-certadm-*		# TODO: Verify the assembly name is right
 # The service itself is registered in SF-CAPI2 package
 Microsoft-Windows-cryptsvc-dll*
 Microsoft-Windows-SF-CAPI2*		# Registers the service, and not much more
-
 
 
 
@@ -79,7 +98,7 @@ Microsoft-Windows-CertUtil*
 # Misc
 Microsoft-Windows-Cryptography*
 Microsoft-Windows-Crypto-keys*
-Microsoft-Windows-Crypto-RNG-instrumentation*
+Microsoft-Windows-Crypto-RNG-instrumentation*		# Instrumentation for cng.sys shipped with LSASS
 
 Microsoft-Windows-Security-CNG-KeyIsolation*
 Microsoft-Windows-KeyIso.Resources

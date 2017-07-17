@@ -6,4 +6,8 @@ Microsoft-Windows-UserPowerManagement*			# Provides storage for system power set
 
 Microsoft-Windows-PowerManagement-Troubleshooter*	# WDI Troubleshooter
 
-Microsoft-Windows-PowerManagement-*			# Package
+Microsoft-Windows-PowerManagement			# Package
+Microsoft-Windows-PowerManagement.*
+Microsoft-Windows-PowerManagement-*
+
+Microsoft-Windows-Power-Policy-Legacy*			# Legacy Power registry settings

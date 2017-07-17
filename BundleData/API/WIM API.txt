@@ -1,0 +1,7 @@
+# WIM (Windows Image File) API
+# Provides functions for creating, editing and mounting Windows Image Files, which are files that store operating system images.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/jj134345.aspx
+
+Microsoft-Windows-Wimgapi
+Microsoft-Windows-Wimgapi.*
+Microsoft-Windows-Wimgapi-*

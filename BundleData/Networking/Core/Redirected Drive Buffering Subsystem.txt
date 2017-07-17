@@ -1,0 +1,13 @@
+# Redirected Drive Buffering Subsystem / RDBSS
+# A kernel-mode library/framework for writing networking file systems. Wraps a compatible driver (called networking mini-redirector) into a full-blown file system driver.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/ifs/the-redirected-drive-buffering-subsystem
+
+# Provided both as a standalone driver (rdbss.sys) and a static library in Windows Driver Kit (rdbsslib.lib). It was originally intended that drivers could link to rdbss.sys, however that wasn't fully implemented so only SMB redirector uses it. All other driver contain their own copies of rdbsslib.
+
+# Clients:
+#  - SMB redirector
+#  - WebDAV mini-redirector (statically linked)
+#  - Terminal Services mini-redirector (statically linked)
+
+Microsoft-Windows-RDBSS
+Microsoft-Windows-RDBSS.*

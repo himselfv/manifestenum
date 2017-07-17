@@ -1,12 +1,9 @@
 # Event Tracing for Windows (ETW)
-# Kernel-mode high speed subscription based binary event/logging facility.
-# Closely tied with Event Log since Vista.
+# Kernel-mode high speed subscription based binary event/logging facility. Closely tied with Event Log since Vista.
 
-# Many components in the OS provide ETW events.
-# Clients can subscribe to any of the available providers, filter by any of the keywords.
+# Many components in the OS provide ETW events. Clients can subscribe to any of the available providers, filter by any of the keywords.
 
-# Schema files are required to interpret log events which are binary.
-# Event schema descriptions can be included in the manifests, and many components do.
+# Schema files are required to interpret log events which are binary. Event schema descriptions can be included in the manifests, and many components do.
 
 Microsoft-Windows-ETW-core
 
@@ -17,3 +14,12 @@ Microsoft-Windows-ETW-core
 # https://msdn.microsoft.com/en-us/library/windows/desktop/aa363692(v=vs.85).aspx
 # To consume event specific data, the consumer must know the format of the event data. If the provider used a manifest, MOF, or TMF files to publish the format of the event data, you can use the trace data helper (TDH) functions to parse the event data. 
 Microsoft-Windows-TraceDataHelper
+
+
+# AutoLogger and GlobalLogger
+# This component provides Autologger and Globallogger functionality.
+# ETW logging sessions can be started automatically at boot to capture events occuring early during load. These sessions need to be registered at:
+#    HKLM\System\CurrentControlSet\WMI\AutoLogger\*
+#    HKLM\System\CurrentControlSet\WMI\GlobalLogger
+# There can be several Autologger sessions but at most one GlobalLogger session. Many components install their own Autologgers for telemetry by default.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa363687(v=vs.85).aspx

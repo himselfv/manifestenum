@@ -11,3 +11,10 @@ Microsoft-Windows-Rollup-Version*
 Microsoft-Windows-SafeMode*			# Contains a list of drivers to load in safe mode
 
 Microsoft-Windows-Shell-Client*			# A single registry setting for Explorer
+
+Microsoft-Windows-Security-Licensing-SLCC	# Deprecated empty assembly which could be used to set partner settings for the target image.
+Microsoft-Windows-Security-Licensing-SLCC.*
+Microsoft-Windows-Security-Licensing-SLC-UX	# Deprecated empty assembly which previously provided target image SLC (licensing client) settings
+Microsoft-Windows-Security-Licensing-SLC-UX.*
+Microsoft-Windows-Security-Licensing-SLC	# Deprecated empty assembly which previously provided settings to skip Licensing rearm on rearm
+Microsoft-Windows-Security-Licensing-SLC.*

@@ -2,12 +2,17 @@
 # A powerful, old and widely used API for installing and enumerating installed devices.
 
 Microsoft-Windows-SetupAPI*
+
 Microsoft-Windows-SPInf*		# Implements INF file processing for SetupAPI. Delay-loaded by it. Provides a long list of neat undocumented SpInf* family functions.
+Microsoft-Windows-spfileq*		# Implements Setup Queues for SetupAPI (https://msdn.microsoft.com/en-us/library/aa377408(v=vs.85).aspx). Provides a list of undocumented SpFileQueue* functions.
 
 # See also: Hardware\Class installers - for the components which handle actual installation/uninstallation and property pages for the devices, as well as for device class declarations.
+
 
 # Inf Default Installer
 # A simple wrapper which runs the default section install for a given INF file.
 # Traditionally this was done by calling into setupapi.dll,InstallHinfSection, but on Vista+ we have this tool.
+
 Microsoft-Windows-InfDefaultInstall*
+
 # Grouped with SetupAPI because SetupAPI registers it as a handler for inf files at the moment anyway.

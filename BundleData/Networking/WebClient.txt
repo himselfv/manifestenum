@@ -4,6 +4,9 @@
 # Many modern operating systems provide built-in client-side support for WebDAV.
 # https://en.wikipedia.org/wiki/WebDAV
 
+# WebDAVRedir is an UNC (MUP) and MPR redirector providing access to WebDAV resources via UNC (\\server\DavWWWRoot\...) paths.
+# https://www.webdavsystem.com/server/access/windows
+
 Microsoft-Windows-WebDAVRedir*				# Service:WebClient
 
 

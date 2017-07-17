@@ -1,0 +1,11 @@
+# File Version Information API
+# Provides functions to extract file version information from PE files (EXE, DLL, etc), to copy file only if it's newer than the installed version, and to choose the install location (system32 / application directory) based on whether its newer or not.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms646981(v=vs.85).aspx
+
+# Provides GetFileVersion* and Ver* families of functions.
+
+# PE files are binary files with application code and resources. EXE and DLL files are examples of PE files. PE files can contain version information among other resources.
+
+# version.dll
+Microsoft-Windows-version
+Microsoft-Windows-version.*

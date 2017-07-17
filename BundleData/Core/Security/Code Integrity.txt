@@ -1,4 +1,12 @@
 # Code Integrity is a feature that validates the integrity of a driver or system file each time it is loaded into memory.
 # https://msdn.microsoft.com/en-us/library/cc733982%28v=ws.10%29.aspx
+# Vista+
+
+# Originally created to implement "Protected Media Path" DRM. It is a required component for NTOSKRNL, and initialized during the earlier stages of system boot.
 
 Microsoft-Windows-CodeIntegrity*
+
+# Protected Environment Authorization Service (driver)
+# Part of Code Integrity kernel support (see https://www.symantec.com/avcenter/reference/Windows_Vista_Kernel_Mode_Security.pdf).
+Microsoft-Windows-PEAuth
+Microsoft-Windows-PEAuth.*

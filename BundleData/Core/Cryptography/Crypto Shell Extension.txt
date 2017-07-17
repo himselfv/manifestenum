@@ -1,3 +1,4 @@
 # Crypto Shell Extension
 
 Microsoft-Windows-cryptext-dll*		# Also in Explorer
+Microsoft-Windows-CAPI2-cryptext-reg*	# Registration

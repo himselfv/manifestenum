@@ -4,3 +4,8 @@ Microsoft-Windows-Shell-HomeGroup*
 # Home Group Control Panel requires XWizards for some tasks.
 
 Microsoft-Windows-Printing-HomeGroup*
+
+# HomeGroup Listener service supports declaring children listener classes:
+#   HKLM\SYSTEM\CurrentControlSet\services\HomeGroupListener\Approved Listeners
+# Four of these are declared by M-W-HomeGroup-ListSvc itself, then one additional is by:
+Microsoft-Windows-Security-IdentityListener*		# Despite the name, it's a HomeGroup component unrelated to anything else

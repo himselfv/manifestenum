@@ -4,3 +4,8 @@ Microsoft-Windows-shell32*
 Microsoft-Windows-shlwapi*
 Microsoft-Windows-shfolder*
 Microsoft-Windows-shdocvw*
+
+# Shell Unimplemented Functions Library
+# Exports a ton of functions by ordinals. Various obsolete shell APIs redirect to these, and these all return 0 or -1 or whatever is suitable for each particular function to safely indicate "not implemented / cannot do".
+Microsoft-Windows-shunimpl
+Microsoft-Windows-shunimpl.*

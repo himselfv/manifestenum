@@ -7,6 +7,7 @@ Microsoft-Windows-Shell-GroupPolicy*
 # Service utilities
 Microsoft-Windows-thumbexthost*		# Hosts thumb extraction COM objects
 Microsoft-Windows-Shell-PreviewHost*	# Preview COM object host
+Microsoft-Windows-verclsid*		# "Extension CLSID verification host", related to Shell Extensions
 
 # "Windows Shell LUA/PA Elevation Factory" (LUA = )
 # Registers "Multi Object Elevation Factory" and "Elevated Object Factory Server Manager" CLSIDs.
