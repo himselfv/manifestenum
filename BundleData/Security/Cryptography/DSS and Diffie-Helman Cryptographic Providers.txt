@@ -5,3 +5,5 @@ Microsoft-Windows-Diffie_Hellman_Software_CSP*
 #   Microsoft Base DSS and Diffie-Hellman Cryptographic Provider
 #   Microsoft DH SChannel Cryptographic Provider
 #   Microsoft Enhanced DSS and Diffie-Hellman Cryptographic Provider
+
+# Registered by M-W-Cryptography together with other standard providers.

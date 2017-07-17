@@ -1,44 +1,32 @@
-# Cryptography and Certificate Services APIs and Tools
-
-Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
-
-# Crypto API - contains a ton of functions
-# See https://msdn.microsoft.com/en-us/library/windows/desktop/aa380252(v=vs.85).aspx
+# Cryptography API and tools / Crypto API 
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa380252(v=vs.85).aspx
 # A lot of functions are covered by advapi32.dll which hosts tons of other API, newer functions are hosted in their respective DLLs
+# Advapi32 mostly just hosts entry points, redirects implementations to cryptsp and bcrypt.
 
-Microsoft-Windows-crypt32-dll*			# Newer CryptoAPI functions, incl.: DPAPI
+Microsoft-Windows-crypt32-dll*			# Exports the majority of CryptoAPI
 Microsoft-Windows-mssip32-dll*			# Forwards some CryptSIP* functions to crypt32.dll (backward compability)
 Microsoft-Windows-mscat32-dll*			# Forwards some CryptCAT* functions to crypt32.dll (backward compability)
 Microsoft-Windows-CAPI2-instrumentation*	# crypt32 events
 
-Microsoft-Windows-cryptui-dll*		# UI helpers
+Microsoft-Windows-cryptui-dll*			# Provides UI for common crypto-related operations.
 
-Microsoft-Windows-cryptnet-dll*		# Networking helpers
-Microsoft-Windows-CAPI2-cryptnet-reg*	# Registration for cryptnet.dll
+Microsoft-Windows-cryptnet-dll*			# Networking functions (e.g. CryptGetObjectUrl)
+Microsoft-Windows-CAPI2-cryptnet-reg*		# Registration for cryptnet.dll
 
-# Note: Advapi32 only hosts entry points, redirects implementations to cryptsp and bcrypt.
+Microsoft-Windows-cryptsp-dll*			# Implements some functions for advapi32
+Microsoft-Windows-cryptdlg-dll*			# Common dialogs for certificate management
 
-# Support DLLs
-Microsoft-Windows-cryptdlg-dll*		# Common dialogs for certificate management
-Microsoft-Windows-cryptsp-dll*		# Implements some functions for advapi32
+Microsoft-Windows-cryptdll-dll*			# Network security component required for SSL/TLS functions
+Microsoft-Windows-CAPI2-cryptdlg-reg*		# cryptdll.dll registration
 
-Microsoft-Windows-cryptdll-dll*		# Network security component required for SSL/TLS functions
-Microsoft-Windows-CAPI2-cryptdlg-reg*	# cryptdll.dll registration
-
-
+Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
 
 # Microsoft Trust Verification API
+# Provides WinTrust* and CryptCAT* function families.
 Microsoft-Windows-wintrust-dll*		# Displays the Certificates dialog box.
 Microsoft-Windows-softpub-dll*		# Compatibility proxy. Forwards a few functions (which were probably originally declared here) to wintrust.dll, notably Softpub*.
 Microsoft-Windows-CAPI2-wintrust-reg*	# wintrust.dll registration
 Microsoft-Windows-CAPI2-setreg*		# more wintrust.dll registration
-
-Microsoft-Windows-CAPI2-certs*		# Certificates, roots and CRLs (revokation lists) installed during setup (empty in live images)
-Microsoft-Windows-CAPI2-WeakCrypto*	# Default registry settings to disable weak crypto, such as MD5
-Microsoft-Windows-capisp*		# SysPrep cleanup DLL for CAPI
-
-Microsoft-Windows-CAPI2			# Package (empty in live images)
-Microsoft-Windows-CAPI2.*
 
 # CryptXML
 # Provides an API for creating and representing digital signatures by using XML formatted data
@@ -52,7 +40,6 @@ Microsoft-Windows-mssign32-dll*
 # Available not on all systems.
 Microsoft-Windows-certadm-*		# TODO: Verify the assembly name is right
 
-
 # Cryptographic Service
 # Provides four management services:
 # - Catalog Database Service, which confirms the signatures of Windows files and allows new programs to be installed
@@ -63,16 +50,22 @@ Microsoft-Windows-certadm-*		# TODO: Verify the assembly name is right
 Microsoft-Windows-cryptsvc-dll*
 Microsoft-Windows-SF-CAPI2*		# Registers the service, and not much more
 
-
-Microsoft-Windows-msasn1*			# "Abstract Syntax Notation One implementation". Implements ASN.1. Produced by and used mostly by crypto APIs, so stored here for now.
-
-
-# Misc
-Microsoft-Windows-Cryptography*
-Microsoft-Windows-Crypto-keys*
+# "Abstract Syntax Notation One implementation". Implements ASN.1. Produced by and used mostly by crypto APIs, so stored here for now.
+Microsoft-Windows-msasn1*
 
 # "GUI Application for adding, deleting and viewing credentials stored by credential manager"
 # Yet is a DLL.
 Microsoft-Windows-Keymgr
 Microsoft-Windows-Keymgr.*
 Microsoft-Windows-Keymgr-*
+
+# Misc and support assemblies
+Microsoft-Windows-CAPI2-certs*			# Certificates, roots and CRLs (revokation lists) installed during setup (empty in live images)
+Microsoft-Windows-CAPI2-WeakCrypto*		# Default registry settings to disable weak crypto, such as MD5
+Microsoft-Windows-Cryptography			# Registry settings for default crypto providers and configurations
+Microsoft-Windows-Cryptography.*
+Microsoft-Windows-Cryptography-CryptoConfig*
+Microsoft-Windows-Crypto-keys*			# Create folders to store cryptographic machine keys
+Microsoft-Windows-capisp*			# SysPrep cleanup DLL for CAPI
+Microsoft-Windows-CAPI2				# Package (empty in live images)
+Microsoft-Windows-CAPI2.*

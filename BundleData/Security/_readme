@@ -1,7 +1,6 @@
 For an overview of authentication, authorization and security technologies in Windows, see
   https://msdn.microsoft.com/en-us/library/windows/desktop/ee663293(v=vs.85).aspx
 
-
 Glossary:
 Authentication: Verifying the credentials to determine who the user is.
 Authorization: Granting or denying the user access to the resource according to a set of rules (and configuration of said rules).

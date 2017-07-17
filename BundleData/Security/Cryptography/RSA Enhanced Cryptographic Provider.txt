@@ -10,3 +10,5 @@ Microsoft-Windows-rsaenh-*
 #   Microsoft Enhanced RSA and AES Cryptographic Provider
 #   Microsoft RSA SChannel Cryptographic Provider
 #   Microsoft Strong Cryptographic Provider
+
+# Registered by M-W-Cryptography together with other standard providers.
