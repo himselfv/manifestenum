@@ -1,0 +1,19 @@
+
+
+# Font management services
+Microsoft-Windows-Font-FMS
+Microsoft-Windows-Font-FMS.*
+
+Microsoft-Windows-Font-RegistrySettings
+Microsoft-Windows-Font-RegistrySettings.*
+
+Microsoft-Windows-Font-StaticCache
+Microsoft-Windows-Font-StaticCache.*
+
+# PANOSE Font Mapper
+# PANOSE is a method for classifying typefaces on their visual characteristics. It can be used to to match a font to its most similar available neighbor.
+# https://en.wikipedia.org/wiki/PANOSE
+# TrueType fonts export their PANOSE metrics which can be accessed with API and used for font matching.
+# https://msdn.microsoft.com/en-us/library/dd162774(v=vs.85).aspx
+Microsoft-Windows-panmap
+Microsoft-Windows-panmap.*

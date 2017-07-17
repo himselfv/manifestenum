@@ -13,3 +13,6 @@ Microsoft-Windows-Security-SPP-*
 
 # Secondary components
 Microsoft-Windows-DNS-License*
+
+Microsoft-Windows-Kernel-Licensing*
+Microsoft-Windows-GroupPolicy-License*

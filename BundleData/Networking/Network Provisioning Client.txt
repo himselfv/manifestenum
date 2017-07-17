@@ -1,0 +1,11 @@
+# Network Provisioning Client
+# A COM API for downloading and parsing XML files which contain the list of available networks and information needed to connect to them.
+# XPSP2+
+
+# This was a service in XP called xmlprov, as an out-of-process COM server in xmlprov.dll.
+# https://msdn.microsoft.com/en-us/library/aa940075(v=winembedded.5).aspx
+# Back then it required MSXML and BITS. It was supposedly needed for Wireless Zero Configuration.
+
+# This is an API DLL xmlprovi.dll. Perhaps the service itself got cut and only the API is kept for Wireless Zero Configuration needs?
+
+Microsoft-Windows-NetworkProvisioning*

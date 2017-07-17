@@ -1,0 +1,5 @@
+# Boot Configuration Data APIs
+# Should probably go where the rest of BCD components are.
+
+Microsoft-Windows-BootConfigurationData-Com-Server*		# COM interface for interacting with BC data
+Microsoft-Windows-BootConfigurationData-Wmi-Provider*		# WMI provider for setting and retrieving BC data

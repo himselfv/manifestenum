@@ -15,3 +15,7 @@ Microsoft-Windows-PnpCustomizationsWinPE*
 Microsoft-Windows-PnpCustomizationsNonWinPE*
 
 Microsoft-Windows-UnattendedJoin*	# "Unattended setup generic command for domain join"
+
+# Global assembly cache installer (for managed code)
+# COM dll but the assembly doesn't declare its interfaces. It's unclear whether this is a CMI plugin or a standalone DLL.
+Microsoft-Windows-GacInstaller*

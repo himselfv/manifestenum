@@ -1,3 +1,6 @@
 # Contains registry entries for Windows version, build number etc.
 
 Microsoft-Product-Data*
+
+Microsoft-Windows-Kernel-CSD		# Contains CurrentControlSet\Control\Windows\CSDBuildNumber entries
+Microsoft-Windows-Kernel-CSD.*

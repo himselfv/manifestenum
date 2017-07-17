@@ -16,7 +16,7 @@ Microsoft-Windows-ML-All.*
 Microsoft.Windows.Fusion_Components_All*
 Microsoft-Windows-ManagementUI-MIG*
 
-Microsoft-Windows-LocalizedDrivers-*		# Contains a single cab with a single empty file.
+Microsoft-Windows-LocalizedDrivers*		# Contains a single cab with a single empty file.
 
 Microsoft-Windows-ServicePackResources*		# "Temporary resources from XP SP2", empty. W7.
 

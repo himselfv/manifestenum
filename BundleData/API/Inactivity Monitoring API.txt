@@ -1,0 +1,13 @@
+# Inactivity Monitoring API / User Idle Detection
+# A half-undocumented half-deprecated API to monitor the keyboard/mouse for user being inactive (idle).
+# https://msdn.microsoft.com/en-us/library/gg547646(v=vs.85).aspx
+
+# The library msidle.dll exports unnamed functions, several of which have known canonic names and defintions:
+#   BeginIdleDetection		https://msdn.microsoft.com/en-us/library/bb432198(v=vs.85).aspx
+#   EndIdleDetection
+#   GetIdleMinutes
+
+# Microsoft discourages from using this API.
+
+Microsoft-Windows-msidle
+Microsoft-Windows-msidle.*

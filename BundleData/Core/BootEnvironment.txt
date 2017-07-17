@@ -1,1 +1,5 @@
 Microsoft-Windows-BootEnvironment*
+
+# "BCD Template for Client SKUs"
+# Contains system32\config\BCD-Template registry hive which is probably a template for BCD configuration.
+Microsoft-Windows-Base Technologies-BCD Template-Client*

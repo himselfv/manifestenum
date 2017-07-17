@@ -1,0 +1,16 @@
+# Windows Mobility Center
+# A panel with easily accessible square tiles for brightness, volume, battery state, network and sync settings.
+# https://en.wikipedia.org/wiki/Windows_Mobility_Center
+# Vista+
+
+Microsoft-Windows-MobilePC-MobilityCenter*
+
+# Presentation settings dialog
+# An utility where you can configure a "presentation mode":
+#  - Turn off the screen saver
+#  - Set the sound volume
+#  - Change background
+# You can switch this presentation mode on/off either from the Mobility Center, or from the utility itself.
+# http://www.thewindowsclub.com/presentation-settings-in-windows-7
+# W7+
+Microsoft-Windows-MobilePC-PresentationSettings*

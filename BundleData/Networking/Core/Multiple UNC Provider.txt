@@ -1,0 +1,8 @@
+# Multiple UNC Provider / MUP
+# Kernel driver which handles paths in the UNC form (\\server\share) and passes them to appropriate registered providers. Samba/Lanman is the default example, but there can be others.
+# https://technet.microsoft.com/en-us/library/cc939978.aspx
+
+# See also: WNet / MPR (multiple provider router) - servers a similar function routing WNet* calls.
+
+Microsoft-Windows-Mup
+Microsoft-Windows-Mup.*

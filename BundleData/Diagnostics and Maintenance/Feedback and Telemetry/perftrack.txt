@@ -5,14 +5,16 @@
 
 # Parts of PerfTrack are hosted in WDI package.
 
-Microsoft-Windows-Core-Fundamentals-ClientPerformance-PerfTrack
+Microsoft-Windows-Core-Fundamentals-ClientPerformance-PerfTrack*
+Microsoft-Windows-Core-Fundamentals-ClientPerformance-PowerTracker*		# This is *probably* related to perftrack and not just WDI
+Microsoft-Windows-Core-Fundamentals-ClientPerformance-XPerfCore*
 
 # Can be configured through the Group Policy setting
-Microsoft-Windows-PerformancePerftrack-Adm
+Microsoft-Windows-PerformancePerftrack-Adm*
 
 # Lots of components install plugins to System32\WDI\PerfTrack
 # Some which lack host components are listed here
-Microsoft-Windows-Documents-Performance
+Microsoft-Windows-Documents-Performance*
 
 # Events definitions for some counters
 Microsoft-Windows-PDH-Events*

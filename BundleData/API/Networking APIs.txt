@@ -1,0 +1,14 @@
+# User-mode networking APIs
+
+# netapi32.dll
+Microsoft-Windows-NETAPI32		# Provides Net*, Dav*, and some Ds* APIs.
+Microsoft-Windows-NETAPI32.*
+
+# netjoin.dll / Domain Join API
+# Provides support for joining and leaving domains.
+Microsoft-Windows-NetJoin		# Provides Netp* and some Net* APIs
+Microsoft-Windows-NetJoin.*
+
+# netutils.dll
+Microsoft-Windows-NetUtils		# Provides NetApi*, Netpw* and some Net* APIs
+Microsoft-Windows-NetUtils.*

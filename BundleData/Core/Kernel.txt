@@ -35,3 +35,22 @@ Microsoft-Windows-KernelBase*
 Microsoft-Windows-BootRes
 Microsoft-Windows-BootRes.*
 Microsoft-Windows-BootRes-*
+
+# MISC
+Microsoft-Windows-Kernel-Licensing*			# SPP license file for the kernel
+Microsoft-Windows-Kernel-CriticalDeviceDatabase*	# Registry list of critical device classes
+Microsoft-Windows-Kernel-PnP				# Kernel-mode PnP registry settings
+Microsoft-Windows-Kernel-PnP.*
+Microsoft-Windows-Kernel-IO				# Some registry settings
+Microsoft-Windows-Kernel-IO.*
+Microsoft-Windows-Kernel-Tm				# "Transaction manager". Contains only event descriptions.
+Microsoft-Windows-Kernel-Tm.*
+Microsoft-Windows-Kernel-Power				# Exports WMI interfaces for kernel power management (registration only)
+Microsoft-Windows-Kernel-Power.*
+Microsoft-Windows-Kernel-Power-Events*			# Event definitions + support DLL (strings and templates) for kernel power management
+Microsoft-Windows-Kernel-Processor-Power-Events*	# Event definitions + support DLL for kernel processor power management
+Microsoft-Windows-Kernel-WMI				# Kernel-mode WMI support (registration only)
+Microsoft-Windows-Kernel-WMI.*
+
+Microsoft-Windows-Kernel				# Package
+Microsoft-Windows-Kernel.*

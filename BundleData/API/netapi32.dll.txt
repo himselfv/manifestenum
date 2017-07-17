@@ -1,4 +1,0 @@
-# netapi32.dll
-# Provides support for Net*, Dav*, and some Ds* families of APIs.
-
-Microsoft-Windows-NETAPI32*
