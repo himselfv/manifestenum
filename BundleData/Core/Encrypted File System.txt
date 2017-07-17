@@ -13,7 +13,7 @@ Microsoft-Windows-EFS.*
 # Likely related
 Microsoft-Windows-efsadu*
 
-# "EFS Client interface"
+# "EFS Client interface" / "File Encryption Client interface"
 Microsoft-Windows-feclient
 Microsoft-Windows-feclient.*
 Microsoft-Windows-feclient-*

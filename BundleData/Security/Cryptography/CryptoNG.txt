@@ -11,13 +11,34 @@
 # Depends on cng.sys (kernel CNG part, incl. random number generator) which is shipped with LSASS.
 # Requires: LSASS.
 
+# CNG configuration is stored under
+#   HKLM\SYSTEM\CurrentControlSet\Control\Cryptography\Configuration
+#
+# The \Providers key lists all CNG cryptographic providers. Each subkey contains one or both of:
+#   \UM - user-mode provider
+#   \KM - kernel-mode provider
+# An image file name is specified for each.
+#
+# Each of these contains subkeys according to their function sets. E.g.
+#   \00010001
+#   \00010004
+# Available roles are defined in Cryptography\Configuration\Local and \Domain.
+
+# Registry settings and provider registration for CNG. Not to be confused with simple M-W-Cryptography which contains settings and providers for older CryptoAPI.
+Microsoft-Windows-Cryptography-CryptoConfig*
+
+# Base modules
+
 Microsoft-Windows-bcrypt-dll*			# Cryptographic configuration and primitives
-Microsoft-Windows-bcrypt-primitives-dll*
-Microsoft-Windows-BCRYPT-Events*		# W10
-Microsoft-Windows-BCrypt.*			# W10, Languages
+Microsoft-Windows-BCrypt			# W10+
+Microsoft-Windows-BCrypt.*
+Microsoft-Windows-BCrypt-Events*		# W10+
 
 Microsoft-Windows-ncrypt-dll*			# Data Protection, Key Storage, SSL API, Helper functions
 Microsoft-Windows-ncryptui-dll*			# User prompt helper (non-public)
+Microsoft-Windows-NCrypt			# W10+
+Microsoft-Windows-NCrypt.*
+Microsoft-Windows-NCrypt-Events*		# W10+
 
 Microsoft-Windows-tokenbinding-dll*		# Token Binding API (W10) # TODO: Verify that it matches
 
@@ -27,3 +48,38 @@ Microsoft-Windows-Crypto-RNG-instrumentation*		# Instrumentation for cng.sys eve
 
 Microsoft-Windows-Security-CNG-KeyIsolation*
 Microsoft-Windows-KeyIso.Resources
+
+
+# W10+
+# CNG default cryptography providers
+
+# Microsoft Key Protection Provider
+Microsoft-Windows-mskeyprotect-dll*			# UM
+
+# Microsoft Passport Key Storage Provider
+# ngcksp.dll in Microsoft Passport component		# UM
+
+# Microsoft Platform Cryptography Provider
+Microsoft-Windows-ncrypt-platformKeyStorage-dll*	# UM: PCPKsp.dll
+Microsoft-Windows-bcrypt-platformCryptoTpm12-dll*	# Referenced as "PlatformProvider"
+
+# Microsoft Primitive Provider
+# cng.sys in LSASS					# KM
+Microsoft-Windows-bcrypt-primitives-dll*		# UM
+
+# Microsoft Smart Card Key Storage Provider
+# scksp.dll in Microsoft-Windows-SmartCardKsp		# UM
+
+# Microsoft Software Key Storage Provider
+Microsoft-Windows-ncryptprov-dll*			# UM
+# References winbio.dll as "BioProtectionBioImage"
+
+# Microsoft SSL Protocol Provider
+# cng.sys in LSASS					# KM
+Microsoft-Windows-ncryptsslp-dll*			# UM
+
+# Windows Client Key Protection Provider
+Microsoft-Windows-mskeyprotcli-dll*			# UM
+# References feclient.dll from EFS as "SessionLockProtectorProxy"
+
+

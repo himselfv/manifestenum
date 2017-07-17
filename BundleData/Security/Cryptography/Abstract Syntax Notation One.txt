@@ -1,0 +1,10 @@
+# Abstract Syntax Notation One implementation.
+# Implements ASN.1. Produced by and used mostly by crypto APIs, so stored here for now.
+# https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One
+
+# At least W7+
+Microsoft-Windows-msasn1*		# "ASN.1 Runtime APIs"
+
+# W10+
+Microsoft-Windows-ntasn1*		# "ASN.1 API"
+Microsoft-Windows-ASN1-Events*

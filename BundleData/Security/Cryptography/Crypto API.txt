@@ -19,6 +19,11 @@ Microsoft-Windows-cryptdlg-dll*			# Common dialogs for certificate management
 Microsoft-Windows-cryptdll-dll*			# Network security component required for SSL/TLS functions
 Microsoft-Windows-CAPI2-cryptdlg-reg*		# cryptdll.dll registration
 
+# W10: implementation for selected DPAPI functions (like CryptProtectMemory) was moved out of crypt32.dll.
+# Probably because it required some kind of cross-security-barrier-handling (there's also a srv component now).
+Microsoft-Windows-dpapi-dll*
+Microsoft-Windows-dpapisrv-dll*
+
 Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
 
 # Microsoft Trust Verification API
@@ -50,8 +55,6 @@ Microsoft-Windows-certadm-*		# TODO: Verify the assembly name is right
 Microsoft-Windows-cryptsvc-dll*
 Microsoft-Windows-SF-CAPI2*		# Registers the service, and not much more
 
-# "Abstract Syntax Notation One implementation". Implements ASN.1. Produced by and used mostly by crypto APIs, so stored here for now.
-Microsoft-Windows-msasn1*
 
 # "GUI Application for adding, deleting and viewing credentials stored by credential manager"
 # Yet is a DLL.
@@ -59,12 +62,14 @@ Microsoft-Windows-Keymgr
 Microsoft-Windows-Keymgr.*
 Microsoft-Windows-Keymgr-*
 
+# Registry settings for default CryptoAPI crypto providers. Not to be confused with M-W-Cryptography-CryptConfig which is settings and providers for CNG.
+Microsoft-Windows-Cryptography
+Microsoft-Windows-Cryptography.*
+
 # Misc and support assemblies
 Microsoft-Windows-CAPI2-certs*			# Certificates, roots and CRLs (revokation lists) installed during setup (empty in live images)
 Microsoft-Windows-CAPI2-WeakCrypto*		# Default registry settings to disable weak crypto, such as MD5
-Microsoft-Windows-Cryptography			# Registry settings for default crypto providers and configurations
-Microsoft-Windows-Cryptography.*
-Microsoft-Windows-Cryptography-CryptoConfig*
+Microsoft-Windows-CAPI2-test-root*		# W10, empty
 Microsoft-Windows-Crypto-keys*			# Create folders to store cryptographic machine keys
 Microsoft-Windows-capisp*			# SysPrep cleanup DLL for CAPI
 Microsoft-Windows-CAPI2				# Package (empty in live images)
