@@ -1,0 +1,2 @@
+# Just a type definiton for volume shadow copies so they don't show up as unknown devices
+volsnap.inf*

@@ -3,13 +3,22 @@
 Microsoft-Windows-TerminalServices*
 Microsoft-Windows-TS-*			# W10 deployments
 
+# Terminal Services Support Drivers
+tsgenericusbdriver.inf*		# W7 only
+tsusbhubfilter.inf*
+tsprint.inf*			# W7+
+tsusbhub.inf*
+ts_generic.inf*
+ts_wpdmtp.inf*
+
+
 # Quick Remote Assistance in Win10
 Microsoft-Windows-QuickAssist*
 
 # RemoteAssistance
 Microsoft-Windows-RemoteAssistance*
-
 Microsoft-Windows-RemoteDesktop*
+
 
 # RemoteFX is a Terminal Services protocol enhancements
 Microsoft-Windows-RemoteFS*

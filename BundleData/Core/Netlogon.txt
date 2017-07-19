@@ -1,0 +1,4 @@
+# Netlogon
+# Maintains a secure channel to the domain controller for authenticating users and services. Required for domain joined machines.
+
+Microsoft-Windows-Security-Netlogon*

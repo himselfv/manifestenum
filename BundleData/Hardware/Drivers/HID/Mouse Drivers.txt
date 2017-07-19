@@ -1,0 +1,2 @@
+# Mouse support + Mouse class driver
+msmouse.inf*

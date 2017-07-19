@@ -1,0 +1,9 @@
+# Service Pack Coordinator
+# A Windows 7 (and perhaps Vista?) set of service utilities which have supposedly been used in the process of service pack installation.
+
+# Service Pack Coordinator (SPC)
+# Contains spinstall.exe/spreview.exe, event log instrumentation for SPC source, event log message resource DLL, spcwizui.dll
+Microsoft-Windows-ServicePackCoordinator*
+
+# Error messages for Service pack installation. Logically groups here, I think.
+Microsoft-Windows-ServicePackError*

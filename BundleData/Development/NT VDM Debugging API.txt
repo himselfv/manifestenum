@@ -1,0 +1,4 @@
+# NT Virtual DOS Machine (VDM) Debugging API
+# Should probably be grouped with NTVDM itself, but on 64-bit Windows NTVDM is part of WOW64 (and severely trimmed).
+
+Microsoft-Windows-NTVDM-VdmDbg*

@@ -1,0 +1,41 @@
+# Standard Scanner Drivers
+# WIA = Windows Image Acquisition (an API for interfacing with scanners and cameras)
+
+# W7 only
+wiabr002.inf*
+wiabr004.inf*
+wiabr005.inf*
+wiabr006.inf*
+wiabr007.inf*
+wiabr008.inf*
+wiabr009.inf*
+wiabr00a.inf*
+wiaca00a.inf*
+wiaca00b.inf*
+wiaca00c.inf*
+wiaca00d.inf*
+wiaca00e.inf*
+wiaca00f.inf*
+wiaca00i.inf*
+wiacn001.inf*
+wiaep002.inf*
+wiahp001.inf*
+wialx002.inf*
+wialx003.inf*
+wialx004.inf*
+wialx005.inf*
+wialx006.inf*
+wiasa002.inf*
+
+# W7+
+wiabr00b.inf*
+wiaca00j.inf*
+wiadl003.inf*
+wiaek002.inf*
+wiaep003.inf*
+wiaep004.inf*
+wiahp008.inf*
+wiaky002.inf*
+wiaky003.inf*
+wiasa003.inf*
+wiaxx002.inf*

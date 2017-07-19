@@ -1,0 +1,8 @@
+# Settings Management Infrastructure (SMI)
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa817312(v=vs.85).aspx
+
+# Assemblies and components can XML-define settings which are configurable bits of information related to the component. Settings have name, type, value and additional attributes (default value, whether it can be migrated etc.).
+# SMI settings are used for automated migration handling, extracted when generating an unattended installation file.
+# Applications can use the SMI API to query settings declaration data and their values.
+
+Microsoft-Windows-SMI-Engine*

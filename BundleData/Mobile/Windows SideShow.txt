@@ -18,3 +18,5 @@ Microsoft-Windows-MobilePC-AuxiliaryDisplay-*
 Microsoft-Windows-SideShow-*
 # -GroupPolicy
 # -License
+
+windowssideshowenhanceddriver.inf*			# Driver

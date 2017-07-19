@@ -19,3 +19,6 @@ Microsoft-Windows-TPM-*
 # -AdminSnapin
 # -Driver
 # -TBS
+
+Microsoft.Tpm			# .NET API
+Microsoft.Tpm.*

@@ -2,3 +2,8 @@
 
 usb.inf*				# The driver
 Microsoft-Windows-USB-USBHUB-Events*	# Instrumentation
+
+# Performance counters for usbhub driver
+# Installed by registering the library and its function names in the usbhub settings key, so requires support from it.
+Microsoft-Windows-usbperf
+Microsoft-Windows-usbperf.*

@@ -1,0 +1,2 @@
+# Standard USB Storage Devices
+usbstor.inf*

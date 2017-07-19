@@ -1,4 +1,4 @@
 
-
+cdrom.inf*
 Microsoft-Windows-Cdrom			# Instrumentation
 Microsoft-Windows-Cdrom.*

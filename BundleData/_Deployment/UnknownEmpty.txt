@@ -28,3 +28,4 @@ Microsoft.Windows.SystemCompatible*
 Microsoft-Win32kCapabilities-Capabilities*	# W10 empty
 Microsoft-Windows-BuildFlighting*		# W10 empty deployment, normal and localization assemblies
 
+Microsoft-Windows-SecurityTemplateBase-Setting*	# W7, deployment + empty package

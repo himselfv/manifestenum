@@ -10,3 +10,5 @@ Microsoft-Windows-SCPNP-*
 # -instrumentation				# Certificate Propagation events descriptions
 
 Microsoft-Windows-Authentication-SmartcardCredentialProvider*	# For authUI
+
+Microsoft.Windows.Software.System.System_Services.Base.Smart_Card_Library*	# smclib.sys - Smart Card Driver Library

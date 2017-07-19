@@ -31,12 +31,14 @@ XsdBuildTask
 
 mscorlib
 mscorlib.*
+mscoree
+mscoree.*
 
 # Batches
 NetFx-*
 NetFx2-*
 NetFx3-*
-NetFx3*
+NetFx3*	# incl. NetFx35
 NetFx4-*
 NetFx4* # yeah, happens
 
@@ -55,3 +57,6 @@ NetFx-cscompmgd*,processorArchitecture=msil
 NetFx-CSharp_Compiler_cscomp*
 
 Microsoft.Data.Entity.Build.Tasks*
+
+Microsoft.VisualC
+Microsoft.VisualC.*

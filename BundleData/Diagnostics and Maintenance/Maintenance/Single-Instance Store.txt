@@ -1,0 +1,22 @@
+# Single-Instance Store / Storage (SIS)
+# An NTFS filter driver that replaces duplicate files with copy-on-write links (referred to as SIS links) that point to a single backing file, reducing the disk and cache overhead of those files.
+# https://technet.microsoft.com/en-us/library/gg232683(v=ws.10).aspx
+
+# Every SIS-enabled volume is backed by a Common Store which contains the original instances of all found duplicate files. Each instance elsewhere in the file system is made a symlink to it.
+# Once a file is put into a common store under unique ID, it will never change; if it changes on disk, it's copied.
+
+# Backup applications are requested to cooperate with SIS by identifying SIS-deduplicated files and handling them efficiently.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/aa362538(v=vs.85).aspx
+
+# Consists of:
+# - a filter driver which implements the symlink/reference counting
+# - a groveler which scans for duplicates and passes them to SIS for processing
+# - an API
+
+# Available on server versions of the OS (except for API).
+
+# API DLL. Provides well documented C API.
+# XP+
+Microsoft-Windows-sisBkup
+Microsoft-Windows-sisBkup.*
+Microsoft-Windows-sisBkup-*
