@@ -5,6 +5,14 @@
 Microsoft-Windows-DesktopWindowManager*
 Microsoft-Windows-DWM-Adm*
 
+# W7+
+# Contains uxinit.dll, which seems to be a satellite for uxtheme.dll.
+# uxinit.dll exports several functions which are unnamed on Windows 7, but named on W8+:
+#   ThemeUserLogoff, ThemeUserLogon, ThemeUserStartShell, ThemeUserTSReconnect, ThemeWatchForStart,
+#   ThemesOnCreateSession, ThemesOnDisconnect, ThemesOnEarlyCreateSession, ThemesOnLogoff, ThemesOnLogon, ThemesOnReconnect, ThemesOnTerminateSession
+# No one statically imports uxinit.dll, it's never mentioned in the registry.
+Microsoft-Windows-UXInit*
+
 # Windows 10 deployments related exclusively to DWM
 Microsoft-Windows-Composition-onecoreuap-*
 Microsoft-Windows-Composition-windows-*

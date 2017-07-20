@@ -25,3 +25,9 @@ Microsoft-Windows-JS-DebuggerIDE*
 Microsoft-Windows-MSLS31*
 
 WinINet.ETW*			# ETW info for WinInet.dll
+
+# Windows Performance Tools (WPT) dlls for Internet Explorer
+# Even though WPT is a standalone toolkit for analyzing Event logs and Performance counters, these two DLLs get installed into Program Files\Internet Explorer and are likely meant only for its use (there's none of the rest of WPT).
+# We will list them with signer keys, in case later the name is reused properly.
+Microsoft-Windows-WPT-AddIns-PerfNT*,publicKeyToken=31bf3856ad364e35
+Microsoft-Windows-WPT-PerfCore*,publicKeyToken=31bf3856ad364e35

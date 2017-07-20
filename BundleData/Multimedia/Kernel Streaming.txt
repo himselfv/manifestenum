@@ -1,8 +1,18 @@
-# Kernel Streaming / Direct Kernel streaming (Direct KS)
+# Kernel Streaming / Direct Kernel streaming (Direct KS) / WDM Audio driver model
 # Kernel-mode processing of streamed data. Allows a device driver to create DirectShow-like filters and pins in kernel mode, providing access to hardware, lower latency communication and still be used within a DirectShow filter graph.
 # https://en.wikipedia.org/wiki/Windows_legacy_audio_components#Kernel_Streaming
-
 # W98+.
-# Deprecated.
+# Slowly being phased out since Vista.
+
+# Microsoft provides three multimedia class driver models: port class, stream class, and AVStream. The vendor writes a minidriver that runs under one of these three class driver models.
+# These are implemented as export drivers (kernel-mode DLLs) in the system files portcls.sys, stream.sys, and ks.sys. In Windows XP and later, ks.sys is referred to as AVStream.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/audio/introduction-to-wdm-audio-drivers
+
+# "WDM Audio Drivers" refers roughly to a driver built on kernel streaming:
+# > A Microsoft Windows Driver Model (WDM) audio driver... [exposes supported KS stream types, properties, streaming support].
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/audio/basic-functions-of-a-wdm-audio-driver
+
 Microsoft-Windows-KernelStreaming*
 Microsoft-Windows-KernelStreamingSupport*
+
+Microsoft-Windows-StreamClass*			# stream.sys

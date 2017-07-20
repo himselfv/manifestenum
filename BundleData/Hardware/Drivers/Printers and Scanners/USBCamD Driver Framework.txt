@@ -1,0 +1,5 @@
+# USBCamD Driver Framework
+# "Legacy USB Webcam Driver framework files used by inbox and 3rd-party USB webcam drivers". Have to be present "on systems containing the IMAGE class installer".
+
+Microsoft-Windows-USBCamD
+Microsoft-Windows-USBCamD.*

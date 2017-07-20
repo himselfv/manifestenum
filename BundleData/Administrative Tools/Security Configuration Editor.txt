@@ -18,3 +18,8 @@ Microsoft-Windows-SecurityConfigurationManagement-*
 
 # Command-line utility based on the same API, with the same functionality
 Microsoft-Windows-Security-Secedit*
+
+# "Security Configuration Template for Security Configuration Editor"
+# "Default Security for [OS Name]"
+# Maybe should be moved to target OS configuration.
+Microsoft-Windows-Professional-SecurityTemplate*

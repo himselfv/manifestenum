@@ -27,6 +27,7 @@ Microsoft-Windows-shmig-*
 # Migration plugins
 # Many components contain their migration plugins inside them and that's alright.
 
-Microsoft-Windows-Power-Policy-Definitions*	# "Power Migration Plugin" (Power Policy Setting Definitions)
-Microsoft-Windows-StorageMigration*		# "Microsoft Storage Migration Plugin"
-Microsoft-Windows-UsbMigPlugin*			# "Offline Files [sic!] Migration Plugin"
+Microsoft-Windows-Power-Policy-Definitions*		# "Power Migration Plugin" (Power Policy Setting Definitions)
+Microsoft-Windows-StorageMigration*			# "Microsoft Storage Migration Plugin"
+Microsoft-Windows-UsbMigPlugin*				# "Offline Files [sic!] Migration Plugin"
+Microsoft-Windows-WindowsMobileDevice-Migration*	# Registry settings under "Windows CE Services" key (and some under "ActiveSync").

@@ -8,11 +8,16 @@ Microsoft-Windows-spfileq*		# Implements Setup Queues for SetupAPI (https://msdn
 
 # See also: Hardware\Class installers - for the components which handle actual installation/uninstallation and property pages for the devices, as well as for device class declarations.
 
+# syssetup.dll
+# Used to export a ton of functions in XP years, including: DevInstall, various class installers (Computer, Keyboard, Mouse, CriticalDeviceCoInstaller), property page providers (Cdrom, Disk), multiple actions used during setup process.
+# These days most stuff moved into their own components and only a few exports are kept for compatibility (probably the ones common software got caught using).
+Microsoft-Windows-Syssetup
+Microsoft-Windows-Syssetup.*
+
 
 # Inf Default Installer
 # A simple wrapper which runs the default section install for a given INF file.
 # Traditionally this was done by calling into setupapi.dll,InstallHinfSection, but on Vista+ we have this tool.
-
 Microsoft-Windows-InfDefaultInstall*
 
 # Grouped with SetupAPI because SetupAPI registers it as a handler for inf files at the moment anyway.

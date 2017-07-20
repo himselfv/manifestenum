@@ -1,0 +1,5 @@
+# MUI Support
+# The core MUI support is built into the operating system, so this bundle is for misc related assemblies.
+
+Microsoft-Windows-MUI-Settings*
+Microsoft-Windows-MUICacheBuilder*

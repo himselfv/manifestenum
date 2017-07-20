@@ -473,7 +473,6 @@ UcmUcsi.inf*
 uefi.inf*
 ufxchipidea.inf*
 ufxsynopsys.inf*
-umbus.inf*
 umpass.inf*
 unknown.inf*
 urschipidea.inf*
@@ -502,7 +501,6 @@ wfpcapture.inf*
 wgencounter.inf*
 wGenCounter.inf*
 whyperkbd.inf*
-winusb.inf*
 wmbclass_wmc_union.inf*
 wmiacpi.inf*
 wnetvsc.inf*

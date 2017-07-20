@@ -1,0 +1,13 @@
+# Generic USB Device Driver / WinUSB
+# A general purpose USB device driver and an user-mode API DLL that exposes functions to open a simple data pipe to USB device, to read, write and control the device. Basically turning it into a glorified serial port.
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff540196(v=vs.85).aspx
+# XPSP2+
+
+# Kernel driver
+winusb.inf
+winusb.inf.*
+
+# User-mode API
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff540046(v=vs.85).aspx
+Microsoft-Windows-WinUsb
+Microsoft-Windows-WinUsb.*

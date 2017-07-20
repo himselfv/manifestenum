@@ -9,11 +9,16 @@
 Microsoft-Windows-Web-Services-for-Management
 Microsoft-Windows-Web-Services-for-Management-*
 
+# .NET API
+Microsoft.WSMan.Management*
+Microsoft.WSMan.Runtime*
+
+# Powershell plugin. Registered by the main Powershell package, unfortunately.
+Microsoft-Windows-PowerShell-WSMan-Plugin
+
 # Windows Remote Shell / API
 # https://msdn.microsoft.com/en-us/library/dd891109(v=vs.85).aspx
-
 # Literally adds support for remote shell over WinRM.
-
 Microsoft-Windows-Winrs
 Microsoft-Windows-Winrs.*
 Microsoft-Windows-Winrs-*

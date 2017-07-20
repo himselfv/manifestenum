@@ -20,3 +20,11 @@ Microsoft-Windows-shpafact.*
 # Probably some sort of helper DLL for Explorer Shell
 Microsoft-Windows-shacct
 Microsoft-Windows-shacct.*
+
+# "Shell Core Instrumentation"
+# Event descriptions for MW-Shell-Core, MW-UxTheme, MW-ShellSvcs
+Microsoft-Windows-Shell-CoreInstrumentation*
+
+# "Shell Setup Helper"
+# Exports functions for unattended setup, Sysprep Cleanup and Generalization
+Microsoft-Windows-Shell-Setup*

@@ -11,3 +11,6 @@ Microsoft-Windows-PnpHotPlugUi*
 
 # PnpUtil command line tool
 Microsoft-Windows-PnPutil*
+
+# User-mode PNP events instrumentation (MW-UserPnp)
+Microsoft-Windows-User-PnpEvents*

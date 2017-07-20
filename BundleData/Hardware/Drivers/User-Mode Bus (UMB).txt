@@ -1,0 +1,10 @@
+# User-Mode Bus (UMB) driver
+
+# Apart from what can be guessed from the title, exact role is unclear.
+# From the inf file, seems to be related to:
+#   IPBusEnum, UmRdpService, WPDBusEnum, spooler, rapimgr, wcescomm, TermService
+
+umbus.inf*		# umbus.sys driver
+
+umb			# Win32 API DLL (umb.dll) + registration
+umb.*
