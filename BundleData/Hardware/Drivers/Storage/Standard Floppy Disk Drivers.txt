@@ -1,2 +1,4 @@
 fdc.inf*		# Standard Floppy Disk Controllers
+dual_fdc.inf*
 flpydisk.inf*		# Standard Floppy Disk Drives
+dual_flpydisk.inf*

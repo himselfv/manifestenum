@@ -1,3 +1,7 @@
 # Media Class Installer
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.MEDIA-DriverClass*	# Requires mmci.dll (Audio Core)
+
+# W10
+c_media.inf*
+dual_c_media.inf*

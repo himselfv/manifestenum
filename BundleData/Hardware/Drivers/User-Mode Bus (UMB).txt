@@ -5,6 +5,7 @@
 #   IPBusEnum, UmRdpService, WPDBusEnum, spooler, rapimgr, wcescomm, TermService
 
 umbus.inf*		# umbus.sys driver
+dual_umbus.inf*
 
 umb			# Win32 API DLL (umb.dll) + registration
 umb.*

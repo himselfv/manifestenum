@@ -1,0 +1,8 @@
+HID Transports:
+  https://msdn.microsoft.com/en-us/library/windows/hardware/jj127210(v=vs.85).aspx
+
+USB
+Bluetooth
+Bluetooth LE
+I2C
+GPIO

@@ -1,0 +1,6 @@
+Windows 10 has two special classes of driver packages:
+c_*	class installer registrations (previously often copied to all appropriate inf files)
+dual_*	drivers with registration information duplicated from inf file to the manifest.
+
+Often drivers (both normal and c_*) will have both normal and dual_* versions. Language-neutral or english version will be dual, while localizations would remain normal.
+Drivers may be converted to dual_* at any time, so it's usually a good idea to just add a dual_* mask for everything.

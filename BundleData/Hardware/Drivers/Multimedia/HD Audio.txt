@@ -1,4 +1,7 @@
 
 hdaudbus.inf*		# Microsoft UAA Bus Driver for HD Audio
+dual_hdaudbus.inf*
 hdaudio.inf*		# Microsoft UAA Function Driver for HD Audio
+dual_hdaudio.inf*
 hdaudss.inf*		# Microsoft UAA Function Driver for HD Audio on speific HDA systems to accomodate pre-Vista incompatible HD Audio systems
+dual_hdaudss.inf*

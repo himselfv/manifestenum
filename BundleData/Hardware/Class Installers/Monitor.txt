@@ -2,3 +2,7 @@
 # Self-contained
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.MONITOR-DriverClass*
+
+# W10
+c_monitor.inf*
+dual_c_monitor.inf*

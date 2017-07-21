@@ -1,2 +1,3 @@
 # Bluetooth Personal Area Network (PAN) driver
 bthpan.inf*
+dual_bthpan.inf*

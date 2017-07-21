@@ -1,0 +1,3 @@
+netmscli.inf*	# Client for Microsoft Networks
+netserv.inf*	# File and Print Services
+netnb.inf*	# NetBIOS Subcomponents - installed by netmscli

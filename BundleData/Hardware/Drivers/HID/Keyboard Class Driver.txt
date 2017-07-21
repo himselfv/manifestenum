@@ -1,1 +1,2 @@
 keyboard.inf*
+dual_keyboard.inf*

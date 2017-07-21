@@ -1,2 +1,3 @@
 # Disk Volume
 volume.inf*
+dual_volume.inf*

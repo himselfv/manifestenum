@@ -1,4 +1,5 @@
 # USB Port Drivers
 
 usbport.inf*					# The driver
+dual_usbport.inf*
 Microsoft-Windows-USB-USBPORT-Events*		# Instrumentation

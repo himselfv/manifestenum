@@ -1,4 +1,7 @@
 # SCSI Tape Class Driver
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.TAPEDRIVE-DriverClass*
+# Sic! Even though called a class installer, contains a class driver too.
+
 tape.inf*
+dual_tape.inf*

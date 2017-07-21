@@ -6,6 +6,7 @@
 # Kernel driver
 winusb.inf
 winusb.inf.*
+dual_winusb.inf*
 
 # User-mode API
 # https://msdn.microsoft.com/en-us/library/windows/hardware/ff540046(v=vs.85).aspx

@@ -1,2 +1,4 @@
 hidir.inf*
 hidirkbd.inf*
+dual_hidir.inf*
+dual_hidirkbd.inf*

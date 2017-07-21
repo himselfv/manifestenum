@@ -2,3 +2,7 @@
 # Self-contained
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.BLUETOOTH-DriverClass*
+
+# W10
+c_bluetooth.inf*
+dual_c_bluetooth.inf*

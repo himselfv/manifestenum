@@ -5,4 +5,5 @@
 # This package contains ATA port and a bunch of IDE (== Parallel ATA) controller drivers based on it.
 
 mshdc.inf*				# Contains a bunch of drivers, including atapi.sys, ataport.sys, various *ide.sys
+dual_mshdc.inf*
 Microsoft-Windows-ATAPort*		# Instrumentation for ataport.sys

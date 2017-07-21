@@ -1,3 +1,13 @@
 Microsoft-Windows-WindowsUpdateClient*
 Microsoft-Windows-WindowsUpdate-Adm*		# Group policy files
 Microsoft-Windows-WindowsUpdateDiagnostic*	# Diagnostics plugin
+
+# WinSetupUI.dll
+# Contains a single library, WinSetupUI.dll, with these exported functions:
+#   CreateUpdateSetupUI		# W7+
+#   CreateWinSetupUI		# W10+
+# And a single DirectUI XML resource (as of W7).
+# The resource contains a update-related wizard with pages such as "Eula", "LicenseKey", "Progress", "Ads1", "Ads2". In page list and design it seems very similar (but not exactly identical) to the wizard used in Get Windows 10 app. It is unclear where it's used.
+# As of Windows 7, this DLL is statically imported by no one. It was however not included with the original installation and was first shipped 2016.02.12 as an update. At the same day, a Windows Update package update was rolled out. It is reasonable to assume the DLL is part of WU.
+# Still, none of the WU dlls import WinSetupUI.dll statically and its name doesn't seem to appear in the open anywhere in their code.
+Microsoft-Windows-WinSetupUI*

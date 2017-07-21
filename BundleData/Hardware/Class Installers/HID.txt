@@ -2,3 +2,7 @@
 # Requires hid.dll from "HID support"
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.HIDCLASS-DriverClass*
+
+# W10
+c_hidclass.inf*
+dual_c_hidclass.inf*

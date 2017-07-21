@@ -1,3 +1,4 @@
 # Disk Block Verification Filter Driver / CRC Filter Driver
 # Until W7.
 crcdisk.inf*
+dual_crcdisk.inf*

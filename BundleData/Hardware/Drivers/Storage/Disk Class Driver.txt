@@ -1,5 +1,6 @@
 # Disk Class Driver
 
 disk.inf*			# The driver itself
+dual_disk.inf*
 Microsoft-Windows-Disk		# Instrumentation
 Microsoft-Windows-Disk.*

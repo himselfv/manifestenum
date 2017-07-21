@@ -1,1 +1,2 @@
 bthmtpenum.inf*
+dual_bthmtpenum.inf*

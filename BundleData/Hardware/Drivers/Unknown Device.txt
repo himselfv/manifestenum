@@ -1,1 +1,2 @@
 unknown.inf*
+dual_unknown.inf*

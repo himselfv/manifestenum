@@ -1,1 +1,2 @@
 bthspp.inf*
+dual_bthspp.inf*

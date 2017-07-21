@@ -1,0 +1,80 @@
+# Supported network controllers
+# Includes Ethernet and Wireless controllers
+
+# W7 only
+net1kx64.inf*
+net1qx64.inf*
+netbc664.inf*
+netl1c64.inf*
+netmyk00.inf*
+netrtx64.inf*
+netvfx64.inf*
+netvg62a.inf*
+netw5v64.inf*
+netxfx64.inf*
+
+# W7+
+net1ic64.inf*
+net1yx64.inf*
+net44amd.inf*
+net7500-x64-n650f.inf*
+net7800-x64-n650f.inf*
+net8185.inf*
+net8187bv64.inf*
+net8187se64.inf*
+net8192se64.inf*
+net8192su64.inf*
+net819xp.inf*
+net9500-x64-n650f.inf*
+netathr10x.inf*
+netathrx.inf*			# Atheros, D-Link, Linksys Wi-Fi adapters
+netax88179_178a.inf*
+NETAX88179_178a.inf*
+netax88772.inf*
+NETAX88772.inf*
+netb57va.inf*
+netbc63a.inf*
+netbc64.inf*
+netbvbda.inf*		# Broadcom NetXtreme II GigE
+netbxnda.inf*		# Broadcom NetXtreme II GigE (NDIS VBD Client)
+nete1e3e.inf*
+nete1g3e.inf*
+netefe3e.inf*
+neteFE3e.inf*
+netelx.inf*
+netevbda.inf*		# Broadcom NetXtreme II 10 GigE
+netg664.inf*
+netimm.inf*		# IBM USB Remote NDIS Network Device
+netjme.inf*
+netk57a.inf*
+netl160a.inf*
+netl1c63x64.inf*
+netl1e64.inf*
+netl260a.inf*
+netlldp.inf*
+netmlx4eth63.inf*
+netmlx5.inf*
+netmyk64.inf*
+netnvm64.inf*
+netnvma.inf*		# NVIDIA nForce Networking Controller
+netr28ux.inf*
+netr28x.inf*
+netr7364.inf*
+netrtl64.inf*
+netrtwlane.inf*		# ?
+netrtwlane_13.inf*
+netrtwlans.inf*
+netrtwlanu.inf*
+nett4x64.inf*
+netv1x64.inf*
+netvf63a.inf*
+netvg63a.inf*
+netwbw02.inf*
+netwew00.inf*
+netwew01.inf*
+netwlan92de.inf*
+netwlv64.inf*
+netwns64.inf*
+netwsw00.inf*
+netwtw04.inf*
+netxex64.inf*

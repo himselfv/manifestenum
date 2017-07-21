@@ -9,3 +9,15 @@ Microsoft.Windows.Hardware.Devices.ClassInstaller.NETTRANS-DriverClass*
 
 # A common co-installer for NET class devices:
 Microsoft-Windows-NetCoInstaller*
+
+# W10
+c_infrared.inf*
+c_net.inf*
+c_netclient.inf*
+c_netservice.inf*
+c_nettrans.inf*
+dual_c_infrared.inf*
+dual_c_net.inf*
+dual_c_netclient.inf*
+dual_c_netservice.inf*
+dual_c_nettrans.inf*

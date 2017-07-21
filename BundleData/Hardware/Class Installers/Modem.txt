@@ -2,3 +2,7 @@
 # Requires mdminst.dll (Modems)
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.MODEM-DriverClass*
+
+# W10
+c_modem.inf*
+dual_c_modem.inf*

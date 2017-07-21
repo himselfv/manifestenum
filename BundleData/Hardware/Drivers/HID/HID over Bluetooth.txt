@@ -1,0 +1,9 @@
+# HID over Bluetooth transport
+
+hidbth.inf*
+dual_hidbth.inf*
+
+# HID over Bluetooth LE
+#W8+
+hidbthle.inf*
+dual_hidbthle.inf*

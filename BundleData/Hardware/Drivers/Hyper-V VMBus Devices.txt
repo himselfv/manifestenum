@@ -1,0 +1,17 @@
+wvmbus.inf*
+wvmbushid.inf*
+wvmbusr.inf*
+wvmbusvideo.inf*
+wvmgid.inf*
+wvmic_ext.inf*
+wvmic_guestinterface.inf*
+wvmic_heartbeat.inf*
+wvmic_kvpexchange.inf*
+wvmic_shutdown.inf*
+wvmic_timesync.inf*
+wvms_mp.inf*
+wvms_pp.inf*
+wvms_vsft.inf*
+wvms_vspp.inf*
+wvpci.inf*
+wvpcivsp.inf*

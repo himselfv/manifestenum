@@ -1,0 +1,17 @@
+
+# W7 only
+ph3xibc0.inf*
+ph3xibc1.inf*
+ph3xibc10.inf*
+ph3xibc11.inf*
+ph3xibc12.inf*
+ph3xibc2.inf*
+ph3xibc3.inf*
+ph3xibc4.inf*
+ph3xibc5.inf*
+ph3xibc6.inf*
+ph3xibc7.inf*
+ph3xibc8.inf*
+ph3xibc9.inf*
+ph6xib64c0.inf*
+ph6xib64c1.inf*

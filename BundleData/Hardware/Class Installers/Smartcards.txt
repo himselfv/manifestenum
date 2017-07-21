@@ -4,3 +4,11 @@
 Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDFILTER-DriverClass*
 Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDREADER-DriverClass*
 Microsoft.Windows.Hardware.Devices.ClassInstaller.SMARTCARDS-DriverClass*
+
+# W10
+c_smartcard.inf*
+c_smartcardfilter.inf*
+c_smartcardreader.inf*
+dual_c_smartcard.inf*
+dual_c_smartcardfilter.inf*
+dual_c_smartcardreader.inf*

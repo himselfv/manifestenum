@@ -1,1 +1,2 @@
 hiddigi.inf*
+dual_hiddigi.inf*

@@ -24,6 +24,9 @@ WPF-*
 
 Sentinel.v3.5Client
 
+XamlBuildTask*
+XamlBuildTask.resources*
+
 # Requires: System.Printing
 # Requires: System.Speech
 # Requires: WindowsBase

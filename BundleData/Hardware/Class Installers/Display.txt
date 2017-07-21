@@ -2,3 +2,7 @@
 # Self-contained
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.DISPLAY-DriverClass*
+
+# W10
+c_display.inf*
+dual_c_display.inf*

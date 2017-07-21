@@ -1,3 +1,5 @@
 # Intel(R) Matrix Storage Manager / Intel Software RAID Drivers
 iastorv.inf*
 iastorav.inf*
+dual_iastorv.inf*
+dual_iastorav.inf*

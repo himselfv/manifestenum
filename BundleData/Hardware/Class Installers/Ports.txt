@@ -5,3 +5,7 @@
 #   ParallelPort, SerialPort, SerialDisplayAdvancedSettings
 
 Microsoft-Windows-msports*
+
+# W10
+c_ports.inf*
+dual_c_ports.inf*

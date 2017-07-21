@@ -3,3 +3,7 @@
 # https://en.wikipedia.org/wiki/Windows_Media_Center_Extender
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.MediaCenterExtender-DriverClass*
+
+# W10
+c_mcx.inf*
+dual_c_mcx.inf*

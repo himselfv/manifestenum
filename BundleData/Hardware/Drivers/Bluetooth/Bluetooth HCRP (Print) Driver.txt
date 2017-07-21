@@ -1,1 +1,2 @@
 bthprint.inf*
+dual_bthprint.inf*

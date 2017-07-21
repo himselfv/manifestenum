@@ -1,2 +1,4 @@
 # Standard supported input devices (HID) - mostly USB devices
+# Contains standard HID driver (on W7) and HID over USB transport driver
 input.inf*
+dual_input.inf*

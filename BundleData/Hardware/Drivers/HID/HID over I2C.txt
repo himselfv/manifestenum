@@ -1,0 +1,3 @@
+# HID over I2C
+hidi2c.inf*
+dual_hidi2c.inf*

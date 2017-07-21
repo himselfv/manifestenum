@@ -1,0 +1,1 @@
+netloop.inf*	# Microsoft Loopback Adapter

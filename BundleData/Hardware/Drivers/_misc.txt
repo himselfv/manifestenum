@@ -1,3 +1,1 @@
 Microsoft-Windows-Drivers-Video*
-
-Microsoft-Windows-Classpnp*		# "SCSI Class System DLL", seems to be used by disk.sys, nvraid.sys, tape.sys, sfloppy.sys, mcd.sys
