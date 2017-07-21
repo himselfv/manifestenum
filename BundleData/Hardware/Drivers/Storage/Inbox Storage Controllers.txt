@@ -1,0 +1,24 @@
+# SATA, SCSI, iSCSI, Fibre Channel
+
+adp94xx.inf*		# Adaptec HostRAID SAS Adapter Driver
+adpahci.inf*		# Adaptec HostRAID SATA (AHCI) Driver
+adpu320.inf*		# Adaptec u320 (SCSI) Host Adapter Drivers
+arc.inf*		# Adaptec IOP RAID Host Adapter Drivers
+
+amdsata.inf*		# AMD SATA Controller
+amdsbs.inf*		# AMD AHCI Compatible RAID Controller
+arcsas.inf*		# Adaptec RAID Controllers
+elxstor.inf*		# Emulex LightPulse Host Bus Adapter
+lsi_fc.inf*		# LSI Fibre Channel
+lsi_sas.inf*		# LSI SAS
+lsi_sas2.inf*		# LSI SAS
+lsi_sas2i.inf*
+lsi_sas3i.inf*
+lsi_sss.inf*
+lsi_scsi.inf*		# LSI SCSI
+nvraid.inf*		# NVIDIA nForce SATA / RAID Controllers
+ql2300.inf*		# QLogic Fibre Channel Adapter
+ql40xx.inf*		# QLogic iSCSI Adapter
+ql40xx2.inf*		# QLogic NULL Driver
+sisraid2.inf*		# SiS RAID Controllers
+sisraid4.inf*

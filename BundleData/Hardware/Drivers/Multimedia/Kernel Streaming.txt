@@ -1,0 +1,4 @@
+# Kernel Streaming Drivers
+ks.inf*
+kscaptur.inf*
+ksfilter.inf*

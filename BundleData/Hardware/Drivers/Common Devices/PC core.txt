@@ -1,0 +1,7 @@
+machine.inf*
+memory.inf*
+cpu.inf*
+
+dual_machine.inf*
+dual_memory.inf*
+dual_cpu.inf*

@@ -1,0 +1,5 @@
+# Multipath Bus Driver
+# Multipath I/O is the use of more than one physical path between the PC and mass-storage device. As an example, a SCSI hard disk drive may connect to two SCSI controllers on the same computer, or a disk may connect to two Fibre Channel ports.
+# https://en.wikipedia.org/wiki/Multipath_I/O
+
+mpio.inf*

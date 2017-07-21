@@ -1,0 +1,9 @@
+
+# W7 only
+# Brother MFCs
+brmfcmdm.inf*
+brmfcmf.inf*
+brmfcsto.inf*
+brmfcumd.inf*
+brmfcwia.inf*
+brmfport.inf*

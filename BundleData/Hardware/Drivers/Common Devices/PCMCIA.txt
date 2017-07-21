@@ -1,0 +1,4 @@
+# PCMCIA / CardBus Controllers
+
+pcmcia.inf*
+dual_pcmcia.inf*

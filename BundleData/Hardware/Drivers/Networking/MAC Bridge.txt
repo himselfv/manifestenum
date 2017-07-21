@@ -1,0 +1,3 @@
+netbrdg.inf*	# MAC Bridge
+netbrdgs.inf*	# MAC Bridge
+netbrdgm.inf*	# MAC Bridge Miniport

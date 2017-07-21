@@ -1,0 +1,6 @@
+
+# W7 only
+smartcrd.inf*		# Inbox PCMCIA and serial Smartcard Readers
+
+# Common Smartcard support
+scrawpdo.inf*		# Smart card filter driver - INF file for sideband communication node for smart card plug and play filter driver

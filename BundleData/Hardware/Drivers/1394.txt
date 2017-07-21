@@ -1,0 +1,9 @@
+
+# 1394 OHCI Compliant Host Controllers
+1394.inf*
+dual_1394.inf*
+
+# IEEE 1394 Audio/Video Control (AV/C) - Virtual AVC Device
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/stream/av-c-overview
+avc.inf*
+dual_avc.inf*

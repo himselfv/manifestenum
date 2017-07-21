@@ -2,6 +2,7 @@
 # WIA = Windows Image Acquisition (an API for interfacing with scanners and cameras)
 
 # W7 only
+ricoh.inf*		# Ricoh Aficio Scanners Drivers
 wiabr002.inf*
 wiabr004.inf*
 wiabr005.inf*

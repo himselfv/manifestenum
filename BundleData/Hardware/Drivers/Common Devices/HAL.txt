@@ -1,0 +1,6 @@
+hal.inf*
+halextintclpiodma.inf*
+halextpl080.inf*
+dual_hal.inf*
+dual_halextintclpiodma.inf*
+dual_halextpl080.inf*

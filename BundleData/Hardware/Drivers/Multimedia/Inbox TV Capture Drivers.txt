@@ -1,5 +1,38 @@
 
+# BDA = Broadcast Driver Architecture
+# https://en.wikipedia.org/wiki/Broadcast_Driver_Architecture
+
+# Almost everything requires Kernel Streaming
+
 # W7 only
+
+af9035bda.inf*		# AfaTech AF9035 BDA Device
+atiriol6.inf*		# ATI Unified AVStream Driver
+
+# Angel
+angel264.inf*
+angel64.inf*
+angelu64.inf*
+
+# Aver
+averfx2hbh826d_noaverir_x64.inf*
+averfx2hbtv_x64.inf*
+averfx2swtv_noavin_x64.inf*
+averfx2swtv_x64.inf*
+averhbh826_noaverir_x64.inf*
+
+# Conexant
+cxfalcon_ibv64.inf*
+cxfalpal_ibv64.inf*
+cxraptor_fm1216mk5_ibv64.inf*
+cxraptor_fm1236mk5_ibv64.inf*
+cxraptor_philipstuv1236d_ibv64.inf*
+
+# Other
+hcw72b64.inf*
+hcw85b64.inf*
+hcw85c64.inf*
+
 ph3xibc0.inf*
 ph3xibc1.inf*
 ph3xibc10.inf*

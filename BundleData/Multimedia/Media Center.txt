@@ -23,6 +23,7 @@ ehCIR-NonMSIL
 ehexthost
 ehexthost-NonMSIL
 ehexthost32
+ehexthost32-info
 ehiActivScp
 ehiBmlDataCarousel
 ehiExtens

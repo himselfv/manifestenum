@@ -1,0 +1,5 @@
+
+# W7 only
+faxca003.inf*
+faxcn001.inf*
+faxcn002.inf*

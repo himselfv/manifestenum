@@ -1,0 +1,4 @@
+# Microsoft VPN Protocol
+
+netavpna.inf*	# Agile VPN Tunneling Protocol WAN Miniport
+netavpnt.inf*	# Agile VPN Tunneling Protocol Transport Edge

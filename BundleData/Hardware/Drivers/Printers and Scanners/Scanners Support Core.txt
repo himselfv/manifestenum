@@ -1,0 +1,2 @@
+# Windows Image Acquisition / Still Image Services
+sti.inf*

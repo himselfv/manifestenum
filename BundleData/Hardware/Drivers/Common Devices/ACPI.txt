@@ -1,0 +1,12 @@
+acpi.inf*		# ACPI power meter driver.
+acpidev.inf*
+acpipagr.inf*
+acpipmi.inf*
+acpitime.inf*
+
+dual_acpi.inf*
+dual_acpidev.inf*
+dual_acpipagr.inf*
+dual_acpipmi.inf*
+dual_acpitime.inf*
+

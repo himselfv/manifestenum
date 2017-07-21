@@ -6,3 +6,7 @@
 Microsoft-Windows-Tunnel
 Microsoft-Windows-Tunnel.*
 Microsoft-Windows-Tunnel-*
+
+# Drivers
+nettun.inf*			# TUN Miniport Adapter
+dual_nettun.inf*

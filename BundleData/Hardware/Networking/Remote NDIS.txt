@@ -5,3 +5,7 @@
 
 Microsoft-Windows-RNDIS-*
 Microsoft-Windows-RemoteNdis*
+
+# Drivers
+netrndis.inf*		# Generic RNDIS USB Adapter
+rndiscmp.inf*		# Remote NDIS template device setup file

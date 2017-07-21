@@ -1,0 +1,2 @@
+battery.inf*
+dual_battery.inf*

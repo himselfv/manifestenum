@@ -1,0 +1,3 @@
+
+atiilhag.inf*		# ATI Graphics Adapters
+nv_lh.inf*		# NVidia Graphics Adapters

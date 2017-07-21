@@ -1,174 +1,52 @@
 
-# W10 class installer registrations
-c_apo.inf*
-c_extension.inf*
-c_firmware.inf*
-c_fsactivitymonitor.inf*
-c_fsantivirus.inf*
-c_fscfsmetadataserver.inf*
-c_fscompression.inf*
-c_fscontentscreener.inf*
-c_fscontinuousbackup.inf*
-c_fscopyprotection.inf*
-c_fsencryption.inf*
-c_fshsm.inf*
-c_fsinfrastructure.inf*
-c_fsopenfilebackup.inf*
-c_fsphysicalquotamgmt.inf*
-c_fsquotamgmt.inf*
-c_fsreplication.inf*
-c_fssecurityenhancer.inf*
-c_fssystem.inf*
-c_fssystemrecovery.inf*
-c_fsundelete.inf*
-c_fsvirtualization.inf*
-c_pnpprinters.inf*
-c_proximity.inf*
-c_scmdisk.inf*
-c_scmvolume.inf*
-c_sslaccel.inf*
-c_swcomponent.inf*
-c_swdevice.inf*
-c_tapedrive.inf*
-c_usbdevice.inf*
-c_usbfn.inf*
-
-# Dual class installer registrations
-dual_c_apo.inf*
-dual_c_extension.inf*
-dual_c_firmware.inf*
-dual_c_fsactivitymonitor.inf*
-dual_c_fsantivirus.inf*
-dual_c_fscfsmetadataserver.inf*
-dual_c_fscompression.inf*
-dual_c_fscontentscreener.inf*
-dual_c_fscontinuousbackup.inf*
-dual_c_fscopyprotection.inf*
-dual_c_fsencryption.inf*
-dual_c_fshsm.inf*
-dual_c_fsinfrastructure.inf*
-dual_c_fsopenfilebackup.inf*
-dual_c_fsphysicalquotamgmt.inf*
-dual_c_fsquotamgmt.inf*
-dual_c_fsreplication.inf*
-dual_c_fssecurityenhancer.inf*
-dual_c_fssystem.inf*
-dual_c_fssystemrecovery.inf*
-dual_c_fsundelete.inf*
-dual_c_fsvirtualization.inf*
-dual_c_pnpprinters.inf*
-dual_c_proximity.inf*
-dual_c_scmdisk.inf*
-dual_c_scmvolume.inf*
-dual_c_sslaccel.inf*
-dual_c_swcomponent.inf*
-dual_c_swdevice.inf*
-dual_c_tapedrive.inf*
-dual_c_usbdevice.inf*
-dual_c_usbfn.inf*
-
 # Normal drivers
-1394.inf*
 3ware.inf*
-61883.inf*
-acpi.inf*
-acpidev.inf*
-acpipagr.inf*
-acpipmi.inf*
-acpitime.inf*
+61883.inf*		# 61883 Class Bus Device
+			# IEC-61883 defines a connection protocol for electronic audio and video devices
+
 adp80xx.inf*
-amdsata.inf*
-amdsbs.inf*
-arcsas.inf*
 athw8x.inf*
 audioendpoint.inf*
-avc.inf*
 basicdisplay.inf*
+  dual_basicdisplay.inf*
 basicrender.inf*
-battery.inf*
+  dual_basicrender.inf*
 bcmdhd.inf*
 bcmdhd64.inf*
 bcmfn.inf*
 bcmfn2.inf*
 bda.inf*
 btampm.inf*
+  dual_btampm.inf*
 bthaudhid.inf*
 bthhfenum.inf*
 bthleenum.inf*
+  dual_bthleenum.inf*
 buttonconverter.inf*
+  dual_buttonconverter.inf*
 capimg.inf*
 cht4nulx64.inf*
 cht4sx64.inf*
 cht4vx64.inf*
 circlass.inf*
 cmbatt.inf*
+  dual_cmbatt.inf*
 compositebus.inf*
-cpu.inf*
 dc1-controller.inf*
+  dual_dc1-controller.inf*
 dc21x4vm.inf*
 digitalmediadevice.inf*
 displayoverride.inf*
-
-# Dual classes
-dual_acpi.inf*
-dual_acpipagr.inf*
-dual_acpitime.inf*
-dual_basicdisplay.inf*
-dual_basicrender.inf*
-dual_battery.inf*
-dual_btampm.inf*
-dual_bthleenum.inf*
-dual_buttonconverter.inf*
-dual_cmbatt.inf*
-dual_cpu.inf*
-dual_dc1-controller.inf*
-dual_genericusbfn.inf*
-dual_hal.inf*
-dual_halextintclpiodma.inf*
-dual_halextpl080.inf*
-dual_hidvhf.inf*
-dual_kdnic.inf*
-dual_ndisuio.inf*
-dual_npsvctrig.inf*
-dual_pci.inf*
-dual_scmvolume.inf*
-dual_sdbus.inf*
-dual_sdstor.inf*
-dual_spaceport.inf*
-dual_swenum.inf*
-dual_tdibth.inf*
-dual_ucmucsi.inf*
-dual_uefi.inf*
-dual_ufxchipidea.inf*
-dual_ufxsynopsys.inf*
-dual_umpass.inf*
-dual_urschipidea.inf*
-dual_urssynopsys.inf*
-dual_usbhub3.inf*
-dual_usbxhci.inf*
-dual_vdrvroot.inf*
-dual_vhdmp.inf*
-dual_volmgr.inf*
-dual_wdma_bt.inf*
-dual_wdmvsc.inf*
-dual_windowstrustedrtproxy.inf*
-dual_xboxgip.inf*
-dual_xinputhid.inf*
-dual_xusb22.inf*
-
 eaphost.inf*
 ehstorpwddrv.inf*
 ehstortcgdrv.inf*
 errdev.inf*
 gameport.inf*
 genericusbfn.inf*
-hal.inf*
-halextintclpiodma.inf*
-HalExtIntcLpioDma.inf*
-halextpl080.inf*
-HalExtPL080.inf*
+  dual_genericusbfn.inf*
 hidbatt.inf*
 hidvhf.inf*
+  dual_hidvhf.inf*
 hpsamd.inf*
 iagpio.inf*
 iai2c.inf*
@@ -181,24 +59,15 @@ intelpep.inf*
 ipmidrv.inf*
 ipoib6x.inf*
 kdnic.inf*
-ks.inf*
-kscaptur.inf*
-ksfilter.inf*
+  dual_kdnic.inf*
 lltdio.inf*
-lsi_sas.inf*
-lsi_sas2i.inf*
-lsi_sas3i.inf*
-lsi_sss.inf*
-machine.inf*
 mbtr8897w81x64.inf*
 mchgr.inf*
 megasas.inf*
 megasr.inf*
-memory.inf*
 mf.inf*
 mlx4_bus.inf*
 modemcsa.inf*
-monitor.inf*
 mrvlpcie8897.inf*
 msclmd.inf*
 msdri.inf*
@@ -220,44 +89,30 @@ ndisimplatform.inf*
 ndisimplatformmp.inf*
 ndisuio.inf*
 ndisvirtualbus.inf*
+dual_ndisuio.inf*
 
 # Networking
-netavpna.inf*	# Agile VPN Tunneling Protocol WAN Miniport
-netavpnt.inf*	# Agile VPN Tunneling Protocol Transport Edge
-netbrdg.inf*	# MAC Bridge
-netbrdgs.inf*	# MAC Bridge
-netbrdgm.inf*	# MAC Bridge Miniport
 netirda.inf*	# IrDA transport
 netnwifi.inf*	# Native Wi-Fi Filter
 netpacer.inf*	# Microsoft Packet Scheduler (PACER)
-netrasa.inf*	# RAS: WAN miniport and wrappers
-netrass.inf*	# RAS services
-netrast.inf*	# RAS transports
-netrndis.inf*	# Generic RNDIS USB Adapter
-netsstpa.inf*	# Secure Socket Tunneling Protocol WAN Miniport
-netsstpt.inf*	# Secure Socket Tunneling Protocol Transport Edge
-nettun.inf*	# TUN Miniport Adapter
 netvchannel.inf*	# ?
 netvwwanmp.inf*	# ?
 netwmbclass.inf*
 
 npsvctrig.inf*
+  dual_npsvctrig.inf*
 ntprint.inf*
 ntprint4.inf*
 nulhpopr.inf*
 nulhprs8.inf*
-nvraid.inf*
 pci.inf*
-pcmcia.inf*
+  dual_pci.inf*
 percsas2i.inf*
 percsas3i.inf*
 pnpxinternetgatewaydevices.inf*
 printqueue.inf*
 qd3x64.inf*
-ramdisk.inf*
 rawsilo.inf*
-rdpbus.inf*
-rndiscmp.inf*
 rspndr.inf*
 rt640x64.inf*
 rtux64w10.inf*
@@ -268,57 +123,68 @@ sbp2.inf*
 scmbus.inf*
 scmdisk0101.inf*
 scmvolume.inf*
-scrawpdo.inf*
+  dual_scmvolume.inf*
 scsidev.inf*
 scunknown.inf*
 sdbus.inf*
+  dual_sdbus.inf*
 sdstor.inf*
-sisraid2.inf*
-sisraid4.inf*
+  dual_sdstor.inf*
 spaceport.inf*
+  dual_spaceport.inf*
 stexstor.inf*
 sti.inf*
 stornvme.inf*
 storufs.inf*
 swenum.inf*
+  dual_swenum.inf*
 tdibth.inf*
-termkbd.inf*
-termmou.inf*
+  dual_tdibth.inf*
 tpmvsc.inf*
 transfercable.inf*
 uaspstor.inf*
 ucmucsi.inf*
-UcmUcsi.inf*
+  dual_ucmucsi.inf*
 uefi.inf*
+  dual_uefi.inf*
 ufxchipidea.inf*
+  dual_ufxchipidea.inf*
 ufxsynopsys.inf*
+  dual_ufxsynopsys.inf*
 umpass.inf*
+  dual_umpass.inf*
 urschipidea.inf*
+  dual_urschipidea.inf*
 urssynopsys.inf*
+  dual_urssynopsys.inf*
 usbcir.inf*
 usbhub3.inf*
+  dual_usbhub3.inf*
 usbnet.inf*
 usbprint.inf*
 usbser.inf*
 usbvideo.inf*
 usbxhci.inf*
+  dual_usbxhci.inf*
 vdrvroot.inf*
+  dual_vdrvroot.inf*
 vhdmp.inf*
+  dual_vhdmp.inf*
 volmgr.inf*
+  dual_volmgr.inf*
 vsmraid.inf*
 vstxraid.inf*
 v_mscdsc.inf*
 wave.inf*
 wceisvista.inf*
-wdmaudio.inf*
-wdma_bt.inf*
-wdma_usb.inf*
 wdmvsc.inf*
+  dual_wdmvsc.inf*
 wfcvsc.inf*
 wfpcapture.inf*
 wgencounter.inf*
-wGenCounter.inf*
 whyperkbd.inf*
+windowstrustedrtproxy.inf*
+  dual_windowstrustedrtproxy.inf*
 wmbclass_wmc_union.inf*
 wmiacpi.inf*
 wnetvsc.inf*
@@ -338,6 +204,9 @@ wsynth3dvsc.inf*
 wudfusbcciddriver.inf*
 wvid.inf*
 xboxgip.inf*
+  dual_xboxgip.inf*
 xinputhid.inf*
+  dual_xinputhid.inf*
 xusb22.inf*
+  dual_xusb22.inf*
 ykinx64.inf*

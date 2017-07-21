@@ -1,0 +1,6 @@
+wdmaudio.inf*
+wdma_bt.inf*
+wdma_usb.inf*
+dual_wdmaudio.inf*
+dual_wdma_bt.inf*
+dual_wdma_usb.inf*

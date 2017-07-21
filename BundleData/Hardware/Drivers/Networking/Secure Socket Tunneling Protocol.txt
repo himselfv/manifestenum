@@ -1,0 +1,2 @@
+netsstpa.inf*	# Secure Socket Tunneling Protocol WAN Miniport
+netsstpt.inf*	# Secure Socket Tunneling Protocol Transport Edge

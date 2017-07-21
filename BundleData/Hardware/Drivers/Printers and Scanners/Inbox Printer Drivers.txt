@@ -103,6 +103,11 @@ prnts002.inf*
 prnts003.inf*
 prnxx002.inf*
 
+hpoa1nd.inf*
+hpoa1sd.inf*
+hpoa1so.inf*
+hpoa1ss.inf*
+
 # W7+
 prnbrcl1.inf*
 prncacl1.inf*
