@@ -21,6 +21,7 @@ lsi_scsi.inf*		# LSI SCSI
 megasas.inf*		# LSI/Intel/DELL MEGARAID family SAS RAID controllers and compatible [W7+]
 megasr.inf*		# LSI/Intel Embedded MegaRAID [W7+]
 megasas2.inf*	 	# LSI/IBM RAID Devices [W7 only]
+megasas2i.inf*		# LSI/AVAGO MegaRAID Adapter
 nfrd960.inf*		# Adaptec (IBM) NFRD960 chip / IBM ServeRAID controllers [W7 only]
 nvraid.inf*		# NVIDIA nForce SATA / RAID Controllers
 ql2300.inf*		# QLogic Fibre Channel Adapter
