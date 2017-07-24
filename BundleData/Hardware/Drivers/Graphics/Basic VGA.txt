@@ -1,0 +1,29 @@
+# Basic VGA Driver / Standard VGA Compatible Display Driver / VGA Save
+
+# This works differently on W8+ systems and before that. Components are also confusingly named so watch out for comments.
+
+
+# Standard-VGA-based fallback driver
+# Hosts the standard VGA compatible driver (vga.sys) which is used ONLY as a fallback device (VgaSave) in case of problems and in some versions of Safe Mode. 
+# The display.inf component below is used as a normal driver for VGA-compatible devices.
+# This is a non Plug and Play driver.
+Microsoft-Windows-StandardVGA*
+# W8+: Replaced by Basic Display and Basic Renderer drivers.
+
+
+# BasicDisplay and BasicRenderer drivers
+# Since W8/WDDM1.2 rendering is now possible for display-only and render-only, and so the basic drivers are split too.
+# This is still a non Plug and Play driver, but it's used BOTH as a fallback and as a normal driver for any VGA-compatible adapters. But not by itself. The display.inf component below registers it for Plug and Play.
+# https://en.wikipedia.org/wiki/Windows_Display_Driver_Model#WDDM_1.2
+basicdisplay.inf*		# Even though this is called Basic Display, it's actually still an adapter driver.
+  dual_basicdisplay.inf*
+basicrender.inf*
+  dual_basicrender.inf*
+
+
+# Standard VGA / Standard Display Driver
+# In all versions of Windows, provides Plug and Play drivers for standard VGA compatible adapter. But:
+# - on Windows < W8 contains a COPY of vga.sys from StandardVGA called vgapnp.sys.
+# - on W8+ only associates the basicdisplay driver with compatible adapters.
+display.inf*
+dual_display.inf*

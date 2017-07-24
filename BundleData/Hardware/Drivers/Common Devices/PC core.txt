@@ -5,3 +5,13 @@ cpu.inf*
 dual_machine.inf*
 dual_memory.inf*
 dual_cpu.inf*
+
+
+# Many of the following was in machine.inf prior to W10
+
+pci.inf*		PCI, PCI-E [W10+]
+  dual_pci.inf*
+swenum.inf*		Plug and Play software device enumerator
+  dual_swenum.inf*
+uefi.inf*		UEFI-compliant system
+  dual_uefi.inf*

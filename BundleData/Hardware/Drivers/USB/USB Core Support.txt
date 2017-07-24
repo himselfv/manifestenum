@@ -1,7 +1,12 @@
 # USB Hub and Composite Device Drivers
 usb.inf*				# The driver
-dual_usb.inf*
+  dual_usb.inf*
 Microsoft-Windows-USB-USBHUB-Events*	# Instrumentation
+
+usbhub3.inf*				# xHCI (SuperSpeed) USB Hub [W10+]
+  dual_usbhub3.inf*
+usbxhci.inf*				# xHCI (SuperSpeed) Compliant Host Controller
+  dual_usbxhci.inf*
 
 # Performance counters for usbhub driver
 # Installed by registering the library and its function names in the usbhub settings key, so requires support from it.

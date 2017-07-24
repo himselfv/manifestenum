@@ -1,3 +1,0 @@
-# Standard display drivers
-display.inf*
-dual_display.inf*

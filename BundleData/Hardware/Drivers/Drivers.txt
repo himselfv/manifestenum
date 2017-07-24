@@ -4,10 +4,6 @@
 adp80xx.inf*
 athw8x.inf*
 audioendpoint.inf*
-basicdisplay.inf*
-  dual_basicdisplay.inf*
-basicrender.inf*
-  dual_basicrender.inf*
 bcmdhd.inf*
 bcmdhd64.inf*
 bcmfn.inf*
@@ -86,8 +82,6 @@ npsvctrig.inf*
   dual_npsvctrig.inf*
 ntprint4.inf*
 nulhprs8.inf*
-pci.inf*
-  dual_pci.inf*
 percsas2i.inf*
 percsas3i.inf*
 pnpxinternetgatewaydevices.inf*
@@ -112,16 +106,12 @@ spaceport.inf*
   dual_spaceport.inf*
 stornvme.inf*
 storufs.inf*
-swenum.inf*
-  dual_swenum.inf*
 tdibth.inf*		# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
   dual_tdibth.inf*
 transfercable.inf*	# Windows Easy Transfer Cable (Generic + Branded) [W7+]
 uaspstor.inf*
 ucmucsi.inf*
   dual_ucmucsi.inf*
-uefi.inf*
-  dual_uefi.inf*
 ufxchipidea.inf*
   dual_ufxchipidea.inf*
 ufxsynopsys.inf*
@@ -130,14 +120,10 @@ urschipidea.inf*
   dual_urschipidea.inf*
 urssynopsys.inf*
   dual_urssynopsys.inf*
-usbhub3.inf*
-  dual_usbhub3.inf*
 usbnet.inf*
 usbprint.inf*			# USB Printing Support [W7+]
 usbser.inf*
 usbvideo.inf*			# USB Video Device WDM Support (both Input and Output) [W7+]
-usbxhci.inf*
-  dual_usbxhci.inf*
 vdrvroot.inf*
   dual_vdrvroot.inf*
 volmgr.inf*
@@ -151,7 +137,7 @@ windowstrustedrtproxy.inf*
   dual_windowstrustedrtproxy.inf*
 wmbclass_wmc_union.inf*
 wmiacpi.inf*
-wpcip.inf*
+#wpcip.inf*
 wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver [W7+]
 wpdfs.inf*			# WPD File System driver [W7+]
 wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices [W7+]
