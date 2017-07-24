@@ -1,0 +1,8 @@
+# IEEE1284
+# A standard that defines bi-directional parallel communications between computers and other devices.
+# https://en.wikipedia.org/wiki/IEEE_1284
+
+# Inbox support consists of generic 1284.4 device drivers and lots of model definitons.
+
+dot4.inf*		# Windows NT 1284.4 class driver setup file - contains dot4, dot4scan, dot4usb - tons of scanners and printers
+dot4prt.inf*		# Tons of printers + dot4print class registration

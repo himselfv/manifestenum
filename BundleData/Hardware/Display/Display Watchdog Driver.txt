@@ -3,4 +3,5 @@
 # https://docs.microsoft.com/en-us/windows-hardware/drivers/display/disabling-timeout-recovery-for-display-drivers
 # XP SP1+
 
+wd.inf*					# Microsoft Watchdog Timer - the driver itself
 Microsoft-Windows-Watchdog*

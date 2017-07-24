@@ -113,6 +113,7 @@ pnpxinternetgatewaydevices.inf*
 printqueue.inf*
 qd3x64.inf*
 rawsilo.inf*
+rdlsbuscbs.inf*
 rspndr.inf*
 rt640x64.inf*
 rtux64w10.inf*
@@ -140,6 +141,8 @@ swenum.inf*
   dual_swenum.inf*
 tdibth.inf*
   dual_tdibth.inf*
+tpm.inf*
+  dual_tpm.inf
 tpmvsc.inf*
 transfercable.inf*
 uaspstor.inf*

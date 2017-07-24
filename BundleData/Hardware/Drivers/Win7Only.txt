@@ -1,25 +1,12 @@
 
 agp.inf*				# Microsoft Generic AGPv3.0 Filter for K8 Processor Platforms
-avmx64c.inf*
-blbdrive.inf*
-divacx64.inf*
-dot4.inf*
-dot4prt.inf*
-ehstorcertdrv.inf*
-elxstor.inf*
-igdlh.inf*
-iirsp.inf*
-iirsp2.inf*
-mcx2.inf*
-megasas2.inf*
-msdsm.inf*
-nfrd960.inf*
-rdlsbuscbs.inf*
-rdvgwddm.inf*
-sensorsalsdriver.inf*
-synth3dvsc.inf*
-tpm.inf*
-wd.inf*
-wvmic.inf*
-xcbdav.inf*
-xnacc.inf*
+avmx64c.inf*				# AVM ISDN-Controller / FRITZ!Card via PCI/PCIE/PCMCIA/USB. Class=Net
+blbdrive.inf*				# BlbDrive / File as Volume Driver
+divacx64.inf*				# Eicon Diva network hardware. Class=Net
+ehstorcertdrv.inf*			# Microsoft WPD Enhanced Storage Certificate Driver (WPD Cert. Driver for IEEE P1667 compliant mass storage device)
+iirsp.inf*				# Intel/ICP RAID Controller (Class=SCSIAdapter)
+iirsp2.inf*				# Intel/ICP Cluster Controller Management Device (Class=System)
+mcx2.inf*				# Media Center Extender Device
+megasas2.inf*				# LSI/IBM RAID Devices
+nfrd960.inf*				# Adaptec (IBM) NFRD960 chip / IBM ServeRAID controllers
+xnacc.inf*				# XBOX 360 Controller

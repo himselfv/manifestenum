@@ -1,3 +1,7 @@
+
+wvmic.inf*				# Hyper-V Integration Components [W7]
+# Contains: Heartbeat, Data Exchange, Guest Shutdown, Time Synchronization and Volume Shadow Copy
+
 wvmbus.inf*
 wvmbushid.inf*
 wvmbusr.inf*
@@ -15,3 +19,5 @@ wvms_vsft.inf*
 wvms_vspp.inf*
 wvpci.inf*
 wvpcivsp.inf*
+
+synth3dvsc.inf*				# VMBus Synth3dVsc (Virtual 3D Video Transport Driver) [W7]

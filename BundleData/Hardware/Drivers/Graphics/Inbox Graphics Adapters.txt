@@ -1,3 +1,4 @@
 
 atiilhag.inf*		# ATI Graphics Adapters
 nv_lh.inf*		# NVidia Graphics Adapters
+igdlh.inf*		# Intel Graphics Adapters (W7)

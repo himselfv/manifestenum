@@ -1,0 +1,29 @@
+c_barcodescanner.inf*
+  dual_c_barcodescanner.inf*
+c_cashdrawer.inf*
+  dual_c_cashdrawer.inf*
+c_magneticstripereader*
+  dual_c_magneticstripereader.inf*
+c_receiptprinter.inf*  dual_c_receiptprinter.inf*
+
+sensorsalsdriver.inf*
+  dual_sensorsalsdriver.inf*
+
+fusionv2.inf*
+  dual_fusionv2.inf*
+hidscanner.inf*
+  dual_hidscanner.inf*
+idtsec.inf*
+  dual_idtsec.inf*
+mgtdyn.inf*
+  dual_mgtdyn.inf*
+miradisp.inf*
+  dual_miradisp.inf*
+remoteposdrv.inf*
+  dual_remoteposdrv.inf*
+Product-onecore__c_sensor.inf*
+  Product-onecore__dual_c_sensor.inf*
+sensorshidclassdriver.inf*
+  dual_sensorshidclassdriver.inf*
+sensorsservicedriver.inf*
+  dual_sensorsservicedriver.inf*

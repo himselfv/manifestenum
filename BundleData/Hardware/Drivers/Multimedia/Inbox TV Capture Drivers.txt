@@ -48,3 +48,5 @@ ph3xibc8.inf*
 ph3xibc9.inf*
 ph6xib64c0.inf*
 ph6xib64c1.inf*
+
+xcbdav.inf*				# ViXS TV Capture / BDA devices [W7]

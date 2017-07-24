@@ -8,7 +8,7 @@ arc.inf*		# Adaptec IOP RAID Host Adapter Drivers
 amdsata.inf*		# AMD SATA Controller
 amdsbs.inf*		# AMD AHCI Compatible RAID Controller
 arcsas.inf*		# Adaptec RAID Controllers
-elxstor.inf*		# Emulex LightPulse Host Bus Adapter
+elxstor.inf*		# Emulex LightPulse Fibre Channel Host Bus Adapter
 lsi_fc.inf*		# LSI Fibre Channel
 lsi_sas.inf*		# LSI SAS
 lsi_sas2.inf*		# LSI SAS

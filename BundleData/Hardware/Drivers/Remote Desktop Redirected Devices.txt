@@ -3,3 +3,7 @@
 rdpbus.inf*		# Remote Desktop Device Redirector Bus
 termkbd.inf*		# Terminal Services Keyboard Driver
 termmou.inf*		# Terminal Services Mouse Driver
+
+# Remote FX
+rdvgwddm.inf*		# Remote FX Graphics Device - W7
+rdvgwddmdx11.inf*	# Remote FX Graphics Device - W10

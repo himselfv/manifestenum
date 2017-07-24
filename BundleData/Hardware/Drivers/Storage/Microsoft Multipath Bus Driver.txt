@@ -3,3 +3,4 @@
 # https://en.wikipedia.org/wiki/Multipath_I/O
 
 mpio.inf*
+msdsm.inf*	# Microsoft Multi-Path Device Specific Module - W7-only
