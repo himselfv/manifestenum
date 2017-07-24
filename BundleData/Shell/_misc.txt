@@ -28,3 +28,10 @@ Microsoft-Windows-Shell-CoreInstrumentation*
 # "Shell Setup Helper"
 # Exports functions for unattended setup, Sysprep Cleanup and Generalization
 Microsoft-Windows-Shell-Setup*
+
+# "Shell Registration"
+# The grouping manifest pulls a single assembly
+Microsoft-Windows-Shell-Registration*		# Grouping manifest
+# The assembly contains a COM DLL with a type library for a "Registration Control". The control is registered in approved ActiveX assemblies.
+Microsoft-Windows-RegCtrl
+Microsoft-Windows-RegCtrl.*

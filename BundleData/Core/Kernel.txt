@@ -52,5 +52,11 @@ Microsoft-Windows-Kernel-Processor-Power-Events*	# Event definitions + support D
 Microsoft-Windows-Kernel-WMI				# Kernel-mode WMI support (registration only)
 Microsoft-Windows-Kernel-WMI.*
 
+# WMI Support Library / wmilib.sys
+# Exports WmiCompleteRequest, WmiFireEvent, WmiSystemControl. Part of kernel-mode WMI.
+# https://msdn.microsoft.com/en-us/library/windows/hardware/ff566359(v=vs.85).aspx
+Microsoft-Windows-WMILib
+Microsoft-Windows-WMILib.*
+
 Microsoft-Windows-Kernel				# Package
 Microsoft-Windows-Kernel.*

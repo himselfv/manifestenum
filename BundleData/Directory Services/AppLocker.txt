@@ -9,3 +9,7 @@ Microsoft.Security.ApplicationId.PolicyManagement*	# PowerShell plugin
 Microsoft.ApplicationId.Framework*
 Microsoft.ApplicationId.RuleWizard*
 Microsoft.Security.ApplicationId.Wizards.*
+
+# discache.sys ("System Indexing/Cache Driver"), required for AppID driver, shipped in updates together, most likely part of AppLocker
+Microsoft-Windows-SystemIndexer
+Microsoft-Windows-SystemIndexer.*
