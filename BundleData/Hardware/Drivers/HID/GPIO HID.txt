@@ -1,3 +1,8 @@
 
 hidinterrupt.inf*
 dual_hidinterrupt.inf*
+
+
+msgpiowin32.inf*				# Common Driver for Buttons, DockMode and Laptop/Slate Indicator
+Microsoft-Windows-GPIO-Class-Extension*
+Microsoft-Windows-GPIOButtons*			# Events

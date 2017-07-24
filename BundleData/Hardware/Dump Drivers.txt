@@ -1,0 +1,4 @@
+
+
+Microsoft-Windows-Dumpsdport*		# [W10]
+Microsoft-Windows-Dumpusbstor*		# [W10]

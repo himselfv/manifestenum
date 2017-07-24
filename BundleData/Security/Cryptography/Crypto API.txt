@@ -23,6 +23,9 @@ Microsoft-Windows-CAPI2-cryptdlg-reg*		# cryptdll.dll registration
 # Probably because it required some kind of cross-security-barrier-handling (there's also a srv component now).
 Microsoft-Windows-dpapi-dll*
 Microsoft-Windows-dpapisrv-dll*
+Microsoft-Windows-dpapisrv.*			# Some resources lack .dll
+Microsoft-Windows-Crypto-DPAPI			# Events and localized versions [W10]
+Microsoft-Windows-Crypto-DPAPI.*
 
 Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
 

@@ -2,3 +2,8 @@
 # built into Windows and used by many components for internal bookkeeping.
 
 Microsoft-Windows-ExtensibleStorageEngine*
+
+Microsoft-OneCore-ESENT		# W10 deployment
+Microsoft-OneCore-ESENT.*
+Microsoft-ETW-ESE		# W10 event instrumentation + resources
+Microsoft-ETW-ESE.*
