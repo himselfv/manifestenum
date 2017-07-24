@@ -24,22 +24,22 @@ capimg.inf*
 cht4nulx64.inf*
 cht4sx64.inf*
 cht4vx64.inf*
-circlass.inf*			# Consumer IR Class enumerator driver
+circlass.inf*			# Consumer IR Class enumerator driver [W7+]
 cmbatt.inf*
   dual_cmbatt.inf*
 dc1-controller.inf*
   dual_dc1-controller.inf*
-digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers)
+digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]
 displayoverride.inf*
-eaphost.inf*			# "ECPNode driver". EAP-related (confirmed)
+eaphost.inf*			# "ECPNode driver". EAP-related (confirmed) [W7+]
 errdev.inf*
-gameport.inf*			# Hooks up known gameports with a NULL service (but no other support).
+gameport.inf*			# Hooks up known gameports with a NULL service (but no other support). [W7+]
 genericusbfn.inf*
   dual_genericusbfn.inf*
 hidbatt.inf*
 hidvhf.inf*
   dual_hidvhf.inf*
-hpsamd.inf*			# Hewlett-Packard Smart Array Controllers (a variety of models)
+hpsamd.inf*			# Hewlett-Packard Smart Array Controllers (a variety of models) [W7+]
 iagpio.inf*
 iai2c.inf*
 ialpss2i_gpio2_skl.inf*
@@ -47,22 +47,22 @@ ialpss2i_i2c_skl.inf*
 ialpssi_gpio.inf*
 ialpssi_i2c.inf*
 intelpep.inf*
-ipmidrv.inf*			# Microsoft Generic IPMI Compliant Device
+ipmidrv.inf*			# Microsoft Generic IPMI Compliant Device [W7+]
 ipoib6x.inf*
 kdnic.inf*
   dual_kdnic.inf*
 lltdio.inf*
 mbtr8897w81x64.inf*
-mf.inf*				# Generic Multifunction PC-Card
+mf.inf*				# Generic Multifunction PC-Card [W7+]
 mlx4_bus.inf*
-modemcsa.inf*			# Windows Modem Wave-Voice settings / Modem Wave Drivers
+modemcsa.inf*			# Windows Modem Wave-Voice settings / Modem Wave Drivers [W7+]
 mrvlpcie8897.inf*
 msgpiowin32.inf*
 mssmbios.inf*
 msux64w10.inf*
 msux64w10.INF*
-mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass)
-multiprt.inf*			# Multi-port serial adapters
+mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass) [W7+]
+multiprt.inf*			# Multi-port serial adapters [W7+]
 mvumis.inf*
 mwlu97w8x64.inf*
 
@@ -75,9 +75,9 @@ ndisvirtualbus.inf*
 dual_ndisuio.inf*
 
 # Networking
-netirda.inf*	# IrDA transport
-netnwifi.inf*	# Native Wi-Fi Filter
-netpacer.inf*	# Microsoft Packet Scheduler (PACER)
+netirda.inf*	# IrDA transport [W7+]
+netnwifi.inf*	# Native Wi-Fi Filter [W7+]
+netpacer.inf*	# Microsoft Packet Scheduler (PACER) [W7+]
 netvchannel.inf*	# ?
 netvwwanmp.inf*		# ?
 netwmbclass.inf*
@@ -102,7 +102,7 @@ scmbus.inf*
 scmdisk0101.inf*
 scmvolume.inf*
   dual_scmvolume.inf*
-scsidev.inf*		# Generic SCSI Array/Enclosure/Processor devices + branded versions
+scsidev.inf*		# Generic SCSI Array/Enclosure/Processor devices + branded versions [W7+]
 scunknown.inf*
 sdstor.inf*
   dual_sdstor.inf*
@@ -114,9 +114,9 @@ stornvme.inf*
 storufs.inf*
 swenum.inf*
   dual_swenum.inf*
-tdibth.inf*		# Bluetooth Device (RFCOMM Protocol TDI)
+tdibth.inf*		# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
   dual_tdibth.inf*
-transfercable.inf*	# Windows Easy Transfer Cable (Generic + Branded)
+transfercable.inf*	# Windows Easy Transfer Cable (Generic + Branded) [W7+]
 uaspstor.inf*
 ucmucsi.inf*
   dual_ucmucsi.inf*
@@ -133,9 +133,9 @@ urssynopsys.inf*
 usbhub3.inf*
   dual_usbhub3.inf*
 usbnet.inf*
-usbprint.inf*			# USB Printing Support
+usbprint.inf*			# USB Printing Support [W7+]
 usbser.inf*
-usbvideo.inf*			# USB Video Device WDM Support (both Input and Output)
+usbvideo.inf*			# USB Video Device WDM Support (both Input and Output) [W7+]
 usbxhci.inf*
   dual_usbxhci.inf*
 vdrvroot.inf*
@@ -152,10 +152,10 @@ windowstrustedrtproxy.inf*
 wmbclass_wmc_union.inf*
 wmiacpi.inf*
 wpcip.inf*
-wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver
-wpdfs.inf*			# WPD File System driver
-wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices
-wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID
+wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver [W7+]
+wpdfs.inf*			# WPD File System driver [W7+]
+wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices [W7+]
+wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID [W7+]
 wsynth3dvsc.inf*
 wvid.inf*
 xboxgip.inf*
