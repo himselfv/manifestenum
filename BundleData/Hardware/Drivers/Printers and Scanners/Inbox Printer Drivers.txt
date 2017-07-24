@@ -1,5 +1,7 @@
 # Standard Printer Drivers
 
+ntprint.inf*		# List of supported printers, manufacturers (Class=Printer) [W7+]
+
 # W7 only
 prnbr002.inf*
 prnbr003.inf*

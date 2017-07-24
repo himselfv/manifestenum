@@ -1,0 +1,5 @@
+# 1394 Tape Device support
+# Requires 1394 Audio-Video Core Support
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/stream/av-c-overview
+
+mstape.inf*			# IEEE 1394 AV/C - Tape Devices (Generic + Branded)

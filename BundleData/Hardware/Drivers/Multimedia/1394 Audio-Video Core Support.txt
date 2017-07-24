@@ -1,0 +1,16 @@
+# IEEE 1394 Audio/Video support
+# See https://docs.microsoft.com/en-us/windows-hardware/drivers/ieee/the-ieee-1394-driver-stack
+# Requires core 1394 support.
+
+# Consists of 61883 support (transport level protocol) + AVC support (command level protocol).
+# Required for 1394 Tape and Digital Video drivers.
+
+# 61883 Class Bus Device
+# IEC-61883 defines a connection protocol for electronic audio and video devices
+# https://en.wikipedia.org/wiki/IEC_61883
+61883.inf*
+
+# IEEE 1394 Audio/Video Control (AV/C) - Virtual AVC Device
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/stream/av-c-overview
+avc.inf*
+dual_avc.inf*

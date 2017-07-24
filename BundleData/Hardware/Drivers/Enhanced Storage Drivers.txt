@@ -1,0 +1,22 @@
+# Enhanced Storage provides an extensible platform for accessing additional functions made available by enhanced storage devices; above and beyond the primary function of data storage.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd430343(v=vs.85).aspx
+
+# Enhanced Storage currently supports devices implementing the IEEE 1667 standard (http://www.ieee1667.com) which defines a mechanism of storage target authentication prior to data access. Even more useful is the fact that the standard also defines a generic mechanism by which any customized function implemented by the storage device can be discovered and accessed.
+
+# Enhanced Storage provides Windows applications with methods to:
+# * Discover and access additional functions available on an Enhanced Storage device.
+# * Discover and invoke function-specific workflow called action for an Enhanced Storage device.
+# * Authenticate access to an Enhanced Storage device that supports device authentication.
+
+# Glossary:
+#   Eh/EhStor = Enhanced Storage
+#   ACT = Addressable Command Target / Addressable Contact Target
+#   PDC = Portable Device Command
+#   Silo = One group of actions or one resource on the portable device. Different Silos perform different functions. There's a discovery protocol to enumerate available silos and their capabilities.
+#   TCG = Trusted Computing Group, the makers of Trusted Platform Module (TPM) and other security-related standards.
+#   WPD = Windows Portable Devices
+
+ehstorpwddrv.inf*	# Enhanced Storage Password Silo Driver [W7+]
+ehstortcgdrv.inf*	# ES driver for storage devices supporting IEEE (version 1667 and TCG protocols) [W10+]
+rawsilo.inf*		# IEEE 1667 Compatible Silos / ACTs / Generic Silos / ACTs [Enhanced Storage] [W7+]
+ehstorcertdrv.inf*	# WPD Enhanced Storage Certificate Driver (WPD Cert. Driver for IEEE P1667 compliant mass storage device) [W7 only]

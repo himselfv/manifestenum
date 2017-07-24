@@ -1,0 +1,1 @@
+wave.inf*			# Inbox non-WDM audio drivers

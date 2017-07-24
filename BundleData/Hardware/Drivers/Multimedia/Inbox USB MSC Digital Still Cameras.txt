@@ -1,0 +1,5 @@
+
+# Mass Storage Class is a set of protocols that makes a USB device accessible for file transfer.
+# https://en.wikipedia.org/wiki/USB_mass_storage_device_class
+
+v_mscdsc.inf*			# Some USB MSC (mass-storage class) digital still cameras (DSC)

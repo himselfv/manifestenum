@@ -1,0 +1,1 @@
+msports.inf*			# Serial, Parallel ports, Serial Enum Filter Driver as well as some device definitions for these

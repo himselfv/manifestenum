@@ -1,0 +1,9 @@
+# Core IEEE 1394 Support
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/ieee/the-ieee-1394-driver-stack
+
+# 1394 SBP2 and 1394 AVC support builds on this.
+
+# 1394 OHCI Compliant Host Controllers
+1394.inf*
+dual_1394.inf*
+

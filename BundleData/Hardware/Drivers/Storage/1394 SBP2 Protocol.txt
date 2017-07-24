@@ -1,0 +1,6 @@
+# Serial Bus Protocol (SBP-2) for 1394 support
+# SBP-2 is a protocol for storage devices over 1394. It is essentially a tunnel for SCSI.
+
+# Requires core 1394 support.
+
+sbp2.inf*		# SBP2 Compliant IEEE 1394 device

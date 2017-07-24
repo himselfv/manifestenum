@@ -1,0 +1,10 @@
+# Virtual HD (VHD) Bus Adapter
+# Allows mounting VHD files (disk images) as disk devices natively.
+# https://blogs.technet.microsoft.com/virtualization/2009/05/14/native-vhd-support-in-windows-7/
+# W7+
+
+# VHD is a file format for virtual disks. It's used by both Hyper-V and Virtual PC for storing disks of client environments.
+# Windows versions since W7 support mounting such disks natively, and MMC disk management snap-in supports creating and mounting such disks from user-mode.
+
+vhdmp.inf*			# VHD Miniport / Host Bus Adapter (unsure if related to Hyper-V or standalone)
+dual_vhdmp.inf*

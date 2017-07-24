@@ -1,0 +1,6 @@
+# 1394 Digital Video Cameras support
+# Requires 1394 Audio-Video Core Support
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/stream/av-c-overview
+
+msdv.inf*			# IEEE 1394 AV/C - DV Camera and VCR devices
+

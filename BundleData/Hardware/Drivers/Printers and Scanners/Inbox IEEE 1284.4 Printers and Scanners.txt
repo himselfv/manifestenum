@@ -4,5 +4,7 @@
 
 # Inbox support consists of generic 1284.4 device drivers and lots of model definitons.
 
-dot4.inf*		# Windows NT 1284.4 class driver setup file - contains dot4, dot4scan, dot4usb - tons of scanners and printers
-dot4prt.inf*		# Tons of printers + dot4print class registration
+dot4.inf*		# Windows NT 1284.4 class driver setup file - contains dot4, dot4scan, dot4usb - tons of scanners and printers [W7+]
+dot4prt.inf*		# Tons of printers + dot4print class registration [W7+]
+
+nulhpopr.inf*		# Hewlett-Packard "Nullifer INF for Win7 and Aio DOT4USB" [W7+]

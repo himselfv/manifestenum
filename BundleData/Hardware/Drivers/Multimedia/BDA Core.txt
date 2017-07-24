@@ -1,0 +1,4 @@
+# Broadcast Driver Architecture (BDA) core
+# https://en.wikipedia.org/wiki/Broadcast_Driver_Architecture
+
+bda.inf*			# Broadcast Driver Architecture (BDA) Core

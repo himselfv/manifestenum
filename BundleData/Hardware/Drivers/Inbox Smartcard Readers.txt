@@ -3,4 +3,6 @@
 smartcrd.inf*		# Inbox PCMCIA and serial Smartcard Readers
 
 # Common Smartcard support
-scrawpdo.inf*		# Smart card filter driver - INF file for sideband communication node for smart card plug and play filter driver
+scrawpdo.inf*			# Smart card filter driver - INF file for sideband communication node for smart card plug and play filter driver
+msclmd.inf*			# SmartCard "Identity Device" driver (exact role is unclear) [W7+]
+wudfusbcciddriver.inf*		# USBCCID user-mode driver / Microsoft Usbccid Smartcard Reader (WUDF) [W7+]

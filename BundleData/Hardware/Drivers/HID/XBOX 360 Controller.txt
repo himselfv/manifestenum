@@ -1,0 +1,1 @@
+xnacc.inf*				# XBOX 360 Controller

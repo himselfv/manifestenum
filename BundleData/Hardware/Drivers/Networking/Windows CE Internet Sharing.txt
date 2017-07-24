@@ -1,0 +1,4 @@
+# Remote NDIS based Internet Sharing / Windows CE Internet Sharing
+# Requires: Remote NDIS
+
+wceisvista.inf*			# Remote NDIS based Internet Sharing device (probably for Windows CE devices? "Windows CE internet Sharing for Vista")

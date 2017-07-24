@@ -1,0 +1,5 @@
+# User-mode drivers for printers and scanners accessible through Web-Services for Devices (WSD)
+# Should probably be integrated with WSD
+
+wsdprint.inf*			# WSD Print Device / WSD Print Support via UMB
+wsdscdrv.inf*			# WSD Scan Device

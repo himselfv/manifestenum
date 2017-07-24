@@ -1,5 +1,4 @@
 # USB Hub and Composite Device Drivers
-
 usb.inf*				# The driver
 dual_usb.inf*
 Microsoft-Windows-USB-USBHUB-Events*	# Instrumentation
@@ -8,3 +7,8 @@ Microsoft-Windows-USB-USBHUB-Events*	# Instrumentation
 # Installed by registering the library and its function names in the usbhub settings key, so requires support from it.
 Microsoft-Windows-usbperf
 Microsoft-Windows-usbperf.*
+
+# USB Port Drivers
+usbport.inf*					# The driver
+dual_usbport.inf*
+Microsoft-Windows-USB-USBPORT-Events*		# Instrumentation

@@ -1,0 +1,2 @@
+
+qd3x64.inf*		# Intel(R) Chipset QuickData Technology devices. Enables data copy by the chipset instead of the CPU, to move data more efficiently. [W7+]

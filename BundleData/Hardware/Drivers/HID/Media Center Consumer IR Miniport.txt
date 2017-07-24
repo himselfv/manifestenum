@@ -2,3 +2,5 @@ hidir.inf*
 hidirkbd.inf*
 dual_hidir.inf*
 dual_hidirkbd.inf*
+
+usbcir.inf*			# Windows Media Center (eHome) USB Infrared Receivers ("Snowflake/Beanbag/Snowball devices") [W7+]

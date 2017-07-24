@@ -1,8 +1,5 @@
 
-# BDA = Broadcast Driver Architecture
-# https://en.wikipedia.org/wiki/Broadcast_Driver_Architecture
-
-# Almost everything requires Kernel Streaming
+# Almost everything requires Kernel Streaming / Broadcast Driver Architecture (BDA)
 
 # W7 only
 

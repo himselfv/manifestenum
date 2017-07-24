@@ -14,6 +14,8 @@ netw5v64.inf*
 netxfx64.inf*
 
 # W7+
+dc21x4vm.inf*			# Intel 21140-Based PCI Fast Ethernet Adapter
+msdri.inf*			# ATI TV Wonder OpenCable Receiver (Class=Net) [W7+] - a Remote NDIS based network controller
 net1ic64.inf*
 net1yx64.inf*
 net44amd.inf*
@@ -35,8 +37,8 @@ NETAX88772.inf*
 netb57va.inf*
 netbc63a.inf*
 netbc64.inf*
-netbvbda.inf*		# Broadcom NetXtreme II GigE
-netbxnda.inf*		# Broadcom NetXtreme II GigE (NDIS VBD Client)
+netbvbda.inf*			# Broadcom NetXtreme II GigE
+netbxnda.inf*			# Broadcom NetXtreme II GigE (NDIS VBD Client)
 nete1e3e.inf*
 nete1g3e.inf*
 netefe3e.inf*

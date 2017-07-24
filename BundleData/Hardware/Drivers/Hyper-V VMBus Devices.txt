@@ -1,8 +1,20 @@
 
-wdmvsc.inf*				# VM Dynamic Memory VSC driver
+# Glossary:
+#   VSC = Virtualization Service Client
+
+wdmvsc.inf*			# VM Dynamic Memory VSC driver
   dual_wdmvsc.inf*
 
-wvmic.inf*				# Hyper-V Integration Components [W7]
+wnetvsc.inf*			# Virtual Machine Bus Network Adapter
+wnetvsc_vfpp.inf*
+
+ws3cap.inf*			# Hyper-V VGA Cap driver / Microsoft Emulated S3 Device Cap
+
+wstorflt.inf*			# Hyper-V Virtual Disk acceleration filter [W7+]
+wstorvsc.inf*			# Storage miniport VSC driver [W7+]
+wstorvsp.inf*
+
+wvmic.inf*			# Hyper-V Integration Components [W7]
 # Contains: Heartbeat, Data Exchange, Guest Shutdown, Time Synchronization and Volume Shadow Copy
 
 wvmbus.inf*
@@ -23,11 +35,4 @@ wvms_vspp.inf*
 wvpci.inf*
 wvpcivsp.inf*
 
-wnetvsc.inf*				# Virtual Machine Bus Network Adapter
-wnetvsc_vfpp.inf*
-
-ws3cap.inf*				# Hyper-V VGA Cap driver / Microsoft Emulated S3 Device Cap
-
-wstorflt.inf*				# Hyper-V Virtual Disk acceleration filter
-
-synth3dvsc.inf*				# VMBus Synth3dVsc (Virtual 3D Video Transport Driver) [W7]
+synth3dvsc.inf*			# VMBus Synth3dVsc (Virtual 3D Video Transport Driver) [W7]

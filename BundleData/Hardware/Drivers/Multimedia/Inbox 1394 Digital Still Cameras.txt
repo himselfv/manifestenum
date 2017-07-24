@@ -1,0 +1,4 @@
+# 1394 Digital Still Cameras support
+# Requires only 1394 Core Support, no 1394 Audio-Video Support.
+
+image.inf*			# "Digital camera and other imaging devices" (in fact: Generic 1394 digital camera + a few branded variations)

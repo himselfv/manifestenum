@@ -1,0 +1,1 @@
+mchgr.inf*			# Inbox supported Medium Changers (a ton of them, most with their own .sys files)

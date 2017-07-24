@@ -1,11 +1,16 @@
-# User-Mode Bus (UMB) driver
+# User-Mode Bus (UMB) driver and User-mode Passthrough
+# Enumerates various devices implemented by user-mode drivers. User-mode passthrough (umpass.sys) is used in place of a kernel driver when installing such user-mode drivers.
+# Probably related to User-Mode Driver Framework (UMDF).
 
-# Apart from what can be guessed from the title, exact role is unclear.
-# From the inf file, seems to be related to:
+# Required and related for a lot of things, including:
 #   IPBusEnum, UmRdpService, WPDBusEnum, spooler, rapimgr, wcescomm, TermService
+# As well as many inbox drivers.
 
 umbus.inf*		# umbus.sys driver
 dual_umbus.inf*
 
 umb			# Win32 API DLL (umb.dll) + registration
 umb.*
+
+umpass.inf*			# Generic UMPass driver (user-mode pass-through). UMBus related.
+dual_umpass.inf*

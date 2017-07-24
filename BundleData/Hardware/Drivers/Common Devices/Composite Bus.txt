@@ -1,0 +1,4 @@
+# Composite Bus
+
+compositebus.inf*			# Multi-Transport Composite Bus Enumerator Driver
+Microsoft-Windows-CompositeBus*		# <rootDevice> declaration
