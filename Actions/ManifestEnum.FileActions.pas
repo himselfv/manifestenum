@@ -21,6 +21,7 @@ type
     miFileJumpToLocal: TMenuItem;
     miFileJumpToSxs: TMenuItem;
     miFolderCopyModelPath: TMenuItem;
+    miFileOpen: TMenuItem;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
     procedure miFolderCopyNameClick(Sender: TObject);
@@ -33,6 +34,7 @@ type
     procedure miFileJumpToSxsClick(Sender: TObject);
     procedure FolderPopupMenuPopup(Sender: TObject);
     procedure FilePopupMenuPopup(Sender: TObject);
+    procedure miFileOpenClick(Sender: TObject);
   protected
     FDb: TAssemblyDb;
     FSelectedFolders: TArray<TFolderId>;
@@ -244,6 +246,24 @@ begin
   else
     Path := Path + FSelectedFiles[0].name;
   OsUtils.ExplorerAtFile(Path);
+end;
+
+procedure TFileActions.miFileOpenClick(Sender: TObject);
+var Path: string;
+  Assembly: TAssemblyData;
+begin
+  if Length(FSelectedFiles) <> 1 then exit;
+
+  if FSelectedFiles[0].assembly <= 0 then exit;
+  Assembly := FDb.Assemblies.GetAssembly(FSelectedFiles[0].assembly);
+
+  Path := SxsDir() + '\' + Assembly.manifestName + '\';
+  if FSelectedFiles[0].sourceName <> '' then
+    Path := Path + FSelectedFiles[0].sourceName
+  else
+    Path := Path + FSelectedFiles[0].name;
+
+  ShellOpen(Path);
 end;
 
 end.

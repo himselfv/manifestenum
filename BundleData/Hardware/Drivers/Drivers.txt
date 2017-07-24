@@ -3,7 +3,6 @@
 3ware.inf*
 61883.inf*		# 61883 Class Bus Device
 			# IEC-61883 defines a connection protocol for electronic audio and video devices
-
 adp80xx.inf*
 athw8x.inf*
 audioendpoint.inf*
@@ -15,7 +14,7 @@ bcmdhd.inf*
 bcmdhd64.inf*
 bcmfn.inf*
 bcmfn2.inf*
-bda.inf*
+bda.inf*			# Broadcast Driver Architecture (BDA) Core
 btampm.inf*
   dual_btampm.inf*
 bthaudhid.inf*
@@ -28,58 +27,58 @@ capimg.inf*
 cht4nulx64.inf*
 cht4sx64.inf*
 cht4vx64.inf*
-circlass.inf*
+circlass.inf*			# Consumer IR Class enumerator driver
 cmbatt.inf*
   dual_cmbatt.inf*
-compositebus.inf*
+compositebus.inf*		# Composite Bus Driver
 dc1-controller.inf*
   dual_dc1-controller.inf*
-dc21x4vm.inf*
-digitalmediadevice.inf*
+dc21x4vm.inf*			# Intel 21140-Based PCI Fast Ethernet Adapter
+digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers)
 displayoverride.inf*
-eaphost.inf*
-ehstorpwddrv.inf*
+eaphost.inf*			# "ECPNode driver". EAP-related (confirmed)
+ehstorpwddrv.inf*		# Enhanced Storage Password Silo Driver
 ehstortcgdrv.inf*
 errdev.inf*
-gameport.inf*
+gameport.inf*			# Hooks up known gameports with a NULL service (but no other support).
 genericusbfn.inf*
   dual_genericusbfn.inf*
 hidbatt.inf*
 hidvhf.inf*
   dual_hidvhf.inf*
-hpsamd.inf*
+hpsamd.inf*			# Hewlett-Packard Smart Array Controllers (a variety of models)
 iagpio.inf*
 iai2c.inf*
 ialpss2i_gpio2_skl.inf*
 ialpss2i_i2c_skl.inf*
 ialpssi_gpio.inf*
 ialpssi_i2c.inf*
-image.inf*
+image.inf*			# Digital camera and other imaging devices (in fact: Generic 1394 digital camera + a few branded variations)
 intelpep.inf*
-ipmidrv.inf*
+ipmidrv.inf*			# Microsoft Generic IPMI Compliant Device
 ipoib6x.inf*
 kdnic.inf*
   dual_kdnic.inf*
 lltdio.inf*
 mbtr8897w81x64.inf*
-mchgr.inf*
-megasas.inf*
-megasr.inf*
-mf.inf*
+mchgr.inf*			# Inbox supported Medium Changers (a ton of them, most with their own .sys files)
+megasas.inf*			# LSI/Intel/DELL MEGARAID family SAS RAID controllers and compatible
+megasr.inf*			# LSI/Intel Embedded MegaRAID
+mf.inf*				# Generic Multifunction PC-Card
 mlx4_bus.inf*
-modemcsa.inf*
+modemcsa.inf*			# Windows Modem Wave-Voice settings / Modem Wave Drivers
 mrvlpcie8897.inf*
-msclmd.inf*
-msdri.inf*
-msdv.inf*
+msclmd.inf*			# SmartCard "Identity Device" driver (exact role is unclear)
+msdri.inf*			# ATI TV Wonder OpenCable Receiver (Class=Net)
+msdv.inf*			# IEEE 1394 DV Camera and VCR devices
 msgpiowin32.inf*
-msports.inf*
+msports.inf*			# Serial, Parallel ports, Serial Enum Filter Driver as well as some device definitions for these
 mssmbios.inf*
-mstape.inf*
+mstape.inf*			# Various AV/C Tape Devices (Generic + Branded)
 msux64w10.inf*
 msux64w10.INF*
-mtconfig.inf*
-multiprt.inf*
+mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass)
+multiprt.inf*			# Multi-port serial adapters
 mvumis.inf*
 mwlu97w8x64.inf*
 
@@ -96,14 +95,14 @@ netirda.inf*	# IrDA transport
 netnwifi.inf*	# Native Wi-Fi Filter
 netpacer.inf*	# Microsoft Packet Scheduler (PACER)
 netvchannel.inf*	# ?
-netvwwanmp.inf*	# ?
+netvwwanmp.inf*		# ?
 netwmbclass.inf*
 
 npsvctrig.inf*
   dual_npsvctrig.inf*
-ntprint.inf*
+ntprint.inf*		# List of supported printers, manufacturers (Class=Printer)
 ntprint4.inf*
-nulhpopr.inf*
+nulhpopr.inf*		# Hewlett-Packard "Nullifer INF for Win7 and Aio DOT4USB"
 nulhprs8.inf*
 pci.inf*
   dual_pci.inf*
@@ -111,40 +110,39 @@ percsas2i.inf*
 percsas3i.inf*
 pnpxinternetgatewaydevices.inf*
 printqueue.inf*
-qd3x64.inf*
-rawsilo.inf*
-rdlsbuscbs.inf*
+qd3x64.inf*		# Intel(R) Chipset QuickData Technology device (multiple)
+rawsilo.inf*		# IEEE 1667 Compatible Silos / ACTs / Generic Silos / ACTs [Enhanced Storage]
 rspndr.inf*
 rt640x64.inf*
 rtux64w10.inf*
 rtvdevx64.inf*
 rtwlanu_oldic.inf*
 rtwlanu_oldIC.inf*
-sbp2.inf*
+sbp2.inf*		# SBP2 Compliant IEEE 1394 device
 scmbus.inf*
 scmdisk0101.inf*
 scmvolume.inf*
   dual_scmvolume.inf*
-scsidev.inf*
+scsidev.inf*		# Generic SCSI Array/Enclosure/Processor devices + branded versions
 scunknown.inf*
-sdbus.inf*
-  dual_sdbus.inf*
 sdstor.inf*
   dual_sdstor.inf*
+sensorsalsdriver.inf*
+  dual_sensorsalsdriver.inf*
 spaceport.inf*
   dual_spaceport.inf*
-stexstor.inf*
-sti.inf*
+stexstor.inf*		# Promise SuperTrak SAS/SATA RAID Controllers + compatible (SCSI Miniport)
+sti.inf*		# Windows Still Image Services (Scanners + Digital Cameras)
 stornvme.inf*
 storufs.inf*
 swenum.inf*
   dual_swenum.inf*
-tdibth.inf*
+tdibth.inf*		# Bluetooth Device (RFCOMM Protocol TDI)
   dual_tdibth.inf*
-tpm.inf*
+tpm.inf*		# General-Purpose Trusted Platform Module (TPM) drivers
   dual_tpm.inf
 tpmvsc.inf*
-transfercable.inf*
+transfercable.inf*	# Windows Easy Transfer Cable (Generic + Branded)
 uaspstor.inf*
 ucmucsi.inf*
   dual_ucmucsi.inf*
@@ -154,34 +152,32 @@ ufxchipidea.inf*
   dual_ufxchipidea.inf*
 ufxsynopsys.inf*
   dual_ufxsynopsys.inf*
-umpass.inf*
+umpass.inf*			# Generic UMPass driver (user-mode pass-through). UMBus related.
   dual_umpass.inf*
 urschipidea.inf*
   dual_urschipidea.inf*
 urssynopsys.inf*
   dual_urssynopsys.inf*
-usbcir.inf*
+usbcir.inf*			# Windows Media Center (eHome) USB Infrared Receivers ("Snowflake/Beanbag/Snowball devices")
 usbhub3.inf*
   dual_usbhub3.inf*
 usbnet.inf*
-usbprint.inf*
+usbprint.inf*			# USB Printing Support
 usbser.inf*
-usbvideo.inf*
+usbvideo.inf*			# USB Video Device WDM Support (both Input and Output)
 usbxhci.inf*
   dual_usbxhci.inf*
 vdrvroot.inf*
   dual_vdrvroot.inf*
-vhdmp.inf*
+vhdmp.inf*			# VHD Miniport / Host Bus Adapter (unsure if related to Hyper-V or standalone)
   dual_vhdmp.inf*
 volmgr.inf*
   dual_volmgr.inf*
-vsmraid.inf*
+vsmraid.inf*			# VIA RAID Stor-Miniport Driver
 vstxraid.inf*
-v_mscdsc.inf*
-wave.inf*
-wceisvista.inf*
-wdmvsc.inf*
-  dual_wdmvsc.inf*
+v_mscdsc.inf*			# Some USB MSC (mass-storage class) digital still cameras (DSC)
+wave.inf*			# Inbox non-WDM audio drivers
+wceisvista.inf*			# Remote NDIS based Internet Sharing device (probably for Windows CE devices? "Windows CE internet Sharing for Vista")
 wfcvsc.inf*
 wfpcapture.inf*
 wgencounter.inf*
@@ -190,21 +186,17 @@ windowstrustedrtproxy.inf*
   dual_windowstrustedrtproxy.inf*
 wmbclass_wmc_union.inf*
 wmiacpi.inf*
-wnetvsc.inf*
-wnetvsc_vfpp.inf*
 wpcip.inf*
-wpdcomp.inf*
-wpdfs.inf*
-wpdmtp.inf*
-wpdmtphw.inf*
-ws3cap.inf*
-wsdprint.inf*
-wsdscdrv.inf*
-wstorflt.inf*
-wstorvsc.inf*
+wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver
+wpdfs.inf*			# WPD File System driver
+wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices
+wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID
+wsdprint.inf*			# WSD Print Device / WSD Print Support via UMB
+wsdscdrv.inf*			# WSD Scan Device
+wstorvsc.inf*			# Storage miniport driver
 wstorvsp.inf*
 wsynth3dvsc.inf*
-wudfusbcciddriver.inf*
+wudfusbcciddriver.inf*		# USBCCID user-mode driver / Microsoft Usbccid Smartcard Reader (WUDF)
 wvid.inf*
 xboxgip.inf*
   dual_xboxgip.inf*

@@ -4,10 +4,7 @@ c_barcodescanner.inf*
   dual_c_cashdrawer.inf*
 c_magneticstripereader*
   dual_c_magneticstripereader.inf*
-c_receiptprinter.inf*  dual_c_receiptprinter.inf*
-
-sensorsalsdriver.inf*
-  dual_sensorsalsdriver.inf*
+c_receiptprinter.inf*  dual_c_receiptprinter.inf*
 
 fusionv2.inf*
   dual_fusionv2.inf*

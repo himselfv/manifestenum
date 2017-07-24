@@ -1,6 +1,7 @@
 # Remote Desktop / Terminal Service Redirected Devices
 
 rdpbus.inf*		# Remote Desktop Device Redirector Bus
+rdlsbuscbs.inf*		# Remote Desktop Licensing VM Bus
 termkbd.inf*		# Terminal Services Keyboard Driver
 termmou.inf*		# Terminal Services Mouse Driver
 

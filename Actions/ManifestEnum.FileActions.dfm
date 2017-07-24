@@ -57,5 +57,9 @@ object FileActions: TFileActions
         OnClick = miFileJumpToSxsClick
       end
     end
+    object miFileOpen: TMenuItem
+      Caption = 'Open'
+      OnClick = miFileOpenClick
+    end
   end
 end
