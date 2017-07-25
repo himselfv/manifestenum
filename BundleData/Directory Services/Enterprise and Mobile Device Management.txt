@@ -1,15 +1,33 @@
 # EnterpriseMgmt / Mobile Device Management
-# https://msdn.microsoft.com/en-us/windows/hardware/commercialize/customize/mdm/index
+# https://docs.microsoft.com/en-us/windows/client-management/mdm/index
 
 # There are two parts to the Windows 10 management component:
 # * The enrollment client, which enrolls and configures the device to communicate with the enterprise management server.
 # * The management client, which periodically synchronizes with the management server to check for updates and apply the latest policies set by IT.
 
+# MDM has its own plugins called Configuration Service Providers (CSPs):
+# "A configuration service provider (CSP) is an interface to read, set, modify, or delete configuration settings on the device. These settings map to registry keys or files."
+# https://docs.microsoft.com/en-us/windows/client-management/mdm/configuration-service-provider-reference
+# As usual, only the core CSPs should be listed here, and the rest with their respective components.
+
 Microsoft-Windows-MDMAgent*
+Microsoft-Windows-MDMAppInstaller*			# W10
+Microsoft-Windows-MDMRegistration2*			# W10
 Microsoft-Windows-EnterpriseMgmt-MdmDiagnostics*
 Microsoft-Windows-EnterpriseMgmt-MdmDiagnosticsTool*
 
+MDMSettingsProv*					# WMI provider [W10]
+Microsoft-Windows-WMIV2-MDMAppProv-dll*			# WMI provider [W10]
+Microsoft-Windows-MDM-WMIV2-DMWmiBridge*		# WMI provider which bridges all CSPs as WMI classes [W10]
+							# https://msdn.microsoft.com/library/windows/hardware/dn905224
+Microsoft-Windows-MDM-DMWmiCSP*				# I think this exports many WMI classes as CSPs [W10]
+Microsoft-Windows-RjvMDMConfig*				# "Windows System Reset Platform Plugin for MDMAgent" [W10]
+
+Microsoft-Windows-MDM-Adm*				# Group Policy definitions [W10]
+
+Microsoft-Windows-EnrollEngine*				# MDM-related [W10]
+
 # Enterprise Management
-Microsoft-Windows-Enterprise-Management*			# Service:EntAppSvc (Enterprise applications management service)
+Microsoft-Windows-Enterprise-Management*		# Service:EntAppSvc (Enterprise applications management service)
 
 Microsoft-Windows-DeviceManagement-*			# Windows 10

@@ -7,6 +7,8 @@ Microsoft-OneCore-Hyper-V*
 Microsoft-Windows-HyperV*
 Microsoft-Windows-Hyper-V*
 
+hvhostsvcstats*					# M-Hyper-V-Hypervisor-Host-Service performance counts
+
 InspectVhdDialog*
 
 Microsoft.Virtualization.Client			# Hyper-V .NET bindings
