@@ -1,0 +1,1 @@
+gameport.inf*			# Hooks up known gameports with a NULL service (but no other support). [W7+]

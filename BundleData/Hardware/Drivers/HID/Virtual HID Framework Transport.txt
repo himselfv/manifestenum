@@ -1,0 +1,8 @@
+# Virtual HID Framework (VHF)
+# Simplifies writing HID drivers which produce HID events from outside one of the standard HID transports (USB, I2C).
+# Previously you had to write your own HID transport, now you can write a HID source and plug it into VHF transport.
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/virtual-hid-framework--vhf-
+# https://msdn.microsoft.com/en-us/library/windows/hardware/dn925048(v=vs.85).aspx
+
+hidvhf.inf*			# Virtual HID Framework (VHF) HID device (Class=HIDClass) [W10]
+  dual_hidvhf.inf*

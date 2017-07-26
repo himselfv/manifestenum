@@ -18,3 +18,4 @@ Microsoft-Windows-NetworkTopology		# API, service and resource DLLs. The service
 Microsoft-Windows-NetworkTopology.*
 Microsoft-Windows-NetworkTopology-Inf		# Kernel part (protocol + responder)
 Microsoft-Windows-NetworkTopology-Inf.*
+rspndr.inf*					# Kernel part [W10]

@@ -1,6 +1,8 @@
 # Standard Printer Drivers
 
 ntprint.inf*		# List of supported printers, manufacturers (Class=Printer) [W7+]
+ntprint4.inf*		# Core Printer Driver Package [W10]
+printqueue.inf*		# MW Print Queue & Printer Connection Driver Package	# Move to core printing support?
 
 # W7 only
 prnbr002.inf*

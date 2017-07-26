@@ -1,0 +1,6 @@
+# Storage Spaces
+# A technology in Windows and Windows Server that enables you to virtualize storage by grouping industry-standard disks into storage pools, and then creating virtual disks called storage spaces from the available capacity in the storage pools.
+# https://technet.microsoft.com/en-us/library/hh831739(v=ws.11).aspx
+
+spaceport.inf*		# Microsoft Storage Spaces Controller (Class=SCSIAdapter) [W10]
+  dual_spaceport.inf*

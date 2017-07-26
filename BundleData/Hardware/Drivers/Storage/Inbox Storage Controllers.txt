@@ -4,10 +4,12 @@ adp94xx.inf*		# Adaptec HostRAID SAS Adapter Driver
 adpahci.inf*		# Adaptec HostRAID SATA (AHCI) Driver
 adpu320.inf*		# Adaptec u320 (SCSI) Host Adapter Drivers
 arc.inf*		# Adaptec IOP RAID Host Adapter Drivers
-
 amdsata.inf*		# AMD SATA Controller
 amdsbs.inf*		# AMD AHCI Compatible RAID Controller
 arcsas.inf*		# Adaptec RAID Controllers
+cht4nulx64.inf*		# Chelsio T4 (Terminator 4) and T5 NULL file [W10]
+cht4sx64.inf*		# Chelsio T4 storage function driver / Chelsio T4 iSCSI Initiator [W10]
+cht4vx64.inf*		# Chelsio T4 bus enumerator driver [W10]
 elxstor.inf*		# Emulex LightPulse Fibre Channel Host Bus Adapter
 iirsp.inf*		# Intel/ICP RAID Controller (Class=SCSIAdapter) [W7 only]
 iirsp2.inf*		# Intel/ICP Cluster Controller Management Device (Class=System) [W7 only]
@@ -22,6 +24,8 @@ megasas.inf*		# LSI/Intel/DELL MEGARAID family SAS RAID controllers and compatib
 megasr.inf*		# LSI/Intel Embedded MegaRAID [W7+]
 megasas2.inf*	 	# LSI/IBM RAID Devices [W7 only]
 megasas2i.inf*		# LSI/AVAGO MegaRAID Adapter
+percsas2i.inf*		# LSI Megaraid PERC family of RAID controllers [W10]
+percsas3i.inf*		# LSI Megaraid PERC family of RAID controllers [W10]
 nfrd960.inf*		# Adaptec (IBM) NFRD960 chip / IBM ServeRAID controllers [W7 only]
 nvraid.inf*		# NVIDIA nForce SATA / RAID Controllers
 ql2300.inf*		# QLogic Fibre Channel Adapter

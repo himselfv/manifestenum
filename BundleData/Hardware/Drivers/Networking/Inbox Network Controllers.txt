@@ -16,6 +16,7 @@ netxfx64.inf*
 # W7+
 dc21x4vm.inf*			# Intel 21140-Based PCI Fast Ethernet Adapter
 msdri.inf*			# ATI TV Wonder OpenCable Receiver (Class=Net) [W7+] - a Remote NDIS based network controller
+msux64w10.inf*			# Microsoft USB Fast/Gigabit Ethernet NIC (Class=Net)
 net1ic64.inf*
 net1yx64.inf*
 net44amd.inf*
@@ -80,3 +81,7 @@ netwns64.inf*
 netwsw00.inf*
 netwtw04.inf*
 netxex64.inf*
+rt640x64.inf*		# Realtek PCI/PCIe FE/GBE Family Controllers (Class=Net) [W10]
+rtux64w10.inf*		# Realtek USB FE/GbE NIC Family Controllers (Multi-branded) (Class=Net) [W10]
+rtvdevx64.inf*		# Realtek RealManage IMPI/COM1/COM2 - no driver (Class=Multifunction) [W10]
+rtwlanu_oldic.inf*	# Realtek Wireless 802.11b/g/n USB2.0 Network Adapter (Class=Net) [W10]

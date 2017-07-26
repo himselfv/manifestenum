@@ -1,7 +1,13 @@
 HID and Game Controllers
 
+Glossary:
+  VHF = Virtual HID Framework
+
 HID Transports:
   https://msdn.microsoft.com/en-us/library/windows/hardware/jj127210(v=vs.85).aspx
+
+See also
+  https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/virtual-hid-framework--vhf-
 
 USB
 Bluetooth

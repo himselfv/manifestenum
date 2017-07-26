@@ -5,13 +5,26 @@
 
 # Very ubiquitous, has seen several versions during the years.
 
-Microsoft-Windows-NDIS
+Microsoft-Windows-NDIS			# ndis.sys [W7+]
 Microsoft-Windows-NDIS.*
 Microsoft-Windows-NDIS-*
-# -PackageCapture			# Packet Capture user-mode helper
-# -TDI-BindingEngine
+# -PackageCapture			# Packet Capture user-mode helper (sys+dll) [W7+]
+# -TDI-BindingEngine			# netcfgx.dll [W7+]
+# -VirtualBus				# [W10]
+# -MinWin				# [W10]
+# -IMPlatform				# [W10]
+# -PerformanceCounters			# [W10]
 
-Microsoft-Windows-ndiscap		# NDIS Packet Capture Filter Driver
+ndisimplatform.inf*			# inf files for MW-NDIS-IMPlatform [W10]
+ndisimplatformmp.inf*
+ndisvirtualbus.inf*			# inf files for MW-NDIS-VirtualBus [W10]
+
+Microsoft-Windows-ndiscap		# NDIS Packet Capture Filter Driver [W7+]
 Microsoft-Windows-ndiscap.*
-Microsoft-Windows-ndiscapinf*		# INF file for the above
-Microsoft-Windows-NDISUIO*		# User mode I/O interface driver for NDIS
+Microsoft-Windows-ndiscapinf*		# INF file for the above [W7+] - present on W10, but empty. Lol MS.
+ndiscap.inf*				# INF file for the above [W10/locales]
+
+Microsoft-Windows-NDISUIO*		# User mode I/O interface driver for NDIS (sys + inf) [W7]
+ndisuio.inf*				# INF file only, sometimes under this name [W10/locales]
+  dual_ndisuio.inf*
+

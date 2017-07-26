@@ -1,2 +1,5 @@
 battery.inf*
 dual_battery.inf*
+
+cmbatt.inf*			# ACPI-Compliant Control Method Battery, AC Adapter (Class=Battery) [W10]
+  dual_cmbatt.inf*
