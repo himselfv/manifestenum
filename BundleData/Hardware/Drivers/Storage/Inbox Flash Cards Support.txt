@@ -1,0 +1,16 @@
+
+# Secure Digital (SD)
+# https://en.wikipedia.org/wiki/Secure_Digital
+sdbus.inf*		# Inbox Secure Digital (SD) Host Controllers
+  dual_sdbus.inf*
+sdstor.inf*		# SD Storage Class Controller / Port Driver (Class=SCSIAdapter) [W10]
+  dual_sdstor.inf*
+
+# SFF Class Storage
+# https://en.wikipedia.org/wiki/Small_Form_Factor_committee
+sffdisk.inf*		# SFF Storage Class Driver - generic SD, MMC and PCMCIA SRAM cards
+
+# Universal Flash Storage
+# Aims to be a replacement for eMMCs and SD Cards.
+# https://en.wikipedia.org/wiki/Universal_Flash_Storage
+storufs.inf*		# Generic Universal Flash Storage (UFS) Host Driver + Brandings (Class=SCSIAdapter) [W10]

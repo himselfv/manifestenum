@@ -1,0 +1,19 @@
+# Storage Class Memory support
+# A PCI-e connected SSD like memory with very high throughput and low latencies. Some forms (NVDIMM) combine RAM and NAND functions by providing RAM which is stored in NAND if the power is lost.
+
+# Class registrations
+c_scmdisk.inf*
+  dual_c_scmdisk.inf*
+c_scmvolume.inf*
+  dual_c_scmvolume.inf*
+
+# SCM devices
+scmbus.inf*		# Storage Class Memory Bus [W10]
+scmdisk0101.inf*	# NVDIMM-N disk (Class=ScmDisk) [W10]
+scmvolume.inf*		# "Volume driver" (Class=ScmVolume) [W10]
+  dual_scmvolume.inf*
+
+# NVM Express
+# A device interface specification for accessing non-volatile storage media (such as SSDs) attached via a PCI Express (PCIe) bus. Designed to exploit the low latency and internal parallelism of such devices.
+# https://en.wikipedia.org/wiki/NVM_Express
+stornvme.inf*		# Standard NVM Express Controller (Class=SCSIAdapter) [W10]

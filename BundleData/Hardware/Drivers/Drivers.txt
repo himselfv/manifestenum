@@ -1,44 +1,27 @@
 
 # Normal drivers
-3ware.inf*
-adp80xx.inf*
-athw8x.inf*
-audioendpoint.inf*
-bcmdhd.inf*
-bcmdhd64.inf*
-bcmfn.inf*
-bcmfn2.inf*
-btampm.inf*
+audioendpoint.inf*		# Audio Endpoint INF (Audio inputs and outputs) [W10]
+bcmdhd.inf*			# Broadcom 802.11 Wireless SDIO Adapter [W10]
+bcmdhd64.inf*			# Broadcom 802.11 Wireless SDIO Adapter [W10]
+bcmfn.inf*			# Broadcom "BCM Function2 Device Driver" (Class=System) [W10]
+bcmfn2.inf*			# Broadcom "BCM Function2 Device Driver" (Class=System) [W10]
+btampm.inf*			# Microsoft Bluetooth Multi-Profile Manager [W10]
   dual_btampm.inf*
-bthaudhid.inf*
-bthhfenum.inf*
-bthleenum.inf*
+bthaudhid.inf*			# Bluetooth Hands-Free Call Control HID / Bluetooth Audio/Video Remote Control HID (Class=HIDClass) [W10]
+bthhfenum.inf*			# Bluetooth Hands-Free Audio and Call Control HID Enumerator (Class=System) [W10]
+bthleenum.inf*			# Bluetooth LE (Low Energy) enumerator (Class=Bluetooth) [W10]
   dual_bthleenum.inf*
 buttonconverter.inf*		# [Coverted] Portable Device Control Device (Class=HIDClass) [W10]
   dual_buttonconverter.inf*
 capimg.inf*			# HID Minidriver for CapImg touch screen [W10]
-dc1-controller.inf*
-  dual_dc1-controller.inf*
 digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]
 displayoverride.inf*
-eaphost.inf*			# "ECPNode driver". EAP-related (confirmed) [W7+]
 errdev.inf*
 genericusbfn.inf*
   dual_genericusbfn.inf*
 hidbatt.inf*
-hpsamd.inf*			# Hewlett-Packard Smart Array Controllers (a variety of models) [W7+]
-
-iagpio.inf*			# Intel Serial IO GPIO Controller / SoC GPIO Controller / INT33FF [W10]
-iai2c.inf*			# Intel Serial IO I2C ES/Host Controller / Intel LPT LP driver (Class=System) [W10]
-ialpss2i_gpio2_skl.inf*		# Intel Serial IO GPIO Host Controllers (Class=System) [W10]
-ialpss2i_i2c_skl.inf*		# Intel Serial IO I2C Host Controllers (Class=System) [W10]
-ialpssi_gpio.inf*		# Intel Serial IO GPIO Host Controllers (Class=System) [W10]
-ialpssi_i2c.inf*		# Intel Serial IO I2C Host Controllers (Class=System) [W10]
-
 intelpep.inf*			# Intel Power Engine Plug-in (PEP) (Class=System)
-ipmidrv.inf*			# Microsoft Generic IPMI Compliant Device [W7+]
-ipoib6x.inf*			# Mellanox/HP ConnectX IPoIB/EoIB Adapters (Class=Net) [W10]
-mlx4_bus.inf*			# Mellanox ConnectX / HP InfiniBand Bus Enumerator
+ipmidrv.inf*			# Microsoft Generic IPMI Compliant Device [W7+]	# https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface
 kdnic.inf*			# Kernel Network Debug Adapter [W10]
   dual_kdnic.inf*
 lltdio.inf*
@@ -60,25 +43,14 @@ netvchannel.inf*	# Virtual Network Channel [W10]
 			# Provides the default sections that must be included by external INFs that require the virtual channel functionality.
 			# "Currently this is used to provide multiple-PDP context functionality for WWAN connections.
 netvwwanmp.inf*		# Virtual WWAN Miniport Adapter [W10]	# ?
-netwmbclass.inf*	# Generic Mobile Broadband Adapter [W10]
 
 npsvctrig.inf*		# Named Pipe Service Trigger Provider [W10]
   dual_npsvctrig.inf*
-nulhprs8.inf*		# HP REST STUB endpoint nullifier to work around for XPS-PCL3 driver (Class=USB) [W10]
-			# Installs null driver for a broad list of PNP identifiers.
-\
+
 pnpxinternetgatewaydevices.inf*
-scmbus.inf*		# Storage Class Memory Bus [W10]
-scmdisk0101.inf*	# NVDIMM-N disk (Class=ScmDisk) [W10]
-scmvolume.inf*		# "Volume driver" (Class=ScmVolume) [W10]
-  dual_scmvolume.inf*
-scsidev.inf*		# Generic SCSI Array/Enclosure/Processor devices + branded versions [W7+]
-sdstor.inf*		# SD Storage Class Controller / Port Driver (Class=SCSIAdapter) [W10]
-  dual_sdstor.inf*
+
 sensorsalsdriver.inf*
   dual_sensorsalsdriver.inf*
-stornvme.inf*		# Standard NVM Express Controller (Class=SCSIAdapter) [W10]
-storufs.inf*		# Generic Universal Flash Storage (UFS) Host Driver + Brandings (Class=SCSIAdapter) [W10]
 tdibth.inf*		# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
   dual_tdibth.inf*
 transfercable.inf*	# Windows Easy Transfer Cable (Generic + Branded) [W7+]
@@ -117,10 +89,4 @@ wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth
 wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID [W7+]
 wsynth3dvsc.inf*
 wvid.inf*
-xboxgip.inf*
-  dual_xboxgip.inf*
-xinputhid.inf*
-  dual_xinputhid.inf*
-xusb22.inf*
-  dual_xusb22.inf*
 ykinx64.inf*

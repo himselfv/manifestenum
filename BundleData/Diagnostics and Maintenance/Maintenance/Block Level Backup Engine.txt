@@ -1,1 +1,5 @@
 Microsoft-Windows-BLB*
+
+# BlbDrive / File as Volume Driver
+# Probably used to mount the backup files.
+blbdrive.inf*		# [W7 only]

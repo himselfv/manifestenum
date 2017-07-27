@@ -1,8 +1,28 @@
 
 # W10 class installer registrations
 c_apo.inf*
+  dual_c_apo.inf*
 c_extension.inf*
+  dual_c_extension.inf*
 c_firmware.inf*
+  dual_c_firmware.inf*
+c_pnpprinters.inf*
+  dual_c_pnpprinters.inf*
+c_proximity.inf*
+  dual_c_proximity.inf*
+c_sslaccel.inf*
+  dual_c_sslaccel.inf*
+c_swcomponent.inf*
+  dual_c_swcomponent.inf*
+c_swdevice.inf*
+  dual_c_swdevice.inf*
+c_tapedrive.inf*
+  dual_c_tapedrive.inf*
+c_usbdevice.inf*
+  dual_c_usbdevice.inf*
+c_usbfn.inf*
+  dual_c_usbfn.inf*
+
 c_fsactivitymonitor.inf*
 c_fsantivirus.inf*
 c_fscfsmetadataserver.inf*
@@ -22,21 +42,6 @@ c_fssystem.inf*
 c_fssystemrecovery.inf*
 c_fsundelete.inf*
 c_fsvirtualization.inf*
-c_pnpprinters.inf*
-c_proximity.inf*
-c_scmdisk.inf*
-c_scmvolume.inf*
-c_sslaccel.inf*
-c_swcomponent.inf*
-c_swdevice.inf*
-c_tapedrive.inf*
-c_usbdevice.inf*
-c_usbfn.inf*
-
-# Dual class installer registrations
-dual_c_apo.inf*
-dual_c_extension.inf*
-dual_c_firmware.inf*
 dual_c_fsactivitymonitor.inf*
 dual_c_fsantivirus.inf*
 dual_c_fscfsmetadataserver.inf*
@@ -56,13 +61,3 @@ dual_c_fssystem.inf*
 dual_c_fssystemrecovery.inf*
 dual_c_fsundelete.inf*
 dual_c_fsvirtualization.inf*
-dual_c_pnpprinters.inf*
-dual_c_proximity.inf*
-dual_c_scmdisk.inf*
-dual_c_scmvolume.inf*
-dual_c_sslaccel.inf*
-dual_c_swcomponent.inf*
-dual_c_swdevice.inf*
-dual_c_tapedrive.inf*
-dual_c_usbdevice.inf*
-dual_c_usbfn.inf*

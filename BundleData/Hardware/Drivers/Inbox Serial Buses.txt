@@ -1,0 +1,16 @@
+
+# SPI: https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus
+# GPIO: https://en.wikipedia.org/wiki/GPIO
+# I2C: https://en.wikipedia.org/wiki/I2C
+#   SMBus, a subset of I2C: https://en.wikipedia.org/wiki/SMBus
+# UART: https://en.wikipedia.org/wiki/UART
+
+# Often used for sensors, HID devices.
+
+# Inbox drivers
+iagpio.inf*			# Intel Serial IO GPIO Controller / SoC GPIO Controller / INT33FF [W10]
+iai2c.inf*			# Intel Serial IO I2C ES/Host Controller / Intel LPT LP driver (Class=System) [W10]
+ialpss2i_gpio2_skl.inf*		# Intel Serial IO GPIO Host Controllers (Class=System) [W10]
+ialpss2i_i2c_skl.inf*		# Intel Serial IO I2C Host Controllers (Class=System) [W10]
+ialpssi_gpio.inf*		# Intel Serial IO GPIO Host Controllers (Class=System) [W10]
+ialpssi_i2c.inf*		# Intel Serial IO I2C Host Controllers (Class=System) [W10]

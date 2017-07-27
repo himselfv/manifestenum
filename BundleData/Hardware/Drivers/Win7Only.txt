@@ -1,7 +1,0 @@
-
-agp.inf*				# Microsoft Generic AGPv3.0 Filter for K8 Processor Platforms
-avmx64c.inf*				# AVM ISDN-Controller / FRITZ!Card via PCI/PCIE/PCMCIA/USB (Class=Net)
-blbdrive.inf*				# BlbDrive / File as Volume Driver
-divacx64.inf*				# Eicon Diva network hardware (Class=Net)
-mcx2.inf*				# Media Center Extender Device
-

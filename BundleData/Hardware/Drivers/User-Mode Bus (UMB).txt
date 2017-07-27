@@ -12,5 +12,5 @@ dual_umbus.inf*
 umb			# Win32 API DLL (umb.dll) + registration
 umb.*
 
-umpass.inf*			# Generic UMPass driver (user-mode pass-through). UMBus related.
+umpass.inf*		# Generic UMPass driver (user-mode pass-through). Does nothing except passing through device IOCTL calls to the umbus driver.
 dual_umpass.inf*

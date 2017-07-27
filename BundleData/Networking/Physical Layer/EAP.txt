@@ -25,3 +25,6 @@ Microsoft-Windows-OneX*
 # Layer2 probably refers to OSI.
 Microsoft-Windows-Dot3Schemas
 Microsoft-Windows-WlanSchemas
+
+# Driver helper
+eaphost.inf*			# "ECPNode driver". EAP-related (confirmed) [W7+]

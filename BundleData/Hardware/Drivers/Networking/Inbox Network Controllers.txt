@@ -2,6 +2,8 @@
 # Includes Ethernet and Wireless controllers
 
 # W7 only
+avmx64c.inf*			# AVM ISDN-Controller / FRITZ!Card via PCI/PCIE/PCMCIA/USB (Class=Net)
+divacx64.inf*			# Eicon Diva ISDN Network Cards [W7] -- ISDN is a network over telephone cables
 net1kx64.inf*
 net1qx64.inf*
 netbc664.inf*
@@ -14,6 +16,7 @@ netw5v64.inf*
 netxfx64.inf*
 
 # W7+
+athw8x.inf*			# Qualcomm Atheros Wireless Network Adapters + Brandings [W10]
 dc21x4vm.inf*			# Intel 21140-Based PCI Fast Ethernet Adapter
 msdri.inf*			# ATI TV Wonder OpenCable Receiver (Class=Net) [W7+] - a Remote NDIS based network controller
 msux64w10.inf*			# Microsoft USB Fast/Gigabit Ethernet NIC (Class=Net)
@@ -85,3 +88,11 @@ rt640x64.inf*		# Realtek PCI/PCIe FE/GBE Family Controllers (Class=Net) [W10]
 rtux64w10.inf*		# Realtek USB FE/GbE NIC Family Controllers (Multi-branded) (Class=Net) [W10]
 rtvdevx64.inf*		# Realtek RealManage IMPI/COM1/COM2 - no driver (Class=Multifunction) [W10]
 rtwlanu_oldic.inf*	# Realtek Wireless 802.11b/g/n USB2.0 Network Adapter (Class=Net) [W10]
+
+# InfiniBand controllers
+# https://en.wikipedia.org/wiki/InfiniBand
+mlx4_bus.inf*		# Mellanox ConnectX / HP InfiniBand Bus Enumerator [W10]
+ipoib6x.inf*		# Mellanox/HP ConnectX IPoIB/EoIB Adapters (Class=Net) [W10]
+
+# Mobile Broadband
+netwmbclass.inf*	# Generic Mobile Broadband Adapter [W10]

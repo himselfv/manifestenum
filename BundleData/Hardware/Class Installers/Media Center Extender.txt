@@ -7,3 +7,7 @@ Microsoft.Windows.Hardware.Devices.ClassInstaller.MediaCenterExtender-DriverClas
 # W10
 c_mcx.inf*
 dual_c_mcx.inf*
+
+# W7
+# Generic Media Center Extender plug and play driver
+mcx2.inf*		# Media Center Extender Device [W7]

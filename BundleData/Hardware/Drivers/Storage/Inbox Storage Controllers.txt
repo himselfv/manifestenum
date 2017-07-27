@@ -1,5 +1,9 @@
 # SATA, SCSI, iSCSI, Fibre Channel
 
+scsidev.inf*		# Generic SCSI Array/Enclosure/Processor devices + branded versions [W7+]
+
+3ware.inf*		# LSI 3ware 9750 RAID Controller (Class=SCSIAdapter) [W10]
+adp80xx.inf*		# Adaptec SAS Adapter / PMC-Sierra SPC Driver (Class=SCSIAdapter) [W10]
 adp94xx.inf*		# Adaptec HostRAID SAS Adapter Driver
 adpahci.inf*		# Adaptec HostRAID SATA (AHCI) Driver
 adpu320.inf*		# Adaptec u320 (SCSI) Host Adapter Drivers
@@ -11,6 +15,7 @@ cht4nulx64.inf*		# Chelsio T4 (Terminator 4) and T5 NULL file [W10]
 cht4sx64.inf*		# Chelsio T4 storage function driver / Chelsio T4 iSCSI Initiator [W10]
 cht4vx64.inf*		# Chelsio T4 bus enumerator driver [W10]
 elxstor.inf*		# Emulex LightPulse Fibre Channel Host Bus Adapter
+hpsamd.inf*		# Hewlett-Packard Smart Array Controllers (a variety of models) (Class=SCSIAdapter) [W7+]
 iirsp.inf*		# Intel/ICP RAID Controller (Class=SCSIAdapter) [W7 only]
 iirsp2.inf*		# Intel/ICP Cluster Controller Management Device (Class=System) [W7 only]
 lsi_fc.inf*		# LSI Fibre Channel

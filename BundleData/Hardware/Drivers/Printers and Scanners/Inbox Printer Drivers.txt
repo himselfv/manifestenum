@@ -113,6 +113,8 @@ hpoa1so.inf*
 hpoa1ss.inf*
 
 # W7+
+nulhprs8.inf*		# HP REST STUB endpoint nullifier to work around for XPS-PCL3 driver (Class=USB) [W10]
+			# Installs null driver for a broad list of PNP identifiers.
 prnbrcl1.inf*
 prncacl1.inf*
 prncacl2.inf*

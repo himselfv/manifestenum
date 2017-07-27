@@ -1,0 +1,12 @@
+
+xnacc.inf*			# Xbox 360 Controller [W7]
+
+dc1-controller.inf*		# Xbox One Controller [W10]
+  dual_dc1-controller.inf*
+
+xboxgip.inf*			# Xbox Game Input Protocol Driver Part (Class=System) [W10]
+  dual_xboxgip.inf*
+xinputhid.inf*			# XInput compatible HIDs + filter driver; Xbox / XboxOne / Xbox Elite Wireless Controller (Class=HIDClass) [W10]
+  dual_xinputhid.inf*
+xusb22.inf*			# Xbox 360 Wired/Wireless/CC Compatible Contollers (Class=XnaComposite) [W10]
+  dual_xusb22.inf*
