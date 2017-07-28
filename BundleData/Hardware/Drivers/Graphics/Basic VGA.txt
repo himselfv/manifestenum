@@ -27,3 +27,6 @@ basicrender.inf*
 # - on W8+ only associates the basicdisplay driver with compatible adapters.
 display.inf*
 dual_display.inf*
+
+displayoverride.inf*		# Installs overrides for specific display adapters that use the in-box BasicDisplayAdapter driver [W10]
+dual_displayoverride.inf*

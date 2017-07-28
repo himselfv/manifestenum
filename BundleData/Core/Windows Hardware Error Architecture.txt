@@ -1,7 +1,17 @@
 # Windows Hardware Error Architecture (WHEA)
-# https://msdn.microsoft.com/en-us/library/windows/hardware/ff559509(v=vs.85).aspx
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/whea/
 
-# The core is integrated in the Kernel, this is mostly just WHEA troubleshooter
+# Implemented as a platform-specific hardware error driver (PSHED) + a number of plugins (also drivers) which handle specific hardware.
+# A plugin registers on a number of PnP IDs and is loaded if the devices are present. It implements a special callback interface which is called by PSHED.
+
+# Platform-specific hardware error driver. Absolutely required, HAL depends on this.
+# Also filed in Kernel.
+Microsoft-Windows-PSHED
+Microsoft-Windows-PSHED.*
+Microsoft-Windows-PSHED-*
+
+# Microsoft Hardware Error Device Driver
+errdev.inf*			# Microsoft Hardware Error Device [W10]
 
 # WHEA Troubleshooter
 Microsoft-Windows-HardwareErrorArchitecture

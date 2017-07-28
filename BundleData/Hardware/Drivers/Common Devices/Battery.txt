@@ -1,5 +1,8 @@
 battery.inf*
-dual_battery.inf*
+  dual_battery.inf*
 
 cmbatt.inf*			# ACPI-Compliant Control Method Battery, AC Adapter (Class=Battery) [W10]
   dual_cmbatt.inf*
+
+hidbatt.inf*			# HID UPS Battery (Class=Battery)
+  dual_hidbatt.inf*		# Even though called "HID" it's a driver for standalone UPS devices with USB control channel.

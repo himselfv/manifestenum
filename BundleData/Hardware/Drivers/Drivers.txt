@@ -1,92 +1,82 @@
 
 # Normal drivers
-audioendpoint.inf*		# Audio Endpoint INF (Audio inputs and outputs) [W10]
-bcmdhd.inf*			# Broadcom 802.11 Wireless SDIO Adapter [W10]
-bcmdhd64.inf*			# Broadcom 802.11 Wireless SDIO Adapter [W10]
-bcmfn.inf*			# Broadcom "BCM Function2 Device Driver" (Class=System) [W10]
-bcmfn2.inf*			# Broadcom "BCM Function2 Device Driver" (Class=System) [W10]
-btampm.inf*			# Microsoft Bluetooth Multi-Profile Manager [W10]
-  dual_btampm.inf*
-bthaudhid.inf*			# Bluetooth Hands-Free Call Control HID / Bluetooth Audio/Video Remote Control HID (Class=HIDClass) [W10]
-bthhfenum.inf*			# Bluetooth Hands-Free Audio and Call Control HID Enumerator (Class=System) [W10]
-bthleenum.inf*			# Bluetooth LE (Low Energy) enumerator (Class=Bluetooth) [W10]
-  dual_bthleenum.inf*
-buttonconverter.inf*		# [Coverted] Portable Device Control Device (Class=HIDClass) [W10]
-  dual_buttonconverter.inf*
-capimg.inf*			# HID Minidriver for CapImg touch screen [W10]
-digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]
-displayoverride.inf*
-errdev.inf*
-genericusbfn.inf*
-  dual_genericusbfn.inf*
-hidbatt.inf*
 intelpep.inf*			# Intel Power Engine Plug-in (PEP) (Class=System)
-ipmidrv.inf*			# Microsoft Generic IPMI Compliant Device [W7+]	# https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface
 kdnic.inf*			# Kernel Network Debug Adapter [W10]
   dual_kdnic.inf*
-lltdio.inf*
-mbtr8897w81x64.inf*
-mf.inf*				# Generic Multifunction PC-Card [W7+]
 modemcsa.inf*			# Windows Modem Wave-Voice settings / Modem Wave Drivers [W7+]
-mrvlpcie8897.inf*
-msgpiowin32.inf*
-mssmbios.inf*			# Microsoft System Management BIOS [W10]
-mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass) [W7+]
 multiprt.inf*			# "Multi-port serial adapters" - contains only a class definition [W7+, W10+]
-mvumis.inf*
-mwlu97w8x64.inf*
 
 # Networking
-netnwifi.inf*		# Native Wi-Fi Filter [W7+]
-netpacer.inf*		# Microsoft Packet Scheduler (PACER) [W7+]
-netvchannel.inf*	# Virtual Network Channel [W10]
-			# Provides the default sections that must be included by external INFs that require the virtual channel functionality.
-			# "Currently this is used to provide multiple-PDP context functionality for WWAN connections.
-netvwwanmp.inf*		# Virtual WWAN Miniport Adapter [W10]	# ?
+netnwifi.inf*			# Native Wi-Fi Filter [W7+]
+netvchannel.inf*		# Virtual Network Channel [W10]
+				# Provides the default sections that must be included by external INFs that require the virtual channel functionality.
+				# "Currently this is used to provide multiple-PDP context functionality for WWAN connections.
+netvwwanmp.inf*			# Virtual WWAN Miniport Adapter [W10]	# ?
 
-npsvctrig.inf*		# Named Pipe Service Trigger Provider [W10]
+npsvctrig.inf*			# Named Pipe Service Trigger Provider [W10]
   dual_npsvctrig.inf*
 
-pnpxinternetgatewaydevices.inf*
-
-sensorsalsdriver.inf*
-  dual_sensorsalsdriver.inf*
-tdibth.inf*		# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
-  dual_tdibth.inf*
-transfercable.inf*	# Windows Easy Transfer Cable (Generic + Branded) [W7+]
-uaspstor.inf*
-ucmucsi.inf*
-  dual_ucmucsi.inf*
-ufxchipidea.inf*
-  dual_ufxchipidea.inf*
-ufxsynopsys.inf*
-  dual_ufxsynopsys.inf*
-urschipidea.inf*
-  dual_urschipidea.inf*
-urssynopsys.inf*
-  dual_urssynopsys.inf*
-usbnet.inf*
-usbprint.inf*			# USB Printing Support [W7+]
-usbser.inf*
-usbvideo.inf*			# USB Video Device WDM Support (both Input and Output) [W7+]
-vdrvroot.inf*
-  dual_vdrvroot.inf*
-volmgr.inf*
-  dual_volmgr.inf*
-vstxraid.inf*
-wfcvsc.inf*
-wfpcapture.inf*
-wgencounter.inf*
-whyperkbd.inf*
-windowstrustedrtproxy.inf*
+transfercable.inf*		# Windows Easy Transfer Cable (Generic + Branded) [W7+]
+windowstrustedrtproxy.inf*	# MW Trusted Runtime Secure Service / Proxy [W10]
   dual_windowstrustedrtproxy.inf*
-wmbclass_wmc_union.inf*
-wmiacpi.inf*
+wmiacpi.inf*			# Windows Management Interface for ACPI (Class=System) [W10]
 #wpcip.inf*
+#wvid.inf*
+
+
+# Bluetooth
+btampm.inf*			# Microsoft Bluetooth Multi-Profile Manager [W10]
+  dual_btampm.inf*
+bthleenum.inf*			# Bluetooth LE (Low Energy) enumerator (Class=Bluetooth) [W10]
+  dual_bthleenum.inf*
+mbtr8897w81x64.inf*		# Marvell AVASTAR Family USB Bluetooth Radio Adapter (Class=Bluetooth) [W10]
+tdibth.inf*			# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
+  dual_tdibth.inf*
+
+
+# USB
+genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
+  dual_genericusbfn.inf*
+ucmucsi.inf*			# USB Connector Manager client driver for UCSI-compatible system (Class=USB) [W10]
+  dual_ucmucsi.inf*
+ufxchipidea.inf*		# USB function driver for Chipidea controllers (Class=USBFunctionController) [W10]
+  dual_ufxchipidea.inf*
+ufxsynopsys.inf*		# USB function dirver for Synopsys controllers (Class=USBFunctionController) [W10]
+  dual_ufxsynopsys.inf*
+urschipidea.inf*		# USB role switch driver for Chipidea dual-role USB controllers (Class=USB) [W10]
+  dual_urschipidea.inf*
+urssynopsys.inf*		# USB role switch driver for Synopsys dual-role USB controllers (Class=USB) [W10]
+  dual_urssynopsys.inf*
+usbprint.inf*			# USB Printing Support [W7+]
+usbser.inf*			# USB Serial / Serial Modem Device (Class=Ports) [W10]
+usbvideo.inf*			# USB Video Streaming Device WDM Support (both Input and Output) [W7+]
+
+
+# Media
+audioendpoint.inf*		# Audio Endpoint INF (Audio inputs and outputs) [W10]
+digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]
+
+
+# Networking
+pnpxinternetgatewaydevices.inf*	# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
+
+
+# Storage
+volmgr.inf*			# Volume Manager Driver [W10]
+  dual_volmgr.inf*
+
+
+# HID and Sensors
+buttonconverter.inf*		# [Converted] Portable Device Control Device (Class=HIDClass) [W10]
+  dual_buttonconverter.inf*
+capimg.inf*			# HID Minidriver for CapImg touch screen (Class=HIDClass) [W10]
+mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass) [W7+]
+sensorsalsdriver.inf*		# Windows ALS Sensor Driver / UMDF Reflector svc for SensorAlsDriver / Light Sensor / ALS Sensor Filter (Class=Sensor) [W10]
+  dual_sensorsalsdriver.inf*
+
+
+# WPD
 wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver [W7+]
 wpdfs.inf*			# WPD File System driver [W7+]
 wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices [W7+]
 wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID [W7+]
-wsynth3dvsc.inf*
-wvid.inf*
-ykinx64.inf*

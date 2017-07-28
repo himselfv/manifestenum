@@ -8,3 +8,6 @@
 
 vhdmp.inf*			# VHD Miniport / Host Bus Adapter (unsure if related to Hyper-V or standalone)
 dual_vhdmp.inf*
+
+vdrvroot.inf*			# Virtual Drive Enumerator (Class=System) [W10] (VHD related)
+dual_vdrvroot.inf*

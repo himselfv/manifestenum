@@ -29,6 +29,7 @@ megasas.inf*		# LSI/Intel/DELL MEGARAID family SAS RAID controllers and compatib
 megasr.inf*		# LSI/Intel Embedded MegaRAID [W7+]
 megasas2.inf*	 	# LSI/IBM RAID Devices [W7 only]
 megasas2i.inf*		# LSI/AVAGO MegaRAID Adapter
+mvumis.inf*		# Marvell Flash Controller (class=SCSIAdapter) [W10]
 percsas2i.inf*		# LSI Megaraid PERC family of RAID controllers [W10]
 percsas3i.inf*		# LSI Megaraid PERC family of RAID controllers [W10]
 nfrd960.inf*		# Adaptec (IBM) NFRD960 chip / IBM ServeRAID controllers [W7 only]
@@ -40,3 +41,9 @@ sisraid2.inf*		# SiS RAID Controllers
 sisraid4.inf*
 stexstor.inf*		# Promise SuperTrak SAS/SATA RAID Controllers + compatible (SCSI Miniport)
 vsmraid.inf*		# VIA RAID Stor-Miniport Driver
+vstxraid.inf*		# VIA StorX RAID Controller (Class=SCSIAdapter) [W10]
+
+
+# USB attached SCSI
+# https://en.wikipedia.org/wiki/USB_Attached_SCSI
+uaspstor.inf*		# Generic Microsoft USB Attached SCSI (UAS) Driver (Class=SCSIAdapter) [W10]

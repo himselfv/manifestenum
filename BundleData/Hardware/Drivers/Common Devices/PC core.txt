@@ -1,13 +1,9 @@
 machine.inf*
 memory.inf*
 cpu.inf*
-
 dual_machine.inf*
 dual_memory.inf*
 dual_cpu.inf*
-
-agp.inf*		# Microsoft Generic AGPv3.0 / AVGv3.5 Bus Filter Drivers [W7 only]
-			# This is not the AGP drivers, those sit in machine.inf on W7.
 
 # Many of the following was in machine.inf prior to W10
 pci.inf*		PCI, PCI-E [W10+]
@@ -16,3 +12,17 @@ swenum.inf*		Plug and Play software device enumerator
   dual_swenum.inf*
 uefi.inf*		UEFI-compliant system
   dual_uefi.inf*
+
+
+agp.inf*		# Microsoft Generic AGPv3.0 / AVGv3.5 Bus Filter Drivers [W7 only]
+			# This is not the AGP drivers, those sit in machine.inf on W7.
+
+mssmbios.inf*		# Microsoft System Management BIOS [W10]
+			# Provides OS access to some of the BIOS settings
+			# https://en.wikipedia.org/wiki/System_Management_BIOS
+
+ipmidrv.inf*		# Microsoft Generic IPMI Compliant Device [W7+]
+			# On-board management of host CPU, BIOS/UEFI and OS by network. Built into the CPU, does not require OS.
+			# https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface
+
+mf.inf*				# Generic Multifunction PC-Card [W7+]

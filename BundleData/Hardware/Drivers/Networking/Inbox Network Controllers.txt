@@ -2,8 +2,6 @@
 # Includes Ethernet and Wireless controllers
 
 # W7 only
-avmx64c.inf*			# AVM ISDN-Controller / FRITZ!Card via PCI/PCIE/PCMCIA/USB (Class=Net)
-divacx64.inf*			# Eicon Diva ISDN Network Cards [W7] -- ISDN is a network over telephone cables
 net1kx64.inf*
 net1qx64.inf*
 netbc664.inf*
@@ -17,7 +15,13 @@ netxfx64.inf*
 
 # W7+
 athw8x.inf*			# Qualcomm Atheros Wireless Network Adapters + Brandings [W10]
+bcmdhd.inf*			# Broadcom 802.11 Wireless SDIO Adapter (Class=Net) [W10]
+bcmfn2.inf*			# Broadcom 802.11 Wireless SDIO Adapter "Function 2" (Class=System) [W10] (same Vendor/Device IDs as above)
+bcmdhd64.inf*			# Broadcom 802.11 Wireless SDIO Adapter (Class=Net) [W10]
+bcmfn.inf*			# Broadcom 802.11 Wireless SDIO Adapter "Function 2" (Class=System) [W10] (same Vendor/Device IDs as above)
 dc21x4vm.inf*			# Intel 21140-Based PCI Fast Ethernet Adapter
+mrvlpcie8897.inf*		# Marvell AVASTAR PCI-e Wireless-AC Network Controller (Class=Net) [W10]
+mwlu97w8x64.inf*		# Marvell AVASTAR Wireless Network Adapters (Class=Net) [W10]
 msdri.inf*			# ATI TV Wonder OpenCable Receiver (Class=Net) [W7+] - a Remote NDIS based network controller
 msux64w10.inf*			# Microsoft USB Fast/Gigabit Ethernet NIC (Class=Net)
 net1ic64.inf*
@@ -88,11 +92,28 @@ rt640x64.inf*		# Realtek PCI/PCIe FE/GBE Family Controllers (Class=Net) [W10]
 rtux64w10.inf*		# Realtek USB FE/GbE NIC Family Controllers (Multi-branded) (Class=Net) [W10]
 rtvdevx64.inf*		# Realtek RealManage IMPI/COM1/COM2 - no driver (Class=Multifunction) [W10]
 rtwlanu_oldic.inf*	# Realtek Wireless 802.11b/g/n USB2.0 Network Adapter (Class=Net) [W10]
+ykinx64.inf*		# Marvell Yukon 88E80XX compatible Ethernet Controller (Class=Net) [W10]
+
+
+# ISDN
+# Ethernet over telephone cables.
+# https://en.wikipedia.org/wiki/ISDN
+avmx64c.inf*		# AVM ISDN-Controller / FRITZ!Card via PCI/PCIE/PCMCIA/USB (Class=Net) [<=W7]
+divacx64.inf*		# Eicon Diva ISDN Network Cards [<=W7]
+
+
+# Ethernet over USB
+# https://en.wikipedia.org/wiki/Ethernet_over_USB
+# EEM = Ethernet Emulation Model protocol
+usbnet.inf*		# Generic and branded USB-EEM Network Adapters (Class=Net) [W10]
+
 
 # InfiniBand controllers
 # https://en.wikipedia.org/wiki/InfiniBand
 mlx4_bus.inf*		# Mellanox ConnectX / HP InfiniBand Bus Enumerator [W10]
 ipoib6x.inf*		# Mellanox/HP ConnectX IPoIB/EoIB Adapters (Class=Net) [W10]
 
+
 # Mobile Broadband
 netwmbclass.inf*	# Generic Mobile Broadband Adapter [W10]
+wmbclass_wmc_union.inf*	# USB Mobile Broadband Network Adapter Module (Class=USB) [W10] (Looks to be a template only)

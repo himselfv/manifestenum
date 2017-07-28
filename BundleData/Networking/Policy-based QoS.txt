@@ -1,12 +1,29 @@
-# Policy based QoS
+# Policy based QoS / Pacer
 
-Microsoft-Windows-QoS
+Microsoft-Windows-QoS				# W7
 Microsoft-Windows-QoS.*
-Microsoft-Windows-netpacerinf*		# INF for pacer.sys from the above
+Microsoft-Windows-Network-QoS-Pacer*		# W10
+Microsoft-Windows-netpacerinf*			# INF for pacer.sys from the above []
+netpacer.inf*					# Microsoft Packet Scheduler (PACER) [W7+]
+Microsoft-Windows-Network-QoS-Core-*		# W10 grouper, only contains Pacer as of 1607
 
+Microsoft-Windows-Network-QoS-Traffic		# traffic.dll [W10] - stored in QoS package on W7
+Microsoft-Windows-Network-QoS-Traffic.*
+
+Microsoft-Windows-Network-QoS-onecore-*		# W10 grouper, contains -Traffic and -WMI as of 1607
+Microsoft-Windows-Network-QoS-WOW64-onecore-*
+
+# WMI module - Pacer-related QoS only
+Microsoft-Windows-Network-QoS-WMI*
+
+# Help
 Server-Help-CHM.qos*
 
 # MMC Snap-in and its instrumentation (also in MMC)
-Microsoft-Windows-Networking-EQoSSnapin*
-Microsoft-Windows-Networking-EQoS
+Microsoft-Windows-Networking-EQoSSnapin*	# W7
+Microsoft-Windows-Networking-EQoS		# W7
 Microsoft-Windows-Networking-EQoS.*
+Microsoft-Windows-Network-EQoS			# W10
+Microsoft-Windows-Network-EQoS.*
+Microsoft-Windows-Network-EQoS-*
+Microsoft-Windows-Network-QoS-minio-*		# W10 grouper, only contains EQoS as of 1607

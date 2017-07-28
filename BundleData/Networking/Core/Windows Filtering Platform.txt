@@ -25,3 +25,6 @@ Microsoft-Windows-WFP.*
 Microsoft-Windows-WFP-*
 Microsoft-Windows-WfpLwf*			# WFP NDIS lightweight filter driver for MAC-level inspection
 Microsoft-Windows-WFPIPSecHelperClasses*	# Helpers for NetDiagFx
+
+# Drivers
+wfpcapture.inf*			# WFP (Windows Filtering Platform) Packet Capture Callout Driver (Class=NetService) [W10]

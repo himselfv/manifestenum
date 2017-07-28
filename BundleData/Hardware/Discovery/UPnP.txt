@@ -2,6 +2,8 @@
 # A set of networking protocols that permits networked devices, such as personal computers, printers, access points and mobile devices to seamlessly discover each other's presence and supported functions.
 # https://en.wikipedia.org/wiki/Universal_Plug_and_Play
 
+# See also: http://www.upnp-hacks.org/upnp.html
+
 # There are two APIs for working with UPnP-certified devices:
 # - The Control Point API, which consists of a set of COM interfaces used to find and control devices.
 # - The Device Host API, which consists of a set of COM interfaces used to implement devices that are hosted by a computer.

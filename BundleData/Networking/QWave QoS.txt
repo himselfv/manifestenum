@@ -5,6 +5,10 @@
 
 # Requires Link Layer Topology Discovery (LLTD) Responder on the counter party PC for advanced features to function.
 
-Microsoft-Windows-QWAVE
+Microsoft-Windows-QWAVE			# W7+
 Microsoft-Windows-QWAVE.*
 Microsoft-Windows-QWAVE-*
+
+Microsoft-Windows-Network-QoS-QWAVE	# W10 additional
+Microsoft-Windows-Network-QoS-QWAVE.*
+Microsoft-Windows-Network-QoS-QWAVE-*

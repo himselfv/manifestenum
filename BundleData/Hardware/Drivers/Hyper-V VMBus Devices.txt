@@ -5,6 +5,10 @@
 wdmvsc.inf*			# VM Dynamic Memory VSC driver
   dual_wdmvsc.inf*
 
+wfcvsc.inf*			# Hyper-V Synthetic Fibre Channel HBA (Class=SCSIAdapter) [W10]
+wgencounter.inf*		# Hyper-V Generation Counter (Class=System) [W10]
+whyperkbd.inf*			# Hyper-V Keyboard Driver (Class=Keyboard) [W10]
+
 wnetvsc.inf*			# Virtual Machine Bus Network Adapter
 wnetvsc_vfpp.inf*
 

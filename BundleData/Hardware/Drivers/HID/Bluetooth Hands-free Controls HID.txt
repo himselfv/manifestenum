@@ -1,0 +1,5 @@
+# Bluetooth Hands-free Audio and Call Control HID
+# Requires HID over Bluetooth transport.
+
+bthaudhid.inf*			# Bluetooth Hands-Free Call Control HID / Bluetooth Audio/Video Remote Control HID (Class=HIDClass) [W10]
+bthhfenum.inf*			# Bluetooth Hands-Free Audio and Call Control HID Enumerator (Class=System) [W10]
