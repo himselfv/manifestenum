@@ -1,26 +1,26 @@
-c_barcodescanner.inf*
+c_barcodescanner.inf*			# Class=BarcodeScanner [W10]
   dual_c_barcodescanner.inf*
-c_cashdrawer.inf*
+c_cashdrawer.inf*			# Class=HidCashDrawer [W10]
   dual_c_cashdrawer.inf*
-c_magneticstripereader*
+c_magneticstripereader*			# Class=HidMsr [W10]
   dual_c_magneticstripereader.inf*
-c_receiptprinter.inf*  dual_c_receiptprinter.inf*
+c_receiptprinter.inf*			# Class=POSPrinter [W10]  dual_c_receiptprinter.inf*
 
-fusionv2.inf*
+fusionv2.inf*				# Sensor 2.09 Fusion Driver (Class=Sensor) [W10]
   dual_fusionv2.inf*
-hidscanner.inf*
+hidscanner.inf*				# POS HID Barcode Scanner (Class=BarcodeScanner) [W10]
   dual_hidscanner.inf*
-idtsec.inf*
+idtsec.inf*				# Idtech Magnetic Stripe Reader HID Device Driver (Class=HidMsr) [W10]
   dual_idtsec.inf*
-mgtdyn.inf*
+mgtdyn.inf*				# Magtek Dynmode Magnetic Stripe Reader HID Device Driver (Class=HidMsr) [W10]
   dual_mgtdyn.inf*
-miradisp.inf*
+miradisp.inf*				# Miracast Display Class + Miracast display port driver  (Class=Miracast) [W10]
   dual_miradisp.inf*
-remoteposdrv.inf*
+remoteposdrv.inf*			# POS Remote Device (Class=RemotePosDevice) [W10]
   dual_remoteposdrv.inf*
-Product-onecore__c_sensor.inf*
-  Product-onecore__dual_c_sensor.inf*
-sensorshidclassdriver.inf*
+Product-onecore__c_sensor.inf*		# Location, Accelerometer, Inclinometer, Compass, Gyrometer, Orientation,
+  Product-onecore__dual_c_sensor.inf*	# SimpleOrientation, Light, Custom, Activity Sensors (Class=Sensor) [W10]
+sensorshidclassdriver.inf*		# A ton of sensor types (10-15) (Class=Sensor) [W10]
   dual_sensorshidclassdriver.inf*
-sensorsservicedriver.inf*
+sensorsservicedriver.inf*		# Sensor Service Driver (Class=Sensor) [W10]
   dual_sensorsservicedriver.inf*
