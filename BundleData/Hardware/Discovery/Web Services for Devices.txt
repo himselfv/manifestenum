@@ -14,4 +14,12 @@ Microsoft-Windows-WSD.*
 Microsoft-Windows-WSD-*
 Microsoft-Windows-WSDScanProxy*		# WSDAPI COM proxy for communicating with WSD scanners
 
+fdWSD					# Function Discovery plugin
+fdWSD.*
+Microsoft-Windows-DAFWSD		# Device Association Framework plugin [W10]
+Microsoft-Windows-DAFWSD.*
+
+Microsoft-OneCore-WSD-*			# W10 deployments
+
+
 # There's also a WSD Printer Port Monitor and WSD Print Proxy, but they are currently hosted under Printing. Maybe this is wrong and they should be here.

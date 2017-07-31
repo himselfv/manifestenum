@@ -17,6 +17,12 @@ MDM Configuration Service Providers (CSP)
 Event instrumentation
   Defines potential events produced in ETW (event logs) by some component. May contain resource DLLs with message texts.
 
+Function Discovery plugins
+  Make devices from a certain source, with their functions, discoverable via Function Discovery.
+
+Device Association Framework plugins [W10]
+  Appear in the same places as Function Discovery plugins, so perhaps similar in role.
+
 Migration rules
   Define operations to perform to upgrade settings placed in older locations. Group with the component which is doing the upgrading, or with the migration framework (if the scope is broad or until the owner is found).
 

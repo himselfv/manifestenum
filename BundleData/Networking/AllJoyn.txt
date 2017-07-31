@@ -1,6 +1,18 @@
 # AllJoyn
+# A collaborative open source software framework that allows devices to communicate with other devices around them. 
+# https://en.wikipedia.org/wiki/AllJoyn
+
+Microsoft-OneCore-AllJoyn-*			# W10 Deployment
+
 Microsoft-Windows-AllJoyn*
 Microsoft-Windows-AllJoyn-API*
 Microsoft-Windows-AllJoyn-Runtime*
-Microsoft-Windows-AllJoyn-Router*			# Service:AJRouter
+Microsoft-Windows-AllJoyn-Router*		# Service:AJRouter
+Microsoft-Windows-AllJoynDiscoveryPlugin*
 Networking-MPSSVC-Rules-AllJoyn*
+
+# Ships in OneCore-AllJoyn deployment. I suppose this is related.
+Microsoft-Windows-DAFIoT
+Microsoft-Windows-DAFIoT.*
+Microsoft-Windows-WiFiDiscoveryPlugin*
+Microsoft-Windows-WiFiOnboardingPlugin*		# Certainly related

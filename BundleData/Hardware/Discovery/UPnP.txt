@@ -13,6 +13,12 @@
 
 Microsoft-Windows-UPnP*
 
+fdSSDP					# Function Discovery plugin
+fdSSDP.*
+Microsoft-Windows-DAFUPnP		# Device Association Framework plugin [W10]
+Microsoft-Windows-DAFUPnP.*
+
+Microsoft-OneCore-UPnP-*		# W10 deployments
 
 # Simple Service Discovery Protocol (SSDP)
 # A network protocol for advertisement and discovery of network services and presence information.

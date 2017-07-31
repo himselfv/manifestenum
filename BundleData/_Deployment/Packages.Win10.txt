@@ -1,0 +1,96 @@
+# Windows 10 Shipment Packages
+# Different from Win7 where everything is one single motership package.
+
+# Usually a W10 Shipment Package family names will be in the form:
+#   Feature-Name-<scope>-Deployment
+#   Feature-Name-<scope>-WOW64-Deployment
+#   Feature-Name-WOW64-<scope>-Deployment
+#   Feature-Name-WOW64-Deployment 		# ignoring the scope altogether
+# It can also end with -Deployment-LanguagePack.
+# Scope can be:			Probably means:
+#   avcore
+#   base
+#   ds				Directory Services
+#   enduser
+#   mergedcomponents
+#   mincore
+#   minkernel
+#   minio			Seems to cover networking IO
+#   onecore			Base Windows Platform (Win32)
+#   onecoreuap			Base Universal Platform (UAP)
+#   shell
+#   shellcommon
+#   windows
+#   ...
+# Often the component itself will be in Microsoft-Windows and the deployment in Microsoft-OneCore.
+
+# NOTE:
+# Wherever possible, group Shipment Packages with appropriate components.
+# Only place here the packages that group parts from multiple logical components (unfortunately, that's most of them).
+
+Connectivity-CustomDeviceAccess-onecore-Deployment		# WinUsb
+Connectivity-CustomDeviceAccess-onecoreuap-Deployment		# Devices.Custom, Devices.HID, Devices.Serial, Devices.USB
+Connectivity-CustomDeviceAccess-WOW64-onecore-Deployment
+Connectivity-CustomDeviceAccess-WOW64-onecoreuap-Deployment
+
+# Absolutely assorted
+Microsoft-Client-Features-Classic-base-Deployment
+Microsoft-Client-Features-Classic-enduser-Deployment
+Microsoft-Client-Features-Classic-shell-Deployment
+Microsoft-Client-Features-Classic-shellcommon-Deployment
+Microsoft-Client-Features-Classic-WOW64-enduser-Deployment
+Microsoft-Client-Features-Classic-WOW64-shell-Deployment
+
+# Absolutely assorted
+Microsoft-OneCore-AppRuntime-avcore-Deployment
+Microsoft-OneCore-AppRuntime-base-Deployment
+Microsoft-OneCore-AppRuntime-ds-Deployment
+Microsoft-OneCore-AppRuntime-mincore-Deployment
+Microsoft-OneCore-AppRuntime-minio-Deployment
+Microsoft-OneCore-AppRuntime-onecore-Deployment
+Microsoft-OneCore-AppRuntime-onecoreuap-Deployment
+Microsoft-OneCore-AppRuntime-shell-Deployment
+Microsoft-OneCore-AppRuntime-shellcommon-Deployment
+Microsoft-OneCore-AppRuntime-windows-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-avcore-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-base-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-ds-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-mincore-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-minio-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-onecore-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-onecoreuap-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-shell-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-shellcommon-Deployment
+Microsoft-OneCore-AppRuntime-WOW64-windows-Deployment
+
+# Absolutely assorted (even though it's called AppX, it contains whatever)
+Microsoft-OneCore-APPXDeployment-mergedcomponents-Deployment
+Microsoft-OneCore-APPXDeployment-onecore-Deployment
+Microsoft-OneCore-APPXDeployment-onecoreuap-Deployment
+Microsoft-OneCore-APPXDeployment-shell-Deployment
+Microsoft-OneCore-APPXDeployment-WOW64-mergedcomponents-Deployment
+Microsoft-OneCore-APPXDeployment-WOW64-onecore-Deployment
+Microsoft-OneCore-APPXDeployment-WOW64-onecoreuap-Deployment
+Microsoft-OneCore-APPXDeployment-WOW64-shell-Deployment
+
+# Assorted but related to minimal Win32 system
+Microsoft-OneCore-CoreSystem-base-Deployment			# Settings
+Microsoft-OneCore-CoreSystem-mincore-Deployment			# OLE Automation
+Microsoft-OneCore-CoreSystem-minio-Deployment			# RPC, TCPIP, WinSock, DNS/DHCP Clients
+Microsoft-OneCore-CoreSystem-minkernel-Deployment		# bootvid, Performance Counters kernel, MSVCP various versions
+Microsoft-OneCore-CoreSystem-onecore-Deployment			# wininit, security, cryptography, other stuff
+Microsoft-OneCore-CoreSystem-onecoreuap-Deployment		# NDISUIO
+Microsoft-OneCore-CoreSystem-WOW64-base-Deployment
+Microsoft-OneCore-CoreSystem-WOW64-mincore-Deployment
+Microsoft-OneCore-CoreSystem-WOW64-minio-Deployment
+Microsoft-OneCore-CoreSystem-WOW64-minkernel-Deployment
+Microsoft-OneCore-CoreSystem-WOW64-onecore-Deployment
+Microsoft-OneCore-CoreSystem-WOW64-onecoreuap-Deployment
+
+# Assorted
+Microsoft-OneCore-Graphics-Required-onecore-Deployment
+Microsoft-OneCore-Graphics-Required-onecoreuap-Deployment
+Microsoft-OneCore-Graphics-Required-windows-Deployment
+Microsoft-OneCore-Graphics-Required-WOW64-onecore-Deployment
+Microsoft-OneCore-Graphics-Required-WOW64-onecoreuap-Deployment
+Microsoft-OneCore-Graphics-Required-WOW64-windows-Deployment
