@@ -1,0 +1,26 @@
+# Miracast 
+# A standard for wireless connections from devices (such as laptops, tablets, or smartphones) to displays (such as TVs, monitors or projectors).
+# It can roughly be described as "HDMI over Wi-Fi", replacing the cable from the device to the display.
+# https://en.wikipedia.org/wiki/Miracast
+
+# Windows provides support both for transmitting and receiving Miracast.
+
+# Transmitter
+Microsoft-OneCore-Miracast-Transmitter*
+Microsoft-Windows-Miracast-Input-Manager*		# in Transmitter deployment
+Microsoft-Windows-Miracast-Registry-Settings*		# in Transmitter deployment
+
+# Receiver API
+Microsoft-Windows-Miracast-Receiver-API*
+
+# MiracastView - receiver application
+Microsoft-Windows-MiracastView
+Microsoft-Windows-MiracastView-*
+Microsoft-Windows-MiracastView.*
+Microsoft-OneCore-Multimedia-CastingTransmitter-MiracastView
+Microsoft-OneCore-Multimedia-CastingTransmitter-MiracastView-*
+Microsoft-OneCore-Multimedia-CastingTransmitter-MiracastView.*
+
+# Drivers for Miracast remote displays
+miradisp.inf*				# Miracast Display Class + Miracast display port driver  (Class=Miracast) [W10]
+  dual_miradisp.inf*

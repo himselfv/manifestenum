@@ -13,8 +13,6 @@ netvchannel.inf*		# Virtual Network Channel [W10]
 				# "Currently this is used to provide multiple-PDP context functionality for WWAN connections.
 netvwwanmp.inf*			# Virtual WWAN Miniport Adapter [W10]	# ?
 
-npsvctrig.inf*			# Named Pipe Service Trigger Provider [W10]
-  dual_npsvctrig.inf*
 
 transfercable.inf*		# Windows Easy Transfer Cable (Generic + Branded) [W7+]
 windowstrustedrtproxy.inf*	# MW Trusted Runtime Secure Service / Proxy [W10]
@@ -35,18 +33,6 @@ tdibth.inf*			# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
 
 
 # USB
-genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
-  dual_genericusbfn.inf*
-ucmucsi.inf*			# USB Connector Manager client driver for UCSI-compatible system (Class=USB) [W10]
-  dual_ucmucsi.inf*
-ufxchipidea.inf*		# USB function driver for Chipidea controllers (Class=USBFunctionController) [W10]
-  dual_ufxchipidea.inf*
-ufxsynopsys.inf*		# USB function dirver for Synopsys controllers (Class=USBFunctionController) [W10]
-  dual_ufxsynopsys.inf*
-urschipidea.inf*		# USB role switch driver for Chipidea dual-role USB controllers (Class=USB) [W10]
-  dual_urschipidea.inf*
-urssynopsys.inf*		# USB role switch driver for Synopsys dual-role USB controllers (Class=USB) [W10]
-  dual_urssynopsys.inf*
 usbprint.inf*			# USB Printing Support [W7+]
 usbser.inf*			# USB Serial / Serial Modem Device (Class=Ports) [W10]
 usbvideo.inf*			# USB Video Streaming Device WDM Support (both Input and Output) [W7+]
@@ -61,18 +47,11 @@ digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for
 pnpxinternetgatewaydevices.inf*	# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
 
 
-# Storage
-volmgr.inf*			# Volume Manager Driver [W10]
-  dual_volmgr.inf*
-
-
 # HID and Sensors
 buttonconverter.inf*		# [Converted] Portable Device Control Device (Class=HIDClass) [W10]
   dual_buttonconverter.inf*
 capimg.inf*			# HID Minidriver for CapImg touch screen (Class=HIDClass) [W10]
 mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass) [W7+]
-sensorsalsdriver.inf*		# Windows ALS Sensor Driver / UMDF Reflector svc for SensorAlsDriver / Light Sensor / ALS Sensor Filter (Class=Sensor) [W10]
-  dual_sensorsalsdriver.inf*
 
 
 # WPD

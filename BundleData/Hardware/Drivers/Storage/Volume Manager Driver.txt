@@ -1,0 +1,2 @@
+volmgr.inf*			# Volume Manager Driver [W10]
+  dual_volmgr.inf*

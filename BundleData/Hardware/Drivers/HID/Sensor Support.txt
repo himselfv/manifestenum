@@ -1,0 +1,15 @@
+
+sensorsalsdriver.inf*			# Ambient Light Sensor (ALS) Driver, Filter / UMDF Reflector for SensorAlsDriver (Class=Sensor) [W10]
+  dual_sensorsalsdriver.inf*
+
+fusionv2.inf*				# Sensor 2.09 Fusion Driver (Class=Sensor) [W10]
+  dual_fusionv2.inf*
+
+Product-onecore__c_sensor.inf*		# Location, Accelerometer, Inclinometer, Compass, Gyrometer, Orientation,
+  Product-onecore__dual_c_sensor.inf*	# SimpleOrientation, Light, Custom, Activity Sensors (Class=Sensor) [W10]
+
+sensorshidclassdriver.inf*		# A ton of sensor types (10-15) (Class=Sensor) [W10]
+  dual_sensorshidclassdriver.inf*
+
+sensorsservicedriver.inf*		# Sensor Service Driver (Class=Sensor) [W10]
+  dual_sensorsservicedriver.inf*

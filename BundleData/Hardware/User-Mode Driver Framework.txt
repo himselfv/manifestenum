@@ -3,5 +3,7 @@
 
 # Related to Kernel-Mode Driver Framework, but a separate thing.
 
+# https://docs.microsoft.com/en-us/windows-hardware/drivers/wdf/overview-of-the-umdf
+
 
 Microsoft-Windows-DriverFrameworks-UserMode*

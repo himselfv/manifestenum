@@ -1,0 +1,16 @@
+c_barcodescanner.inf*			# Class=BarcodeScanner [W10]
+  dual_c_barcodescanner.inf*
+c_cashdrawer.inf*			# Class=HidCashDrawer [W10]
+  dual_c_cashdrawer.inf*
+c_magneticstripereader*			# Class=HidMsr [W10]
+  dual_c_magneticstripereader.inf*
+c_receiptprinter.inf*			# Class=POSPrinter [W10]  dual_c_receiptprinter.inf*
+hidscanner.inf*				# POS HID Barcode Scanner (Class=BarcodeScanner) [W10]
+  dual_hidscanner.inf*
+idtsec.inf*				# Idtech Magnetic Stripe Reader HID Device Driver (Class=HidMsr) [W10]
+  dual_idtsec.inf*
+mgtdyn.inf*				# Magtek Dynmode Magnetic Stripe Reader HID Device Driver (Class=HidMsr) [W10]
+  dual_mgtdyn.inf*
+remoteposdrv.inf*			# POS Remote Device (Class=RemotePosDevice) [W10]
+  dual_remoteposdrv.inf*
+

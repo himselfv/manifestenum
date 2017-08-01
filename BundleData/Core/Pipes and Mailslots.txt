@@ -5,3 +5,7 @@ Microsoft-Windows-NPFS
 
 # Mailslot file system
 Microsoft-Windows-MSFS
+
+# Named Pipe Service Trigger Provider
+npsvctrig.inf*			# Named Pipe Service Trigger Provider [W10]
+  dual_npsvctrig.inf*
