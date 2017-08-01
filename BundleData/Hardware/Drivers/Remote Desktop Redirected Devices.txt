@@ -5,6 +5,8 @@ rdlsbuscbs.inf*		# Remote Desktop Licensing VM Bus
 termkbd.inf*		# Terminal Services Keyboard Driver
 termmou.inf*		# Terminal Services Mouse Driver
 
+Microsoft-Windows-ROOTENUM-TEMP*	# ROOT\RDP_KBD\0000, ROOT\RDP_MOU\0000 keys
+
 # Remote FX
 rdvgwddm.inf*		# Remote FX Graphics Device - W7
 rdvgwddmdx11.inf*	# Remote FX Graphics Device - W10

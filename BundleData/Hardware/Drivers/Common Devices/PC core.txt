@@ -6,11 +6,14 @@ dual_memory.inf*
 dual_cpu.inf*
 
 # Many of the following was in machine.inf prior to W10
-pci.inf*		PCI, PCI-E [W10+]
+pci.inf*				# PCI, PCI-E [W10+]
   dual_pci.inf*
-swenum.inf*		Plug and Play software device enumerator
+
+swenum.inf*				# Plug and Play software device enumerator
   dual_swenum.inf*
-uefi.inf*		UEFI-compliant system
+Microsoft-Windows-PnpSwenum*		# ROOT\swenum\0000 key
+
+uefi.inf*		# UEFI-compliant system
   dual_uefi.inf*
 
 
@@ -25,4 +28,4 @@ ipmidrv.inf*		# Microsoft Generic IPMI Compliant Device [W7+]
 			# On-board management of host CPU, BIOS/UEFI and OS by network. Built into the CPU, does not require OS.
 			# https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface
 
-mf.inf*				# Generic Multifunction PC-Card [W7+]
+mf.inf*			# Generic Multifunction PC-Card [W7+]
