@@ -1,3 +1,5 @@
 Microsoft-Windows-EnhancedStorage*
 Microsoft-Windows-ES-*
 Microsoft-Windows-EhStor-*
+
+Microsoft-Windows-Enhanced-Storage-*	# W10 deployments

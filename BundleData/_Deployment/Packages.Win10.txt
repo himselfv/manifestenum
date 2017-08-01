@@ -1,6 +1,15 @@
 # Windows 10 Shipment Packages
 # Different from Win7 where everything is one single motership package.
 
+# * DO NOT include deployments which cover only one component (even if those are split in minkernel/onecore/shell).
+# * DO NOT include deployments which cover multiple components but do not look like shipment packages (minkernel/onecore/shell + feature based naming).
+
+# * Wherever possible, group Shipment Packages with appropriate components.
+#   Only place here the packages that group parts from multiple logical components (unfortunately, that's most of them).
+
+# * Always include full names (ending in -Deployment), otherwise we might match too much.
+
+######
 # Usually a W10 Shipment Package family names will be in the form:
 #   Feature-Name-<scope>-Deployment
 #   Feature-Name-<scope>-WOW64-Deployment
@@ -8,25 +17,32 @@
 #   Feature-Name-WOW64-Deployment 		# ignoring the scope altogether
 # It can also end with -Deployment-LanguagePack.
 # Scope can be:			Probably means:
+#   admin
 #   avcore
 #   base
+#   com
+#   drivers
 #   ds				Directory Services
 #   enduser
+#   inetcore
+#   inetsrv
 #   mergedcomponents
 #   mincore
 #   minkernel
 #   minio			Seems to cover networking IO
-#   onecore			Base Windows Platform (Win32)
-#   onecoreuap			Base Universal Platform (UAP)
+#   multimedia
+#   net
+#   onecore			Base Windows Platform (Win32) - usually APIs for Win32 and components written in it
+#   onecoreuap			Base Universal Platform (UAP) - usually APIs for UAP and components written in it
+#   printscan
+#   servercommon
 #   shell
 #   shellcommon
+#   termsrv			Terminal Services
 #   windows
 #   ...
 # Often the component itself will be in Microsoft-Windows and the deployment in Microsoft-OneCore.
 
-# NOTE:
-# Wherever possible, group Shipment Packages with appropriate components.
-# Only place here the packages that group parts from multiple logical components (unfortunately, that's most of them).
 
 Connectivity-CustomDeviceAccess-onecore-Deployment		# WinUsb
 Connectivity-CustomDeviceAccess-onecoreuap-Deployment		# Devices.Custom, Devices.HID, Devices.Serial, Devices.USB
@@ -94,3 +110,212 @@ Microsoft-OneCore-Graphics-Required-windows-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-onecore-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-onecoreuap-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-windows-Deployment
+
+
+# Assorted
+Microsoft-Windows-Foundation-Group-base-Deployment
+Microsoft-Windows-Foundation-Group-mergedcomponents-Deployment
+Microsoft-Windows-Foundation-Group-mincore-Deployment
+Microsoft-Windows-Foundation-Group-minio-Deployment
+Microsoft-Windows-Foundation-Group-minkernel-Deployment
+Microsoft-Windows-Foundation-Group-onecore-Deployment
+Microsoft-Windows-Foundation-Group-WOW64-base-Deployment
+Microsoft-Windows-Foundation-Group-WOW64-mergedcomponents-Deployment
+Microsoft-Windows-Foundation-Group-WOW64-mincore-Deployment
+Microsoft-Windows-Foundation-Group-WOW64-minio-Deployment
+Microsoft-Windows-Foundation-Group-WOW64-minkernel-Deployment
+Microsoft-Windows-Foundation-Group-WOW64-onecore-Deployment
+
+
+
+
+
+
+
+
+
+
+
+# Contains all -Adm assemblies which contain Group Policy Editor definitions for various components
+# These assemblies should be grouped with their respective components, but declare @provides:gpedefs
+Microsoft-Windows-GroupPolicy-ClientTools-Group-admin-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-base-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-com-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-drivers-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-ds-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-enduser-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-inetcore-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-inetsrv-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-minio-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-minkernel-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-multimedia-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-net-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-onecore-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-onecoreuap-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-printscan-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-shell-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-termsrv-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-windows-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-admin-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-base-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-com-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-drivers-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-ds-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-enduser-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-inetcore-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-inetsrv-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-minio-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-minkernel-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-multimedia-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-net-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-onecore-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-onecoreuap-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-printscan-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-shell-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-termsrv-Deployment
+Microsoft-Windows-GroupPolicy-ClientTools-Group-WOW64-windows-Deployment
+
+
+# Assorted
+Microsoft-Windows-InputDrivers-drivers-Deployment
+Microsoft-Windows-InputDrivers-onecore-Deployment
+Microsoft-Windows-InputDrivers-onecoreuap-Deployment
+Microsoft-Windows-InputDrivers-WOW64-drivers-Deployment
+Microsoft-Windows-InputDrivers-WOW64-onecore-Deployment
+Microsoft-Windows-InputDrivers-WOW64-onecoreuap-Deployment
+
+Microsoft-Windows-Installers-base-Deployment
+Microsoft-Windows-Installers-onecore-Deployment
+Microsoft-Windows-Installers-shell-Deployment
+Microsoft-Windows-Installers-WOW64-base-Deployment
+Microsoft-Windows-Installers-WOW64-onecore-Deployment
+Microsoft-Windows-Installers-WOW64-shell-Deployment
+
+# Contains all available localized versions (~24) for a few selected system components.
+# Unrelated to installed MUIs. Some components are just shipped in all the available versions.
+# Some components ship with locales on their own.
+Microsoft-Windows-Multilingual-admin-Deployment
+Microsoft-Windows-Multilingual-base-Deployment
+Microsoft-Windows-Multilingual-drivers-Deployment
+Microsoft-Windows-Multilingual-enduser-Deployment
+Microsoft-Windows-Multilingual-minkernel-Deployment
+Microsoft-Windows-Multilingual-onecore-Deployment
+Microsoft-Windows-Multilingual-onecoreuap-Deployment
+Microsoft-Windows-Multilingual-shell-Deployment
+Microsoft-Windows-Multilingual-WOW64-windows-Deployment
+Microsoft-Windows-Multilingual-WOW64-admin-Deployment
+Microsoft-Windows-Multilingual-WOW64-base-Deployment
+Microsoft-Windows-Multilingual-WOW64-drivers-Deployment
+Microsoft-Windows-Multilingual-WOW64-enduser-Deployment
+Microsoft-Windows-Multilingual-WOW64-minkernel-Deployment
+Microsoft-Windows-Multilingual-WOW64-onecore-Deployment
+Microsoft-Windows-Multilingual-WOW64-onecoreuap-Deployment
+Microsoft-Windows-Multilingual-WOW64-shell-Deployment
+Microsoft-Windows-Multilingual-WOW64-windows-Deployment
+
+# Assorted
+Microsoft-Windows-NetAdm-admin-Deployment
+Microsoft-Windows-NetAdm-onecore-Deployment
+Microsoft-Windows-NetAdm-WOW64-admin-Deployment
+Microsoft-Windows-NetAdm-WOW64-onecore-Deployment
+
+Microsoft-Windows-Network-Foundation-minio-Deployment
+Microsoft-Windows-Network-Foundation-onecore-Deployment
+Microsoft-Windows-Network-Foundation-WOW64-minio-Deployment
+Microsoft-Windows-Network-Foundation-WOW64-onecore-Deployment
+
+Microsoft-Windows-PackagedDesktopApplications-base-Deployment
+Microsoft-Windows-PackagedDesktopApplications-WOW64-base-Deployment
+
+Microsoft-Windows-PNP-base-Deployment
+Microsoft-Windows-PNP-onecore-Deployment
+Microsoft-Windows-PNP-WOW64-base-Deployment
+Microsoft-Windows-PNP-WOW64-onecore-Deployment
+
+Microsoft-Windows-PowerUX-base-Deployment
+Microsoft-Windows-PowerUX-onecore-Deployment
+Microsoft-Windows-PowerUX-onecoreuap-Deployment
+Microsoft-Windows-PowerUX-shell-Deployment
+Microsoft-Windows-PowerUX-WOW64-base-Deployment
+Microsoft-Windows-PowerUX-WOW64-onecore-Deployment
+Microsoft-Windows-PowerUX-WOW64-onecoreuap-Deployment
+Microsoft-Windows-PowerUX-WOW64-shell-Deployment
+
+Microsoft-Windows-Settings-base-Deployment
+Microsoft-Windows-Settings-drivers-Deployment
+Microsoft-Windows-Settings-mergedcomponents-Deployment
+Microsoft-Windows-Settings-minkernel-Deployment
+Microsoft-Windows-Settings-onecoreuap-Deployment
+Microsoft-Windows-Settings-shell-Deployment
+Microsoft-Windows-Settings-windows-Deployment
+Microsoft-Windows-Settings-WOW64-base-Deployment
+Microsoft-Windows-Settings-WOW64-drivers-Deployment
+Microsoft-Windows-Settings-WOW64-mergedcomponents-Deployment
+Microsoft-Windows-Settings-WOW64-minkernel-Deployment
+Microsoft-Windows-Settings-WOW64-onecoreuap-Deployment
+Microsoft-Windows-Settings-WOW64-shell-Deployment
+Microsoft-Windows-Settings-WOW64-windows-Deployment
+
+# "Cherezzabornoguzaderischenko!" "Present." "Well, that's a hell of a name." "Present!"
+Microsoft-Windows-SKU-Foundation-Package-avcore-noindeo-Group-avcore-Deployment
+Microsoft-Windows-SKU-Foundation-Package-avcore-noindeo-Group-multimedia-Deployment
+Microsoft-Windows-SKU-Foundation-Package-avcore-noindeo-Group-WOW64-avcore-Deployment
+Microsoft-Windows-SKU-Foundation-Package-avcore-noindeo-Group-WOW64-multimedia-Deployment
+
+Microsoft-Windows-StorageDrivers-drivers-Deployment
+Microsoft-Windows-StorageDrivers-onecore-Deployment
+Microsoft-Windows-StorageDrivers-WOW64-drivers-Deployment
+Microsoft-Windows-StorageDrivers-WOW64-onecore-Deployment
+
+Microsoft-Windows-TroubleShooting-base-Deployment
+Microsoft-Windows-TroubleShooting-net-Deployment
+Microsoft-Windows-TroubleShooting-onecore-Deployment
+Microsoft-Windows-TroubleShooting-servercommon-Deployment
+Microsoft-Windows-TroubleShooting-WOW64-base-Deployment
+Microsoft-Windows-TroubleShooting-WOW64-net-Deployment
+Microsoft-Windows-TroubleShooting-WOW64-onecore-Deployment
+Microsoft-Windows-TroubleShooting-WOW64-servercommon-Deployment
+
+Microsoft-Windows-UserAccounts-ds-Deployment
+Microsoft-Windows-UserAccounts-onecore-Deployment
+Microsoft-Windows-UserAccounts-onecoreuap-Deployment
+Microsoft-Windows-UserAccounts-shell-Deployment
+Microsoft-Windows-UserAccounts-WOW64-ds-Deployment
+Microsoft-Windows-UserAccounts-WOW64-onecore-Deployment
+Microsoft-Windows-UserAccounts-WOW64-onecoreuap-Deployment
+Microsoft-Windows-UserAccounts-WOW64-shell-Deployment
+
+Microsoft-Windows-WindowsShell-base-Deployment
+Microsoft-Windows-WindowsShell-WOW64-base-Deployment
+
+Microsoft-Windows-WinRT-admin-Deployment
+Microsoft-Windows-WinRT-base-Deployment
+Microsoft-Windows-WinRT-inetcore-Deployment
+Microsoft-Windows-WinRT-mergedcomponents-Deployment
+Microsoft-Windows-WinRT-onecore-Deployment
+Microsoft-Windows-WinRT-onecoreuap-Deployment
+Microsoft-Windows-WinRT-windows-Deployment
+Microsoft-Windows-WinRT-WOW64-admin-Deployment
+Microsoft-Windows-WinRT-WOW64-base-Deployment
+Microsoft-Windows-WinRT-WOW64-inetcore-Deployment
+Microsoft-Windows-WinRT-WOW64-mergedcomponents-Deployment
+Microsoft-Windows-WinRT-WOW64-onecore-Deployment
+Microsoft-Windows-WinRT-WOW64-onecoreuap-Deployment
+Microsoft-Windows-WinRT-WOW64-windows-Deployment
+
+# Contains many -Events assemblies which contain ETW events declarations for various components
+# These assemblies should be grouped with their respective components, but declare @provides:events
+Microsoft-Windows-WMIEvents-base-Deployment
+Microsoft-Windows-WMIEvents-minkernel-Deployment
+Microsoft-Windows-WMIEvents-onecore-Deployment
+Microsoft-Windows-WMIEvents-servercommon-Deployment
+Microsoft-Windows-WMIEvents-WOW64-base-Deployment
+Microsoft-Windows-WMIEvents-WOW64-minkernel-Deployment
+Microsoft-Windows-WMIEvents-WOW64-onecore-Deployment
+Microsoft-Windows-WMIEvents-WOW64-servercommon-Deployment
+
+# Assorted
+Multimedia-AudioCore-avcore-Deployment
+Multimedia-AudioCore-multimedia-Deployment
+Multimedia-AudioCore-WOW64-avcore-Deployment
+Multimedia-AudioCore-WOW64-multimedia-Deployment
