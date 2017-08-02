@@ -4,3 +4,7 @@
 
 # W7:
 # Even though it's a separate driver, it's shipped as a part of machine.inf package.
+
+# W10: Shipped separately:
+volmgr.inf*			# Volume Manager Driver [W10]
+  dual_volmgr.inf*

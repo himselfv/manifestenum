@@ -1,0 +1,2 @@
+# User-mode drivers for scanners accessible through Web-Services for Devices (WSD)
+wsdscdrv.inf*			# WSD Scan Device

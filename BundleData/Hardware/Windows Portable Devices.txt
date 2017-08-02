@@ -1,8 +1,16 @@
 # Windows Portable Devices (WPD) enables computers to communicate with attached media and storage devices.
 # WPD provides a flexible, robust way for computers to communicate with music players, storage devices, mobile phones, cameras, and many other types of connected devices.
-# This system supersedes both Windows Media Device Manager and Windows Image Acquisition. 
+# This system supersedes both Windows Media Device Manager and Windows Image Acquisition.
 
 Microsoft-Windows-WPD-*
 Microsoft-Windows-Portable-Devices-*
 Microsoft-Windows-PortableDevices-*
 # -WinRT = WinRT API
+
+
+# Drivers
+
+wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver [W7+]
+wpdfs.inf*			# WPD File System driver [W7+]
+wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices [W7+]
+wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID [W7+]

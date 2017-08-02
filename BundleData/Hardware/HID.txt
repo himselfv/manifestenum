@@ -1,9 +1,0 @@
-
-# HID user-mode components
-Microsoft-Windows-HID-USER*
-HID-USER.*				# Some resources are filed as this
-hidserv.inf*				# .inf file for hidserv.dll
-
-# W10 additions
-Microsoft-Windows-HID-DLL*
-HID-DLL.*

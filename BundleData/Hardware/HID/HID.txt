@@ -1,0 +1,18 @@
+
+# HID user-mode components
+Microsoft-Windows-HID-USER*
+HID-USER.*				# Some resources are filed as this
+hidserv.inf*				# .inf file for hidserv.dll
+
+# W10 additions
+Microsoft-Windows-HID-DLL*
+HID-DLL.*
+
+
+# Drivers
+# Misc HID and Sensor drivers (uncategorized)
+
+buttonconverter.inf*		# [Converted] Portable Device Control Device (Class=HIDClass) [W10]
+  dual_buttonconverter.inf*
+capimg.inf*			# HID Minidriver for CapImg touch screen (Class=HIDClass) [W10]
+

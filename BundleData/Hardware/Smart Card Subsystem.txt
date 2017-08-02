@@ -12,3 +12,15 @@ Microsoft-Windows-SCPNP-*
 Microsoft-Windows-Authentication-SmartcardCredentialProvider*	# For authUI
 
 Microsoft.Windows.Software.System.System_Services.Base.Smart_Card_Library*	# smclib.sys - Smart Card Driver Library
+
+
+# Drivers
+
+# Common Smartcard support
+scunknown.inf*			# Unknown Smart Card [W10]
+scrawpdo.inf*			# Smart card filter driver - INF file for sideband communication node for smart card plug and play filter driver [W7+]
+msclmd.inf*			# SmartCard "Identity Device" driver (exact role is unclear) [W7+]
+wudfusbcciddriver.inf*		# USBCCID user-mode driver / Microsoft Usbccid Smartcard Reader (WUDF) [W7+]
+
+# W7 only
+smartcrd.inf*			# Inbox PCMCIA and serial Smartcard Readers

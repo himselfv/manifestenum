@@ -5,3 +5,7 @@
 
 Microsoft-Windows-Printing-WSDPortMonitor*
 Microsoft-Windows-Printing-WSDPrintProxy*
+
+# Driver
+# User-mode drivers for printers accessible through Web-Services for Devices (WSD)
+wsdprint.inf*			# WSD Print Device / WSD Print Support via UMB

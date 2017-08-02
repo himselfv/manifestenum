@@ -20,3 +20,6 @@ Microsoft-Windows-Printing-OLEPRN*
 Microsoft-Windows-Printing-SeparatorPages*
 
 Microsoft-Windows-Printing-GroupPolicies*		# Group Policies for Printing
+
+@hosts:PrintProvider
+@hosts:PrintMonitor

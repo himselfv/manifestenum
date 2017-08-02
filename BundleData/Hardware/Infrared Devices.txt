@@ -10,3 +10,13 @@ Microsoft-Windows-IrdaFileTransfer*	# UI resources (sounds)
 Microsoft-Windows-IrdaIrCOMM*		# IrENUM service
 Microsoft-Windows-IRFTP*
 Microsoft-Windows-IRMON*
+
+
+# Drivers
+
+# https://en.wikipedia.org/wiki/Consumer_IR
+circlass.inf*		# Consumer IR Class enumerator driver [W7+]
+
+# Infrared network transport
+# https://en.wikipedia.org/wiki/Infrared_Data_Association
+netirda.inf*		# IrDA transport [W7+]

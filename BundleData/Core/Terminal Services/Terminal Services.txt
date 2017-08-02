@@ -10,6 +10,11 @@ tsprint.inf*			# W7+
 tsusbhub.inf*
 ts_generic.inf*
 ts_wpdmtp.inf*
+rdpbus.inf*			# Remote Desktop Device Redirector Bus
+rdlsbuscbs.inf*			# Remote Desktop Licensing VM Bus
+termkbd.inf*			# Terminal Services Keyboard Driver
+termmou.inf*			# Terminal Services Mouse Driver
+Microsoft-Windows-ROOTENUM-TEMP*	# ROOT\RDP_KBD\0000, ROOT\RDP_MOU\0000 keys
 
 
 # Quick Remote Assistance in Win10
@@ -25,3 +30,8 @@ Microsoft-Windows-RemoteFS*
 Microsoft-Windows-RemoteFX*
 
 microsoft-windows-RDSH-Events*		# Instrumentation for RDPWD.sys from this bundle
+
+# Remote FX Support Drivers
+rdvgwddm.inf*		# Remote FX Graphics Device - W7
+rdvgwddmdx11.inf*	# Remote FX Graphics Device - W10
+wsynth3dvsc.inf*	# RemoteFX Synth3D VSC Driver [W10]

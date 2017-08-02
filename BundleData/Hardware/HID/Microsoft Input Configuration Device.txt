@@ -1,0 +1,7 @@
+
+# MSFT personnel says:
+# "That component manages device configuration through a configuration top level collection. When the configuration collection is present in a HID report descriptor, the driver is loaded on it. What happens after that depends on what other top level collections are present in the descriptor. For new hardware, this is only relevant for Precision Touchpads."
+
+# Indeed seems to be at least related to Precision Touchpad handling.
+
+mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass) [W7+]

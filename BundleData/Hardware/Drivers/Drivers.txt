@@ -45,17 +45,3 @@ digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for
 
 # Networking
 pnpxinternetgatewaydevices.inf*	# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
-
-
-# HID and Sensors
-buttonconverter.inf*		# [Converted] Portable Device Control Device (Class=HIDClass) [W10]
-  dual_buttonconverter.inf*
-capimg.inf*			# HID Minidriver for CapImg touch screen (Class=HIDClass) [W10]
-mtconfig.inf*			# Microsoft Input Configuration Device (Class=HIDClass) [W7+]
-
-
-# WPD
-wpdcomp.inf*			# WPD (Windows Portable Devices) Composite Device driver [W7+]
-wpdfs.inf*			# WPD File System driver [W7+]
-wpdmtp.inf*			# Generic MTP(media transfer protocol)-compatible USB/IP/Bluetooth Devices [W7+]
-wpdmtphw.inf*			# Devices supporting Media Transfer Protocol (MTP) and using device's hardware ID [W7+]
