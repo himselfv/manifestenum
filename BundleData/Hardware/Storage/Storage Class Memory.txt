@@ -13,6 +13,11 @@ scmdisk0101.inf*	# NVDIMM-N disk (Class=ScmDisk) [W10]
 scmvolume.inf*		# "Volume driver" (Class=ScmVolume) [W10]
   dual_scmvolume.inf*
 
+# Events for the above
+Microsoft-Windows-ScmBus*
+Microsoft-Windows-ScmDisk0101*
+
+
 # NVM Express
 # A device interface specification for accessing non-volatile storage media (such as SSDs) attached via a PCI Express (PCIe) bus. Designed to exploit the low latency and internal parallelism of such devices.
 # https://en.wikipedia.org/wiki/NVM_Express

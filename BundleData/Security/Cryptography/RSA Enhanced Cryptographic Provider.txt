@@ -5,6 +5,7 @@
 Microsoft-Windows-rsaenh-*
 Microsoft-Windows-Crypto-RSAEnh			# Events and localized versions [W10]
 Microsoft-Windows-Crypto-RSAEnh.*
+Microsoft-Windows-Crypto-RSAEnh-*
 
 # Provides:
 #   Microsoft Base Cryptographic Provider v1.0

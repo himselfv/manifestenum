@@ -3,3 +3,4 @@
 
 Microsoft-Windows-MSXML30*
 Microsoft-Windows-MSXML60*
+Microsoft-Windows-CoreSystem-MSXML6*

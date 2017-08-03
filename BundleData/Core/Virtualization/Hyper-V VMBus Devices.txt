@@ -52,3 +52,4 @@ wvpci.inf*
 wvpcivsp.inf*
 
 synth3dvsc.inf*			# VMBus Synth3dVsc (Virtual 3D Video Transport Driver) [W7]
+wsynth3dvsp.inf*		# VM Synth3D Video VSP Driver

@@ -5,3 +5,8 @@ Microsoft-Windows-Winsock*
 # Contains NapiNSP.dll ("Email Naming Shim Provider"), a WinSock service provider (recognizable by a NSPStartup export)
 # What it does is unclear.
 Microsoft-Windows-Naming-Provider-Infrastructure*
+
+# AFD is Ancillary Function Driver (kernel winsock helper) = afd.sys
+Microsoft-Windows-AFD-Performance-Counters*		# Performance counters for AFD.sys
+
+Microsoft-Windows-OneCore-WinSock-Deployment*

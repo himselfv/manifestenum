@@ -5,16 +5,23 @@
 #   USB Host controller - the USB controller on the host
 #   USB Function controller - the USB controller on the client device (controller mode when we are the client)
 
-
+[USB Core and Host]
 # USB Hub and Composite Device Drivers
 usb.inf*				# The driver
   dual_usb.inf*
-Microsoft-Windows-USB-USBHUB-Events*	# Instrumentation
-
 usbhub3.inf*				# xHCI (SuperSpeed) USB Hub [W10+]
   dual_usbhub3.inf*
 usbxhci.inf*				# xHCI (SuperSpeed) Compliant Host Controller
   dual_usbxhci.inf*
+
+Microsoft-Windows-UCX-ClassExtension*		# USB Host support library
+Microsoft-Windows-USB-UDE-ClassExtension*	# USB Device Emulation support library
+
+# Instrumentation [W10]
+Microsoft-Windows-USB-USBHUB-Events*
+Microsoft-Windows-USB-USBHUB3-Events*
+Microsoft-Windows-USB-USBPORT-Events*
+Microsoft-Windows-USB-USBXHCI-Events*
 
 # Performance counters for usbhub driver
 # Installed by registering the library and its function names in the usbhub settings key, so requires support from it.
@@ -31,18 +38,10 @@ c_usbdevice.inf*		# USB Device class
   dual_c_usbdevice.inf*
 @provides:ClassRegistration
 
+Microsoft-OneCore-Connectivity-UsbHost-Deployment*	# Deployment [W10]
 
 
-
-[USB Function Sude]
-# Generic USB Function Class Driver
-# A USB function class driver implements the functionality of a specific interface on the USB device. Certain class drivers are included in Windows, such as MTP and IpOverUsb. Windows also provides a generic kernel-mode class driver, Generic USBFN (GenericUSBFn.sys).
-# https://msdn.microsoft.com/en-us/library/windows/hardware/mt188013(v=vs.85).aspx
-genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
-  dual_genericusbfn.inf*
-
-
-[Dual-role USB support]
+[UCSI]
 # USB Type-C Software Interface (UCSI) Support [W10]
 # https://msdn.microsoft.com/en-us/library/windows/hardware/mt595923(v=vs.85).aspx
 
@@ -52,12 +51,26 @@ genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
 # Microsoft provides the Connector Manager as well as the default USB role-switch, device-side and host-side drivers (generic and branded as below), but the manufacturers can write their own ones.
 # https://msdn.microsoft.com/en-us/library/windows/hardware/mt710944(v=vs.85).aspx
 
+
+[USB Function]
+# A USB function class driver implements the functionality of a specific interface on the USB device. Certain class drivers are included in Windows, such as MTP and IpOverUsb. Windows also provides a generic kernel-mode class driver, Generic USBFN (GenericUSBFn.sys).
+# https://msdn.microsoft.com/en-us/library/windows/hardware/mt188013(v=vs.85).aspx
+genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
+  dual_genericusbfn.inf*
+
+Microsoft-WindowsPhone-Ufx*	# USB Function class extensions
+
+Microsoft-OneCore-Connectivity-UsbFunction-Deployment*	# Deployment [W10]
+
 c_usbfn.inf*			# USB function controller class
   dual_c_usbfn.inf*
 @provides:ClassRegistration
 
-ucmucsi.inf*			# USB Connector Manager client driver for UCSI-compatible system (Class=USB) [W10]
-  dual_ucmucsi.inf*
+
+[USB Role-switch]
+Microsoft-Windows-URS-ClassExtension*				# USB Role-switch support library
+
+Microsoft-OneCore-Connectivity-UsbDualRole-Deployment*		# Deployment [W10]
 
 ufxchipidea.inf*		# USB function driver for Chipidea controllers (Class=USBFunctionController) [W10]
   dual_ufxchipidea.inf*
@@ -67,6 +80,17 @@ urschipidea.inf*		# USB role switch driver for Chipidea dual-role USB controller
   dual_urschipidea.inf*
 urssynopsys.inf*		# USB role switch driver for Synopsys dual-role USB controllers (Class=USB) [W10]
   dual_urssynopsys.inf*
+
+
+
+[USB Connector Manager]
+Microsoft-Windows-UCM-ClassExtension*				# USB Connector Manager KMDF Class Extension
+Microsoft-Windows-UCM-TCPCI-ClassExtension*
+Microsoft-Windows-UsbConnectorApi*				# UsbCApi.dll
+Microsoft-OneCore-Connectivity-UsbConnectorManager-Deployment*	# Deployment [W10]
+
+ucmucsi.inf*			# USB Connector Manager client driver for UCSI-compatible system (Class=USB) [W10]
+  dual_ucmucsi.inf*
 
 
 [Misc]

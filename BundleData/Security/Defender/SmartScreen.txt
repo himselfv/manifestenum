@@ -1,3 +1,14 @@
+# SmartScreen
+# https://en.wikipedia.org/wiki/Microsoft_SmartScreen
 
 Microsoft-Windows-SmartScreen*
 Microsoft-Windows-SmartScreenSettings*
+
+# Application Reputation (AppRep)
+# Part of SmartScreen. Evaluates applications according to their publishers, various kinds of white listing.
+# https://www.digicert.com/blog/ms-smartscreen-application-reputation/
+# Consults AppID (AppLocker) if possible.
+
+Microsoft-Windows-AppRep
+Microsoft-Windows-AppRep.*
+Microsoft-Windows-AppRep-*

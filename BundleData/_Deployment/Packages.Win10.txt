@@ -111,8 +111,11 @@ Microsoft-OneCore-Graphics-Required-WOW64-onecore-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-onecoreuap-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-windows-Deployment
 
+Microsoft-Windows-Compression-WOW64-base-Deployment
+Microsoft-Windows-Compression-WOW64-onecore-Deployment
+Microsoft-Windows-Compression-WOW64-base-Deployment
+Microsoft-Windows-Compression-WOW64-onecore-Deployment
 
-# Assorted
 Microsoft-Windows-Foundation-Group-base-Deployment
 Microsoft-Windows-Foundation-Group-mergedcomponents-Deployment
 Microsoft-Windows-Foundation-Group-mincore-Deployment
