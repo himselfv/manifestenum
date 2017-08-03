@@ -3,9 +3,6 @@
 intelpep.inf*			# Intel Power Engine Plug-in (PEP) (Class=System)
 kdnic.inf*			# Kernel Network Debug Adapter [W10]
   dual_kdnic.inf*
-multiprt.inf*			# "Multi-port serial adapters" - contains only a class definition [W7+, W10+]
-windowstrustedrtproxy.inf*	# MW Trusted Runtime Secure Service / Proxy [W10]
-  dual_windowstrustedrtproxy.inf*
 wmiacpi.inf*			# Windows Management Interface for ACPI (Class=System) [W10]
 
 # W10 class installer registrations
@@ -17,29 +14,8 @@ c_sslaccel.inf*				# SSL Accelerator device (that's a real class of devices)
   dual_c_sslaccel.inf*
 
 
-# Networking
-pnpxinternetgatewaydevices.inf*	# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
-
-
-# Bluetooth
-btampm.inf*			# Microsoft Bluetooth Multi-Profile Manager [W10]
-  dual_btampm.inf*
-bthleenum.inf*			# Bluetooth LE (Low Energy) enumerator (Class=Bluetooth) [W10]
-  dual_bthleenum.inf*
-mbtr8897w81x64.inf*		# Marvell AVASTAR Family USB Bluetooth Radio Adapter (Class=Bluetooth) [W10]
-tdibth.inf*			# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
-  dual_tdibth.inf*
-
-
-# USB
-usbprint.inf*			# USB Printing Support [W7+]
-usbser.inf*			# USB Serial / Serial Modem Device (Class=Ports) [W10]
-usbvideo.inf*			# USB Video Streaming Device WDM Support (both Input and Output) [W7+]
-
-
 # Media
 c_apo.inf*			# AudioProcessingObject
   dual_c_apo.inf*
 audioendpoint.inf*		# Audio Endpoint INF (Audio inputs and outputs) [W10]
 digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]
-

@@ -1,0 +1,11 @@
+bth.inf*
+dual_bth.inf*
+
+# To be sorted
+btampm.inf*			# Microsoft Bluetooth Multi-Profile Manager [W10]
+  dual_btampm.inf*
+bthleenum.inf*			# Bluetooth LE (Low Energy) enumerator (Class=Bluetooth) [W10]
+  dual_bthleenum.inf*
+mbtr8897w81x64.inf*		# Marvell AVASTAR Family USB Bluetooth Radio Adapter (Class=Bluetooth) [W10]
+tdibth.inf*			# Bluetooth Device (RFCOMM Protocol TDI) [W7+]
+  dual_tdibth.inf*

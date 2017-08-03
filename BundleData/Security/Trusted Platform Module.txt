@@ -22,3 +22,9 @@ Microsoft-Windows-TPM-*
 
 Microsoft.Tpm			# .NET API
 Microsoft.Tpm.*
+
+[Drivers]
+# Trusted Platform Module drivers
+tpm.inf*		# General-Purpose Trusted Platform Module (TPM) drivers
+dual_tpm.inf*
+tpmvsc.inf*		# TPM Virtual SmartCard

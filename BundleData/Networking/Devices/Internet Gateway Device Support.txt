@@ -1,0 +1,21 @@
+# PnP-X/UPnP Internet Gateway Device (IGD) support
+# Support for UPnP-discovered devices which implement the IGD profile.
+# Requires UPnP.
+
+[Drivers]
+pnpxinternetgatewaydevices.inf*		# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
+
+[Shell Extensions]
+Microsoft-Windows-icsigd		# Popup menu entries and property page
+Microsoft-Windows-icsigd.*
+Microsoft-Windows-icsigd-*
+@provides:NetworkPlacesExtensions
+
+Microsoft-Windows-IGDContextHandler*	# DeviceDisplayObject context menu handler
+@provides:DeviceDisplayObject
+
+[Helpers]
+Microsoft-Windows-IGDHelperClass*	# Network Diagnostics Framework helper
+@provides:NDFHelper
+
+Microsoft-Windows-Bits-IGDSearcher*	# BITS searcher - also in BITS

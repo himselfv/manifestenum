@@ -1,5 +1,6 @@
 # Core USB Support
 
+# USB device can function in two roles: as a host and as a client device.
 # Glossary:
 #   USB Host controller - the USB controller on the host
 #   USB Function controller - the USB controller on the client device (controller mode when we are the client)
@@ -31,14 +32,19 @@ c_usbdevice.inf*		# USB Device class
 @provides:ClassRegistration
 
 
+
+
+[USB Function Sude]
 # Generic USB Function Class Driver
 # A USB function class driver implements the functionality of a specific interface on the USB device. Certain class drivers are included in Windows, such as MTP and IpOverUsb. Windows also provides a generic kernel-mode class driver, Generic USBFN (GenericUSBFn.sys).
+# https://msdn.microsoft.com/en-us/library/windows/hardware/mt188013(v=vs.85).aspx
 genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
   dual_genericusbfn.inf*
 
 
+[Dual-role USB support]
 # USB Type-C Software Interface (UCSI) Support [W10]
-# # https://msdn.microsoft.com/en-us/library/windows/hardware/mt595923(v=vs.85).aspx
+# https://msdn.microsoft.com/en-us/library/windows/hardware/mt595923(v=vs.85).aspx
 
 # UCSI defines a software protocol and a set of features for USB controllers.
 # This includes the ability to switch USB from host to client mode.
@@ -61,3 +67,10 @@ urschipidea.inf*		# USB role switch driver for Chipidea dual-role USB controller
   dual_urschipidea.inf*
 urssynopsys.inf*		# USB role switch driver for Synopsys dual-role USB controllers (Class=USB) [W10]
   dual_urssynopsys.inf*
+
+
+[Misc]
+# To be sorted
+usbprint.inf*			# USB Printing Support [W7+]
+usbser.inf*			# USB Serial / Serial Modem Device (Class=Ports) [W10]
+usbvideo.inf*			# USB Video Streaming Device WDM Support (both Input and Output) [W7+]

@@ -17,7 +17,6 @@ Microsoft-Windows-NetCoreHelperClasses*
 Microsoft-Windows-DnsHelperClass*
 Microsoft-Windows-Dot3HelperClass*
 Microsoft-Windows-GroupingHelperClass*		# Peer to peer grouping
-Microsoft-Windows-IGDHelperClass*		# Internet Gateway device
 Microsoft-Windows-Layer2SecurityHelperClass*
 Microsoft-Windows-NdisHelperClass*
 Microsoft-Windows-NlaHelperClass*

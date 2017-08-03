@@ -1,3 +1,0 @@
-tpm.inf*		# General-Purpose Trusted Platform Module (TPM) drivers
-dual_tpm.inf*
-tpmvsc.inf*		# TPM Virtual SmartCard
