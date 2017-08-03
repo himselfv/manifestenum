@@ -1,25 +1,24 @@
 
-# Normal drivers
+# Misc
 intelpep.inf*			# Intel Power Engine Plug-in (PEP) (Class=System)
 kdnic.inf*			# Kernel Network Debug Adapter [W10]
   dual_kdnic.inf*
-modemcsa.inf*			# Windows Modem Wave-Voice settings / Modem Wave Drivers [W7+]
 multiprt.inf*			# "Multi-port serial adapters" - contains only a class definition [W7+, W10+]
-
-# Networking
-netnwifi.inf*			# Native Wi-Fi Filter [W7+]
-netvchannel.inf*		# Virtual Network Channel [W10]
-				# Provides the default sections that must be included by external INFs that require the virtual channel functionality.
-				# "Currently this is used to provide multiple-PDP context functionality for WWAN connections.
-netvwwanmp.inf*			# Virtual WWAN Miniport Adapter [W10]	# ?
-
-
-transfercable.inf*		# Windows Easy Transfer Cable (Generic + Branded) [W7+]
 windowstrustedrtproxy.inf*	# MW Trusted Runtime Secure Service / Proxy [W10]
   dual_windowstrustedrtproxy.inf*
 wmiacpi.inf*			# Windows Management Interface for ACPI (Class=System) [W10]
-#wpcip.inf*
-#wvid.inf*
+
+# W10 class installer registrations
+c_extension.inf*			# Extension (for what is unclear)
+  dual_c_extension.inf*
+c_pnpprinters.inf*			# PnpPrinters
+  dual_c_pnpprinters.inf*
+c_sslaccel.inf*				# SSL Accelerator device (that's a real class of devices)
+  dual_c_sslaccel.inf*
+
+
+# Networking
+pnpxinternetgatewaydevices.inf*	# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
 
 
 # Bluetooth
@@ -39,20 +38,8 @@ usbvideo.inf*			# USB Video Streaming Device WDM Support (both Input and Output)
 
 
 # Media
+c_apo.inf*			# AudioProcessingObject
+  dual_c_apo.inf*
 audioendpoint.inf*		# Audio Endpoint INF (Audio inputs and outputs) [W10]
 digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]
 
-
-# Networking
-pnpxinternetgatewaydevices.inf*	# PnP-X/UPnP Internet Gateway Device (Class=System) [W10]
-
-
-# W10 class installer registrations
-c_apo.inf*				# AudioProcessingObject
-  dual_c_apo.inf*
-c_extension.inf*			# Extension (for what is unclear)
-  dual_c_extension.inf*
-c_pnpprinters.inf*			# PnpPrinters
-  dual_c_pnpprinters.inf*
-c_sslaccel.inf*				# SSL Accelerator device (that's a real class of devices)
-  dual_c_sslaccel.inf*

@@ -1,0 +1,19 @@
+# Virtual Wi-Fi
+# Creates several virtual Wi-Fi adapters over a single Wi-Fi card, so that you can connect to multiple IEEE 802.11 networks at once.
+# Underlies Wi-Fi access point internet sharing: one of the virtual adapters runs the access point while another connects to the internet.
+
+# Originally a project from Microsoft Research. Included in Windows since at least Vista.
+
+# Implements Virtual Wi-Fi Bus which other Virtual* things (Virtual Network Channel, Virtual WWAN) found convenient to use, so it's required for them.
+
+Microsoft-Windows-VWiFi*		# The driver itself
+Microsoft-Windows-netvwifi*		# inf files
+
+netvwifibus.inf*	# Virtual Wi-Fi Bus Driver
+netvwififlt.inf*	# Virtual Wi-Fi Filter
+netvwifimp.inf*		# Virtual Wi-Fi Miniport Adapter
+
+netvchannel.inf*		# Virtual Network Channel [W10]
+				# Provides the default sections that must be included by external INFs that require the virtual channel functionality.
+				# "Currently this is used to provide multiple-PDP context functionality for WWAN connections.
+				# Relies on netvwifibus.

@@ -6,6 +6,9 @@ Mark @provides:
   ClassRegistration
   Driver
 
+Vendor-specific drivers shipped with Windows should be grouped into bundles called:
+  Inbox *** [Devices/Support]
+
 
 Windows 10 has two special classes of driver packages:
 c_*	class installer registrations (previously often copied to all appropriate inf files)

@@ -1,3 +1,0 @@
-netvwifibus.inf*	# Virtual Wi-Fi Bus Driver
-netvwififlt.inf*	# Virtual Wi-Fi Filter
-netvwifimp.inf*		# Virtual Wi-Fi Miniport Adapter

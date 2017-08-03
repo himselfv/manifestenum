@@ -1,0 +1,8 @@
+# Windows Easy Transfer cable
+# A type of USB 2.0 cable which contains a mediator to connect two PCs together directly. Designed for Windows Easy Transfer, an app to migrate files and settings from one Windows PC to another.
+# https://en.wikipedia.org/wiki/Windows_Easy_Transfer
+
+# A few vendors produced these.
+
+[Drivers]
+transfercable.inf*		# Windows Easy Transfer Cable (Generic + Branded) [W7+]

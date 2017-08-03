@@ -33,6 +33,7 @@ Print Monitors
 
 WMI plugins
   Provide configurable options to be accessed through WMI.
+    *-Mof
 
 Event instrumentation
   Defines potential events produced in ETW (event logs) by some component. May contain resource DLLs with message texts.

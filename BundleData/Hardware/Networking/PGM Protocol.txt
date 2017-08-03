@@ -1,1 +1,0 @@
-netpgm.inf*	# RMCast/PGM protocol
