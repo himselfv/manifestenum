@@ -4,6 +4,8 @@
 # Property pages:
 #   ParallelPort, SerialPort, SerialDisplayAdvancedSettings
 
+Microsoft.Windows.Hardware.Devices.ClassInstaller.PORTS-DriverClass*
+
 Microsoft-Windows-msports*
 
 # W10

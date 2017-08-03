@@ -8,9 +8,12 @@ Microsoft-Windows-Storprop-*
 # Class declarations
 Microsoft.Windows.Hardware.Devices.ClassInstaller.CDROM-DriverClass*		# Requires sysclass.dll, imageres.dll
 Microsoft.Windows.Hardware.Devices.ClassInstaller.DISKDRIVE-DriverClass*	# Requires sysclass.dll, imageres.dll
+Microsoft.Windows.Hardware.Devices.ClassInstaller.TAPEDRIVE-DriverClass*
 
 # W10
 c_cdrom.inf*
 c_diskdrive.inf*
+c_tapedrive.inf*
 dual_c_cdrom.inf*
 dual_c_diskdrive.inf*
+dual_c_tapedrive.inf*

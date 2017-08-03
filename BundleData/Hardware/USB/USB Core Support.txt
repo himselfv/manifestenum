@@ -1,5 +1,9 @@
 # Core USB Support
 
+# Glossary:
+#   USB Host controller - the USB controller on the host
+#   USB Function controller - the USB controller on the client device (controller mode when we are the client)
+
 
 # USB Hub and Composite Device Drivers
 usb.inf*				# The driver
@@ -16,11 +20,15 @@ usbxhci.inf*				# xHCI (SuperSpeed) Compliant Host Controller
 Microsoft-Windows-usbperf
 Microsoft-Windows-usbperf.*
 
-
 # USB Port Drivers
 usbport.inf*					# The driver
 dual_usbport.inf*
 Microsoft-Windows-USB-USBPORT-Events*		# Instrumentation
+
+# USBDevice Class Registration [W10]
+c_usbdevice.inf*		# USB Device class
+  dual_c_usbdevice.inf*
+@provides:ClassRegistration
 
 
 # Generic USB Function Class Driver
@@ -37,6 +45,10 @@ genericusbfn.inf*		# Generic USB Function Class Driver (Class=USB) [W10]
 
 # Microsoft provides the Connector Manager as well as the default USB role-switch, device-side and host-side drivers (generic and branded as below), but the manufacturers can write their own ones.
 # https://msdn.microsoft.com/en-us/library/windows/hardware/mt710944(v=vs.85).aspx
+
+c_usbfn.inf*			# USB function controller class
+  dual_c_usbfn.inf*
+@provides:ClassRegistration
 
 ucmucsi.inf*			# USB Connector Manager client driver for UCSI-compatible system (Class=USB) [W10]
   dual_ucmucsi.inf*
