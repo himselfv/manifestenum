@@ -1,0 +1,32 @@
+# Gaming Support APIs [W10]
+# A set of functions commonly used by games, implemented in Windows and accessible via WinRT APIs (Windows.Gaming.*)
+
+[Games Enumeration]
+# Access to registered game list (with categories) and their configuration modes
+Microsoft-OneCore-Gaming-Preview-GamesEnumeration*	# Deployment
+Windows-Gaming-Preview-GamesEnumeration*		# WinRT API (Windows.Gaming.Preview.GamesEnumeration)
+
+[Game Bar]
+# Access to GameBar
+Microsoft-OneCore-Gaming-UI				# Deployment
+Microsoft-OneCore-Gaming-UI.
+Microsoft-OneCore-Gaming-UI-*
+Windows-Gaming-UI-GameBar				# WinRT API (Windows.Gaming.UI)
+Windows-Gaming-UI-GameBar.*
+Windows-Gaming-UI-GameBar-*
+Microsoft-Xbox-ShellCore-GamingUI*			# Backbone
+Microsoft-Xbox-GameOverlay*
+Microsoft-Xbox-GameCallableUI*
+Microsoft-Gaming-GameBar-Internal-PresenceWriter*
+
+
+[Save Storage]
+# Ability to save and load blocks of data
+Microsoft-OneCore-Gaming-Storage			# Deployment
+Microsoft-OneCore-Gaming-Storage.*
+Microsoft-OneCore-Gaming-Storage-*
+Windows-Gaming-XboxLive-Storage-*			# Backbone
+# -Client
+# -Service
+# -WinRT						# WinRT API (Windows.Gaming.XboxLive.Storage)
+# -XblGameSaveExt

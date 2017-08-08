@@ -1,3 +1,6 @@
+# XBox Controllers Support (Xbox 360 and One)
+
+# XBox One Wireless Controller runs a propietary procotol over Wi-Fi called Xbox GIP (Game Input protocol).
 
 xnacc.inf*			# Xbox 360 Controller [W7]
 
@@ -10,3 +13,10 @@ xinputhid.inf*			# XInput compatible HIDs + filter driver; Xbox / XboxOne / Xbox
   dual_xinputhid.inf*
 xusb22.inf*			# Xbox 360 Wired/Wireless/CC Compatible Contollers (Class=XnaComposite) [W10]
   dual_xusb22.inf*
+
+Microsoft-Windows-XBOXGIP*	# xboxgip protocol driver registration
+
+[User-mode]
+Microsoft-Windows-Gip-DafProvider*	# Device Association Framework provider
+Microsoft-Windows-XboxGipRadioManager*
+Microsoft-OneCore-Connectivity-GamingPeripherals-Deployment*	# Deploys GIP-related things
