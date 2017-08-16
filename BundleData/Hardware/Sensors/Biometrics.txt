@@ -86,3 +86,7 @@ Microsoft-Windows-Internal-UI-BioEnrollment-ProxyStub
 
 [Group Policy definitions]
 Microsoft-Windows-Biometrics-Adm
+
+
+[Control Panel]
+Microsoft-Windows-Biometrics-CPL

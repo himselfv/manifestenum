@@ -1,0 +1,99 @@
+WinRT apps run with severely restricted permissions. This restrictive mode is called running in an AppContainer.
+
+Brokers are applications or services which run with full permissions and host out of process COM servers which provide WinRT APIs to WinRT applications. Their interaction is guarded by normal COM object access security.
+> "Brokers" means external processes or activable classes which run with better permissions and perform some tasks for the application. It seems.
+
+
+Background Execution Infrastructure / Background Model (BM).
+
+WinRT apps might be suspended once the user has moved away from them. Some applications need to perform background work periodically or in response to some system or network events. Windows provides a framework that allows them to register a small standalone module to be executed on these events.
+
+This module is allotted only a certain quota of time and system resources for processing, after which it's interrupted. The exact limitations and treatment are dependent on the type of event it handles. The module runs in its own container called BackgroundTaskHost.
+
+BM settings are stored in the registry:
+  HKLM\Software\Microsoft\Windows NT\CurrentVersion\BackgroundModel
+
+
+BM event brokers.
+
+Trigger events are provided to the BM by the BM event brokers. These are standalone applications (usually services or drivers) which run an RPC server hosting an event provider API. BM event brokers are registered in
+  BackgroundModel\Brokers\{CLSID}
+This is an RPC server ID, I think.
+
+NOTE: Not every "broker" is a BM event broker. Many assemblies are brokers in the general sense of the word. The defining part of a BM event broker is the registration in BM\Brokers key.
+      It also seems that background event brokers are well exhausted by what's included in the BackgroundExecution (and UBPM) deployment.
+
+Many of BM event brokers also serve as an event providers for Universal Background Process Monitor (UBPM). For this, they provide C API DLLs which UBPM imports directly (see UBPM for more).
+
+Event brokers may have a:
+  Server component (usually a service or a driver).
+  WinRT API DLL (usually defines Windows.ApplicationModel.Background.SomeKindOfTrigger activable classes)
+  Client DLL (a proxy for WinRT API DLL)
+  Classic Client DLL (for use with UBPM)
+  Policy DLL (or -BMPolicy; if present, the assembly often defines Event Policies too)
+  Event Policies
+
+
+
+Event policies.
+
+BM event brokers generate trigger events. One broker may generate multiple types of events. Event types and the rules the system applies to background applications handling these events are defined in the registry:
+  BackgroundModel\EventSettings
+
+Each subkey lists a single event type. Different assemblies register their own event types as well as sometimes a DLL providing a COM class handling event type policies (see below). The assemblies providing these are often called -BMPolicy.
+
+The following EventSettings parameters have been observed in the wild:
+  WallClockLimitMs		int
+  RescheduleOnAbort		bool
+  RescheduleOnCancel		bool
+  BatterySaverOverride		bool
+  TimeCritical			bool
+  ExecutionDisabledOverride	bool
+  PolicyFlags 			flags (?)
+  ShellReadyBufferingExempt 	(?)
+  ResourceSetType 		string, may be 
+  CLSID
+
+CLSID points to a class registered in HKEY_CLASSES_ROOT\CLSID. It's purpose is unclear but it indeed seems to handle specifically the BM execution policy (because the class itself and the containing assembly are usually called this way). One class may serve policy for multiple event types.
+
+BackgroundModel\LegacyEventSettings:
+  Duplicates some keys from EventSettings (or sometimes adds new ones), but lists only some of the above properties (usually available in EventSettings too, usually with the same values).
+  The purpose is unclear.
+
+The following ResourceSetType values have been observed:
+  CallingEvent
+  CallingEventHighPriority
+  ContentDeliveryManager
+  CortanaSpeechBackground
+  GeofenceTask
+  LongRunningBluetooth
+  ShortRunningBluetooth
+  BackgroundTaskCompletion
+  ForegroundTaskCompletion
+  PreinstallTask
+  ResourceIntensive
+  PushTriggerTask
+  DefaultModernBackgroundTask
+  BackgroundAudioPlayer
+  IoTStartupTask
+  ApplicationService
+  ApplicationServiceRemote
+  Vpn
+  BackgroundTransfer
+  OemBackgroundAgent
+  MediaProcessing
+
+
+
+WinRT wrappers
+
+BM event brokers usually provide WinRT wrappers in the Windows.ApplicationModel.Background which allow the application to register the background jobs for these events.
+
+These are called triggers in the docs:
+https://docs.microsoft.com/en-us/uwp/api/windows.applicationmodel.background
+
+
+
+Categorization.
+
+As usual, *preferably* brokers should be categorized with their technology/framework, but overarching, generic and/or yet poorly understood brokers are kept here.

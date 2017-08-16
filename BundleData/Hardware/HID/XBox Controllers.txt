@@ -2,6 +2,8 @@
 
 # XBox One Wireless Controller runs a propietary procotol over Wi-Fi called Xbox GIP (Game Input protocol).
 
+Microsoft.Windows.Hardware.Devices.ClassInstaller.XNACOMPOSITE-DriverClass*
+
 xnacc.inf*			# Xbox 360 Controller [W7]
 
 dc1-controller.inf*		# Xbox One Controller [W10]

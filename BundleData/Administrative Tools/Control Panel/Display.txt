@@ -1,5 +1,21 @@
-# Display Control panel
+# Display and Desktop Control panel
+
 Microsoft-Windows-Display
 Microsoft-Windows-Display.*
 Microsoft-Windows-Display-*
 Microsoft-Windows-Display-ChangeDesktopBackground-License*
+
+
+Microsoft-Windows-desk			# desk.cpl / Desktop Control Panel
+Microsoft-Windows-desk.*
+Microsoft-Windows-desk-*
+
+Microsoft-Windows-deskadp		# "Display Adapter CPL Extension" / "Display Monitor CPL Extension"
+Microsoft-Windows-deskadp.*
+Microsoft-Windows-deskadp-*
+Microsoft-Windows-deskperf		# "Advanced display performance properties" [W7]
+Microsoft-Windows-deskperf.*
+Microsoft-Windows-deskperf-*
+Microsoft-Windows-deskmon		# "Advanced display monitor properties" [W7]
+Microsoft-Windows-deskmon.*
+Microsoft-Windows-deskmon-*

@@ -2,7 +2,9 @@
 # A subsystem of Windows 7 responsible for monitoring application crashes and autonomously applying mitigations to prevent future crashes on a per application basis. Functions automatically.
 # https://msdn.microsoft.com/en-us/library/windows/desktop/dd744764(v=vs.85).aspx
 
-# Builds on top of WDI.
+# Monitors application crashes via Windows Error Reporting. If a certain app is noticed often crashing due to heap-related errors, applies a compatibility shim which replaces Heap* functions with extra safe versions which leave additional space between allocations, delays block disposal after freeing, ignores non-fatal errors.
+# Requires: Windows Security Center, WDI, Windows Error Reporting, Shim Engine.
+# Ref.: Windows Internals, "Memory Management".
 
 Microsoft-Windows-Fault-Tolerant-Heap
 Microsoft-Windows-Fault-Tolerant-Heap.*

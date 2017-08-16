@@ -4,5 +4,7 @@
 
 # A few vendors produced these.
 
+Microsoft.Windows.Hardware.Devices.ClassInstaller.TransferCables-DriverClass*
+
 [Drivers]
 transfercable.inf*		# Windows Easy Transfer Cable (Generic + Branded) [W7+]

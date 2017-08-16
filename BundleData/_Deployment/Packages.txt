@@ -49,3 +49,5 @@ Microsoft-Windows-Shell-Registration*
 
 Microsoft-Windows-ImageBasedSetup-IE-Base-Deployment*
 Microsoft-Windows-KernelMode-Minimal*
+
+Microsoft-Windows-DesktopTechnologies-Fonts*		# Empty when deployed

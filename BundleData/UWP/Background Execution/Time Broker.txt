@@ -1,0 +1,5 @@
+# Time Broker
+# A true BM event broker
+
+Microsoft-Windows-TimeBroker*
+Windows-ApplicationModel-Background-TimeBroker-WinRT*	# WinRT API

@@ -1,0 +1,11 @@
+# System Event Broker
+# A true BM event broker.
+
+# Has its own policy table at
+#   HKLM\System\CurrentControlSet\Services\SystemEventsBroker\Parameters\EventPolicyTable
+# Lists supported events and whether they're allowed for "general apps".
+
+Microsoft-Windows-SystemEventsBroker*
+Microsoft-Windows-SystemEventsBrokerConfig*
+Microsoft-Windows-SystemEventsBroker-BMPolicy*
+Windows-ApplicationModel-Background-SystemEventsBroker-WinRT*	# WinRT API

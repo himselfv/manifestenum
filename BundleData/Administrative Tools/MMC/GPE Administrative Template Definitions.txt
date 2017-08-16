@@ -32,6 +32,7 @@ Microsoft-Windows-COM-Adm*
 Microsoft-Windows-DCOM-Adm*
 Microsoft-Windows-CredSsp-Adm*
 Microsoft-Windows-CtrlAltDel-Adm*
+Microsoft-Windows-Desktop-Adm*
 Microsoft-Windows-DevInst-Adm*
 Microsoft-Windows-DFS-Adm*
 Microsoft-Windows-DigitalLocker-Adm*

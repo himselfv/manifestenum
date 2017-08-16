@@ -1,0 +1,32 @@
+# Unified Background Process Manager [W7+]
+# Provides a common trigger-based activation platform for UBPM-registered clients.
+# https://blogs.technet.microsoft.com/askperf/2009/10/04/windows-7-windows-server-2008-r2-unified-background-process-manager-ubpm/
+
+# Provides the same set of events to various facilities in the system. The same triggers are available to all clients, exposed in various ways via their APIs:
+# - Service Control Manager [W7]
+#     Exposes UBPM Triggers via SCM Triggers API.
+#     W7: Links to UPBM.dll via scext.dll. If this DLL is missing, triggers will not function but the rest of service management should work. This is done to allow for minimal kernels.
+# - Task Scheduler Service [W7]
+
+# The core RPC server is implemented in services.exe. Clients use ubmp.dll to access it.
+
+# UBPM gets triggers from:
+# 1. Starts an Event Tracing for Windows (ETW) session and enables each registered provider GUID (you can see this in the MMC Performance Snap-in).
+# 2. Provies a number of triggers directly.
+
+Microsoft-Windows-CoreSystem-UnifiedBPM-Deployment*			# Deployment
+Microsoft-Windows-UnifiedBackgroundProcessManager*			# Core
+Microsoft-Windows-Services-UnifiedBackgroundProcessManager*
+
+# W10:
+# Statically links against a number of BM event providers (brokers), each via it's own C API DLL + core (usually a service or a driver):
+#   DesktopActivityBroker, TimeBroker, SystemEventsBroker, EventAggregation
+# These event providers are also covered (more extensively) by BackgroundBrokers deployment, so we'll list them there for now.
+
+[DesktopActivityBroker]
+# Not a true BM broker, but a UBPM only event source (so far).
+# Deployed only by UBPM.
+Microsoft-Windows-DesktopActivityBroker
+Microsoft-Windows-DesktopActivityBrokerApi
+Microsoft-Windows-Services-DesktopActivityBroker
+Microsoft-Windows-DesktopActivityModerator		# Support driver

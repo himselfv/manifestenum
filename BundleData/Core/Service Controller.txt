@@ -4,14 +4,10 @@
 # Starts and stops services, performs a number of other tasks:
 # - Handles last known good configuration updates
 # - Notifies usermode of network drive changes (as reported by mup.sys)
+# - Contains a server code for a few other components (Unified Background Process Manager)
 
 Microsoft-Windows-Services			# Package
 Microsoft-Windows-Services.*
 
 Microsoft-Windows-Services-ServiceController*	# services.exe
 Microsoft-Windows-Services-Svchost*		# Runs services from dlls
-
-# Unified background process manager is covered by this for now,
-# since it's heavily interdependent.
-Microsoft-Windows-Services-UnifiedBackgroundProcessManager*
-Microsoft-Windows-UnifiedBackgroundProcessManager*
