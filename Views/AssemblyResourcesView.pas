@@ -356,7 +356,7 @@ begin
   Result := inherited AddNode(AParent);
   AData := Tree.GetNodeData(Result);
   AData.NodeType := ntRegistryValue;
-  AData.Name := FDb.Registry.GetKeyPath(ARegistryValueData.key) + '\' + ARegistryValueData.name;
+  AData.Name := FDb.Registry.GetKeyPath(ARegistryValueData.key) + '\' + ARegistryValueData.name + ' = ' + ARegistryValueData.value;
   AData.ResourceId := ARegistryValueData.id;
   AData.DelayLoad.Touched := true;
 end;
