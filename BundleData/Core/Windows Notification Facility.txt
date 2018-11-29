@@ -1,0 +1,23 @@
+# Windows Notification Facility
+# A kernel API for sending native system event notifications to subscribers. Entirely separate from other event subsystems.
+# https://blog.quarkslab.com/playing-with-the-windows-notification-facility-wnf.html
+# Windows 8+
+
+# The facility itself is implemented as a set of Rtl* and Nt* functions in the kernel. This bundle only contains supporting packages.
+# http://redplait.blogspot.com/2012/09/wnf-notifiers.html
+
+# An event is identified by it's WNF State Name (QWORD), e.g.:
+#   1395033ea3bc0875 (low-ending)
+#   7518BCA321078541 (high-ending)
+# State Names are undocumented, declared locally in each DLL that sends them. Their structure and how to extract them:
+#   http://redplait.blogspot.com/2015/12/wnf-identifiers.html
+#   http://redplait.blogspot.com/2017/08/wnf-ids-from-perfntcdll.html
+# Extract script is available at the Quarkslab's article.
+# More:
+#   http://redplait.blogspot.com/2017/05/wnf-kernelmode-callbacks.html
+
+# WNF State Names are the backbone for SERVICE_TRIGGER_CUSTOM_SYSTEM_STATE_CHANGE triggers in Service Manager (SCM).
+
+# Registers many well-known WNF State Names in
+#   HKLM\System\CurrentControlSet\Control\Notifications
+Microsoft-Windows-WNF-Names-WellKnown-*
