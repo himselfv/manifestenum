@@ -6,9 +6,12 @@ Microsoft-Windows-SpeechRecognizer*
 Microsoft-Windows-Speech-UserExperience*
 Microsoft-Windows-Speech-IEKillBits*
 
+# Win7
+Microsoft-Windows-MulanTTS*
+
 # Win10
 Microsoft-OneCore-SpeechComponents*
 Microsoft-OneCore-SpeechService*
 
-# Win7
-Microsoft-Windows-MulanTTS*
+# Text to speech voices
+Microsoft-Windows-TextToSpeech-*	# -en-us, -ru-ru etc.

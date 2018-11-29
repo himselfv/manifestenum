@@ -3,7 +3,4 @@ Microsoft-Windows-NetworkExplorer
 Microsoft-Windows-NetworkExplorer.*
 Microsoft-Windows-NetworkExplorer-*
 
-# Network Explorer Plugins
-Microsoft-Windows-icsigd		# Internet Gateway popup menu entries and property page
-Microsoft-Windows-icsigd.*
-Microsoft-Windows-icsigd-*
+@hosts:NetworkPlacesExtensions

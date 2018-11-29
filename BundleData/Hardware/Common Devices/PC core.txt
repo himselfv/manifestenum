@@ -9,14 +9,28 @@ dual_cpu.inf*
 pci.inf*				# PCI, PCI-E [W10+]
   dual_pci.inf*
 
+
+[Software devices]
 swenum.inf*				# Plug and Play software device enumerator
   dual_swenum.inf*
 Microsoft-Windows-PnpSwenum*		# ROOT\swenum\0000 key
 
-uefi.inf*		# UEFI-compliant system
+c_swcomponent.inf*			# "Generic software component"
+  dual_c_swcomponent.inf*
+c_swdevice.inf*				# "Generic software device"
+  dual_c_swdevice.inf*
+@provides:ClassRegistration
+
+
+[UEFI]
+uefi.inf*			# UEFI-compliant system
   dual_uefi.inf*
+c_firmware.inf*			# System/Device Firmware (UEFI)
+  dual_c_firmware.inf*
+@provides:ClassRegistration
 
 
+[Other]
 agp.inf*		# Microsoft Generic AGPv3.0 / AVGv3.5 Bus Filter Drivers [W7 only]
 			# This is not the AGP drivers, those sit in machine.inf on W7.
 

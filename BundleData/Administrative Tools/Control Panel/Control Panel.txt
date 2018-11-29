@@ -2,9 +2,6 @@
 Microsoft-Windows-LegacyHwUi*		# Legacy as of Windows 7
 
 
-
-Microsoft-Windows-desk*
-
 # main.cpl				# Mouse, Keyboard
 Microsoft-Windows-main
 Microsoft-Windows-main-*

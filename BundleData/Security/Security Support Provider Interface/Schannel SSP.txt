@@ -13,3 +13,5 @@
 Microsoft-Windows-Security-Schannel
 Microsoft-Windows-Security-Schannel.*
 Microsoft-Windows-Security-Schannel-*
+
+Microsoft-Windows-Schannel-Events*		# W10

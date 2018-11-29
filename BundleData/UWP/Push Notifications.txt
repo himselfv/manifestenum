@@ -1,0 +1,26 @@
+# Windows Push Notifications (WPN/WNS)
+# Enables third-party developers to send toast, tile, badge, and raw updates from their own internet service to the local PC without keeping an app running.
+# https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-windows-push-notification-services--wns--overview
+# W10+ 
+
+# Windows.UI.Notifications
+
+# Local application registers with WNS for a push channel. It then sends an URL to this channel to their internet service and exits. When the service needs to reactivate the application or to display a message on the target PC, it uses the URL to ask Windows Push (internet server + a client on local PC) to relay the request.
+
+Microsoft-Windows-PushNotifications-Feature-*		# Deployment
+
+Microsoft-Windows-PushNotifications-Developer-Events
+Microsoft-Windows-PushNotifications-Developer-Library	# WinRT APIs
+Microsoft-Windows-PushNotifications-InProc-Events
+Microsoft-Windows-PushNotifications-InProc-Library
+Microsoft-Windows-PushNotifications-Platform-Adm
+Microsoft-Windows-PushNotifications-Platform-Events	# Inc. NetDiagFX helper
+Microsoft-Windows-PushNotifications-Platform-Library
+Microsoft-Windows-PushNotifications-Service
+Microsoft-Windows-PushNotifications-UserService
+
+@provides:SrumExtension
+
+Microsoft-Windows-PushNotify-onecoreuap-Deployment	# Deployment
+Microsoft-Windows-PushNotifications-SrumProvider	# SRUM provider
+Microsoft-Windows-PushNotifications-Provider-Library

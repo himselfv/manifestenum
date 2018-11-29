@@ -12,7 +12,7 @@ Microsoft-Windows-AllJoynDiscoveryPlugin*
 Networking-MPSSVC-Rules-AllJoyn*
 
 # Ships in OneCore-AllJoyn deployment. I suppose this is related.
-Microsoft-Windows-DAFIoT
+Microsoft-Windows-DAFIoT			# DAF is Device Association Framework. IoT is Internet of Things.
 Microsoft-Windows-DAFIoT.*
 Microsoft-Windows-WiFiDiscoveryPlugin*
 Microsoft-Windows-WiFiOnboardingPlugin*		# Certainly related

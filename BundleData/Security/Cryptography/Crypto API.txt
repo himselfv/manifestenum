@@ -26,6 +26,7 @@ Microsoft-Windows-dpapisrv-dll*
 Microsoft-Windows-dpapisrv.*			# Some resources lack .dll
 Microsoft-Windows-Crypto-DPAPI			# Events and localized versions [W10]
 Microsoft-Windows-Crypto-DPAPI.*
+Microsoft-Windows-Crypto-DPAPI-*
 
 Microsoft-Windows-CryptBase*		# "Implements low-level cryptographic APIs for memory encryption/decryption and session keys"
 

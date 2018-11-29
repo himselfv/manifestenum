@@ -1,3 +1,5 @@
 
 # Contains processor microcode update DLLs for Intel and AMD and an utility which probably applies those.
 Microsoft-Windows-Microcode Update*
+
+Microsoft-Windows-MCUpdate-*		# W10 Deployment

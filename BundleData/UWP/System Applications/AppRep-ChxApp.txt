@@ -1,3 +1,4 @@
 
-# Who knows what this is
+# Probably a SmartScreen related app.
+# AppRep = Application Reputation, a subtechnology in SmartScreen (also related to AppLocker / AppID).
 Microsoft-Windows-AppRep-ChxApp*

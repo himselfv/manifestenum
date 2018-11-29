@@ -1,2 +1,4 @@
 Microsoft-Windows-DHCP-Client*			# Core
 Microsoft-Windows-DHCPV6-Client-Events*		# Eventlog definitions for dhcpv6 from Core
+
+Microsoft-Windows-DHCPCMonitor*			# Looks like a netsh helper for DHCPC

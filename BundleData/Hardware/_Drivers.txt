@@ -1,0 +1,21 @@
+
+# Misc
+intelpep.inf*			# Intel Power Engine Plug-in (PEP) (Class=System)
+kdnic.inf*			# Kernel Network Debug Adapter [W10]
+  dual_kdnic.inf*
+wmiacpi.inf*			# Windows Management Interface for ACPI (Class=System) [W10]
+
+# W10 class installer registrations
+c_extension.inf*			# Extension (for what is unclear)
+  dual_c_extension.inf*
+c_pnpprinters.inf*			# PnpPrinters
+  dual_c_pnpprinters.inf*
+c_sslaccel.inf*				# SSL Accelerator device (that's a real class of devices)
+  dual_c_sslaccel.inf*
+
+
+# Media
+c_apo.inf*			# AudioProcessingObject
+  dual_c_apo.inf*
+audioendpoint.inf*		# Audio Endpoint INF (Audio inputs and outputs) [W10]
+digitalmediadevice.inf*		# Digital Media Device (seems to be just a templace for DMD drivers) [W7+]

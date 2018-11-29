@@ -25,4 +25,3 @@ Microsoft-Windows-WLANMediaManager*		# Registers in CCS\Control\VAN, along with 
 Microsoft-Windows-Wlansvc*
 Microsoft-Windows-Wlansvc-Extra*
 Microsoft-Windows-Wlansvc-ClientCfg*		# This registers the service
-

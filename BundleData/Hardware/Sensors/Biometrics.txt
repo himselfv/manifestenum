@@ -1,0 +1,92 @@
+# Windows Biometric Framework
+# An API for retrieving samples of biometric information that can be used to uniquely identify the user, from any devices that support providing such an information.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd560897(v=vs.85).aspx
+# W7+
+
+# B. measurements are physical traits which are unique to each person, including:
+# - Fingerprints
+# - Iris patterns
+# - Faces
+# - Gait
+# - Typing rythm
+
+# Samples of biometric information are retrieved from sensors devices and stored associated with each user.
+
+# B. Framework includes:
+# - Driver Interface (WBDI)
+# - Service which manages WBDI-compatible devices (Biometrics Service)
+#  - Each type of biometrics requires a Biometrics Service Provider (WBSP), but these are built into Biometrics Service and are not plugins.
+# - API library to access the above.
+# - Credential provider
+# - OS integration (Control panel, administrative tools)
+
+# Can be used to login into the operating system via Windows Hello.
+
+# M-OC-Biometrics
+# M-W-Biometrics
+# M-W-Security-Biometrics
+# M-W-WinBio
+# M-W-WBio
+
+
+# Deployments
+Microsoft-OneCore-Biometrics-onecore-Deployment		# Service + API
+Microsoft-OneCore-Biometrics-WOW64-onecore-Deployment
+Microsoft-OneCore-Biometrics-Fingerprint-Deployment	# CredentialProvider + SensorAdapter. Not really related to Fingerprints only
+
+
+[Core]
+# Biometrics service
+Microsoft-Windows-WBioSrvc*
+
+# Isolated User Mode trustlet (probably to run Biometrics Units)
+Microsoft-Windows-Security-Biometrics-Trustlet*
+
+# Adapters
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd401508(v=vs.85).aspx
+Microsoft-Windows-Security-Biometrics-SensorAdapter
+Microsoft-Windows-Security-Biometrics-StorageAdapter
+Microsoft-Windows-Security-Biometrics-VsmStorageAdapter
+Microsoft-Windows-WBioSensorAdapter*
+Microsoft-Windows-WBioStorageAdapter*
+
+
+[Facial recognition]
+Microsoft-OneCore-Biometrics-FaceRecognition-onecore-Deployment
+Microsoft-OneCore-Biometrics-FaceRecognition-windows-Deployment
+Microsoft-Windows-Analog-FaceRecognitionCredentialProvider
+Microsoft-Windows-Analog-FaceRecognitionAdapters
+
+
+[Biometric Framework API]
+# Windows Biometric Framework API / WinBio*
+# https://msdn.microsoft.com/en-us/library/windows/desktop/dd401510(v=vs.85).aspx
+Microsoft-Windows-Security-Biometrics-Client			# WinBio*
+Microsoft-Windows-Security-Biometrics-Client-Extension		# Implements some WinBio* functions
+Microsoft-Windows-WinBio					# Some locales for WinBio.dll have different naming
+Microsoft-Windows-WinBioExt					# Some locales for WinBioExt.dll
+
+
+[Credential providers]
+Microsoft-Windows-Security-Biometrics-CredentialProvider
+Microsoft-Windows-Security-Biometrics-FingerprintCredential
+
+# Windows.Internal.UI.Logon.Controller.BioFeedbackUX - probably related to Biometrics Logon
+Microsoft-Windows-UI-BioFeedback
+Microsoft-Windows-UI-BioFeedback-Library
+
+
+[Enrollment]
+# BioEnrollment/BioEnrollmentDataModel [?]
+# Probably related to BioEnrollment AppX application, and probably needed for registration of samples (control panel)
+Microsoft-Windows-WinBioEnrollmentDataModel
+Microsoft-Windows-WinBioDataModel-Library
+Microsoft-Windows-Internal-UI-BioEnrollment-ProxyStub
+
+
+[Group Policy definitions]
+Microsoft-Windows-Biometrics-Adm
+
+
+[Control Panel]
+Microsoft-Windows-Biometrics-CPL

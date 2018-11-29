@@ -49,6 +49,8 @@ Microsoft-Windows-Crypto-RNG-instrumentation*		# Instrumentation for cng.sys eve
 Microsoft-Windows-Security-CNG-KeyIsolation*
 Microsoft-Windows-KeyIso.Resources
 
+Microsoft-Windows-cngcredui-dll*		# W10
+
 
 # W10+
 # CNG default cryptography providers

@@ -1,2 +1,0 @@
-bth.inf*
-dual_bth.inf*

@@ -3,3 +3,6 @@
 # https://en.wikipedia.org/wiki/Pragmatic_General_Multicast
 
 Microsoft-Windows-RMCast*
+
+[Drivers]
+netpgm.inf*	# RMCast/PGM protocol

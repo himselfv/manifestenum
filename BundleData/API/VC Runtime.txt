@@ -4,6 +4,7 @@ Microsoft-Windows-ATL*
 Microsoft-Windows-MSVCIRT*
 Microsoft-Windows-MSVCP60*
 Microsoft-Windows-MSVCRT*
+Microsoft-Windows-MSVCP110*	# W10
 
 Microsoft.VC80.*
 Microsoft.VC90.*

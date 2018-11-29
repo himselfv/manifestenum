@@ -1,0 +1,4 @@
+# A true BM event broker for Network Connection and Socket events
+Microsoft-Windows-NCB-Deployment*				# Deployment
+Microsoft-Windows-NCB-mergedcomponents-onecore-Deployment*	# Imports BrokerBase which is imported both by BM and UBPM anyway.
+Microsoft-Windows-NetworkConnectionBroker*			# The component itself

@@ -1,3 +1,15 @@
+Hardware Devices and Drivers
+
+Group by device type (Display, Printer, Biometrics...) and/then by facility. Keep class registrations, drivers and user-mode components together, logically grouped.
+
+Mark @provides:
+  ClassRegistration
+  Driver
+
+Vendor-specific drivers shipped with Windows should be grouped into bundles called:
+  Inbox *** [Devices/Support]
+
+
 Windows 10 has two special classes of driver packages:
 c_*	class installer registrations (previously often copied to all appropriate inf files)
 dual_*	drivers with registration information duplicated from inf file to the manifest.

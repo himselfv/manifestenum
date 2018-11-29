@@ -3,6 +3,7 @@
 Microsoft-Windows-Diffie_Hellman_Software_CSP*
 Microsoft-Windows-Crypto-DSSEnh			# Events and localized versions [W10]
 Microsoft-Windows-Crypto-DSSEnh.*
+Microsoft-Windows-Crypto-DSSEnh-*
 
 # Provides:
 #   Microsoft Base DSS Cryptographic Provider

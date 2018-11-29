@@ -7,3 +7,7 @@ Microsoft-Windows-TCPIP6Helper*
 
 # Seems to provide support for legacy TCP/IP registry settings
 Microsoft-Windows-Legacy-Registry-Support-TCPIP*
+
+[Drivers]
+nettcpip.inf*	# TCP/IP v4
+netip6.inf*	# TCP/IP v6

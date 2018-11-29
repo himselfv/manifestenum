@@ -2,8 +2,20 @@
 # Glossary:
 #   VSC = Virtualization Service Client
 
+wvid.inf*			# Hyper-V Virtualization Infrastructure Driver (Class=System)
+
 wdmvsc.inf*			# VM Dynamic Memory VSC driver
   dual_wdmvsc.inf*
+
+wpcip.inf*			# "PCI Proxy driver is for PCI device FDO" (Class=System)
+				# "PCI Express Host Bus Adapter - Dismounted"
+				# "PCI Express Fibre Channel Port - Dismounted"
+				# "PCI Express Graphics Processing Unnit - Dismounted"
+				# "PCI Express Ethernet Port - Dismounted"
+				# "PCI Express Audio Device - Dismounted"
+				# "PCI Express Device of unknown type - Dismounted"
+				# "NVM Express Controller - Dismounted"
+				# I *think* that it might be Hyper-V related (from some of the comments inside)
 
 wfcvsc.inf*			# Hyper-V Synthetic Fibre Channel HBA (Class=SCSIAdapter) [W10]
 wgencounter.inf*		# Hyper-V Generation Counter (Class=System) [W10]
@@ -40,3 +52,4 @@ wvpci.inf*
 wvpcivsp.inf*
 
 synth3dvsc.inf*			# VMBus Synth3dVsc (Virtual 3D Video Transport Driver) [W7]
+wsynth3dvsp.inf*		# VM Synth3D Video VSP Driver

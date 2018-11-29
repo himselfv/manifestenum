@@ -26,7 +26,7 @@ Additionally this tool supports:
 * Unpacking SxS files (credit to Aunty Mel Package Extractor)
 * Extracting assembly contents
 
-The above uses of the application is safe. It changes nothing on your PC and only inspects its data.
+The above uses of the application are safe. They change nothing on your PC and only inspect its data.
 
 See also: [CBSEnum](https://bitbucket.org/himselfv/cbsenum/) for more higher level and OS-supported management of components.
 
@@ -45,17 +45,17 @@ The interface presents you with a list of all assemblies, which you can filter, 
 
 **Warning! Alert!** The following functions are experimental. You *will* break your warranty and *may* break your PC. You **should not** use these on a PC where you have any important data.
 
-* Uninstalling deployment assemblies (those that can be uninstalled with OS)
+* Uninstalling deployment assemblies (those that can be uninstalled via OS)
 * Uninstalled ANY assemblies (by converting them to deployments)
 * Installing deployment assemblies manually
 
 
 ## For a programmer
 
-This tool contains a number of algorithms and info about SxS internals which are hard to find and you might perhaps find useful:
+This tool contains a number of algorithms and info about the SxS internals which are hard to find and you might perhaps find useful:
 
 * Unpacking algorithms (credit to Aunty Mel) -- see `MSDeltaLib.pas` and `SxsExpand.pas`
-* Keyform generation algorithms (keyforms are hash-like additions to names throughout SxS) -- see `SxsUtils.pas`
+* Keyform generation algorithms (keyforms are hash-like additions to the names throughout SxS) -- see `SxsUtils.pas`
 * SxS registry (COMPONENTS hive) internals partially explained -- see `SxsUtils.pas`
 * Assembly management via IAssemblyCache (installing and uninstalling) -- see `WinSxS.pas`
 * Fast SAX XML parser built on MSXML for speedy SxS manifest cache parsing

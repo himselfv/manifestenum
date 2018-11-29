@@ -1,0 +1,6 @@
+
+# A single class "ContinuousBackgroundTaskPolicy" registered for a single event "IoTStartupTask".
+# *Maybe* provides an event for a single continuously executing background task?)
+
+Microsoft-Windows-ContinuousBackgroundTaskPolicy-Deployment
+Microsoft-Windows-ContinuousBackgroundTask-BMPolicy

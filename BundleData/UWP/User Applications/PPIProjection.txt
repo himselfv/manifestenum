@@ -1,0 +1,5 @@
+# Microsoft.PPIProjection
+# "Connect to Projector"
+
+Microsoft-PPIProjection-*		# Deployment
+Microsoft-PPIProjection.*		# AppXMain, AppxSetup

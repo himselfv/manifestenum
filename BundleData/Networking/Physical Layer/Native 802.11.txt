@@ -25,3 +25,10 @@ Microsoft-Windows-NWiFi*		# Some MUI registers like this
 # "Wireless LAN Extensibility Framework"
 # "Provides an interface to Windows wireless security and connectivity features for the drivers of wireless network adapters."
 Microsoft-Windows-Wlan-Extension*		# Contains a single application.
+
+
+# Native Wi-Fi
+# Note that Native 802.11 is not *quite* the same as "Native Wi-Fi". The latter is a component which stores Wi-Fi configuration settings and connects to the automatically (basically Wireless Zero Configuration from XP, renamed). It's not deprecated as of W10.
+# https://msdn.microsoft.com/en-us/library/windows/desktop/ms706556(v=vs.85).aspx
+# It should not really be grouped here, but for now this'll do.
+netnwifi.inf*			# Native Wi-Fi Filter [W7+]

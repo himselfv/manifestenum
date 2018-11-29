@@ -1,0 +1,7 @@
+# Combined Windows Runtime Metadata package
+# Contains metadata files for all major Windows Runtime API libraries.
+
+# WinRT will not work properly without metadata, so you should probably keep this component if you keep even one of the assemblies.
+# I don't know why MS hasn't grouped each metadata file with the appropriate library *sigh*.
+
+Microsoft-Windows-Runtime-Metadata

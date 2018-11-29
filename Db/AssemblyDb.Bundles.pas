@@ -491,6 +491,12 @@ begin
       ln := AnsiLowercase(ln.Trim);
       if ln = '' then continue;
 
+      //Process sections
+      //At the moment we just skip them (to allow defining them before support is introduced)
+      if (ln[1] = '[') and (ln[Length(ln)] = ']') then begin
+        continue;
+      end;
+
       //Process instructions
       if ln[1] = '@' then begin
         part := EatCmd(ln);

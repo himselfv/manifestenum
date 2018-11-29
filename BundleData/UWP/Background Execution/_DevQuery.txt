@@ -1,0 +1,10 @@
+# DevQuery
+# Judges are still out on what this is, but it provides two things:
+
+# A true BM event broker, which registers as a BM broker, but provides absolutely nothing else (no API DLL, no activable classes, no event policies).
+# Registers a service with a description "Enables apps to discover devices with a background function".
+Microsoft-Windows-DevQueryBroker*
+Microsoft-Windows-DevQueryBroker
+
+# A function discovery provider:
+Microsoft-Windows-DeviceQueryProvider*		# FdDevQuery.dll

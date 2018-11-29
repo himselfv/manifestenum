@@ -1,0 +1,6 @@
+# Errata Manager
+# A kernel component which works around the known bugs in devices. The code itself is contained in the kernel.
+
+# Errata Manager Database
+# Big INF file with workaround rules for lots of different buggy devices. Applied by the kernel.
+Microsoft-Windows-ErrataManager*

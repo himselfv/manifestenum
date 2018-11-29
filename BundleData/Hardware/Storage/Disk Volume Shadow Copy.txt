@@ -1,3 +1,4 @@
 # Just a type definiton for volume shadow copies so they don't show up as unknown devices
 volsnap.inf*
 dual_volsnap.inf*
+Microsoft-Windows-Volsnap*	# sys file for the inf above

@@ -3,9 +3,18 @@
 # https://en.wikipedia.org/wiki/Microsoft_Narrator
 
 Microsoft-Windows-Narrator*
-Narrator			# Windows 7
+Narrator				# W7+
 Narrator.*
 Narrator-*
 
+# W8+: Requires UI Automation
+
+# Helper libraries, exist only until W8
 Microsoft-Windows-NativeHooks*		# "Narrator Native Hooks Handler"
 Microsoft-Windows-trapi*		# "Microsoft Narrator Text Renderer". No real API, index-only exports.
+
+# "Screen Reader Helper". W8+, seems to be narrator-related.
+# Contains a lot of COM interfaces (including a lot of Narrator* ones), requires (or at least relies on) UI Automation.
+Microsoft-Windows-SRH
+Microsoft-Windows-SRH.*
+Microsoft-Windows-SRH-*

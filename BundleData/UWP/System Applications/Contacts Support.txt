@@ -1,0 +1,5 @@
+# ContactSupport system app
+
+Microsoft-Windows-ContactSupport-Deployment*
+Microsoft-Windows-ContactSupport.AppxMain*
+Microsoft-Windows-ContactSupport.AppxSetup*

@@ -1,3 +1,6 @@
 # Sensor Class Installer
 
 Microsoft.Windows.Hardware.Devices.ClassInstaller.Sensor-DriverClass*	# Requires wpd_ci.dll and SensorsCpl.dll
+
+c_proximity.inf*			# Proximity devices
+  dual_c_proximity.inf*

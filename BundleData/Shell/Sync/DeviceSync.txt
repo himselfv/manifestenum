@@ -23,6 +23,7 @@ Microsoft-Windows-SyncProviders*
 Microsoft-Windows-MSF
 Microsoft-Windows-MSF.*
 Microsoft-Windows-MSF-*
+Microsoft-Windows-CoreSystem-MSF-Core-*
 
 # DeviceStage task to Sync with device, I guess.
 # Also in Hardware-DeviceStage

@@ -16,6 +16,9 @@ termkbd.inf*			# Terminal Services Keyboard Driver
 termmou.inf*			# Terminal Services Mouse Driver
 Microsoft-Windows-ROOTENUM-TEMP*	# ROOT\RDP_KBD\0000, ROOT\RDP_MOU\0000 keys
 
+# Collaboration [W10]
+Microsoft-Windows-TerminalServices-Collaboration*
+Microsoft-OneCore-RemoteDesktopServices-Collaboration*
 
 # Quick Remote Assistance in Win10
 Microsoft-Windows-QuickAssist*
@@ -25,9 +28,11 @@ Microsoft-Windows-RemoteAssistance*
 Microsoft-Windows-RemoteDesktop*
 
 
+[RemoteFX]
 # RemoteFX is a Terminal Services protocol enhancements
 Microsoft-Windows-RemoteFS*
 Microsoft-Windows-RemoteFX*
+Microsoft-Windows-Virtualization-RemoteFX*	# Also here [W10]
 
 microsoft-windows-RDSH-Events*		# Instrumentation for RDPWD.sys from this bundle
 

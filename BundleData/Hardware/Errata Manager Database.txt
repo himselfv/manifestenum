@@ -1,4 +1,0 @@
-# Errata Manager Database
-# Big INF file with workaround rules for lots of different buggy devices. Probably applied by the kernel.
-
-Microsoft-Windows-ErrataManager*

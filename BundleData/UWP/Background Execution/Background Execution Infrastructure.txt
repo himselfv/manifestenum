@@ -1,0 +1,48 @@
+# Background Execution Infrastructure
+
+# Deployed by everyone (UBPM, BM, third party event brokers)
+# Provides some kind of C API with Br* functions such as BrCreateBrokerInstance, BrCreateBrokeredEvent, BrGetBrokeredAppState.
+Microsoft-Windows-BrokerBase*
+
+Microsoft-Windows-BrokerInfrastructure-Configuration*		# Energy Budget registry settings
+Microsoft-Windows-BrokerInfrastructure-Events*			# Instrumentation
+Microsoft-Windows-BrokerInfrastructure				# Core service
+Microsoft-Windows-BrokerInfrastructureBGHost*			# Contains Background Task Host application. This runs background tasks registered by apps.
+Microsoft-Windows-BrokerInfrastructureClient*			# C API to enumerate, signal events, activate packages.
+Microsoft-Windows-BrokerInfrastructureWinRT*			# Windows.ApplicationModel.BackgroundTaskBuilder etc.
+
+# Microsoft Background Task Manager WMIv2 Provider
+# Provides WMI objects + a few Powershell commands to manager Background Task policy and switch logging.
+Microsoft-Windows-Background-TaskManager-WMIv2Provider
+
+# Contains a single DLL which exports a single functions: CreateOnDemandBrokerClient.
+# Used by AppContracts' BackgroundManagerPolicy DLL and WinRT API DLL.
+Microsoft-Windows-Background-OnDemandBroker-Client*	# OnDemandBrokerClient.dll
+
+# WARNING: The following things are NOT event brokers and are unrelated:
+#   Microsoft-Windows-Internal-Shell-Broker
+#   Microsoft-Windows-DevicesFlowBroker
+#   Microsoft-Windows-Input-ModernInjectionBroker
+#   Microsoft-Windows-COM-RuntimeBroker			# RuntimeBroker.exe
+
+Microsoft-Windows-BackgroundManager-LegacyEventSettings
+# Fills HKLM\Software\Microsoft\Windows NT\CurrentVersion\BackgroundModel\LegacyEventSettings key
+
+[Event Aggregation]
+# Not a true BM broker, but statically linked by a few other brokers and things (TimeBroker, WPN Platform Connection Provider) as well as by UBPM.
+Microsoft-Windows-EventAggregation*
+
+
+[AppContracts]
+Microsoft-Windows-AppContract-BMPolicy
+Microsoft-Windows-AppContract-BMPolicy-PauseConfig
+Windows-ApplicationModel-AppContracts-WinRT
+# ModernVoipPolicy
+# AppContractPolicy
+# PreinstallTaskPolicy
+
+
+[SmartCardBackgroundPolicy]
+Microsoft-Windows-NFC-SmartCardBackgroundPolicy*
+# A single class "SmartCardBackgroundPolicy"
+# Should be moved to its host package.

@@ -1,0 +1,26 @@
+# System Resource Usage Monitor (SruMon)
+# Tracks system resource usage, process and network metrics over time. Continuously records this and maintains a database of historical activity.
+# W8+
+
+# Owns a key:
+#   HKLM\Software\Microsoft\Windows NT\CurrentVersion\SRUM
+
+# Supports extensions to track further metrics. Registered in:
+#   SRUM\Extensions\{CLSID} (directly refers to dll name)
+# Other components may provide their own extensions. (Windows Push Notification is a known example)
+@hosts:SrumonExtension
+
+# Tracks:
+# - Periods of network connectivity (interfaces and times)
+# - Network usage (apps consuming data, interfaces used, bytes uploaded)
+# - Process information (CPU usage, I/O)
+# - Application history (launches, parent processes, user SIDs)
+# Task manager uses Application history to show "History for all processes" (incl. uninstalled)
+
+# Data is collected and temporarily stored in registry, periodically moved to SRUDB.dat (ESET database).
+# Written once every hour and at shutdown.
+
+Microsoft-Windows-SruMon				# Core
+Microsoft-Windows-SruMon-Energy				# Extension
+Microsoft-Windows-SruMon-EnergyEstimation		# Extension
+Microsoft-Windows-SruMon-Application			# Extension

@@ -1,2 +1,0 @@
-nettcpip.inf*	# TCP/IP v4
-netip6.inf*	# TCP/IP v6

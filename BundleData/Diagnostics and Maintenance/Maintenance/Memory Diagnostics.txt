@@ -1,6 +1,8 @@
 # Core
 Microsoft-Windows-Memory-Diagnostic-Schedule*
 Microsoft-Windows-Memory-Diagnostic-Results*
+Microsoft-Windows-Memory-Diagnostic-Client-Tasks*	# W10
+Microsoft-Windows-Memory-Diagnostic-Task-Handler*	# W10
 
 # Extended with additions
 Microsoft-Windows-Mem-Zero-Page-Diagnostic*

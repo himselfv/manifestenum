@@ -1,37 +1,14 @@
+# Filesystem filter classes [W10]
 
-# W10 class installer registrations
-c_apo.inf*
-  dual_c_apo.inf*
-c_extension.inf*
-  dual_c_extension.inf*
-c_firmware.inf*
-  dual_c_firmware.inf*
-c_pnpprinters.inf*
-  dual_c_pnpprinters.inf*
-c_proximity.inf*
-  dual_c_proximity.inf*
-c_sslaccel.inf*
-  dual_c_sslaccel.inf*
-c_swcomponent.inf*
-  dual_c_swcomponent.inf*
-c_swdevice.inf*
-  dual_c_swdevice.inf*
-c_tapedrive.inf*
-  dual_c_tapedrive.inf*
-c_usbdevice.inf*
-  dual_c_usbdevice.inf*
-c_usbfn.inf*
-  dual_c_usbfn.inf*
-
-c_fsactivitymonitor.inf*
+c_fsactivitymonitor.inf*		# FS Activity monitor filter
 c_fsantivirus.inf*
-c_fscfsmetadataserver.inf*
+c_fscfsmetadataserver.inf*		# FS CFS Metadata server filter
 c_fscompression.inf*
 c_fscontentscreener.inf*
 c_fscontinuousbackup.inf*
 c_fscopyprotection.inf*
 c_fsencryption.inf*
-c_fshsm.inf*
+c_fshsm.inf*				# FS HSM Filters
 c_fsinfrastructure.inf*
 c_fsopenfilebackup.inf*
 c_fsphysicalquotamgmt.inf*

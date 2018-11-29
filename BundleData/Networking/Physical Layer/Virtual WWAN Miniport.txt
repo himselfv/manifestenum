@@ -1,0 +1,6 @@
+# Virtual WWAN (Mobile Broadband) Miniport Adapter
+# I *suppose* works similar to Virtual Wi-Fi Miniport Adapter (which is well known), though who really knows.
+
+# Requires Virtual Wi-Fi as it implements core base services.
+
+netvwwanmp.inf*			# Virtual WWAN Miniport Adapter (Class=Net) [W10]

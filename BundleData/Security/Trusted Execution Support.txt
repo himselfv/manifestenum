@@ -1,0 +1,8 @@
+# Trusted Execution Support / Windows Trusted Runtime [W10]
+# This is *probably* an implementation of Intel Trusted Execution Technology, which is a way of attesting the authenticity of a platform and OS with the help of Trusted Platform Module.
+# https://en.wikipedia.org/wiki/Trusted_Execution_Technology
+
+Microsoft-Windows-TrustedExecution-Deployment*
+Microsoft-Windows-TrEE-ClassExtension*		# WindowsTrustedRT.sys
+windowstrustedrtproxy.inf*			# WindowsTrustedRTProxy.sys / Trusted Runtime Secure Service (Proxy) [W10]
+  dual_windowstrustedrtproxy.inf*

@@ -1,6 +1,5 @@
 # AppID / AppLocker
-# Allows you to specify which users or groups can run particular applications in your organization
-# based on unique identities of files.
+# Allows you to specify which users or groups can run particular applications in your organization based on unique identities of files.
 # https://technet.microsoft.com/en-us/library/dd759117(v=ws.11).aspx
 Microsoft-Windows-AppID*				# Service:AppIDSvc, Tasks:AppID\*
 Microsoft-Windows-AppID-Event*

@@ -13,3 +13,6 @@ Microsoft-Windows-Unimodem-*
 # -Core-ClassDriver
 # -Core-TSP
 # -Voice
+
+
+modemcsa.inf*			# Windows Modem Wave-Voice settings / Modem Wave Drivers [W7+]

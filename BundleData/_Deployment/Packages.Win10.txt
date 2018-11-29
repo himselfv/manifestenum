@@ -111,8 +111,17 @@ Microsoft-OneCore-Graphics-Required-WOW64-onecore-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-onecoreuap-Deployment
 Microsoft-OneCore-Graphics-Required-WOW64-windows-Deployment
 
+Microsoft-Windows-BackgroundBrokers-Group-onecore-Deployment
+Microsoft-Windows-BackgroundBrokers-Group-onecoreuap-Deployment
+Microsoft-Windows-BackgroundBrokers-Group-WOW64-Deployment
+Microsoft-Windows-BackgroundExecution-Group-Deployment
+Microsoft-Windows-BackgroundExecution-Group-WOW64-Deployment
 
-# Assorted
+Microsoft-Windows-Compression-WOW64-base-Deployment
+Microsoft-Windows-Compression-WOW64-onecore-Deployment
+Microsoft-Windows-Compression-WOW64-base-Deployment
+Microsoft-Windows-Compression-WOW64-onecore-Deployment
+
 Microsoft-Windows-Foundation-Group-base-Deployment
 Microsoft-Windows-Foundation-Group-mergedcomponents-Deployment
 Microsoft-Windows-Foundation-Group-mincore-Deployment
