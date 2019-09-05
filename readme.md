@@ -15,9 +15,9 @@ This tool scans these assemblies, analyzes their contents and lets you inspect h
 * Shell extensions
 * And more.
 
-![Main window screenshot](https://bitbucket.org/himselfv/manifestenum/raw/tip/Assets/screenshots/main1.png)
+![Main window screenshot](Assets/screenshots/main1.png)
 
-[More screenshots](https://bitbucket.org/himselfv/manifestenum/src/tip/Assets/screenshots/) 
+[More screenshots](Assets/screenshots/) 
 
 Have you ever wondered what does some service do, what is it needed for, why is it installed? Now you can figure it out.
 
@@ -28,7 +28,7 @@ Additionally this tool supports:
 
 The above uses of the application are safe. They change nothing on your PC and only inspect its data.
 
-See also: [CBSEnum](https://bitbucket.org/himselfv/cbsenum/) for more higher level and OS-supported management of components.
+See also: [CBSEnum](https://github.com/himselfv/cbsenum/) for more higher level and OS-supported management of components.
 
 ### Usage
 
