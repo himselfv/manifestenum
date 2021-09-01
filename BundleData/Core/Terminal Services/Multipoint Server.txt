@@ -1,6 +1,5 @@
 # Windows Multipoint Services / Server
-# A set of tools and enhancements to host multiple simultaneous independent computing terminals
-# connected to a single computer using Remote Desktop Services technology.
+# A set of tools and enhancements to host multiple simultaneous independent computing terminals connected to a single computer using Remote Desktop Services technology.
 # https://en.wikipedia.org/wiki/Windows_MultiPoint_Server
 
 # Windows Multipoint Server was an edition of Windows Server tailored exclusively for MPS.

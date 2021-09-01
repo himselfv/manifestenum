@@ -9,6 +9,7 @@
 
 Microsoft-OneCore-IsolatedUserMode
 Microsoft-OneCore-IsolatedUserMode-*
+Microsoft-Windows-IsolatedUserMode-*	# Also happens, e.g. in 210H
 
 Microsoft-Onecore-Vsm-Idk-Cache		# Also in package
 

@@ -10,3 +10,7 @@ Microsoft.Ink-*
 Policy.1.0.Microsoft.Ink	# Version redirections
 Policy.1.7.Microsoft.Ink
 Policy.6.0.Microsoft.Ink
+
+# TabletPC Math Input
+Microsoft-Windows-TabletPCMath-*	# Deployment
+Microsoft-Windows-TabletPCMath*		# Components (InputPanel, Recognizer)

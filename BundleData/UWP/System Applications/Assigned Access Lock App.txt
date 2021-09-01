@@ -1,2 +1,20 @@
+# Assigned Access
+# Configures the device to only run a single app and prevent all other interactions.
 # https://technet.microsoft.com/en-us/itpro/windows/manage/guidelines-for-assigned-access-app
-Microsoft-Windows-AssignedAccessLockApp*
+
+Microsoft-Windows-AssignedAccess*
+# Microsoft-Windows-AssignedAccessLockApp
+# Microsoft-Windows-AssignedAccessManager-RuntimeServer
+# Microsoft-Windows-AssignedAccess-Diagnostics
+# Microsoft-Windows-AssignedAccess-Guard
+# Microsoft-Windows-AssignedAccess-ShellProxy
+
+Microsoft-Management-AssignedAccess*
+
+Microsoft-OneCore-AssignedAccess*
+# Microsoft-OneCore-AssignedAccess-CSP		# Configuration Service Provider, see CSP
+
+Microsoft-Windows-Embedded-AssignedAccess*
+# Microsoft-Windows-Embedded-AssignedAccessCsp-Deployment
+
+# There's a little bit in Microsoft-Windows-Embedded-LockdownWmi too, but I think that mostly groups WMI classes for managing all embedded lockdown features.

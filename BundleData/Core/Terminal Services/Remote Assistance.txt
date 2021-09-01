@@ -1,2 +1,11 @@
 # RemoteAssistance
+
+# Remote desktop-related
+# "Lets you invite a friend to connect to your computer and help you with problems."
+
 Microsoft-Windows-RemoteAssistance*
+CBS:RemoteAssistance-*
+
+# Probably the same thing, but on 210H I've seen both QuickAssist and RemoteAssistance packages present at the same time in CBS. So maybe not exactly same.
+Microsoft-Windows-QuickAssist		# CBS
+Microsoft-Windows-QuickAssist-*		# CBS

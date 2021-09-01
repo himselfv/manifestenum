@@ -30,6 +30,8 @@ Microsoft-Windows-MFGRL.*
 Microsoft-Windows-MFPlat
 Microsoft-Windows-MFPlat.*
 
+Microsoft-OneCore-Multimedia-MFPMP-*	# Media Foundation Protected Pipeline
+
 # Enhanced Video Renderer
 # A standard rendering Sink in Media Foundation.
 Microsoft-Windows-EnhancedVideoRenderer*

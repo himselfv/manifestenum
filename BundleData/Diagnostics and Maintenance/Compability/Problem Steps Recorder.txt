@@ -6,3 +6,7 @@ Microsoft-Windows-Application-Compability-UI-Recording*			# Library it relies on
 
 Microsoft-Windows-Application-Compatibility-ProblemStepsRecorder*
 Microsoft-Windows-Application-Compatibility-UI-Recording*
+
+
+# Name in 210H, both Assemblies and CBS
+Microsoft-Windows-StepsRecorder-*
