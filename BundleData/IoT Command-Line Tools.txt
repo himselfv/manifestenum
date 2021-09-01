@@ -1,0 +1,9 @@
+# IoT Command-Line Tools
+# Seems to be a bunch of powershell/cmd tools to control headless/"internet of things" Windows installations.
+# https://docs.microsoft.com/en-us/windows/iot-core/manage-your-device/commandlineutils
+
+# IoTUAP = IoT UAP (Universal Application Platform)
+
+Microsoft-IoTUAP-ShellExt-Tools-*		# Deployment
+Microsoft-Windows-OnecoreUap-IoTUAP-Tools*
+

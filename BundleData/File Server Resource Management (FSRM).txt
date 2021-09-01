@@ -1,0 +1,21 @@
+# File Classification Infrastructure (FCI)
+# Helps organizations classify data stored on Windows file servers.
+# Using FCI, system administrators can set up rules that automatically classify files based on various factors, such as location or content. Once files have been classified, FCI can perform specified actions on them, such as moving them to a specified directory or encrypting them.
+
+CBS:Microsoft-Windows-FCI-Client-*
+
+# ~= File Server Resource Management (FSRM)
+# Enables you to automatically classify files, perform tasks based on these classifications, set quotas on folders, and create reports monitoring storage usage.
+# https://docs.microsoft.com/en-us/windows-server/storage/fsrm/fsrm-overview
+
+# FSRM is not EXACTLY FCI (it lists Quota management too), but so far everything under FSRM assemblies covers only FCI
+
+Microsoft-Windows-FCI-*
+# Microsoft-Windows-FCI-Adm		# Group policy definitions
+# Microsoft-Windows-FCI-Client		# Deployment
+
+Microsoft-Windows-FSRM-*
+# Microsoft-Windows-FSRM-Common
+# Microsoft-Windows-FSRM-TaskSchedule	# "Property Definition Sync" task -- only for FCI
+
+srmlib*

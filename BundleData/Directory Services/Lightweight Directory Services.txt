@@ -1,0 +1,10 @@
+# Active Directory Lightweight Directory Services (AD LDS)
+# A Lightweight Directory Access Protocol (LDAP)-compliant directory service. Intended for users who do not want to set up a domain controller to enable directory services.
+
+# = Active Directory Application Mode (ADAM)
+# Started with Windows Server 2003 and Windows XP Professional.
+# Since Windows Server 2008 ADAM came to be known as Active Directory Lightweight Directory Services (AD LDS).
+# https://www.techopedia.com/definition/25232/active-directory-application-mode-adam
+
+CBS:Microsoft-Windows-DirectoryServices-ADAM
+CBS:Microsoft-Windows-DirectoryServices-ADAM-*

@@ -1,0 +1,18 @@
+
+Microsoft-Windows-Media-Streaming
+Microsoft-Windows-Media-Streaming-*
+Microsoft-Windows-Multimedia-Casting-Shell-Ext*
+Microsoft-Windows-DLNA-*
+Microsoft-OneCore-Multimedia-DLNAShellNamespaceExtension*
+
+Microsoft-OneCore-Multimedia-CastingCommon-*		# Deployment
+Microsoft-Windows-Media-Streaming-DLL*
+Microsoft-Windows-Media-Streaming-PS*
+
+Microsoft-OneCore-Multimedia-CastingReceiver-*		# Deployment
+Microsoft-Windows-DLNA-DMRServer*
+Microsoft-Windows-PlayToReceiver-DLL*
+
+Microsoft-OneCore-Multimedia-CastingTransmitter-*	# Deployment
+Microsoft-Windows-DLNA-MDEServer*
+Microsoft-Windows-WinMDE*

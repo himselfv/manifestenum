@@ -1,0 +1,9 @@
+# Projected File System (ProjFS)
+# Similar to FUSE found on Linux, or to Dokan & WinFSP. Allows apps to create virtual file systems which appear indistinguishable from local folders, but their entire contents are generated "live" by the program.
+https://docs.microsoft.com/en-us/windows/win32/projfs/projected-file-system
+
+# Has an API.
+
+Microsoft-Windows-ProjFS*
+#CBS:Microsoft-Windows-ProjFS*
+

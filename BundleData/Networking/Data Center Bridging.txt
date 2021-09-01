@@ -1,0 +1,6 @@
+# IEEE Data center bridging (DCB)
+# A set of enhancements to the Ethernet local area network communication protocol for use in data center environments, in particular for use with clustering and storage area networks.
+
+CBS:Microsoft-Windows-DataCenterBridging-*
+
+# Present in CBS, can't find assemblies.

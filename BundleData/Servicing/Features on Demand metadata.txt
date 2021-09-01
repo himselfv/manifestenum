@@ -1,0 +1,7 @@
+# Features on Demand metadata
+# Features on Demand (FODs) are Windows features that can be added at any time. Common features include language resources like handwriting recognition or other features like the .NET Framework (.NetFx3). When Windows 10 or Windows Server needs a new feature, it can request the feature package from Windows Update.
+# https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/features-on-demand-v2--capabilities
+
+# Servicing-related
+# This contains only the metadata for these features
+Microsoft-Windows-FodMetadata*

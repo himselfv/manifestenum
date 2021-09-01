@@ -1,0 +1,4 @@
+# Now Playing banner
+# I think this is the UWP popup which stays above all windows and provides an API for media players to report what's "now playing"
+
+Microsoft-Windows-NowPlayingSessionManager*

@@ -1,0 +1,16 @@
+# Network File System support (Client and Server)
+# Can be enabled in optional Windows components
+
+# Using the NFS protocol, you can transfer files between computers running Windows and other non-Windows operating systems, such as Linux or UNIX.
+# NFS in Windows Server includes Server for NFS and Client for NFS.
+# https://docs.microsoft.com/en-us/windows-server/storage/nfs/nfs-overview
+
+# It seemingly should install both a MMC snap-in
+#   nfsmgmt.msc
+# And a property page (NFS attributes)
+# https://blog.it-kb.ru/2018/10/16/using-the-nfs-client-in-windows-10-professional-edition/
+# But I can't find these in assemblies.
+
+CBS:Microsoft-Windows-ClientForNFS-*
+
+Microsoft-Windows-NFS-*
