@@ -15,3 +15,21 @@ Microsoft-Windows-WinSetupUI*
 # WaaS Medic. Undisableable system protected service which reenables everything related to Windows Update.
 Microsoft-Windows-WaaSMedic*
 Microsoft-Windows-WaaSAssessment*
+
+# UPFC (Updateability From SCM)
+# Another update reenabler. Started by Service Control Manager, apparently hardcoded into it.
+# Related to WaasMedic, contains strings:
+#   Microsoft-Windows-WaasMedic-Enable-Remediations
+# Configuration at:
+#   HKLM\System\WaaS\UPFC
+# Short writeup on what it does:
+#   https://www.acepace.net/2019-03-29-upfc/
+#    Check command line parameters
+#    Check if another instance is in progress through the registry
+#        If so, quit
+#    Mark that upfc is running through the registry
+#    Call Upfc::PerformDetectionAndRemediationIfNeeded
+#    Call Upfc::LaunchWaasMedicIfAllowed
+#    Call Upfc::LaunchSihIfAllowed
+#    Mark that upfc is not running
+Microsoft-Windows-Upfc*
