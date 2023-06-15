@@ -182,7 +182,7 @@ type
   end;
 
 implementation
-uses Windows, UniStrUtils;
+uses Windows;
 
 function TQuickList<T>.GetPItem(const AIndex: integer): PT;
 begin

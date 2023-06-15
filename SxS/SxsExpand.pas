@@ -19,7 +19,7 @@ procedure DecodeDCS1(AData: TMemoryStream); overload;
 
 
 implementation
-uses SysUtils, Windows, FilenameUtils, MSDeltaLib, CompressApi;
+uses SysUtils, Windows, OsUtils, MSDeltaLib, CompressApi;
 
 type
   TPackageSignature = integer;

@@ -99,7 +99,7 @@ var
   MainForm: TMainForm;
 
 implementation
-uses UITypes, Registry, FilenameUtils, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
+uses UITypes, Registry, OsUtils, SxSExpand, AssemblyDbBuilder, SxsUtils, ComObj, WinSxS,
   DelayLoadTree, AutorunsBrowser, ShellExtBrowser, ServiceBrowser, CommonFilters,
   AssemblyDb.Bundles, ManifestEnum.Log, ManifestEnum.AssemblyActions,
   ManifestEnum.RegistryActions, ManifestEnum.FileActions, ManifestEnum.BundleActions;

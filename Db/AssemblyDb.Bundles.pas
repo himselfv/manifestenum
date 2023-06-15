@@ -124,7 +124,7 @@ function BundleDir(): string;
 
 
 implementation
-uses Windows, FilenameUtils, WildcardMatching;
+uses Windows, OsUtils, WildcardMatching;
 
 //Returns the default directory for storing bundle definitions
 function BundleDir(): string;

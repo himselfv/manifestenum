@@ -18,7 +18,7 @@ procedure RefreshAssemblyDatabase(ADb: TAssemblyDb);
 procedure RebuildAssemblyDatabase(ADb: TAssemblyDb; const AFilename: string);
 
 implementation
-uses Windows, SysUtils, Classes, FilenameUtils, ManifestEnum_Progress, AssemblyDb.Assemblies,
+uses Windows, SysUtils, Classes, ManifestEnum_Progress, AssemblyDb.Assemblies,
   AssemblyDb.Bundles, Generics.Collections, WinSxS, ComObj, SxSUtils, BitSets;
 
 procedure InitAssemblyDb(ADb: TAssemblyDb; const AFilename: string; AAutoRebuild: boolean);
