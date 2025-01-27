@@ -3,4 +3,24 @@
 
 Desktop_Shell-GettingStarted*		# Windows 10
 Microsoft-Windows-GettingStarted*	# Windows 7
-Microsoft-Windows-OOBE*			# Windows 7
+Microsoft-Windows-OOBE*			# Windows 7/10
+
+# Microsoft-Windows-OOBE-Core-Adapters
+# Microsoft-Windows-OOBE-Core-Documents
+# Microsoft-Windows-OOBE-FirstLogonAnim
+# Microsoft-Windows-OOBE-Machine
+# Microsoft-Windows-OOBE-Machine-DUI
+# Microsoft-Windows-OOBE-Machine-Plugins
+# Microsoft-Windows-OOBE-Machine-Plugins-Wireless
+# Microsoft-Windows-OOBE-Policies
+# Microsoft-Windows-OOBE-User-Broker
+# Microsoft-Windows-OOBE-User
+
+# OOBE Networking UI:
+# Microsoft-Windows-OOBENetworkCaptivePortal.*
+# Microsoft-Windows-OOBENetworkConnectionFlow.*
+
+# W10: Contains OobeLdr.exe and Windeploy.exe
+Microsoft-OneCore-OnlineSetup-Component*
+# W10: Additional sources for WMI\Autologger
+Microsoft-Windows-OobeLdr-Instrumentation*
